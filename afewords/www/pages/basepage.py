@@ -9,7 +9,7 @@ def with_attr(cls):
 
 @with_attr
 class BasePage(object):
-    __template_file__ = ''
+    __template__ = ''
     doc = {}
 
     def __init__(self, handler, doc=None):
@@ -19,4 +19,12 @@ class BasePage(object):
             self.doc.update(doc)
 
     def render(self):
-        return self.handler.render(self.__template_file__, doc=doc)
+        return self.handler.render(self.__template__, doc=self.doc)
+
+    show = render
+
+    def render_string(self):
+        return self.handler.render_string(self.__template__, doc=self.doc)
+
+    __unicode__ = render_string
+    __str__ = render_string
