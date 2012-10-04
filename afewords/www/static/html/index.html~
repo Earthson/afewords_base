@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ceshi</title>
+<link rel="stylesheet" type="text/css" href="/static/html/main.css" />
+</head>
+<body>
+<div id="aside_wrap">
+<div id="aside_logo"><img src="/static/img/afewords_ok1.png" alt="" /></div>
+<div id="aside_nav">
+<ul>
+<li><a class="home" href="#" title="博客主页">&nbsp;</a></li>
+<li><a class="settings" title="管理" href="javascript:void(0);">&nbsp;</a></li>
+<ul class="nav_wrap" id="nav_wrap_settings">
+<li><a href="#">个性化</a></li>
+<li><a href="#">文章</a></li>
+<li><a href="#">分类</a></li>
+</ul>
+<li><a class="write" href="#" title="执笔">&nbsp;</a></li>
+<li><a class="feed" href="#" title="动态">&nbsp;</a></li>
+<li><a class="laboratory" href="javascript:void(0);" title="实验室">&nbsp;</a></li>
+<ul class="nav_wrap" id="nav_wrap_lab">
+<li><a href="#">简介</a></li>
+<li><a href="#">知识谱</a></li>
+<li><a href="#">小组</a></li>
+</ul>
+<li><a class="logout" href="#" title="退出">&nbsp;</a></li>
+</ul>
+
+</div>
+</div>
+<div id="container_wrap">
+<div id="container">
+<div id="module">
+子曰
+</div>
+<div id="middle">
+<div id="middle_left">
+
+<div id="bloger_title">Deju.tu</div>
+<div id="bloger_class">
+<a class="one_class current1" href="#">所有</a>
+<a class="one_class" href="#">Linux</a>
+<a class="one_class" href="#">在吉大的日子</a>
+</div>
+
+
+<div id="middle_body">
+<div id="all_nav">
+<div id="nav_title">执笔</div>
+</div>
+</div>
+</div>
+<div id="middle_right">
+
+<div id="m_r_nav">
+<ul>
+<li><a href="#" class="current1">执笔</a></li>
+<li><a href="#">喜欢</a></li>
+<li><a href="#">关注</a></li>
+<li><a href="#">知识谱</a></li>
+<li><a href="#">信息卡</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

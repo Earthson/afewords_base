@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ title }}</title>
+  <meta http-equiv="pragma" content="no-cache"/>
+  <meta http-equiv="cache-control" content="no-cache"/>
+  <meta http-equiv="expires" content="0"/>
+  <meta http-equiv="keywords" content="子曰,子曰网"/>
+  <meta http-equiv="description" content="子曰"/>
+  <meta charset="UTF-8"/>
+  <link rel="stylesheet" type="text/css" href="/static/css/me/main.css" />
+  <script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.6.2/jquery.min.js"></script>
+  <script type="text/javascript" >
+ !window.jQuery && document.write(unescape('%3Cscript src="/static/js/jquery.js"%3E%3C/script%3E'));
+</script>
+
+  <script type="text/javascript" src="/static/js/me/ajax.js" ></script>
+  <script type="text/javascript" src="/static/js/me/main.js"></script>
+  <!--
+  {% block script %}{% end %}
+  -->
+</head>
+<body>
+<div id="pop-overlay"></div>
+<div id="pop-wrap">
+<div id="pop-outer">
+<div class="pop-bg" id="pop-bg-n"></div>
+<div class="pop-bg" id="pop-bg-ne"></div>
+<div class="pop-bg" id="pop-bg-e"></div>
+<div class="pop-bg" id="pop-bg-se"></div>
+<div class="pop-bg" id="pop-bg-s"></div>
+<div class="pop-bg" id="pop-bg-sw"></div>
+<div class="pop-bg" id="pop-bg-w"></div>
+<div class="pop-bg" id="pop-bg-nw"></div>
+<div id="pop-content">
+</div><a id="pop-close" onclick="pop_page_close();" style="display:inline;"></a>
+</div>
+</div>
+
+<div id="feed-back"><a href="#">反馈</a></div>
+
+<div id="main">
+<div id="head">
+
+
+<div class="left"><a href="/">子曰</a><span id="left-beta-style">Beta</span></div>
+
+<div class="right">
+<div class="top">
+<!--{% if user is None %}
+
+    {# have not login #}
+    <div class="reg" title="注册"><a href="/reg">注册</a></div>
+    <div class="login" title="登陆"><a href="/">登录</a></div>
+    
+{% else %}-->
+
+    <!--{# already login #} -->
+    <div class="quit" title="退出"><a href="/quit" title="退出">退出</a></div>
+    <!--
+    <div class="myself" title="我的">
+    <a href="javascript:void(0)" id="top_myself">我的</a>
+    <div id="head_nav" class="head_nav_my" style="display:none">
+    <ul>
+    <li><a href="/settings-info">设置</a></li>
+    <li><a href="/author/">展示</a></li>
+    <li><a href="/blog-lib/{{ user._id }}">执笔</a></li>
+    <li><a href="/follow-lib/">关注</a></li>
+    <li><a href="/like-lib/">喜欢</a></li>
+    <li><a href="/notice">消息</a></li>
+    </ul>
+    </div>
+    </div>
+    -->
+
+    <!--{% if len(user.drafts_lib) > 0 %}
+        {# draft notification #}
+        <div class="draft" title="草稿"><a href="/draft" title="草稿">{{ len(user.drafts_lib) }}草稿</a></div>
+    {% end %}
+
+    {% if len(user.notification_list_not_read) > 0 %}
+        {# notification notification #}-->
+        <!--
+        <div class="noti" title="消息"><a href="/notice" title="消息"><!--{{ len(user.notification_list_not_read) }}--><!--1消息</a></div>
+    <!--{% end %}
+    {# for future 
+    <!--
+    <div class="write" title="执笔">
+    <a href="javascript:void(0)"  id="top_write">执笔</a>
+    <div id="head_nav" class="head_nav_write" style="display:none">
+    <ul>
+    <li><a href="/write" target="_blank">长说</a></li>
+    <li><a href="javascript:void(0)" onclick="write_short();">短语</a></li>
+    </ul>
+    </div>
+    </div>
+    -->
+    <!--#}-->
+    
+    
+    <div class="myself" title="我的"><a href="#">管理</a></div>
+    <div class="myself" title="我的"><a href="#">动态</a></div>
+    <div class="home" title="主页"><a href="/home">主页</a></div>
+
+
+</div>
+
+
+<div class="bottom">
+<div class="write" title="执笔">
+        <a href="/write" target="_blank">执笔</a>
+    </div>
+<!--
+{% if user is not None %}
+
+    <div class="head-user" title="他们"><a href="/user-lib" target="_blank">他们</a></div>
+    <div class="head-feed" title="聚合"><a href="/feed" target="_blank">聚合</a></div>
+{% else %}
+    <div class="head-feed" title="聚合"><a href="/feed" target="_blank">聚合</a></div>
+{% end %}
+{# for future 
+<!--
+<div class="search" title="搜索">
+<input type="submit" value="" />
+<input type="text" />
+</div>
+<!--
+#}-->
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<div id="middle">
+
+<div id="left2">
+<div id="left2-name">涂德巨</div>
+
+<ul id="left2-nav">
+<li><a href="#">动态</a></li>
+<li><a href="#" class="current">管理</a></li>
+<li><a href="#">消息</a></li>
+<li><a href="#">草稿</a></li>
+</ul>
+
+</div>
+<div id="right2">
+
+<div id="top_nav">
+<ul>
+<li><a href="#">密码</a></li>
+<li><a href="#">头像</a></li>
+<li><a href="#">分类</a></li>
+
+<li><a href="#">喜欢</a></li>
+<li><a href="#">关注</a></li>
+<li><a href="#">被关注</a></li>
+<li><a href="#" class="current">关于我</a></li>
+</ul>
+</div>
+
+
+
+<div id="body_content">
+
+
+<!-- for password -->
+<div class="settings margin-left-0">
+<div class="page_name">修改密码</div>
+<table>
+<tr><td width="15%" height="40px;">原密码</td><td width="8%"></td><td width="72%"><input type="password" id="self-old-pwd" name="self-old-pwd"  /></td></tr>
+<tr><td width="15%" height="40px;">新密码</td><td width="8%"></td><td width="72%"><input type="password" id="self-new-pwd" name="self-new-pwd" /></td></tr>
+<tr><td width="15%" height="40px;">确认新密码</td><td width="8%"></td><td width="72%"><input type="password" id="self-pwd-again" name="self-pwd-again" /></td></tr>
+<tr><td colspan="3"><button class="self-intro-button">确认修改</button><span class="self-info-process">&nbsp;</span></td></tr>
+</table>
+</div>
+
+<!-- for tag -->
+<div class="settings margin-left-0">
+<div class="page_name">修改分类</div>
+</div>
+
+<!-- for avatar -->
+<div class="settings margin-left-0">
+<div class="page_name">修改头像</div>
+</div>
+
+
+<!-- for about -->
+<div class="about margin-left-0">
+<div class="page_name">关于我</div>
+我就是我！
+</div>
+
+
+
+<!-- for blog -->
+<!--
+<div class="blog_one">
+<div class="title"><a href="#">写给自己的信</a></div>
+<div class="summary">摘要</div>
+<div class="content">就是这样的生活</div>
+<div class="control"><span>2012-3-4</span></div>
+</div>
+
+<div class="blog_one">
+<div class="title"><a href="#">写给自己的信</a></div>
+<div class="summary">摘要</div>
+<div class="content">就是这样的生活</div>
+<div class="control"><span>2012-3-4</span></div>
+</div>
+-->
+<!-- -->
+
+<!-- like -->
+<div class="like margin-left-0">
+<div class="page_name">喜欢</div>
+<ul>
+<li><a href="#" target="_blank">学习java</a></li>
+<li><a href="#" target="_blank">python是这样学习的</a></li>
+</ul>
+</div>
+
+
+
+<!-- follow and follower -->
+<div class="follow margin-left-0">
+<div class="page_name">关注</div>
+<ul>
+<li>
+<div class="follow_one">
+<img src="/static/avatar/small/afw_o0vIz5YV7b1341658308.jpg"/>
+<div class="info">
+<span class="name"><a href="#" target="_blank">Earthson lu</a></span>
+<span class="control"><a href="javascript:void(0);">关注</a></span>
+<span class="control"><a href="#" target="_blank">留言</a></span>
+</div>
+</div>
+</li>
+</ul>
+</div>
+
+
+
+
+<div class="body_page margin-left-0"><span>页</span><span><a href="#" class="current">1</a></span><span><a href="#">2</a></span><span><a href="#">3</a></span></div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div id="footer">
+
+<ul>
+<li><a href="#">关于子曰</a></li>
+</ul>
+
+</div>
+</div>
+
+<script type="text/javascript" src="/static/js/me/init.js"></script>
+</body>
+</html>

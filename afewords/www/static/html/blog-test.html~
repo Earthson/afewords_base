@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ title }}</title>
+  <meta http-equiv="pragma" content="no-cache"/>
+  <meta http-equiv="cache-control" content="no-cache"/>
+  <meta http-equiv="expires" content="0"/>
+  <meta http-equiv="keywords" content="子曰,子曰网"/>
+  <meta http-equiv="description" content="子曰"/>
+  <meta charset="UTF-8"/>
+  <link rel="stylesheet" type="text/css" href="/static/css/me/main.css" />
+  <link rel="stylesheet" type="text/css" href="/static/css/me/blog.css"/>
+  <script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.6.2/jquery.min.js"></script>
+  <script type="text/javascript" >
+ !window.jQuery && document.write(unescape('%3Cscript src="/static/js/jq/jquery.js"%3E%3C/script%3E'));
+</script>
+
+  <script type="text/javascript" src="/static/js/me/main.js"></script>
+  <!--
+  {% block script %}{% end %}
+  -->
+</head>
+<body style="background-color:#f8f8f8">
+<div id="pop-overlay"></div>
+<div id="pop-wrap">
+<div id="pop-outer">
+<div class="pop-bg" id="pop-bg-n"></div>
+<div class="pop-bg" id="pop-bg-ne"></div>
+<div class="pop-bg" id="pop-bg-e"></div>
+<div class="pop-bg" id="pop-bg-se"></div>
+<div class="pop-bg" id="pop-bg-s"></div>
+<div class="pop-bg" id="pop-bg-sw"></div>
+<div class="pop-bg" id="pop-bg-w"></div>
+<div class="pop-bg" id="pop-bg-nw"></div>
+<div id="pop-content">
+</div><a id="pop-close" onclick="pop_page_close();" style="display:inline;"></a>
+</div>
+</div>
+
+<div id="feed-back"><a href="#">反馈</a></div>
+
+<div id="main">
+<div id="head">
+
+
+<div class="left"><a href="/">子曰</a><span id="left-beta-style">Beta</span></div>
+
+<div class="right">
+<div class="top">
+<!--{% if user is None %}
+
+    {# have not login #}
+    <div class="reg" title="注册"><a href="/reg">注册</a></div>
+    <div class="login" title="登陆"><a href="/">登录</a></div>
+    
+{% else %}-->
+
+    <!--{# already login #} -->
+    <div class="quit" title="退出"><a href="/quit" title="退出">退出</a></div>
+    <!--
+    <div class="myself" title="我的">
+    <a href="javascript:void(0)" id="top_myself">我的</a>
+    <div id="head_nav" class="head_nav_my" style="display:none">
+    <ul>
+    <li><a href="/settings-info">设置</a></li>
+    <li><a href="/author/">展示</a></li>
+    <li><a href="/blog-lib/{{ user._id }}">执笔</a></li>
+    <li><a href="/follow-lib/">关注</a></li>
+    <li><a href="/like-lib/">喜欢</a></li>
+    <li><a href="/notice">消息</a></li>
+    </ul>
+    </div>
+    </div>
+    -->
+
+    <!--{% if len(user.drafts_lib) > 0 %}
+        {# draft notification #}
+        <div class="draft" title="草稿"><a href="/draft" title="草稿">{{ len(user.drafts_lib) }}草稿</a></div>
+    {% end %}
+
+    {% if len(user.notification_list_not_read) > 0 %}
+        {# notification notification #}-->
+        <!--
+        <div class="noti" title="消息"><a href="/notice" title="消息"><!--{{ len(user.notification_list_not_read) }}--><!--1消息</a></div>
+    <!--{% end %}
+    {# for future 
+    <!--
+    <div class="write" title="执笔">
+    <a href="javascript:void(0)"  id="top_write">执笔</a>
+    <div id="head_nav" class="head_nav_write" style="display:none">
+    <ul>
+    <li><a href="/write" target="_blank">长说</a></li>
+    <li><a href="javascript:void(0)" onclick="write_short();">短语</a></li>
+    </ul>
+    </div>
+    </div>
+    -->
+    <!--#}-->
+    
+    
+    <div class="myself" title="我的"><a href="#">管理</a></div>
+    <div class="myself" title="我的"><a href="#">动态</a></div>
+    <div class="home" title="主页"><a href="/home">主页</a></div>
+
+
+</div>
+
+
+<div class="bottom">
+<div class="write" title="执笔">
+        <a href="/write" target="_blank">执笔</a>
+    </div>
+<!--
+{% if user is not None %}
+
+    <div class="head-user" title="他们"><a href="/user-lib" target="_blank">他们</a></div>
+    <div class="head-feed" title="聚合"><a href="/feed" target="_blank">聚合</a></div>
+{% else %}
+    <div class="head-feed" title="聚合"><a href="/feed" target="_blank">聚合</a></div>
+{% end %}
+{# for future 
+<!--
+<div class="search" title="搜索">
+<input type="submit" value="" />
+<input type="text" />
+</div>
+<!--
+#}-->
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<div id="middle">
+
+<div id="middle-blog-left">
+
+
+
+<div class="blog_tip">
+<span class="blog_author"><a href="/author/50078a4907bf8f0a6000000b">deju.tu</a></span>
+</div>
+
+<div class="blog_tip">
+<span class="blog_tip_time">2012-7-12</span>
+</div>
+
+<div class="blog_tip">
+<span class="bb_tag">
+<span class="tag_one"><span class="tag-label"></span><span class="tag-text">测试</span></span>
+</span>
+</div>
+
+
+<div class="blog_tip">
+<span class="blog_tip_like">2<span class="blog_tip_do">+1</span></span>
+</div>
+
+<div class="blog_tip">
+<span class="blog_tip_comment">2</span>
+</div>
+
+
+<div class="blog_tip">
+<span class="blog_tip_view">2</span>
+</div>
+
+<div class="blog_tip">
+<span class="blog_tip_dir">目录</span>
+</div>
+
+
+</div>
+
+<div id="middle-blog-right">
+<div id="middle-blog" style="width:100%;float:left;background-color:#fff;">
+<div class="blog_edit_link"><a href="/write?id=5016985207bf8f1f31000002&amp;edit=true">修改文章</a></div>
+<div id="blog_title">测试</div>
+<div id="blog_view">
+<div class="b_blog" style="margin-top:10px;">
+<div class="b_body">
+
+
+
+
+<div class="bb_control">
+
+
+
+<div class="bb_summary">
+<div class="summary">摘要</div>
+测试
+</div>
+
+</div>
+<div class="bb_con">
+<div>介绍下我的背景情况，大学里面尝试过大学生创业，有招到过100多人的团队，也很快分崩离析，最后还是几个人一起在做，做的是依托大学城的毕业生手册项目，就是以学院为单位，在他们毕业时，制作纪念手册。很传统。</div>
+<div>毕业后离开校园项目也就不了了之了，毕竟也没有到可以依靠这个吃饭然后发财的地步。</div>
+<div class="br"></div>
+<div>虽然去了一家传统电视媒体做广告销售，但是创业之心一直不死。对创业也有了一些新的认识和改变。对互联网和移动互联网领域带来的变化和改革，有一种除了愿意做受益者，更想参与到这个时代当中的冲动和激情。</div>
+<div class="br"></div>
+<div>所以还是通过微博等其他一些网站的信息在学习中逐渐形成了一些自己的想法和模式，不怕班门弄斧不如在这里也和你说说。</div>
+<div class="br"></div>
+<div>一，用NFC签到的技术，改造一般大公司所有员工每天打卡报道的日常行为，并以此为聚点和开始，推出一款手机产品，以公司为单位，可以像360开机一样告诉你今天上班是第几个到的打败了多少人，中午食堂又会吃什么，本公司大楼附近又有了那些别的好吃的，加班的时候可以送去温馨的问候，公司也可以专门有团购产品和旅游的线路等等，甚至公司每个个人的发票报销也可以在这个平台上实现更快捷的解决。</div>
+<div>二，依然是nfc签到技术，用于像上海这样大城市的知名餐厅，签到后无需再排队，通过数据得出排队还需多少时间，然后可以把菜单制作在手机上，提前点单，接着推荐附近好玩的地方或新有的优惠，再还有10分钟或5分钟的就排队到你的时候，再通过软件的提醒，回到餐厅用餐。这个试用范围个人认为不止餐饮业。</div>
+<div>三，以siri为代表的语言识别，能否用于投诉维修服务等电话接听服务，从此不会再听到，XX服务请按一，XX服务请按二。。。比如我家的美的空调坏了，他的上下风功能不能实现了。然后就直接到达了维修师傅的终端，让他上门服务了。当然这也肯定不仅仅局限于家电的维修。</div>
+<div class="br"></div>
+<div>好吧，以上就是我的一些自己认为还算比较靠谱比较解决实际问题的想法，欢迎各种批评各种打击，经不起嘲笑的梦想不算梦想嘛</div>
+<div class="br"></div>
+<div>ok， 如果你觉得我当中有任何一个想法还不错的话，或者说，我还是希望能够在新时代互联网或者移动互联网热潮中也立足一下的话，问题来了，我只是一个人，还是一个不懂技术家底也不厚实的人。或者更干脆更冷酷一点，我屁都没有，就上面那些想法。</div>
+<div class="br"></div>
+<div>我知道，想法还要变成计划，那才算是完善。我的第一个问题是，是把他变成一个完整的创业计划书，还是像你的博客中有提到的一些产品报告等，如果是后者，我不知道如何做，能否学习。或者说，又该包括哪些内容。</div>
+<div>第二个问题是，你有提到产品的计划在做的时候越做越踏实，越做越有底气，我很希望能够有这样的感受，可现在的我，不是眼高手低，不知如何脚踏实地。</div>
+<div class="br"></div>
+<div>第三个问题，做好这些计划，就能找到志同道合的技术伙伴了么？我一直认为创业伙伴在一开始即使不一定是因为理念和大局观走到一起，那也肯定不是因为一开始的钱吧？这却恰恰和现在业内的人才高薪现象不太相符，这我也相对比较困惑。</div>
+<div class="br"></div>
+<div>第四个问题，这些都有了，是不是就找得到天使，可以把梦想变成现实，万里长征至少踏出了第一步。</div>
+<div>还不得不提一下的是，关于创业和职业的选择问题。像我这样全靠山寨自学年轻又轻刚毕业一年的，你是否支持我创业去完成自己的梦想。如果是边工作边准备的话，是不是在工作的时候就很难在创业上全心投入好好准备。另外我有一条路就是换个工作去大众点评或者别的IT方面的公司，虽然做的应该还是sales方面的工作，但是至少需要寻找到的伙伴就在眼前了，曲线救国嘛~你又觉得如何？</div>
+<div class="br"></div>
+<div>因为家里人比较传统，他们认为我白手起家又不知道我在搞些什么腾云驾雾迟早摔死在地上。</div>
+</div>
+
+
+<div class="b_bottom_wrap" blog="5016985207bf8f1f31000002">
+<span class="bot-comment" ref_type="blog" title="写评论">写评论</span>
+<span class="bot-author-name"><a href="/author/50078a4907bf8f0a6000000b">deju</a></span>
+<span class="bot-time">2012-07-30 22:21&nbsp;/&nbsp;</span>
+</div>
+</div>
+<div class="b_com" blog_id="5016985207bf8f1f31000002">
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+
+
+
+<div id="footer">
+
+<ul>
+<li><a href="#">关于子曰</a></li>
+</ul>
+
+</div>
+</div>
+
+<script type="text/javascript" src="/static/js/me/init.js"></script>
+</body>
+</html>

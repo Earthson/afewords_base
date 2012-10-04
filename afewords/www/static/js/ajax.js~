@@ -1,0 +1,317 @@
+$().ready(function(){
+
+jQuery.com = jQuery.com || {};
+jQuery.com.afewords = jQuery.com.afewords || {};
+jQuery.com.afewords.www = jQuery.com.afewords.www || {};
+jQuery.com.afewords.www.user_group = jQuery.com.afewords.www.user_group || {};  // for group
+jQuery.com.afewords.www.user_write = jQuery.com.afewords.www.user_write || {};  // for write page
+jQuery.com.afewords.www.user_blog = jQuery.com.afewords.www.user_blog || {};  // for blog
+jQuery.com.afewords.www.user_init = jQuery.com.afewords.www.user_init || {};  // for init
+jQuery.com.afewords.www.user_settings = jQuery.com.afewords.www.user_settings || {};  // for settings
+jQuery.com.afewords.www.user_tool = jQuery.com.afewords.www.user_tool || {};  // tools
+jQuery.com.afewords.www.user_URI = jQuery.com.afewords.www.user_URI || {};  // URI
+jQuery.com.afewords.www.user_login = jQuery.com.afewords.www.user_login || {};  // for login,reg,reset
+jQuery.com.afewords.www.user_control = jQuery.com.afewords.user_control || {};  // for all user's control 
+
+$Control = jQuery.com.afewords.www.user_control;
+
+jQuery.extend({
+    log: function(value){
+        console.log(value);    
+    }
+});
+
+$URI = jQuery.com.afewords.www.user_URI;
+$URI.login_url = '/';
+$URI.register_url = '/reg';
+$URI.wrtie_url = '/write';
+$URI.write_new_src = '/new';
+$URI.write_update_src = '/update';
+$URI.write_delete_src = '/del';
+$URI.crop_image_url = '/crop-image';
+$URI.upload_image_url = '/upload-image';
+
+
+$Tool = jQuery.com.afewords.www.user_tool;
+$Login = jQuery.com.afewords.www.user_login;
+
+
+
+/******** form to dict **************/
+jQuery.fn.FormToDict = function() {
+    var fields = this.serializeArray();
+    var json = {}
+    for (var i = 0; i < fields.length; i++) {
+        json[fields[i].name] = fields[i].value;
+    }
+    if (json.next) delete json.next;
+    return json;
+};
+
+/************ ALL DIV input textarea select to dict ********************/
+jQuery.fn.DivToDict = function() {
+	var json = {};
+    var root_this = $(this);
+	root_this.children().find('input').each(function(){
+        var self_this = $(this);
+        var input_type = self_this.attr("type");
+        var key = self_this.attr("name");
+        var value = $.trim(self_this.val());
+        switch(input_type){
+            case 'radio':
+                if(self_this.attr('checked') == 'checked'){
+				    json[key] = value;
+			    }
+			    break;
+			case 'checkbox':
+			     if(self_this.attr("checked") == 'checked'){
+			         //alert(value);
+                    if(key in json){
+                        json[key].push(value);                    
+                    }else{
+                        json[key] = new Array();
+                        json[key].push(value);                    
+                    }			     
+			     }
+			     break;
+			default:
+			    json[key] = value;        
+        
+        }
+	});
+	root_this.children().find('textarea').each(function(){
+		json[$(this).attr("name")] = $.trim($(this).val());	
+	});
+	root_this.children().find('select').each(function(){
+		json[$(this).attr("name")] = $.trim($(this).val());	
+	});
+	
+	return json;
+};
+
+
+getQueryStringRegExp = function(name)
+{
+    var reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");
+    if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " ")); return "";
+};
+
+
+jQuery.getCookie =function(name) {
+    var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+    return r ? r[1] : undefined;
+};
+
+jQuery.postJSON = function(url, args, callback_before,callback_success , callback_error ){
+    args._xsrf = jQuery.getCookie("_xsrf");
+    $.ajax({
+            url: url, 
+            data: $.param(args), 
+            dataType: "json", 
+            type: "POST",
+            contentType:"application/x-www-form-urlencoded; charset=utf-8",
+    		beforeSend:function(){
+    			callback_before();
+    		},
+            success:function(response) {
+        		if(callback_success) callback_success(response);
+    		}, 
+    		error: function(response) {
+    			callback_error(response);
+		    }
+	});
+};	
+
+/*********** fixed the width and height ***************/
+web_page_fixed = function(){
+    var url = location.href;
+    /********* for different page  ************/
+    if(url){
+        page_height = $(document).height();
+ 		page_width = $(document).width();
+        if(page_height<600)	page_height = 600;
+ 		page_height -= 160;
+        if(url.search('reg')!=-1 || url.search('login')!=-1 ){
+            /**** login page ****/
+  		    $("#middle-in").css("height",parseInt(page_height) + "px");
+  		    $("#login").find("table").css("margin-top",parseInt((page_height-400)/3) + "px");
+            return;
+        }
+        if(url.search('settings')!=-1 ){
+  		    $("#middle-in").css("height",parseInt(page_height) + "px");
+  		    $("#login").find("table").css("margin-top",parseInt((page_height-400)/2) + "px");
+            return ;
+        }
+        if(url.search('user-lib')!=-1 || url.search('feed')!=-1){
+            $("#right1").css("height",parseInt(page_height) + "px");
+            return ;
+        }
+        
+        
+    }
+}
+
+$Tool.change_code = change_code = function(){
+	$("#code_img").html('<img src="/code" alt="验证图片" class="code-img" >');
+}
+
+
+$Tool.image_upload_handler = image_upload_handler = function(image_for, image_process, image_path, image_more_info){
+    // image upload handler, contains user avatar, group logo, article
+    switch(image_for){
+        case 'avatar':
+            avatar_handler(image_process, image_path);
+            break;
+        case 'logo':
+        
+            break;
+        case 'article':
+            break;
+        default: break;    
+    
+    }
+    
+    function avatar_handler(result, src){
+          var $process = $('.self-upload-process');
+          var $tag = $("#self-img-up-tag");
+          var $up_but = $("#self-img-up-upb");    
+          var img_src = src;
+          var append_html = '';
+          if(result == 1 || result == '1'){
+            $up_but.removeAttr("disabled").css("color","#555");
+            $process.html(src).css('color','red');	 
+               
+            return  false;    
+          }
+          $process.html('头像上传成功，在下面区域您可以裁剪它！').css('color','blue');
+          if($tag.length < 1){
+            // create new block to crop image 
+            
+            append_html = '<div class="self-img-up" style="margin-top:20px;" id="self-img-up-tag">裁剪头像：</div>'+
+                        '<table style="margin-top:5px;" id="form-avatar" style="display:none">' +
+                        '<tr>'+
+                    	'<td rowspan="5" id="crop-contain">'+
+		                '<img src="' + img_src + '" id="crop-obj" />'+
+	                   '</td>' +
+                        '</tr>' +
+                        '<tr><td align="center" width="150px;">'+
+	                    '<div style="width:120px;height:120px;overflow:hidden;">'+
+		                '<img src="' + img_src + '" id="preview-120" alt="Preview" />'+
+	                    '</div>'+
+	                    '</td>'+
+                        '</tr>'+
+                        '<tr><td align="center" height="100px;">'+
+	                   '<div style="width:50px;height:50px;overflow:hidden;">'+
+		             '<img src="'+ img_src +'" id="preview-50" alt="Preview" />'+
+		            '</div>'+
+                    '</td></tr>' +
+                    '<tr><td align="center" id="crop-process">&nbsp;</td></tr>'+ 
+                    '<tr><td align="center">'+
+                    '<input type="hidden" name="crop_type" value="avatar" />' +
+                    '<input type="hidden" name="pos-x" id="pos-x" value="0" />' +
+                    '<input type="hidden" name="pos-y" id="pos-y" value="0" />' +
+                    '<input type="hidden" name="pos-w" id="pos-w" value="0" />' +
+                    '<input type="hidden" name="pos-time" id="pos-time" value="1" />' +
+                    '<button class="self-intro-button">提交</button>'+
+                    '</td></tr>' +
+                    '</table>';
+                $append_html = $(append_html);
+                $("#self-content2").find("#self").append($append_html);
+                $("#self-content2").find("#form-avatar").find("button").bind('click', function(){
+                       $Set.crop_avatar(this);  
+                }); 
+                $('#crop-contain>img').load(function(){
+                    $Set.do_crop_init(); 
+                }).error(function(){
+                    $('#crop-process').html('图片加载失败！').css('color', 'red');                
+                });
+                        
+          }else{
+          
+            $('#crop-contain').empty().append("<img id='crop-obj'/>");  
+		  //$("#target").attr('src','/static/avatar/650/'+info);
+		    $('#crop-obj').attr('src', img_src);  
+		    $('#preview-120').attr('src', img_src); 
+		    $('#preview-50').attr('src',img_src); 
+		    $('#crop-contain>img').load(function(){
+                    $Set.do_crop_init(); 
+                }).error(function(){
+                    $('#crop-process').html('图片加载失败！').css('color', 'red');                
+                });      
+          }
+    }
+    
+    
+}
+
+
+
+
+$Tool.html_encode = function(value){
+    var html_encode_dict = {'&': "&amp", '<':"&lt;", '>':"&gt;", "'":"&#39;", '"':'&quot;' };
+    if(typeof(value) == "string"){
+        return ret_fun(value);
+    }else{
+        for(var ii in value){
+            if(typeof value[ii] == "string")  value[ii] = ret_fun(value[ii]);        
+        }    
+        return value;
+    }
+    
+    function ret_fun(str){
+        return str.replace(/'|"|>|</g, function(tt){
+            return html_encode_dict[tt];
+        })  
+    }
+}
+
+$Tool.html_decode =  function(value){
+    var html_decode_dict = {"&amp":'&', "&lt;":'<', "&gt;":'>', "&#39;":"'", '&quot;':'"' };
+    if(typeof value == "string"){
+        return ret_fun(value);
+    }else{
+        for(var ii in value){
+            if(typeof value[ii] == "string")  value[ii] = ret_fun(value[ii]);        
+        }
+        return value;    
+    }
+    
+    function ret_fun(str){
+        return str.replace(/&amp;|&lt;|&gt;|&#39;|&quot;/g, function(tt){
+            return html_decode_dict[tt];
+        });   
+    }
+}
+
+jQuery.extend({
+    encode: jQuery.com.afewords.www.user_tool.html_encode,
+    decode: jQuery.com.afewords.www.user_tool.html_decode,
+});
+
+
+
+$Tool.html_encode1 = function(str){
+    var s = "";
+	 if (str.length == 0) return "";
+	 s = str.replace(/&/g, "&amp;");
+	 s = s.replace(/</g, "&lt;");
+	 s = s.replace(/>/g, "&gt;");  
+	 s = s.replace(/\'/g, "&#39;");
+	 s = s.replace(/\"/g, "&quot;");
+	 return s;
+}
+
+$Tool.html_decode1 = function(str){
+    var s = "";   
+	if (str.length == 0) return "";
+	s = str.replace(/&amp;/g, "&");
+	s = s.replace(/&lt;/g, "<");
+	s = s.replace(/&gt;/g, ">"); 
+	s = s.replace(/&#39;/g, "\'");   
+	s = s.replace(/&quot;/g, "\""); 
+	return s;  
+
+};
+
+
+});

@@ -1,0 +1,55 @@
+/*login and register page*/
+
+#login{width: 90%; margin-top:10px;float:left;min-height: auto;vertical-align: center;margin-left: 20px;}
+#login table{width: 100%;line-height: 40px;font-size: 14px;color: #666;}
+#login table tr{height: 25px;font-size: 14px !important;}
+#login table tr td{font-size: 14px;height: 25px !important;}
+#login table tr.height-20{line-height: 30px !important;height: 25px;}
+.login_mail{width: 200px;height: 30px;line-height: 30px;font-size: 18px;padding: 3px;}
+.login_button{border:#ccc 1px solid;margin-top: 0px;float: left;}
+.login-info{color: red;font-size: 12px !important;}
+.login-info span{font-size: 12px;}
+.login-info a{font-size: 12px;margin-left: 5px;text-decoration: underline;color: blue;}
+.login-process{float: left;margin-left: 20px;min-width: 10px;margin-top: 5px;font-size: 14px;}
+
+#repeat_time_all{font-size: 14px;}
+#repeat_time_all a{color: blue;font-size: 14px;text-decoration: underline;}
+
+.l-tag{width: 90%;float: left;margin: 20px;margin-top: 30px;}
+.l-tag ul{list-style: none;display: inline-block;}
+.l-tag ul li{float: left;height: 23px;margin-right: 25px;margin-bottom: 12px;}
+.l-tag ul li span.ll{background: url('/static/img/label.png') no-repeat;width: 17px;height: 23px;float: left;}
+.l-tag ul li span.rr{border:#ccc 1px dotted;min-width: 10px;border:#ececec 1px solid;border-left-width: 0;
+line-height: 21px;padding-right: 5px;border-bottom: 1px solid #D9D8DA;border-right: 1px solid #DDD;background: #FCFDFD;
+display: inline-block;color: #666;font-size: 12px !important;height: 21px;float: left;}
+.l-tag ul li .rr a{font-size: 12px;color: black;}
+.l-tag ul li .rr a:hover{color: blue;border-bottom: blue 1px dashed;}
+.l-tag div{line-height: 30px;}
+.l-a{font-size: 14px;color: blue;}
+.l-a:hover{text-decoration: underline;}
+.l-a-reset{margin-left: 30px;font-size: 12px;}
+.code-img{border:#ccc 1px dotted;margin-top: 5px;}
+
+#self{width: 100%;float: left;margin-bottom: 0px;}
+.self-intro-text{border:#ccc 1px solid;width: 99%;float: left;height: 450px;resize:none;padding: 5px;}
+.self-intro-button{border:#ccc 1px solid;margin-top: 20px;float: left;}
+.self-button{border:#ccc 1px solid;}
+
+.self-upload-process{font-size: 12px !important;}
+#crop-process{font-size: 12px !important;}
+
+.self-nav-a{margin-left: 100px;color: blue;font-size: 12px;}
+#self-content1{width: 100%;float: left;}
+#self-content2{width: 100%;float: left;}
+
+span.self-info-process{margin-left:30px;height:40px;line-height:40px;font-size:12px;display: inline-block;margin-top: 20px;width: 50%;float: left;}
+
+/*********** feed lib **************/
+#feed-lib{float: left;width: 95%;padding-top: 20px;margin-left: 10px;margin-bottom: 40px;}
+#feed-lib ul{list-style-type: none;}
+#feed-lib ul li{display: block;line-height: 25px;border-bottom: #d1d1d1 1px dotted;padding: 12px 0 12px 5px;font-size: 14px;}
+#feed-lib ul li a{line-height: 25px;height: 23px;min-width: 10px;display: inline-block;color: black;font-size: 14px;}
+#feed-lib ul li a:hover{border-bottom: blue 1px dashed;}
+
+#crop-obj{max-width: 600px;}
+#priview-120, #preview-50{border:#ccc 1px solid;}

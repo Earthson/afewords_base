@@ -1,0 +1,186 @@
+
+
+.middle_book_summary{display: none;}
+.middle_book_catalog{display: none;}
+.middle_book_topic{display: none;}
+.middle_book_feedback{display: none;}
+.current_middle1{display: block;}
+.current_middle0{display: none;}
+
+.book_nav_mark{float: left;width: 100%;height: 40px;text-align: right;color: #666;height: auto;
+line-height: 40px;border-bottom: #ccc 1px dotted;background-color: #f8f8f8;font-size: 12px;}
+.book_nav_mark span{margin-right: 10px;}
+
+.book_nav_title{float: left;width: 90%;min-height: 30px;text-align: center;color: #666;height: auto;
+line-height: 28px;padding: 5px 0;margin-left: 10px;position: relative; border-bottom: #ccc 1px dotted;}
+
+.book_nav_title span{float: left;padding-left: 20px;display: inline-block;text-align: center;font-size: 16px;font-weight: bold;}
+
+.book_tip{float: left;width: 90%;min-height: 30px;text-align: left;color: #666;height: auto;
+line-height: 28px;padding: 5px 0;margin-left: 10px;position: relative; border-bottom: #ccc 1px dotted;border-top:#ffffff 1px solid;
+border-left:#fff 1px solid;}
+
+.book_tip_normal{float: left;width: 100%;min-height: 30px;text-align: left;color: #333;height: auto;
+line-height: 28px;padding: 5px 0;position: relative; border-bottom: #ccc 1px dotted;z-index: 10000;}
+.book_tip_normal span{float: left;padding-left: 20px;display: inline-block;overflow-x:hidden; }
+.book_tip_normal.current_tip1{border-left-color: #ffffff;}
+.book_node_process{position: absolute;left: -30px;top: 7px;line-height: 20px;height: 20px;z-index: 10001;width: 18px;
+background-color: #fff;border:#ccc 1px solid;border-right-color: #fff;text-align: center;color: #666;}
+.book_node_process1{position: absolute;left: -30px;top: 7px;line-height: 20px;height: 20px;z-index: 10001;width: 18px;
+background-color: #fff;border:#ccc 1px solid;border-right-color: #fff;text-align: center;color: green;}
+
+.book_tip span:hover{text-decoration: underline;}
+.book_name_tip{padding-left: 0px !important;text-align: center;color: black;letter-spacing: 1px;}
+.book_name_tip a{color: black;font-size: 16px;}
+
+.book_node_tip{padding: 0 10px !important;}
+.book_node_tip a{text-decoration: none;color:black;}
+.book_node_tip a:hover{color: blue;text-decoration: underline;}
+
+.current_tip1{background-color:#a66f00;color: #ffffff;border-bottom: #a10 1px solid;border-top:#a10 1px solid;}
+.current_tip1 a{color: #ffffff;}
+.current_tip1 a:hover{color: #ffffff;}
+
+.book_tip span{float: left;padding-left: 20px;display: inline-block;cursor: pointer;}
+.book_page_a{color: #369;margin:0 3px;padding: 0 2px;}
+.book_page_current1{background-color: #369;color: #fff;}
+.book_page_current1:hover{color: #fff;background-color: blue;}
+
+.book_image{background: url('/static/img/button/book_ok3.png') no-repeat 0 6px;font-size: 16px;}
+
+#middle_book{float: left;width: 100%;background-color: #ffffff;min-height: 1000px;overflow-x:hidden; padding: 70px 0;
+position: relative;}
+/*#middle_book *{font-size: 18px;}*/
+
+#book_name{width: 80%;text-align: center;margin: 0 auto;font-size: 60px;margin-top: 200px;line-height: 100px;color: #666;
+text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;}
+#book_name:first-letter{font-size: 64px;}
+
+#book_admin{width: 80%;text-align: center;margin: 0 auto;margin-top: 100px;}
+#book_admin a{color: blue;margin-right: 5px;font-weight: normal;}
+
+#book_press{position: absolute;bottom: 80px;width: 100%;left: 0;text-align: center;}
+
+#book_author{width: 50%;text-align: center;margin: 0 auto;margin-top: 100px;}
+#book_author a{color: #369;margin-right: 5px;display: inline-block;font-weight: normal;}
+#book_author span{display: inline-block;}
+
+.book_header{position: absolute;top: 30px;left: 0;width: 100%;height: 40px;border-bottom:black 1px solid;line-height: 40px;font-size: 14px !important;}
+.book_header span.header_left{float: left;display: inline-block;}
+.book_header span.header_right{float: right;display: inline-block;}
+
+.book_footer{position: absolute;bottom: 0;left: 0;width: 100%;height: 70px;border-top:black 1px solid;}
+
+
+.book_summary{width: 100%;float: left;margin-top: 50px;position: relative;}
+.book_summary div.book_summary_tip{float: left;width: 100%;height: 30px;text-align: center;line-height: 30px;font-size: 18px;}
+.book_summary div.book_summary_con{float: left;width: 100%;min-height: 100px;margin-top: 50px;font-size: 14px !important;
+padding-bottom: 100px;}
+
+
+.book_catalog{width: 100%;float: left;margin-top: 30px;position: relative;}
+.book_catalog div.book_catalog_tip{float: left;width: 100%;height: 30px;line-height: 30px;font-size: 18px;}
+.book_catalog div.book_catalog_con{float: left;width: 100%;min-height: 100px;margin-top: 20px;font-size: 16px !important;
+padding-bottom: 100px;}
+.book_catalog .book_catalog_add{position: absolute;top: 0;right: 0;color: blue;cursor: pointer;font-size: 12px;}
+.book_catalog .book_catalog_add:hover{text-decoration: underline;}
+.book_do_a{position: absolute;top: 0;right: 0;color: blue;cursor: pointer;font-size: 12px;}
+.book_do_a a{color: blue;font-size: 12px;}
+
+
+ul.catalog_ul li{width: 100%;margin-left: 0px;list-style: none;line-height: 40px;font-size: 16px;position: relative;}
+ul.catalog_ul li span{line-height: 30px;}
+ul.catalog_ul li span a{color: blue;}
+ul.catalog_edit1 li{border-bottom: #ccc 1px dotted;}
+span.catalog_del{position: absolute;top: 0;right: 0;font-size: 12px;color: #a10;cursor: pointer;}
+span.catalog_del:hover{text-decoration: underline;}
+span.catalog_edit{position: absolute;top: 0;right: 40px;font-size: 12px;color: #369;cursor: pointer;}
+span.catalog_edit:hover{text-decoration: underline;}
+
+
+
+ul.margin{margin-left: 20px;list-style: none;}
+ul.margin li{line-height: 30px;}
+span.num{margin-right: 5px;font-size: 90%;}
+span.complete0{font-size: 12px;color: #999;margin-left: 10px;}
+span.complete1{font-size: 12px;color: green;margin-left: 10px;}
+
+.book_card_wrap{width: 100%;height: auto;background-color: #ffffff;margin-top: 20px;margin-bottom: 50px;padding: 0%;float: left;}
+
+.book_card_one{width: 300px;float: left;height: 200px;border:#ccc 1px dotted;padding: 20px;margin-right: 10px;margin-bottom: 20px;}
+.book_card_one td{border:none;}
+.book_card{width: 150px;height: 200px;text-align: center;border:#ccc 2px solid;background-color: #ffffff;float: left;clear: left;
+-moz-box-shadow: 3px 3px 4px #ccc;
+    -webkit-box-shadow: 3px 3px 4px #ccc;
+    box-shadow: 3px 3px 4px #ccc;border-left-width: 2px;}
+.book_card .book_card_name{width: 80%;margin: 0 auto; text-align: center;margin-top: 50px;}
+.book_card .book_card_name a{color: black;font-size: 16px;}
+
+.book_card_feed{width: 130px;float: right;height: auto;margin-left: 20px;}
+.book_card_feed .card_tip{width: 100%;float: left;line-height: 25px;text-align: left;}
+.book_card_feed .card_tip a{color: #369;}
+.book_card_feed .card_tip a.book_modify{font-size: 12px;margin-right:5px;}
+
+
+.book_textarea{
+border: #CCC 1px solid;
+width: 98.5%;
+float: left;
+height: 450px;
+resize: none;
+padding: 5px;
+}
+
+#book_write_wrap{float: left;width: 99%;}
+
+#middle_node_nav{float: right;width: 750px;padding-right: 25px;
+padding-left: 25px;background-color: #f0f0f0;margin-bottom: -30px;height: 40px;margin-top: 20px;
+line-height: 40px;border:#fff 1px solid;border-left-color:#fff;border-right-color:#fff;z-index: 100;}
+#middle_node_nav span{float: left;line-height: 40px;background-color: #f8f8f8;padding: 0 10px;margin: -2px 5px;border:#ccc 1px solid;
+border-left: none;border-right: none;}
+#middle_node_nav span.current1{background-color: #fff;}
+
+.node_top_tip:hover{cursor: pointer;text-decoration: underline;}
+
+.book_node_wrap{width: 100%;float: left;margin-top: 0px;}
+.book_node_nav{width: 100%;float: left;margin-top: 5px;}
+.book_node_nav ul{list-style-type: none;line-height: 35px;float: right;border-bottom: #ccc 1px dotted;}
+.book_node_nav ul li{float: left;padding: 0 10px;}
+.book_node_nav ul li a{font-size: 12px !important;line-height: 35px;display: block;padding: 0 5px;border-bottom:#ffffff 2px solid;}
+.book_node_nav ul li a:hover{border-bottom-color: #a10;text-decoration: none;}
+.book_node_nav ul li a.current{color: black;border-bottom-color: #a10;}
+.book_node_nav ul li a.current1{color: black;border-bottom-color: #a10;}
+
+
+
+.book_node_con{float: left;width: 100%;min-height: 100px;margin-top: 40px;padding-bottom: 100px;}
+.book_node_con_main{float: left;width: 100%;min-height: 100px;position: relative;}
+.book_node_con_article{float: left;width: 100%;min-height: 100px;position: relative;}
+.book_node_con_catalog{float: left;width: 100%;min-height: 100px;position: relative;}
+
+.book_node_con_recommend{right: 0;top: -20px;position: absolute;}
+.book_node_con_recommend a{color: blue;font-size: 12px;line-height: 40px;}
+
+.book_node_con > .con_current0{display: none;}
+
+.book_node_author{float: left;width: 100%;line-height: 30px;}
+.book_node_author a{margin-left: 5px;color: blue;}
+
+
+.node_style{list-style-type: none;line-height: 25px;margin: 20px 0 30px 0;width: 100%;float: left;border-top:#ccc 1px dotted;}
+.node_style li{width: 90%;padding: 10px 8% 10px 2%;
+float: left;border-bottom: #ccc 1px dotted;padding-left: 2%;position: relative;padding-right: 8%;vertical-align: middle;
+}
+.node_style li a{font-size: 14px; color: blue;float: left;}
+.node_style li a:hover{ color: blue;}
+.node_style .like_cancel{font-size: 12px;color: red;cursor: pointer;position: absolute;top: 12px;right: 10px;}
+.node_style .like_cancel:hover{text-decoration: underline;}
+.node_style span.mark_article{position: absolute; right: 35px;top: 8px;}
+.node_style span.mark_article a{font-size: 12px;}
+.node_style span.del_article{position: absolute;right: 0;top: 8px;}
+.node_style span.del_article a{font-size: 12px;color: red;}
+
+
+
+
+

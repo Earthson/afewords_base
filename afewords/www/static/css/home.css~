@@ -1,0 +1,69 @@
+#feed{width: 100%;float: left;margin: 10px auto;font-size: 14px !important;}
+#feed .f-body{width: 730px;float: left;margin-top: 20px;border:#ccc 1px dotted;min-height: 50px;
+line-height: 30px;padding: 10px 20px;line-height: 25px;position: relative;margin-left: 20px;}
+#feed .f-pic{width: 120px;float: right;margin-right: 25px;margin-top: 20px;}
+#feed .f-pic img{width: 120px;height: 120px;}
+#feed .f-body .f-style{position: absolute;top: 5px;right: -40px;letter-spacing: 2px;}
+
+#feed .f-control{width: 100%;border-bottom: #ccc 1px dotted;height: 30px;}
+
+#feed .f-control .f-author{float: left;color: #555;}
+#feed .f-control .f-author a{color: #555;font-size: 14px;float: left;}
+#feed .f-control .f-author a:hover{border-bottom: blue 1px dashed;color: blue;}
+#feed .f-control .f-sub{float: left;margin-left: 5px;margin-right: 5px;width: 20px;text-align: center;}
+#feed .f-control .f-type{float: left;font-size: 14px;}
+
+
+#feed .f-control .f-time{float: right;color: #999;}
+#feed .f-control .f-comment{float: right;color: #888;font-size: 14px;cursor: pointer;}
+#feed .f-control .f-comment span{float: left;margin-right: 3px;font-size: 14px;}
+#feed .f-control .f-comment:hover{text-decoration: underline;color: blue;}
+
+#feed .f-con{width: 100%;padding-top: 10px;padding-bottom: 10px;font-size: 14px !important;min-height: 20px;line-height: 28px;}
+#feed .f-con a{color: blue;font-size: 14px;float: left;min-width: 10px;margin-right: 3px;min-height: 20px;}
+#feed .f-con a:hover{border-bottom: #ccc 1px blue;color: red;}
+#feed .f-con span{float: left;font-size: 14px;}
+
+#feed .f-com{width: 100%;float: left;padding-top: 0px;padding-bottom: 10px;border-top: #ccc 1px dotted;font-size: 14px !important;
+min-height: 1px;}
+#feed .f-com .f-c-one{width: 98%;float: left;padding: 10px 5px;border-bottom: #ccc 1px dotted;min-height: 50px;}
+#feed .f-com .f-c-one .f-c-o-img{width: 50px;float: left;height: 50px;}
+#feed .f-com .f-c-one .f-c-o-text{width: 91%;float: right;font-size: 14px !important;min-height: 20px;line-height: 25px;}
+#feed .f-com .f-c-one .f-c-o-author{width: 91%;float: right;font-size: 14px;height: 20px;margin-top: 5px;}
+#feed .f-com .f-c-one .f-c-o-author span{float: right;margin-left: 10px;line-height: 20px;}
+#feed .f-com .f-c-one .f-c-o-author span a{font-size: 14px;}
+#feed .f-com .f-c-one .f-c-o-author span a:hover{color:blue;}
+#feed .f-com .f-c-one .f-c-o-reply{background: url('/static/img/reply.gif') no-repeat 0 2px;width: 20px;height: 20px;cursor:pointer;}
+#feed .f-com .f-c-one .f-c-o-reply:hover{border-bottom: #ccc 1px dashed;}
+#feed .f-com .f-c-write{float: left;width: 98%;min-height: 50px;padding: 10px 5px;}
+#feed .f-com .f-c-w-text{width: 98%;float: left;height: 60px;border:#ccc 1px dotted;resize:none;padding: 5px;line-height: 24px;}
+#feed .f-com .f-c-w-submit{width: 100%;float: left;margin-top: 15px;}
+#feed .f-com .f-c-w-submit button{border:#ccc 1px solid;float: right;height: 36px;line-height: 35px;width: 80px;margin-right: 2px;}
+
+
+/********** for user lib ************/
+
+#u-l-l{float: left;width: 100%;padding-top: 40px;}
+#u-l-l ul{list-style-type: none;}
+#u-l-l ul li{border-right: #a10 3px solid;line-height: 25px;text-indent: 10px;border-bottom: #ccc 1px solid;}
+
+#u-l-r{float: left;width: 100%;padding-top: 20px;}
+#u-l-r .ulr-one{width: 120px;height:150px;float: left;margin: 20px;margin-left: 35px;margin-right: 10px;padding: 15px;padding-bottom: 0;}
+#u-l-r .ulr-one:hover{background-color: #f1f1f1;}
+#u-l-r .ulr-one img{width: 120px;height: 120px;}
+#u-l-r .ulr-one .ulr-con{width: 100%;text-align: center;height: 30px;line-height: 28px;font-size: 14px;cursor: pointer;overflow: hidden;}
+#u-l-r .ulr-one .ulr-con a{color: black;font-size: 14px;}
+
+#u-l-r .ulr-one.chosed{background-color: #f1f1f1;}
+
+
+
+/*****************feed lib ****************/
+#feed-lib{float: left;width: 95%;padding-top: 20px;margin-left: 20px;margin-bottom: 160px;}
+#feed-lib ul{list-style-type: none;}
+#feed-lib ul li{display: block;line-height: 32px;border-bottom: #ccc 1px dashed;padding: 15px 0 15px 5px;}
+#feed-lib ul li a{line-height: 32px;height: 28px;min-width: 10px;display: inline-block;color: black;}
+#feed-lib ul li a:hover{border-bottom: blue 1px dashed;}
+.feed-next-page{color: blue;font-size: 12px;}
+
+
