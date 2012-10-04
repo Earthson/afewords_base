@@ -13,7 +13,7 @@ def with_attr(cls):
 
 #@with_attr
 class BasePage(object):
-    __template__ = ''
+    __template_file__ = ''
     doc = {
         'title' : '', # the web page title
         'description' : '', # the web page description, maybe for SEO
@@ -37,24 +37,26 @@ class BasePage(object):
             self.doc.update(doc)
 
         #self.doc['user'] = user_to_dict(self.handler.current_user)
-        self.doc['user'] = self.tmp_attr_gen(self.handler.current_user, 'user')
+        usr = self.handler.current_user
+        if usr:
+            self.doc['user'] = self.tmp_attr_gen(usr, 'user')
 
     def __getitem__(self, key):
         return self.doc[key]
 
     def __setitem__(self, key, value):
-        return self.doc[key] = value
+        self.doc[key] = value
 
     def __delitem__(self, key):
         del self.doc[key]
 
     def render(self):
-        return self.handler.render(self.__template__, doc=self.doc)
+        return self.handler.render(self.__template_file__, doc=self.doc)
 
     show = render
 
     def render_string(self):
-        return self.handler.render_string(self.__template__, doc=self.doc)
+        return self.handler.render_string(self.__template_file__, doc=self.doc)
 
     __unicode__ = render_string
     __str__ = render_string
