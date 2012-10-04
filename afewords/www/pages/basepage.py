@@ -53,6 +53,6 @@ def user_to_dict(user):
     ret['_id'] = unicode(user._id)
     ret['name'] = user.name
     ret['thumb'] = user.avatar.tbumb_name
-    ret['draft'] = len(user.draft_lib)
+    ret['draft'] = len(user.draft_lib.load_all())
     ret['notice'] = len([i for i in user.notification_list.load_all() if i is not None and i[1] == False])
     return ret
