@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>{{ title }}</title>
+  <title>{{ doc['title'] }}</title>
   <meta http-equiv="pragma" content="no-cache"/>
   <meta http-equiv="cache-control" content="no-cache"/>
   <meta http-equiv="expires" content="0"/>
   <meta http-equiv="keywords" content="子曰,子曰网"/>
-  <meta http-equiv="description" content="子曰"/>
+  <meta http-equiv="description" content="{{ doc['description'] }}"/>
   <meta charset="UTF-8"/>
   <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/main.css") }}" />
   {% block css_link %} {% end %}
@@ -45,7 +45,7 @@
 <!-- head start -->
 <div id="head">
 <div class="left"><a href="/">子曰</a><span id="left-beta-style">Beta</span></div>
-{% if user is None %}
+{% if doc['user'] is None %}
     <div class="right-mid">
     <div class="reg" title="注册"><a href="/reg">注册</a></div>
     <div class="login" title="登录"><a href="/">登录</a></div>
@@ -54,15 +54,15 @@
     <div class="right">
     <div class="top">
     <div class="quit" title="退出"><a href="/quit" title="退出">退出</a></div>
-    {% if len(user.drafts_lib) > 0 %}
+    {% if draft_count > 0 %}
         {# draft notification #}
-        <div class="head_draft" title="草稿"><a href="/draft" title="草稿">{{ len(user.drafts_lib) }}草稿</a></div>
+        <div class="head_draft" title="草稿"><a href="/draft" title="草稿">{{ draft_count }}草稿</a></div>
     {% end %}
 
-    {% if len(user.notification_list_not_read) > 0 %}
+    {% if notice_count > 0 %}
         {# notification notification #}
         
-        <div class="noti" title="消息"><a href="/notice" title="消息">{{ len(user.notification_list_not_read) }}消息</a></div>
+        <div class="noti" title="消息"><a href="/notice" title="消息">{{ notice_count }}消息</a></div>
     {% end %}
 
     <div class="myself manage" title="管理"><a href="/settings-invite">管理</a></div>
