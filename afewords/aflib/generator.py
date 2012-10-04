@@ -3,6 +3,10 @@ from bson import ObjectId
 def id_generator(doctype):
     return lambda _id: doctype(doctype.datatype.one({'_id':ObjectId(_id)}))
 
+def index_generator(doctype):
+    def index_gen(**kwargs):
+        return doctype(doctype.datatype.one(kwargs))
+    return index_gen
 
 def generator(objid, objtype):
     from article.blog import Blog

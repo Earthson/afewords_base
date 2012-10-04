@@ -7,13 +7,12 @@ import tornado.ioloop as ioloop
 import tornado.options
 
 
-def app_gen(debug=False):
-    app_handlers = [
-        (r'/', HomeHandler),
-        #(r'/login', LoginHandler),
-    ]
+def app_gen(handlers=None, debug=False):
+    
+    if not handlers:
+        handlers = list
 
-    app_settings = {
+    settings = {
         'static_path' : os.path.join(os.path.dirname(__file__), "static"),
         'template_path' : os.path.join(os.path.dirname(__file__), "templates"),
         #'debug' : True,
@@ -25,8 +24,8 @@ def app_gen(debug=False):
         #'localhost' : True,
     }
     if debug:
-        app_settings.update({'debug':True})
-    return web.Application(app_handlers, **settings)
+        settings.update({'debug':True})
+    return web.Application(handlers, **settings)
 
 
 def start_server(port, debug=False, log_path=None, proc_num=1):
@@ -44,4 +43,4 @@ def start_server(port, debug=False, log_path=None, proc_num=1):
 
 if __name__ == '__main__':
     port = sys.argv[1]
-    start_server(each)
+    start_server(port)
