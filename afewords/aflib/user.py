@@ -162,6 +162,25 @@ class User(DataBox):
     own_data =  ['avatar', 'about', 'lib']
 
     @db_property
+    def notice_count():
+        def getter(self):
+            return len([each for each in self.lib.notification_list.load_all() 
+                            if each is not None and each[1] is False])   
+        return getter
+
+    @db_property
+    def draft_count():
+        def getter(self):
+            return len(self.lib.drafts_lib.load_all())
+        return getter
+
+    @db_property
+    def thumb_name
+        def getter(self):
+            return self.avatar.thumb_name
+        return getter
+
+    @db_property
     def about():
         '''introduction page to user'''
         def getter(self):

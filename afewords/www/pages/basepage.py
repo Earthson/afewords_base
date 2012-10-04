@@ -3,17 +3,31 @@ def with_attr(cls):
         doc = super(cls, cls).doc
         doc.update(cls.doc)
         cls.doc = doc
+
+        attr_template = super(cls, cls).attr_template
+        attr_template.update(cls.attr_template)
+        cls.attr_template = attr_template
         return cls
     except AttributeError:
         return cls
 
-@with_attr
+#@with_attr
 class BasePage(object):
     __template__ = ''
     doc = {
         'title' : '', # the web page title
         'description' : '', # the web page description, maybe for SEO
         'user' : None, # the user's info, the value is returned by function user_to_dict
+    }
+
+    attr_template = {
+        'user' : [
+            'id', #unicode, user id
+            'name', #unicode, user name
+            'draft_count', #int, article num in drafts_lib
+            'notice_count', #int, unread notification count
+            'thumb_name', #unicode, user thumb
+        ],
     }
 
     def __init__(self, handler, doc=None):
@@ -34,7 +48,16 @@ class BasePage(object):
     __unicode__ = render_string
     __str__ = render_string
 
+    @staticmethod
+    def attr_gen(obj, *attrs):
+        '''
+        get attributes from obj by attrs, e.g.
+        
+        usr_dic = self.attr_gen(usrobj, *self.attr_template['user'])
+        '''
+        return dict(zip(attrs, obj.get_propertys(*attrs)))
 
+_tmp_tmp_ = '''
 def user_to_dict(user):
     '''
     user info to dict:
@@ -56,3 +79,4 @@ def user_to_dict(user):
     ret['draft'] = len(user.draft_lib.load_all())
     ret['notice'] = len([i for i in user.notification_list.load_all() if i is not None and i[1] == False])
     return ret
+'''
