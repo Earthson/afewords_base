@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ title }}</title>
+  <meta http-equiv="pragma" content="no-cache"/>
+  <meta http-equiv="cache-control" content="no-cache"/>
+  <meta http-equiv="expires" content="0"/>
+  <meta http-equiv="keywords" content="子曰,子曰网"/>
+  <meta http-equiv="description" content="子曰"/>
+  <meta charset="UTF-8"/>
+  <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/main.css") }}" />
+  {% block css_link %} {% end %}
+  <script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.6.2/jquery.min.js"></script>
+  <script type="text/javascript" >
+    !window.jQuery && document.write(unescape('%3Cscript src="/static/js/jq/jquery.js"%3E%3C/script%3E'));
+  </script>
+  <script type="text/javascript" src="{{ static_url("js/me/main.js") }}"></script>
+</head>
+<body>
+<div id="pop-overlay"></div>
+<div id="pop-wrap">
+<div id="pop-outer">
+<div class="pop-bg" id="pop-bg-n"></div>
+<div class="pop-bg" id="pop-bg-ne"></div>
+<div class="pop-bg" id="pop-bg-e"></div>
+<div class="pop-bg" id="pop-bg-se"></div>
+<div class="pop-bg" id="pop-bg-s"></div>
+<div class="pop-bg" id="pop-bg-sw"></div>
+<div class="pop-bg" id="pop-bg-w"></div>
+<div class="pop-bg" id="pop-bg-nw"></div>
+<div id="pop-content">
+</div><a id="pop-close" onclick="pop_page_close();" style="display:inline;"></a>
+</div>
+</div>
+{% if user is not None %}
+<div id="feed-back"><a href="/help-feedback" target="_blank">反馈</a></div>
+{% end %}
+<div id="go-to-top">&nbsp;</div>
+
+<div id="main">
+
+
+<!-- head start -->
+<div id="head">
+<div class="left"><a href="/">子曰</a><span id="left-beta-style">Beta</span></div>
+{% if user is None %}
+    <div class="right-mid">
+    <div class="reg" title="注册"><a href="/reg">注册</a></div>
+    <div class="login" title="登录"><a href="/">登录</a></div>
+    </div>
+{% else %}
+    <div class="right">
+    <div class="top">
+    <div class="quit" title="退出"><a href="/quit" title="退出">退出</a></div>
+    {% if len(user.drafts_lib) > 0 %}
+        {# draft notification #}
+        <div class="head_draft" title="草稿"><a href="/draft" title="草稿">{{ len(user.drafts_lib) }}草稿</a></div>
+    {% end %}
+
+    {% if len(user.notification_list_not_read) > 0 %}
+        {# notification notification #}
+        
+        <div class="noti" title="消息"><a href="/notice" title="消息">{{ len(user.notification_list_not_read) }}消息</a></div>
+    {% end %}
+
+    <div class="myself manage" title="管理"><a href="/settings-invite">管理</a></div>
+    <div class="myself" title="动态"><a href="/feed">动态</a></div>
+    <div class="home" title="博客"><a href="/bloger">博客</a></div>
+    </div>
+    <div class="bottom">
+    <div class="write" title="执笔"><a href="/write">执笔</a></div>
+    <div class="group_image" title="小组"><a href="/user-group">小组</a></div>
+    <div class="group_image book_image" title="知识谱"><a href="/user-book">知识谱</a></div>
+    {{ xsrf_form_html() }}
+    </div>
+    </div>
+{% end %}
+</div>
+<!-- head end -->
+
+<!-- middle start -->
+<div id="middle">
+{% block middle_body %}{% end %}
+</div>
+
+
+<div id="footer">
+<ul>
+<li><a href="/help-about">关于子曰</a></li>
+</ul>
+</div>
+
+</div>
+{% block script_bottom %}{% end %}
+<script type="text/javascript" src="{{ static_url("js/me/init.js") }}"></script>
+</body>
+</html>

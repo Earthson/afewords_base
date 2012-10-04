@@ -1,0 +1,34 @@
+{% extends "blog-base.html" %}
+{# for blog page --- user about #}
+
+{% block css_link %}
+    <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/blog.css") }}"/>
+{% end %}
+
+{% block blog_base_left_body %}
+
+<!-- for about -->
+{% if author is not None %}
+<div class="about">
+{% if user is not None and user._id == author._id %}
+<div class="page_name"><a href="/write?id={{ author.about_id }}&type=about">编辑</a></div>
+{% else %}
+
+<div class="page_name">关于我</div>
+{% end %}
+<div class="about_body">
+<div class="bb_con">
+
+{{ author.about_view_body}}
+
+</div>
+</div>
+
+</div>
+{% end %}
+
+
+{% end %}
+
+
+

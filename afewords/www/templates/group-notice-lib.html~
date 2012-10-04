@@ -1,0 +1,12 @@
+{% extends "group-base.html" %}
+
+
+{% block group_base_left_body %}
+
+
+<div class="group_content">
+<div class="group_nav group_board_img"><span>公告板</span><span class="group_nav_right">添加</span></div>
+</div>
+
+
+{% end %}

@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+
+
+{% block css_link %}
+
+<link rel="stylesheet" type="text/css" href="{{ static_url("css/me/write.css") }}">
+{% end %}
+
+
+{% block middle_body %}
+
+
+<!-- left body start -->
+<div id="left" style="border-right-width:0;">
+<div id="write">
+
+{% if article_type not in ['about', 'group-info'] %}
+    {% if isedit is True %}
+        <input type="text" class="w_title" value="{{ blog.title }}" />
+    {% else%}
+        <input type="text" class="w_title"  />
+    {% end %}
+{% end %}
+
+{% if article_type == 'blog' %}
+    {% if isedit is False %}
+    <textarea class="w_summary" style="resize:none;display:none;" spellcheck="false">摘要</textarea>
+    {% else %}
+    <textarea class="w_summary" style="resize:none;display:none;" spellcheck="false">{{ blog.abstract }}</textarea>
+    {% end %}
+{% end %}
+
+{% if isedit is False %}
+<textarea class="text" id="write_textarea"></textarea>
+{% else %}
+<textarea class="text" id="write_textarea">{{ blog.body }}</textarea>
+{% end %}
+</div>
+</div>
+
+<!-- left body end -->
+
+<!-- right body start -->
+<div id="right">
+<div id="right_w">
+
+<div class="w-open">
+
+{% if article_type == 'blog' %}
+<span to="summary">展开摘要</span>
+{% end %}
+<span to="head">展开页头</span>
+</div>
+
+<div class="w-mark">{{ mark_str }}</div>
+
+
+
+{% if article_type == 'group-doc' %}
+<div class="w-class">
+<div class="w-nav" title="给文档归档，方便您对文档的管理">归档<span class="px-12 color-blue cursor-pointer" title="添加新的分类">&nbsp;&nbsp;添加新分类</span></div>
+<div>
+{% if isedit is False %}
+    {% for tmp_tag in  env.tag_lib %}
+    <span class="w-class"><label><input type="checkbox" name="classes" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
+    {% end %}
+{% else %}
+    {% for tmp_tag in  env.tag_lib %}
+        {% if tmp_tag in blog.tag %}
+            <span class="w-class"><label><input type="checkbox" name="classes" checked="checked" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
+        {% else %}
+            <span class="w-class"><label><input type="checkbox" name="classes" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
+        {% end %}
+    {% end %}
+{% end %}
+</div>
+</div>
+
+{% end %}
+
+
+{% if article_type == 'blog' %}
+<div class="w-class">
+<div class="w-nav" title="给文章归类，方便您对文章的管理">归类<span class="px-12 color-blue cursor-pointer" title="添加新的分类">&nbsp;&nbsp;添加新分类</span></div>
+<div>
+{% if isedit is False %}
+    {% for tmp_tag in  user.tag_lib %}
+    <span class="w-class"><label><input type="checkbox" name="classes" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
+    {% end %}
+{% else %}
+    {% for tmp_tag in  user.tag_lib %}
+        {% if tmp_tag in blog.tag %}
+            <span class="w-class"><label><input type="checkbox" name="classes" checked="checked" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
+        {% else %}
+            <span class="w-class"><label><input type="checkbox" name="classes" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
+        {% end %}
+    {% end %}
+{% end %}
+</div>
+</div>
+
+
+<div class="div-20"></div>
+
+<div class="w-key" id="write-keys">
+<div class="w-nav">标签<span class="px-12 color-blue">&nbsp;&nbsp;多个请用,或者，分开</span></div>
+{% if isedit is False %}
+<span><textarea class="k-text" spellcheck="false" name="keys"></textarea></span>
+{% else %}
+<span><textarea class="k-text" spellcheck="false" name="keys">{{ ",".join(blog.keywords) }}</textarea></span>
+{% end %}
+</div>
+
+{% end %}
+
+<div class="div-20"></div>
+
+<div class="w-preview"><button do="preview">存稿</button><span></span></div>
+<div class="w-submit-result">&nbsp;</div>
+<div class="w-submit"><button type="submit" do="post">发布</button></div>
+</div>
+</div>
+<!-- right body end -->
+
+
+{% end %}
+
+
+{% block script_bottom %}
+<script type="text/javascript" src="{{ static_url("js/me/write.js") }}" ></script>
+<script type="text/javascript">
+$().ready(function(){
+$("#right").css("border-left-width",'0');
+
+
+{% if isedit is False %}
+    {% if article_type in  ['about', 'blog'] %}
+        $("#write_textarea").CreateEditor("-1","{{ article_type }}", "", 0);
+        
+    {% elif  article_type in ['group-info', 'group-doc', 'group-topic', 'group-notice', 'group-feedback'] %}
+        $("#write_textarea").CreateEditor("-1","{{ article_type }}", "", 0, '', "{{ env._id }}");        
+    {% end %}
+    $("#write_textarea").summary_title_init();
+    var isedit = false;
+
+{% else %}
+
+    var init_target = $("#write_textarea");
+    {% if article_type in ['about', 'blog'] %}
+        init_target.CreateEditor("{{ blog._id }}","{{ article_type }}", "", 0);
+    {% elif article_type in ['group-info', 'group-doc', 'group-topic', 'group-notice', 'group-feedback'] %}
+        $("#write_textarea").CreateEditor("{{ blog._id }}","{{ article_type }}", "", 0, '', "{{ env._id }}");        
+    {% end %}
+
+init_target.summary_title_init();
+
+pic_lib = {{ json_encode(blog.picture_lib) }};
+math_lib = {{ json_encode(blog.equation_lib) }};
+table_lib = {{ json_encode(blog.tableform_lib) }};
+ref_lib = {{ json_encode(blog.reference_lib) }};
+code_lib = {{ json_encode(blog.langcode_lib) }};
+
+init_target.lib_init(pic_lib, math_lib, table_lib, code_lib, ref_lib);	
+$Write.window_close_alert();
+
+{% end %}
+})
+</script>
+{% end %}
+

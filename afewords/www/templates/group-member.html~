@@ -1,0 +1,31 @@
+{% extends "group_base.html" %}
+
+
+{% block group_base_left_body %}
+
+<div id="body_content">
+
+
+<!-- follow and follower -->
+<div class="group_content follow" style="background:none;">
+<div class="group_nav group_member_img"><span>成员</span></div>
+<ul>
+<li>
+<div class="follow_one">
+<img src="/static/avatar/small/afw_o0vIz5YV7b1341658308.jpg"/>
+<div class="info">
+<span class="name"><a href="#" target="_blank">Some one</a></span>
+<span class="control"><a href="javascript:void(0);">关注</a></span>
+<!--
+<span class="control"><a href="#" target="_blank">留言</a></span>-->
+</div>
+</div>
+</li>
+</ul>
+</div>
+
+
+</div>
+
+
+{% end %}

@@ -1,0 +1,127 @@
+{% extends "user-base.html" %}
+
+
+{% block css_link %}
+ <link rel="stylesheet" type="text/css" href="{{ static_url("css/jquery.Jcrop.css") }}" />
+ <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/write.css") }}" />
+ <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/book.css") }}" />
+  <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/group.css") }}" />
+{% end %}
+
+
+{% block user_base_right_body %}
+
+<div id="top_nav">
+<ul>
+<li><a href="/user-book" class="current{{ int(kind=="user-book") }}">我的知识谱</a></li>
+<li><a href="/book-lib" class="current{{ int(kind=="book-lib") }}">子曰知识谱</a></li>
+<li><a href="/book-create" class="current{{ int(kind=="book-create") }}">新建知识谱</a></li>
+</ul>
+</div>
+
+
+<div id="body_content">
+
+{% if kind == "user-book" %}
+    <div class="like settings margin-left-0 my_book_image">
+    <div class="page_nav"><span>我的知识谱</span></div>
+    <div class="book_card_wrap">
+    {% if len(book_list) == 0 %}
+    您没有知识谱
+    {% else %}
+        {% for item in book_list %}
+            <div class="book_card_one">
+            <table summary="" >
+            <tr><td>
+            <div class="book_card">
+            <div class="book_card_name"><a href="/book/{{ item['book_id'] }}" target="_blank">{{ item['book_name'] }}</a></div>
+            </div></td><td>
+            <div class="book_card_feed">
+            {#<span class="card_tip"><a href="/bloger/{{ item['book_owner_id'] }}" target="_blank">{{ item['book_owner_name'] }}</a>审</span>#}
+            {#<span class="card_tip"><a href="#">讨论</a></span>
+            <span class="card_tip"><a href="#">建议</a></span>
+            <span class="card_tip"><a href="#">文章</a></span>#}
+            <span class="card_tip"><a href="/book/{{ item['book_id'] }}?want=catalog">目录</a></span>
+            <span class="card_tip">完成度 {{ item['book_complete'] }}%({{item['book_complete_count']}}/{{item['book_node_sum']}})</span>
+            <span class="card_tip">
+                <a href="/book-edit/{{ item['book_id'] }}?want=catalog" target="_blank" class="book_modify">修改目录</a>
+                <a href="/book-edit/{{ item['book_id'] }}?want=summary" class="book_modify" target="_blank">修改摘要</a>
+            </span>
+            </div></td>
+            </tr>
+            </table>
+            </div>
+        {% end %}   
+    {% end %}
+    {{ create_page_block('/user-book?page=', current_page=page, sum_count=total_num, page_cap=8) }} 
+    </div>
+    </div>
+{% elif kind == "book-lib" %}
+    <div class="like settings margin-left-0 my_book_image">
+    <div class="page_nav"><span>所有知识谱</span></div>
+    <div class="book_card_wrap">
+    {% if len(book_list) == 0 %}
+    暂时没有知识谱
+    {% else %}
+        {% for item in book_list %}
+            <div class="book_card_one">
+            <table summary="" >
+            <tr><td>
+            <div class="book_card">
+            <div class="book_card_name"><a href="/book/{{ item['book_id'] }}" target="_blank">{{ item['book_name'] }}</a></div>
+            </div></td><td>
+            <div class="book_card_feed">
+            <span class="card_tip"><a href="/bloger/{{ item['book_owner_id'] }}" target="_blank">{{ item['book_owner_name'] }}</a>审</span>
+            {#<span class="card_tip"><a href="#">讨论</a></span>
+            <span class="card_tip"><a href="#">建议</a></span>
+            <span class="card_tip"><a href="#">文章</a></span>#}
+            <span class="card_tip"><a href="/book/{{ item['book_id'] }}?want=catalog">目录</a></span>
+            <span class="card_tip">完成度 {{ item['book_complete'] }}%({{item['book_complete_count']}}/{{item['book_node_sum']}})</span>
+            {% if item['book_owner_id'] == user._id %}
+            <span class="card_tip">
+                <a href="/book-edit/{{ item['book_id'] }}?want=catalog" target="_blank" class="book_modify">修改目录</a>
+                <a href="/book-edit/{{ item['book_id'] }}?want=summary" class="book_modify" target="_blank">修改摘要</a>
+            </span>
+            {% end %}
+            </div></td>
+            </tr>
+            </table>
+            </div>
+            {#{{ item['book_name'] }} {{ item['book_id'] }}#}
+        {% end %}
+       
+    {% end %}
+    </div>
+     {{ create_page_block('/book-lib?page=', current_page=page, sum_count=total_num, page_cap=8) }} 
+    <div class="div-20"></div>
+    </div>
+
+{% elif kind == 'book-create' %}
+    <div class="like settings margin-left-0 my_book_image">
+    <div class="page_nav"><span>新建知识谱</span></div>
+    <div class="group_create">
+    <div class="group_create_note">说明：知识谱名的字数请在100字以内，不建议频繁修改知识谱名，摘要可以在创建后进行富编辑方式修改！</div>
+    <table summary="" id="group_create_table" >
+    <tr><td width="10%" align="center">知识谱名</td><td width="90%"><input type="text" class="g_c_name" name="book_name" /></td></tr>
+    <!--<tr><td align="center">分类</td><td><input type="text" class="g_c_name" name="group_class" /></td></tr>-->
+    <tr><td align="center" valign="top" style="vertical-align: top;">内容摘要</td><td><textarea class="g_c_des" name="book_summary"></textarea></td></tr>
+    <tr><td>&nbsp;</td><td><div class="inline"><button id="book_create_button">提交</button></div><div class="inline"><span class="g_c_process">&nbsp;</span></div></td></tr>
+    </table>
+    </div>
+    </div>
+{% else %}
+
+{% end %}
+
+
+
+
+
+</div>
+
+{% end %}
+
+
+{% block script_bottom %}
+<script type="text/javascript" src="{{ static_url("js/me/book.js") }}"></script>
+{% end %}

@@ -1,0 +1,45 @@
+{% extends "blog-base.html" %}
+{# for blog page --- user like #}
+
+
+
+{% block blog_base_left_body %}
+
+{% if author is not None %}
+
+<!-- like -->
+<div class="like">
+<div class="page_name">喜欢</div>
+
+{% if like_list == [] %}
+    {% if page > 1 %}
+        已经浏览完！
+    {% else %}
+        Nothing
+    {% end %}
+{% else %}
+
+    <ul>
+        {% for like_one in like_list %}
+           <li><a href="/blog/{{ like_one['id'] }}" target="_blank">{{ like_one['title'] }}</a>
+           {% if user is not None and user._id == author._id %}
+           <span class="like_cancel" style="display:none" page="settings" do="unlike" like_id="{{ like_one['id'] }}">取消</span>
+           {% end %}
+           </li>
+        {% end %}
+
+    </ul>
+    {{ create_page_block('/bloger/'+ str(author._id) +'/like?page=', current_page=page, sum_count=total_num) }} 
+{% end %}
+
+</div>
+
+{% else %}
+
+{% end %}
+
+
+{% end %}
+
+
+

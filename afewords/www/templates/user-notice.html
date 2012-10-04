@@ -1,0 +1,44 @@
+
+{% extends "user-base.html" %}
+{# this page for user notice  #}
+
+{% block user_base_right_body %}
+
+<div id="body_content">
+<div class="notice margin-left-0">
+<div class="page_nav">
+<span>消息</span>
+<span class="noti_clear_all" do="delete" is_all="yes"><a href="javascript:void(0);" class="noti_link">清空全部</a></span>
+<span class="noti_read_all" do="read" is_all="yes"><a href="javascript:void(0);" class="noti_link">已读全部</a></span></div>
+<div class="div-20"></div>
+{% if notice_list != [] %}
+    <ul>
+    {% for kk in notice_list %}
+        
+        <li index="{{ kk['index'] }}" class="noti-read-{{ str(kk['noti'][1]) }}">{{ kk['noti'][0] }}</li>
+        
+    {% end %}
+    </ul>
+    <div class="div-20"></div>
+    {{ create_page_block('/notice?page=', current_page=page, sum_count=total_num) }}
+{% else %}
+
+    {#
+    {% if page > 1 %}
+       已经到最后了
+    {% else %}
+        没有消息
+    {% end %}
+    #}
+    您没有消息
+    
+{% end %}
+
+</div>
+
+
+</div>
+
+
+{% end %}
+

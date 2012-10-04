@@ -1,0 +1,11 @@
+{% extends "group-base.html" %}
+
+{% block group_base_left_body %}
+
+
+
+
+
+
+
+{% end %}

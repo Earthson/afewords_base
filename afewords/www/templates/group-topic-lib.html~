@@ -1,0 +1,21 @@
+{% extends "group-base.html" %}
+
+
+{% block group_base_left_body %}
+
+<div id="body_content">
+
+
+<div class="group_content">
+<div class="group_nav group_topic_img"><span>话题</span><span class="group_nav_right">写话题</span></div>
+<table summary="" >
+<tr><th width="71%" align="left">话题</th><th width="8%" align="left">作者</th><th width="8%">回应</th><th width="13%" align="right">最后发言</th></tr>
+<tr><td><a href="#">测试一下</a></td><td align="left"><a href="#">deju.tu</a></td><td align="center">1</td><td align="right">7-30 15:00</td></tr>
+</table>
+</div>
+
+
+</div>
+
+
+{% end %}

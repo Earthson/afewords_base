@@ -1,0 +1,23 @@
+{% extends "user-base.html" %}
+
+
+
+{% block user_base_right_body %}
+
+<div id="left_div">
+<div id="left3_tag_nav">
+<div id="left3_tag_tag">文章分类：</div>
+<ul>
+<li><a href="/author/4ff2fbed07bf8f49d6000005?tag=default" class="current">所有</a></li>
+<li><a href="/author/4ff2fbed07bf8f49d6000005?tag=Python">Python</a></li>
+<li><a href="/author/4ff2fbed07bf8f49d6000005?tag=C++">C++</a></li>
+<li><a href="/author/4ff2fbed07bf8f49d6000005?tag=Linux">Linux</a></li>
+</ul>
+</div>
+</div>
+
+
+
+
+
+{% end %}

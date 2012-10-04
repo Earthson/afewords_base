@@ -1,0 +1,54 @@
+
+{% extends "blog-base.html" %}
+
+{# for blog page --- user blog lib #}
+{% block css_link %}
+<link rel="stylesheet" type="text/css" href="{{ static_url("css/me/blog.css") }}" />
+{% end %}
+
+
+{% block blog_base_left_body %}
+
+{% if author is not None %}
+{# authot is not none start #}
+
+{% if blog_list != [] %}
+
+    {% for blog_one in blog_list %}
+        <div class="blog_one">
+        <div class="title"><a target="_blank" href="/blog/{{ blog_one['id'] }}">{{ blog_one['title'] }}</a></div>
+        {% if blog_one['summary'] != '' %}
+            <div class="summary">摘要：{{ blog_one['summary'] }}</div>
+        {% end %}
+        <div class="content">{{ blog_one['view_body'] }}</div>
+        <div class="control"><span class="time">{{ str(blog_one['time'])[:10] }}</span></div>
+        </div>
+    {% end %}
+
+    {{ create_page_block('/bloger/' + str(author._id) + '?tag='+ tag + '&page='  , current_page=page, sum_count=total_num, page_count=5) }}
+
+{% else %}
+
+        <div class="blog_one">
+        <!--<div class="title"></div>-->
+        <div class="content">Nothing</div>
+        <!--<div class="control"><span class="time"></span></div>-->
+        </div>
+
+{%  end %}
+<!-- for blog -->
+
+<!--
+<div class="blog_one">
+<div class="title"><a href="#">写给自己的信</a></div>
+<div class="summary">摘要</div>
+<div class="content">就是这样的生活</div>
+<div class="control"><span>2012-3-4</span></div>
+</div>-->
+
+
+
+{# author is not none end #}
+{% end %}
+
+{% end %}

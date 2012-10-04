@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+{% block css_link %}
+<link rel="stylesheet" type="text/css" href="{{ static_url("css/me/blog.css") }}" />
+<link rel="stylesheet" type="text/css" href="{{ static_url("css/me/write.css") }}" />
+<link type="text/css" rel="stylesheet" href="{{ static_url("css/code/shCore.css") }}" />
+<link type="text/css" rel="stylesheet" href="{{ static_url("css/code/shThemeEmacs.css") }}" />
+
+{% end %}
+
+
+{% block middle_body %}
+
+{% if author is not None and blog is not None %}
+
+<div id="middle-blog-left">
+
+<div class="blog_tip" title="作者">
+<span class="blog_author"><a href="/bloger/{{ author._id }}">{{ author.name }}</a></span>
+</div>
+
+<div class="blog_tip" title="发布时间">
+<span class="blog_tip_time">{{ str(blog.release_time)[:16] }}</span>
+</div>
+
+{% if blog.keywords is not None and blog.keywords != [] %}
+<div class="blog_tip" title="关键词">
+<span class="bb_tag">
+{% for item in blog.keywords %}
+<span class="tag_one"><span class="tag-label"></span><span class="tag-text">{{ item }}</span></span>
+{% end %}
+</span>
+</div>
+{% end %}
+
+
+{% if preview != 'yes' %}
+    <div class="blog_tip"  title="喜欢人数">
+    <span class="blog_tip_like"><span>{{ statis.like_count }}</span>
+    {% if user is None or user.like_lib[str(blog._id)] is None %}
+        <span class="blog_tip_do" obj_id="{{ blog._id }}" do="like" kind="blog">+1</span>
+    {% else %}
+        <span class="blog_tip_do" obj_id="{{ blog._id }}" do="unlike" kind="blog">-1</span>
+    {% end %}
+    </span>
+    </div>
+
+
+
+<div class="blog_tip" title="评论人数">
+<span class="blog_tip_comment"><span>{{ blog.comment_count }}</span>
+<span class="blog_tip_do" ref_type="blog"  father_id="{{ blog._id }}" father_type="blog">+1</span></span>
+</div>
+
+
+<div class="blog_tip" title="浏览人数">
+<span class="blog_tip_view" do="view" obj_id="{{ blog._id }}" kind="blog">{{ statis.view_count }}</span>
+</div>
+
+<div class="blog_tip" title="推荐到知识谱">
+<span class="blog_tip_star" do="recommend" obj_id="{{ blog._id }}" kind="blog">
+<a href="javascript:void(0);" article_id="{{ blog._id }}" article_type="blog">推荐到知识谱</a>
+</span>
+</div>
+
+<!--
+<div class="blog_tip">
+<span class="blog_tip_dir">目录</span>
+</div>
+-->
+
+{% if recommender_list != [] %}
+<div class="blog_tip">
+<span>推荐</span>
+<ul class="blog-recom">
+{% for item in recommender_list %}
+    <li><a href="/blog/{{ item['blog_id'] }}">{{ item['blog_title'] }}</a></li>
+{% end %}
+</ul>
+</div>
+{% end %}
+
+
+{% end %}
+
+</div>
+
+
+
+{% end %}
+
+
+
+
+
+<div id="middle-blog-right">
+<div id="middle-blog">
+
+{% if author is not None and blog is not None %}
+    {% if user is not None and user._id == author._id %}
+        <div class="blog_edit_link">
+            <a href="/write?id={{ blog._id }}&edit=true" class="edit">修改</a>
+            <a href="javascript:void(0);" class="del" obj_id="{{ blog._id }}" want="del_blog" page="blog_view">删除</a>
+        </div>
+    {% end %}
+    <div id="blog_title">{{ blog.name }}</div>
+    
+    <div id="blog_view">
+    <div class="b_blog" style="margin-top:10px;">
+
+    <div class="b_body">
+    {% if blog.privilege == "public" %}
+
+        <div class="bb_control">
+
+        {% if blog.abstract != '' and blog.abstract is not None %}
+            <div class="bb_summary">
+            <div class="summary">摘要</div>
+            {{ blog.abstract }}
+            </div>
+        {% end %}
+
+        </div>
+
+
+        <div class="bb_con">
+        {{ blog.view_body }}
+        </div>
+    {% else %}
+        仅对站内用户开放，<a href="/reg" style="color:blue">点击注册</a>
+    {% end %}
+
+    {% if preview != 'yes'%}
+        <div class="b_bottom_wrap" blog="{{ blog._id }}">
+            <span class="bot-comment" ref_type="blog" title="写评论" father_id="{{ blog._id }}" father_type="blog">写评论</span>
+            
+            <span class="bot-author-name"><a href="/bloger/{{ author._id }}">{{ author.name }}</a></span>
+            <span class="bot-time">{{ str(blog.release_time)[:16] }}&nbsp;/&nbsp;</span>
+        </div>
+        </div>
+
+        <div class="b_com" blog_id="{{ blog._id }}">
+
+        </div>
+    {% else %}
+        </div>
+    {% end %}
+
+    </div>
+
+
+    </div>
+
+{% end %}
+
+
+
+
+
+</div>
+</div>
+{% end %}
+
+
+
+
+{% block script_bottom %}
+
+<script type="text/javascript" >
+$().ready(function(){ 
+    $('body').css({'background-image': 'url(/static/img/wrap.png)',
+        'background-repeat': 'repeat',
+        'background-attachment':'fixed'}); /*document.body.style.backgroundColor="#f8f8f8";*/ });
+</script>
+
+<script type="text/javascript" src="{{ static_url("js/me/write.js") }}"></script>
+{% if blog is not None %}
+    <script type="text/javascript" >
+    $(document).ready(function(){
+        current_load_blog = {
+            'id': '{{ blog._id }}',
+            'comment': ''+ ((location.hash.match('#com-([^#]*)') !=null) ? location.hash.match('#com-([^#]*)')[1] : ''),
+        }
+        $("#write_textarea").CreateEditor('','comment','','{{ blog._id }}');
+        var first_page = $('<span>&nbsp;</span>');
+        var load_one = current_load_blog['comment'] == '' ? "no" : "yes";
+        first_page.attr({"pos": current_load_blog['comment'], "load_one":load_one, 'article_id':'{{ blog._id }}'});
+        $Write.comment_get(first_page);
+    });
+    </script>
+{% end %}
+
+
+<script type="text/javascript" src="{{ static_url("js/code/shCore.js") }}"></script>
+{%  for jjj in script  %}
+    <script type="text/javascript" src="{{ static_url("js/code/" + jjj) }}"></script>
+{% end %}
+<script type="text/javascript">
+$().ready(function(){
+	SyntaxHighlighter.all();
+});
+</script>
+
+<script type="text/javascript" src="/static/js/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['[math]', '[/math]']],
+      displayMath: [ ['[equation]', '[/equation]']],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] },
+     TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+
+{% end %}
+
+

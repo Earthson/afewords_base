@@ -1,0 +1,107 @@
+{% extends "book.html" %}
+
+
+
+{% block book_middle_other %}
+
+
+
+<div id="middle_book" class="middle_book_node current_middle{{ int(want=="node") }}" >
+<div class="book_header"><span class="header_left">{{ current_node['node_section'] }}&nbsp;-&nbsp;{{ current_node['node_title'] }}</span><span class="header_right">{{ book.name }}</span></div>
+<div class="book_node_wrap">
+<div class="book_node_nav">
+<ul><li><a href="javascript:void(0)" class="current1" page="main">指定文章({{ current_node['node_spec_count'] }})</a></li>
+<li><a href="javascript:void(0)" page="article">推荐文章({{ current_node['node_article_count'] }})</a></li>
+<li><a href="javascript:void(0)" page="catalog">推荐知识谱({{ current_node['node_subcatalog_count'] }})</a></li></ul>
+</div>
+
+
+<div class="book_node_con">
+
+<div class="book_node_con_main">
+{% if len(current_node['node_main']) == 0 %}
+章节{{ current_node['node_section'] }}尚未指定文章！
+{% else %}
+<div class="book_node_author">作者：<a href="/bloger/{{ current_node['node_main'][0]['article_author_id'] }}">{{ current_node['node_main'][0]['article_author_name'] }}</a></div>
+<div class="book_node_author">原文：<a href="/blog/{{ current_node['node_main'][0]['article_id'] }}">{{ current_node['node_main'][0]['article_title'] }}</a></div>
+
+<div class="bb_con">
+    {{ current_node['node_main'][0]['article_view_body'] }}
+</div>
+{% end %}
+</div>
+
+<div class="book_node_con_article con_current0">
+    <div class="book_node_con_recommend"><a href="javascript:void(0)" book_id="{{ book._id }}" node_id="{{ current_node['node_id'] }}">我要推荐文章</a></div>
+
+{% if len(current_node['node_articles']) == 0 %}
+    暂无文章被推荐到章节{{ current_node['node_section'] }}中！
+{% else %}
+    <ul class="node_style" book_id="{{ book._id }}" node_id="{{ current_node['node_id'] }}">
+    {% for item in current_node['node_articles'] %}
+        <li>
+        {% if item['article_type'] == 'Blog' %}
+            <a href="/blog/{{ item['article_id'] }}" target="_blank">{{ item['article_title'] }}</a>
+        {% else %}
+            <a href="#" >wenzhang skldfjlksdlkflksdfldsf</a>
+        {% end %}
+        {% if user is not None and user._id == book.owner_id %}
+        <span class="mark_article"><a href="javascript:void(0)" do="mark_recommend" relation_id="{{ item['article_relation_id'] }}">指定</a></span>
+        <span class="del_article"><a href="javascript:void(0)" do="del_recommend" relation_id="{{ item['article_relation_id'] }}">删除</a></span>
+        {% end %}
+        </li>
+    {% end %}
+    </ul>
+{% end %}
+</div>
+
+
+
+<div class="book_node_con_catalog con_current0">
+<div class="book_node_con_recommend">
+<a href="javascript:void(0)" book_id="{{ book._id }}" node_id="{{ current_node['node_id'] }}" want="catalog">我要推荐知识谱</a>
+</div>
+
+{% if len(current_node['node_catalogs']) == 0 %}
+    暂无知识谱被推荐到章节{{ current_node['node_section'] }}中！
+{% else %}
+    <ul class="node_style" book_id="{{ book._id }}" node_id="{{ current_node['node_id'] }}">
+    {% for item in current_node['node_catalogs'] %}
+        <li>
+            <a href="/book/{{ item['book_id'] }}" target="_blank">{{ item['book_name'] }}</a>
+
+        {% if user is not None and user._id == book.owner_id %}
+        <span class="del_article"><a href="javascript:void(0)" do="del_recommend" relation_id="{{ item['book_relation_id'] }}">删除</a></span>
+        {% end %}
+        </li>
+    {% end %}
+    </ul>
+{% end %}
+
+</div>
+
+
+</div>
+
+
+</div>
+<div class="book_footer">&nbsp;</div>
+</div>
+
+{% end %}
+
+
+{% block script_book_node_bottom %}
+<script type="text/javascript" src="{{ static_url("js/code/shCore.js") }}"></script>
+{%  for jjj in current_node['node_main_script']  %}
+    <script type="text/javascript" src="{{ static_url("js/code/" + jjj) }}"></script>
+{% end %}
+{#
+<script type="text/javascript">
+$().ready(function(){
+	SyntaxHighlighter.all();
+});
+</script>
+#}
+
+{%end %}

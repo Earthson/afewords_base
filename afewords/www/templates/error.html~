@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+
+{% block middle_body %}
+
+
+
+
+
+<div id="left2">
+<div id="left2-name">迷路了</div>
+<ul id="left2-nav">
+<li><a href="/" class="current0">回主页</a></li>
+<li><a href="{{ error['next_url'] }}" class="current0">相关页</a></li>
+</ul>
+</div>
+
+<div id="right2">
+
+<!--
+<div id="top_nav">
+<ul>
+<li><a href="javascript:void(0)" class="current1">迷路详情</a></li>
+</ul>
+</div>
+-->
+
+<div id="body_content">
+
+<div class="like settings margin-left-0 my_book_image">
+<div class="page_nav"><span>迷路详情</span></div>
+<div class="error_wrap">
+<table summary="" class="error_wrap_table" >
+<tr><td width="10%" class="lefttd">迷路描述</td><td width="90%" class="righttd">{{ error['des'] }}</td></tr>
+<tr><td class="lefttd">迷路状态</td><td class="status_code">{{ error['code'] }}</td></tr>
+<tr><td class="lefttd">迷路位置</td><td>{{ error['url'] }}</td></tr>
+{% if error['debug'] %}
+<tr><td class="lefttd">错误栈</td><td class="righttd">{{ error['exc_info'] }}</td></tr>
+{% end %}
+<tr><td class="lefttd" valign="top">迷路原因</td>
+<td class="righttd">
+<ul class="error_style">
+{% for item in error['reason'] %}
+<li>{{ item }}</li>
+{% end %}
+</ul>
+</td></tr>
+</table>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+{% end %}

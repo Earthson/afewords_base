@@ -1,0 +1,46 @@
+
+{% extends "user-base.html" %}
+{# this page for user's draft #}
+
+{% block user_base_right_body %}
+
+<div id="body_content">
+
+<div class="like draft margin-left-0">
+<div class="page_nav"><span>草稿</span></div>
+<div class="div-20"></div>
+{% if draft_list != [] %}
+    <ul>
+    {% for kk in draft_list %}
+        {% if kk['type'] == "Blog" %}
+            <li><a href="/write?id={{ kk['id'] }}" class="draft-link" target="_blank">未完成文章</a>
+            <span class="draft_time">{{ str(kk['time'])[:16] }}</span>
+            <a style="display:none" class="draft_del" href="javascript:void(0);" article_id="{{ kk['id'] }}" type="blog" onclick="do_draft_del(this)" target="_blank">删除</a>
+            </li>
+        {% elif kk['type'] == "Comment" %}
+            <li><a href="/blog/{{ kk['father'] }}" class="draft-link"  target="_blank">未完成评论</a><span class="draft-time">{{ str(kk['time'])[:16] }}</span></li>
+            <a style="display:none" class="draft_del" href="javascript:void(0);" article_id="{{ kk['id'] }}" type="comment" onclick="do_draft_del(this)" target="_blank">删除</a>
+        {% else %}
+
+        {% end %}
+    {% end %}
+    </ul>
+    {{ create_page_block('/draft?page=', current_page=page, sum_count=total_num) }}
+{% else %}
+    {% if page > 1 %}
+       已经到最后了
+    {% else %}
+        草稿箱里没有内容
+    {% end %}
+{% end %}
+<div class="div-20"></div>
+</div>
+
+
+
+</div>
+
+
+
+
+{% end %}
