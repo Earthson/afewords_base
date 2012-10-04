@@ -1,5 +1,9 @@
 from basepage import BasePage, with_attr
 
+'''
+new templates will use
+'''
+
 @with_attr
 class LoginPage(BasePage):
     '''
@@ -14,3 +18,9 @@ class LoginPage(BasePage):
         #what is title? doc
         'blog_list' : None,
     }
+
+@with_attr
+class RegisterPage(BasePage):
+    '''
+    title
+    '''
