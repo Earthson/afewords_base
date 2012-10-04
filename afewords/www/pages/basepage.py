@@ -35,7 +35,9 @@ class BasePage(object):
         self.doc = dict(self.doc)
         if doc:
             self.doc.update(doc)
-        self.doc['user'] = user_to_dict(self.handler.current_user)
+
+        #self.doc['user'] = user_to_dict(self.handler.current_user)
+        self.doc['user'] = self.tmp_attr_gen(self.handler.current_user, 'user')
 
     def render(self):
         return self.handler.render(self.__template__, doc=self.doc)
@@ -56,6 +58,11 @@ class BasePage(object):
         usr_dic = self.attr_gen(usrobj, *self.attr_template['user'])
         '''
         return dict(zip(attrs, obj.get_propertys(*attrs)))
+
+    @classmethod
+    def tmp_attr_gen(cls, obj, temp_name):
+        return cls.attr_gen(obj, cls.attr_template[temp_name])
+
 
 _tmp_tmp_ = '''
 def user_to_dict(user):
