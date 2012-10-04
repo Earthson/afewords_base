@@ -39,6 +39,15 @@ class BasePage(object):
         #self.doc['user'] = user_to_dict(self.handler.current_user)
         self.doc['user'] = self.tmp_attr_gen(self.handler.current_user, 'user')
 
+    def __getitem__(self, key):
+        return self.doc[key]
+
+    def __setitem__(self, key, value):
+        return self.doc[key] = value
+
+    def __delitem__(self, key):
+        del self.doc[key]
+
     def render(self):
         return self.handler.render(self.__template__, doc=self.doc)
 
