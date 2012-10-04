@@ -71,28 +71,3 @@ class BasePage(object):
     @classmethod
     def tmp_attr_gen(cls, obj, temp_name):
         return cls.attr_gen(obj, cls.attr_template[temp_name])
-
-
-_tmp_tmp_ = '''
-def user_to_dict(user):
-    '''
-    user info to dict:
-        {
-            '_id': 'a241212dsf', # unicode, user id
-            'name': 'afewords', # unicode, user name
-            'draft': '', # int, user draft's num
-            'notice': '',  # int, user notification's num
-            'thumb': '', # unicode, user thumb
-            
-        }
-    '''
-    if user is None:
-        return None
-    ret = dict()
-    ret['_id'] = unicode(user._id)
-    ret['name'] = user.name
-    ret['thumb'] = user.avatar.tbumb_name
-    ret['draft'] = len(user.draft_lib.load_all())
-    ret['notice'] = len([i for i in user.notification_list.load_all() if i is not None and i[1] == False])
-    return ret
-'''
