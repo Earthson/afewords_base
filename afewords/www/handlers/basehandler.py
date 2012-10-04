@@ -1,3 +1,4 @@
+# coding=utf-8
 from tornado.web import RequestHandler
 
 
@@ -23,6 +24,11 @@ class BaseHandler(RequestHandler):
             usr = None
         return usr
 
+    @property
+    def request_url(self):
+        return self.request.protocol + "://" + \
+                self.request.host + self.request.uri
+
     def get(self):
         return self.redirect("/")
 
@@ -32,6 +38,7 @@ class BaseHandler(RequestHandler):
         return
 
     def get_error_html(self, status_code=500, **kwargs):
+        '''
         user = self.current_user
         if user is not None:
             AFUser = SuperUser(user)
@@ -39,7 +46,7 @@ class BaseHandler(RequestHandler):
             AFUser = None
         error_info = dict()
         error_info = kwargs
-        error_info['url'] = self.request.protocol + "://" + self.request.host + self.request.uri
+        error_info['url'] = self.request_url
         error_info['code'] = status_code
         error_info['debug'] = AFWConfig.afewords_debug
         if 'title' not in error_info:
@@ -69,3 +76,5 @@ class BaseHandler(RequestHandler):
 
         return self.render_string("error.html", user=AFUser, title=title, error=error_info)
 
+        '''
+        pass

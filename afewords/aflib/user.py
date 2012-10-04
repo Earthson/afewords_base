@@ -12,7 +12,7 @@ from article.avatar import Avatar
 from generator import *
 
 
-@with_con
+@with_conn
 class UserLibDoc(AFDocument):
     __collection__ = 'UserLibDB'
 
@@ -134,7 +134,7 @@ class UserDoc(AFDocument):
         {
             'fields' : 'email',
             'unique' : True, 
-        }
+        },
         {
             'fields' : 'domain',
             'unique' : True, 
@@ -175,7 +175,7 @@ class User(DataBox):
         return getter
 
     @db_property
-    def thumb_name
+    def thumb_name():
         def getter(self):
             return self.avatar.thumb_name
         return getter

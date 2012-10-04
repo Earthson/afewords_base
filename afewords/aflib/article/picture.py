@@ -15,7 +15,7 @@ class PictureDoc(AFDocument):
         'thumb_name' : basestring,
         'release_time' : datetime,
     }
-    required_fields = ['file_name', 'thumb_name']
+    required_fields = []
     default_values = {
         'name' : '',
         'alias' : '',
