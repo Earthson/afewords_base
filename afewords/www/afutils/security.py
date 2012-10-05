@@ -1,3 +1,4 @@
+#coding=utf-8
 import hashlib
 import Image, ImageDraw, ImageFont, random
 
@@ -14,6 +15,19 @@ def arg_escape(value):
     if isinstance(value, basestring):
         return xhtml_escape(value)
     return value
+
+def user_login(email, pwd):
+    '''return user obj if successfully login'''
+    from user import User
+    data = User.datatype.find_one({'email':email})
+    if not data:
+        return None, 1, 'User not exist'
+    usr = User(data)
+    pwd = encrypt(pwd)
+    if usr.password != pwd:
+        return None, 2, 'password error'
+    return usr, 0, ':)'
+    
 
 def create_vertify_code():
     background = (random.randrange(230,255),random.randrange(230,255),random.randrange(230,255))

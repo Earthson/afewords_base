@@ -79,7 +79,7 @@ class BasePage(AFDocBase):
 
     attr_template = {
         'user' : [
-            'id', #unicode, user id
+            'uid', #unicode, user id
             'name', #unicode, user name
             'draft_count', #int, article num in drafts_lib
             'notice_count', #int, unread notification count

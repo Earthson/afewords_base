@@ -127,7 +127,7 @@ class DataBox(object):
         return getter
 
     @db_property
-    def id():
+    def uid():
         def getter(self):
             return unicode(self.data['_id'])
         return getter

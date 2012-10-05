@@ -5,6 +5,8 @@ from tornado.web import RequestHandler
 from user import User
 from generator import id_generator, index_generator
 
+from afutils.security import *
+
 def with_nologin(operate):
     def wrapper(self, *args, **kwargs):
         if self.current_user:
@@ -46,6 +48,9 @@ class BaseHandler(RequestHandler):
     def request_url(self):
         return self.request.protocol + "://" + \
                 self.request.host + self.request.uri
+
+    def get_esc_arg(self, name):
+        return arg_escape(self.get_argument(name, None))
 
     def get(self):
         return self.redirect("/")
