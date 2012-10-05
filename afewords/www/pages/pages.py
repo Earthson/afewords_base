@@ -165,10 +165,25 @@ class AuthorPage(BasePage):
     author page, contain author blog, author like, author book, author about, author follow
     @get
     parameter
-    
+        author: {
+                'name': '',     # unicode
+                ''
+            }
+        page_type:  blog | like | book | about | follow
+        
+        @chose_one
+        blog_list: [],  # list
+        like_list: [],  # list
+        book_list: [],  # list
+        about: {},      # dict
+        follow_list: [], # list
     '''
     __template_file__ = 'afewords-bloger.html'
-    doc = {}
+    doc = {
+        'page_type': 'blog',
+        'author':{}
+        # chosed one parameter from the comment
+    }
 
 
 """ +++++++ for blog page """
