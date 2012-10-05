@@ -1,6 +1,7 @@
 #coding=utf-8
 from basepage import with_attr, BaseJson
 
+@with_attr
 class RegisterJson(BaseJson):
     doc = {
         'kind' : 0, #status: 1 for error
