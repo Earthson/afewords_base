@@ -2,11 +2,14 @@
 import os
 from handlers.loginhandler import LoginHandler
 from handlers.vertifycodehandler import VertifyCodeHandler
+from handlers.registerhandler import RegisterHandler
 
 app_handlers = {
-    #(r'/', HomeHandler),
+    #(r'/', MainHandler),
+    #(r'/home', HomeHandler),
     (r'/login', LoginHandler),
     (r'/code', VertifyCodeHandler),
+    (r'/reg', RegisterHandler),
 }
 
 app_settings = {

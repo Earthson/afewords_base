@@ -1,3 +1,4 @@
+#coding=utf-8
 from tornado.escape import json_encode
 
 def with_attr(cls):
@@ -72,7 +73,7 @@ class BaseJson(AFDocBase):
 class BasePage(AFDocBase):
     __template_file__ = ''
     doc = {
-        'title' : '', # the web page title
+        'title' : '子曰', # the web page title
         'description' : '', # the web page description, maybe for SEO
         'user' : None, # the user's info, the value is returned by function user_to_dict
     }
