@@ -4,6 +4,7 @@ from basepage import BasePage, with_attr
 new templates will use, only for get method
 '''
 
+"""+++++ login, register, reset password, check mail, repeat mail """ 
 @with_attr
 class LoginPage(BasePage):
     '''
@@ -14,15 +15,17 @@ class LoginPage(BasePage):
     __template_file__ = 'afewords-login.html'
     doc = {}
 
+
 @with_attr
 class RegisterPage(BasePage):
     '''
     @nologin
     @get  --- for show web page
-    @post  --- for handler register parameter
+    @post  --- for handle register parameter
     '''
     __template_file__ = 'afewords-reg.html'
     doc = {}
+
 
 @with_attr
 class CheckPage(BasePage):
@@ -34,27 +37,44 @@ class CheckPage(BasePage):
     __template_file__ = 'afewords-check.html'
     doc = {}
 
+
 @with_attr
 class ResetPage(BasePage):
     '''
     @nologin
     @get  --- for show the web page
-    @post  --- for handler reset password
+    @post  --- for handle reset password
     reset password
     '''
     __template_file__ = 'afewords-reset.html'
     doc = {}
 
+
 @with_attr
 class RepeatMailPage(BasePage):
     '''
     @nologin
-    @post  --- for handler repeat mail
+    @post  --- for handle repeat mail
     repeat send mail when register in afewords
     '''
     __template_file__ = ''
     doc = {}
 
+
+""" ++++++++++ home page """
+@with_attr
+class HomePage(BasePage):
+    '''
+    when we first enter afewords.com
+    @get
+    '''
+    __template_file__ = 'afewords.html'
+    doc = {
+        'blog_list': [], # list, 
+    }
+
+
+""" ++++++++++++ for user settings """
 @with_attr
 class UserSettingsPage(BasePage):
     '''
@@ -89,14 +109,35 @@ class UserSettingsPage(BasePage):
     }
 
 
+""" ++++++++ for author bloger page """
 @with_attr
-class HomePage(BasePage):
+class AuthorPage(BasePage):
     '''
-    when we first enter afewords.com
+    author page, contain author blog, author like, author book, author about, author follow
     @get
     '''
-    __template_file__ = 'afewords.html'
-    doc = {
-        'blog_list': [], # list, 
-    }
+    __template_file__ = 'afewords-bloger.html'
+    doc = {}
+
+
+""" +++++++ for blog page """
+@with_attr
+class BlogPage(BasePage):
+    '''
+    blog page, show author blog
+    @get 
+    '''
+    __template_file__ = 'afewords-blog.html'
+    doc = {}
+
+
+""" ++++++ for catalog(book) """
+@with_attr
+class BookPage(BasePage):
+    '''
+    book page, show book
+    @get
+    '''
+    __template_file__ = 'afewords-book.html'
+    doc = {}
 
