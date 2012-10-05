@@ -24,7 +24,9 @@ class RegisterPage(BasePage):
     @post  --- for handle register parameter
     '''
     __template_file__ = 'afewords-reg.html'
-    doc = {}
+    doc = {
+        'blog_list' : [],
+    }
 
 
 @with_attr

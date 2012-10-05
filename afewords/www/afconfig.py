@@ -27,4 +27,5 @@ app_settings = {
 
 af_conf = {
     'debug' : True,
+    'needinvite' : True,
 }
