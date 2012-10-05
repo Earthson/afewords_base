@@ -80,6 +80,15 @@ class DataBox(object):
     def new_doc(cls):
         return cls()._id
 
+    @classmethod
+    def is_exist(cls, spec):
+        return cls.datatype.find_one(spec) is not None
+
+    @classmethod
+    def find_one(cls, spec):
+        from generator import *
+        return index_generator(cls)(spec)
+
     def __str__(self):
         return str(self.data)
 
