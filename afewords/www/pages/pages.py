@@ -59,10 +59,27 @@ class RepeatMailPage(BasePage):
 
 """ ++++++++++ home page """
 @with_attr
-class HomePage(BasePage):
+class IndexPage(BasePage):
     '''
     when we first enter afewords.com
     @get
+    parameter
+        blog_list: list,
+            [
+                {
+                    'title': '',    # unicode
+                    'summary': '',  # unicode
+                    'content': '',  # unicode
+                    'release_time': '', # unicode
+                    'author':   {
+                                    'uid': 'xxx',   # unicode
+                                    'thumb': '',    # unicode
+                                    'name': '',     # unicode
+                                    'isfollow': False,  # Bollean
+                                }
+                },
+                ...
+            ]
     '''
     __template_file__ = 'afewords.html'
     doc = {
@@ -91,10 +108,47 @@ class UserSettingsPage(BasePage):
             domain: 'xxx',      # unicode, for domain page
             avatar_path: '',    # unicode, for avatar settings
             follow_list: [],    # list, for follow control, decide by page(int)
+                        ++++++++++++++++++++++++++++
+                        [ 
+                            {
+                                'uid': '',      # unicode
+                                'name': '',     # unicode
+                                'thumb': '',    # unicode
+                                'isfollow': False,  # Bollean
+                            },
+                            ...
+                        ]
+                        ++++++++++++++++++++++++++++
             follower_list: [],  # list, for follower control, decide by page(int)
+                        ++++++++++++++++++++++++++++
+                        as the same as follow_list
+                        ++++++++++++++++++++++++++++
             draft_list: [],     # list, for draft manage, decide by page(int)
+                        ++++++++++++++++++++++++++++
+                        [
+                            {
+                                'type': 'Blog', # unicode, Blog or Comment or Other
+                                'time': '',     # unicode
+                                'id':'',        # unicode
+                            },
+                            ...
+                        ]
+                        ++++++++++++++++++++++++++++
             notice_list:[],     # list, for notification manage, decide by page(int)
+                        ++++++++++++++++++++++++++++
+                        [
+                            {
+                                'index': 0 , # int, for index the notification
+                                'isread': False, # bollean
+                                'content': '',  #unicode
+                            },
+                            ...
+                        ]
+                        ++++++++++++++++++++++++++++
             tag_list:[],        # list, for tag manage
+                        ++++++++++++++++++++++++++++
+                        ['tag1', 'tag2', ...]
+                        ++++++++++++++++++++++++++++
             
     '''
     __template_file__ = 'afewords-settings.html'
@@ -110,6 +164,8 @@ class AuthorPage(BasePage):
     '''
     author page, contain author blog, author like, author book, author about, author follow
     @get
+    parameter
+    
     '''
     __template_file__ = 'afewords-bloger.html'
     doc = {}
