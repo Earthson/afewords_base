@@ -5,6 +5,24 @@ from tornado.web import RequestHandler
 from user import User
 from generator import id_generator, index_generator
 
+def with_nologin(operate):
+    def wrapper(self, *args, **kwargs):
+        if self.current_user:
+            self.redirect('/home')
+            return
+        operate(self, *args, **kwargs)
+        return
+    return wrapper
+
+def with_login(operate):
+    def wrapper(self, *args, **kwargs):
+        if not self.current_user:
+            self.redirect('/login')
+            return
+        operate(self, *args, **kwargs)
+        return
+    return wrapper
+
 class BaseHandler(RequestHandler):
 
     def get_current_user(self):
