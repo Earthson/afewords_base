@@ -1,4 +1,5 @@
 #coding=utf-8
+import re
 import hashlib
 import string
 import StringIO
@@ -17,6 +18,10 @@ def random_string(num):
     ''' num is the nums of random string '''
     salt = ''.join(random.sample(string.ascii_letters + string.digits, num))
     return salt
+
+def is_email(email):
+    reg = r"^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$"
+    return re.match(reg, email) is not None
 
 def arg_escape(value):
     if isinstance(value, basestring):

@@ -22,7 +22,9 @@ class RegisterPage(BasePage):
     @get  --- for show web page
     '''
     __template_file__ = 'afewords-reg.html'
-    doc = {}
+    doc = {
+        'blog_list' : [],
+    }
 
 
 @with_attr
