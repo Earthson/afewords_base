@@ -9,6 +9,7 @@ pages for method post
 class LoginPostPage(BaseJson):
     '''
     @nologin
+    @normal_post
     @only_redirect
     '''
     doc = {}
@@ -17,6 +18,7 @@ class LoginPostPage(BaseJson):
 class RegisterPostPage(BaseJson):
     '''
     @nologin
+    @ajax_post
     '''
     doc = {
         'status': -1,   # int, non-zero represent wrong, 0 ---right
@@ -27,6 +29,7 @@ class RegisterPostPage(BaseJson):
 class ResetPostPage(BaseJson):
     '''
     @nologin
+    @ajax_post
     '''
     doc = {
         'status': -1,   # int 
