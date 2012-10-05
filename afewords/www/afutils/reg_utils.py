@@ -6,7 +6,7 @@ from log_utils import *
 from mail_utils import *
 
 def user_reg(email, password, sex, name):
-    from af_config import af_conf
+    from afconfig import af_conf
     email = email.lower()
     if User.is_exist({'email':email}):
         return 6 #'existed user'

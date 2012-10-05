@@ -2,7 +2,7 @@
 import time
 from basehandler import *
 from pages.pages import RegisterPage
-from pages.datajsons import RegisterJson
+from pages.postjson import RegisterJson
 from afutils.reg_utils import user_reg
 from generator import id_generator, index_generator
 
@@ -12,18 +12,17 @@ class RegisterHandler(BaseHandler):
     @with_nologin
     def get(self):
         page = RegisterPage(self)
-        print page.doc
         return page.render()
 
     @with_nologin
     def post(self):
         info = RegisterJson(self)
 
-        email = is_value(self.get_argument("email", None))
-        pwd = is_value(self.get_argument("pwd", None))
-        sex = is_value(self.get_argument("sex", '男'))
-        name = is_value(self.get_argument("name", None))  
-        token = is_value(self.get_argument("token", None))
+        email = self.get_esc_arg('email')
+        pwd = self.get_esc_arg('pwd')
+        sex = self.get_esc_arg('sex')
+        name = self.get_esc_arg('name')
+        token = self.get_esc_arg('token')
 
         if name is None or len(name) < 2:
             info.set_info(1)
