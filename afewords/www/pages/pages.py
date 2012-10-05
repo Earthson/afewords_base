@@ -10,7 +10,6 @@ class LoginPage(BasePage):
     '''
     @nologin
     @get  --- for show web page
-    @post  --- for handle the login parameter
     '''
     __template_file__ = 'afewords-login.html'
     doc = {}
@@ -21,7 +20,6 @@ class RegisterPage(BasePage):
     '''
     @nologin
     @get  --- for show web page
-    @post  --- for handle register parameter
     '''
     __template_file__ = 'afewords-reg.html'
     doc = {}
@@ -43,7 +41,6 @@ class ResetPage(BasePage):
     '''
     @nologin
     @get  --- for show the web page
-    @post  --- for handle reset password
     reset password
     '''
     __template_file__ = 'afewords-reset.html'
@@ -54,7 +51,6 @@ class ResetPage(BasePage):
 class RepeatMailPage(BasePage):
     '''
     @nologin
-    @post  --- for handle repeat mail
     repeat send mail when register in afewords
     '''
     __template_file__ = ''
@@ -80,7 +76,6 @@ class UserSettingsPage(BasePage):
     '''
     @login
     @get  --- show the page
-    @post --- handle the settings parameter
         user settings page, like invite, domain, password, avatar etc...
         parameter:
             settings_type:  invite      |   # user's invite
