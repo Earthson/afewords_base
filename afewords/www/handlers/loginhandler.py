@@ -20,17 +20,20 @@ class LoginHandler(BaseHandler):
         pwd = self.get_esc_arg('pwd')
         token = self.get_esc_arg('token')
 
+        error_info = {}
         if email is None or pwd is None:
-            self.redirect('/login?error=1')
+            error_info['error'] = 1
+        elif token is None or token.lower() != cookie_code:
+            error_info['error'] = 2
+            error_info['email'] = email
+        else:
+            usr, status_code, status_info = user_login(email, pwd)
+            if status_code == 1:
+                error_info['email'] = email
+                error_info['error'] = 5
+        if error_info:
+            self.redirect_with_para('/login', error_info)
             return
-        if token is None or token.lower() != cookie_code:
-            self.redirect('/login?email='+email+'&error=2')
-            return
-
-        usr, status_code, status_info = user_login(email, pwd)
-        if status_code == 1:
-            self.redirect('/login?email='+email+'&error=5')
-            return 
         self.set_cookie('UI', usr.uid, expires_days=7)
         self.set_secure_cookie('UT', usr.uid)
         self.set_secure_cookie('IT', self.request.remote_ip)

@@ -1,5 +1,7 @@
 #coding=utf-8
 import hashlib
+import string
+import StringIO
 import Image, ImageDraw, ImageFont, random
 
 from tornado.escape import url_escape
@@ -11,6 +13,11 @@ def encrypt(pwd):
     result = hashlib.sha1(result).hexdigest()
     return result
 
+def random_string(num):
+    ''' num is the nums of random string '''
+    salt = ''.join(random.sample(string.ascii_letters + string.digits, num))
+    return salt
+
 def arg_escape(value):
     if isinstance(value, basestring):
         return xhtml_escape(value)
@@ -19,6 +26,7 @@ def arg_escape(value):
 def user_login(email, pwd):
     '''return user obj if successfully login'''
     from user import User
+    email = email.lower()
     data = User.datatype.find_one({'email':email})
     if not data:
         return None, 1, 'User not exist'

@@ -1,10 +1,12 @@
 # coding=utf-8
 import os
 from handlers.loginhandler import LoginHandler
+from handlers.vertifycodehandler import VertifyCodeHandler
 
 app_handlers = {
     #(r'/', HomeHandler),
     (r'/login', LoginHandler),
+    (r'/code', VertifyCodeHandler),
 }
 
 app_settings = {

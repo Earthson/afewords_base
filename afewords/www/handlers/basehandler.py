@@ -25,7 +25,16 @@ def with_login(operate):
         return
     return wrapper
 
+def url_with_para(baseurl, paradoc):
+    url = baseurl
+    if paradoc:
+        url = url + r'?' + '&'.join([str(ek)+'='+str(ev) 
+                            for ek, ev in paradoc.items()])
+    return url
+
 class BaseHandler(RequestHandler):
+    def redirect_with_para(self, url, paradoc):
+        self.redirect(url_with_para(url, paradoc))
 
     def get_current_user(self):
         usr_id = self.get_cookie("UI", None)
