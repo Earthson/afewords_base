@@ -4,7 +4,7 @@ from basepage import with_attr, BaseJson
 @with_attr
 class RegisterJson(BaseJson):
     doc = {
-        'kind' : 0, #status: 1 for error
+        'status' : 0, #status: 1 for error
         'info' : '', #error info to display, when registration error occured
     }
 
@@ -20,4 +20,4 @@ class RegisterJson(BaseJson):
             8 : '验证邮件发送失败！',
         }
         self.doc['info'] = temp[info_type]
-        self.doc['kind'] = 0 if info_type == 0 else 1
+        self.doc['status'] = 0 if info_type == 0 else 1
