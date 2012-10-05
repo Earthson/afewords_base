@@ -169,21 +169,71 @@ class AuthorPage(BasePage):
     parameter
         author: {
                 'name': '',     # unicode
-                ''
+                'uid': '',      # unicode
+                'thumb': '',    # unicode
+                'isfollow': False,  # bollean
+                'isme': False,  # bollean
             }
         page_type:  blog | like | book | about | follow
         
         @chose_one
         blog_list: [],  # list
+                    ++++++++++++++++++++++++++++
+                    [
+                        {
+                            'title': '',    # unicode
+                            'summary': '',  # unicode
+                            'content': '',  # unicode
+                            'release_time': '', # unicode
+                        },
+                        ...
+                    ]
+                    +++++++++++++++++++++++++++++++
         like_list: [],  # list
+            +++++++++++++++++++++++++++++
+            [
+                {
+                    'title': '',    # unicode
+                    'summary': '',  # unicode
+                    'content': '',  # unicode
+                    'release_time': '', # unicode
+                    'author':   {
+                                    'uid': 'xxx',   # unicode
+                                    'thumb': '',    # unicode
+                                    'name': '',     # unicode
+                                    'isfollow': False,  # Bollean
+                                }
+                },
+                ...
+            ]
+            +++++++++++++++++++++++++++++++
         book_list: [],  # list
+            +++++++++++++++++++++++++++++++
+            [
+                {
+                    'title': '', # unicode
+                    'complete_count': 0,    # int
+                    'all_count': 0,     # int
+                },
+                ...
+            ]
+            +++++++++++++++++++++++++++++++
         about: {},      # dict
+            +++++++++++++++++++++++++++++++
+            {
+                'content': '',  # unicode
+                'js_list': [],  # list, like ['java', 'c#']
+            }
+            +++++++++++++++++++++++++++++++
         follow_list: [], # list
+            +++++++++++++++++++++++++++++++
+            see above
+            +++++++++++++++++++++++++++++++
     '''
     __template_file__ = 'afewords-bloger.html'
     doc = {
         'page_type': 'blog',
-        'author':{}
+        'author': {}, # see above
         # chosed one parameter from the comment
     }
 
