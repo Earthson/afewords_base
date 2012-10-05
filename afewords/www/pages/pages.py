@@ -8,6 +8,8 @@ new templates will use, only for get method
 class LoginPage(BasePage):
     '''
     @nologin
+    @get  --- for show web page
+    @post  --- for handle the login parameter
     '''
     __template_file__ = 'afewords-login.html'
     doc = {}
@@ -16,6 +18,8 @@ class LoginPage(BasePage):
 class RegisterPage(BasePage):
     '''
     @nologin
+    @get  --- for show web page
+    @post  --- for handler register parameter
     '''
     __template_file__ = 'afewords-reg.html'
     doc = {}
@@ -24,6 +28,7 @@ class RegisterPage(BasePage):
 class CheckPage(BasePage):
     '''
     @nologin
+    @get 
     check email or check reset password
     '''
     __template_file__ = 'afewords-check.html'
@@ -33,15 +38,29 @@ class CheckPage(BasePage):
 class ResetPage(BasePage):
     '''
     @nologin
+    @get  --- for show the web page
+    @post  --- for handler reset password
     reset password
     '''
     __template_file__ = 'afewords-reset.html'
     doc = {}
 
 @with_attr
+class RepeatMailPage(BasePage):
+    '''
+    @nologin
+    @post  --- for handler repeat mail
+    repeat send mail when register in afewords
+    '''
+    __template_file__ = ''
+    doc = {}
+
+@with_attr
 class UserSettingsPage(BasePage):
     '''
     @login
+    @get  --- show the page
+    @post --- handle the settings parameter
         user settings page, like invite, domain, password, avatar etc...
         parameter:
             settings_type:  invite      |   # user's invite
@@ -69,4 +88,15 @@ class UserSettingsPage(BasePage):
         # only need one parameter more, we chosed in comment
     }
 
+
+@with_attr
+class HomePage(BasePage):
+    '''
+    when we first enter afewords.com
+    @get
+    '''
+    __template_file__ = 'afewords.html'
+    doc = {
+        'blog_list': [], # list, 
+    }
 
