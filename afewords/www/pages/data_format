@@ -1,20 +1,5 @@
 +++++++++++++++++++++ data format ++++++++++++++++++++++++++
 
-follow_list:[dict,dict,...]
-follower_list:[]
--------------------------------
-[ 
-    {
-        'uid': '',      # unicode
-        'name': '',     # unicode
-        'thumb': '',    # unicode
-        'isfollow': False,  # Bollean
-        'isme': False,  # bollean
-    },
-    ...
-]
--------------------------------
-
 author:{}
 --------------------------------
 {
@@ -27,33 +12,83 @@ author:{}
 --------------------------------
 
 
+article:{}  /****** for blog, comment, topic, doc, .... ***********/
+---------------------------------
+{
+    'article_type': 'Blog', # unicode
+    'aid': ''           # unicode
+    'title': '',        # unicode
+    'summary': '',      # unicode
+    'js_list': list,    # see js_list
+    'relase_time': '',  # unicode
+    'author': dict,     # see author
+    'statistics': dict, # see statistics
+    
+    @for comment
+    'ref_comment_list':[],  # list [index1, index2, ...]
+}
+---------------------------------
+
+
+statistics: {}
+---------------------------------
+{
+    'comment_count': 0,     # int
+    'view_count':   0,      # int
+    'like_count':   0,      # int
+}
+---------------------------------
+
+book: {}
+---------------------------------
+{
+    'bid': '',      # unicode
+    'name': '',     # unicode
+    'all_count': 0, # unicode
+    'complete_count': 0,    # unicode
+    'author': dict,     # see author definition
+}
+----------------------------------
+
+
+tag_list: [unicode, unicode, ...]
+---------------------------------
+[ 'tag1', 'tag2' ]
+---------------------------------
+
+
+js_list: [ unicode, unicode, ... ]
+---------------------------------
+[ 'javascript', 'java' ]
+----------------------------------
+
+
+
+follow_list:[dict,dict,...]
+follower_list:[]
+-------------------------------
+[ 
+    {
+        [[ author ]]    # see [[ author ]]
+    },
+    ...
+]
+-------------------------------
+
+
 blog_list: [dict, dict, ...]
 like_list: [dict, dict, ...]
+draft_list: [dict, dict, ...]
 --------------------------------
 [
     {
-        'title': '',    # unicode
-        'summary': '',  # unicode
-        'content': '',  # unicode
-        'release_time': '', # unicode
-        'author': dict , # see above
+        [[ article ]]       # see article
     },
     ...
 ]
 ---------------------------------
 
 
-draft_list: [dict, dict]
----------------------------------
-[
-    {
-        'type': 'Blog', # unicode, Blog or Topic ...
-        'time': '',     # unicode
-        'id': '',       # unicode
-    },
-    ...
-]
----------------------------------
 
 notice_list: [dict, dict]
 ---------------------------------
@@ -68,49 +103,12 @@ notice_list: [dict, dict]
 ---------------------------------
 
 
-tag_list: [unicode, unicode, ...]
----------------------------------
-[ 'tag1', 'tag2' ]
----------------------------------
-
-js_list: [ unicode, unicode, ... ]
----------------------------------
-[ 'javascript', 'java' ]
-----------------------------------
-
-
-
-article:{}  /****** for blog, comment, topic, doc, .... ***********/
----------------------------------
-{
-    'article_type': 'Blog', # unicode
-    'title': '',        # unicode
-    'summary': '',      # unicode
-    'js_list': list,    # see js_list
-    'relase_time': '',  # unicode
-    'author': dict,     # see author
-    'statistics': dict, # see statistics
-}
----------------------------------
-
-statistics: {}
----------------------------------
-{
-    'comment_count': 0,     # int
-    'view_count':   0,      # int
-    'like_count':   0,      # int
-}
----------------------------------
 
 book_list: [dict, dict, ...]
 ---------------------------------
 [
     {
-        'bid': '',      # unicode
-        'name': '',     # unicode
-        'all_count': 0, # unicode
-        'complete_count': 0,    # unicode
-        'author': dict,     # see author definition
+        [[ book ]]  # see [[ book ]]
     },
     ...
 ]
