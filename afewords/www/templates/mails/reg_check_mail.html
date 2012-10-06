@@ -1,0 +1,11 @@
+<html>
+    <head></head>
+    
+    <body>
+        <p> {{ doc['name'] }} ，欢迎您注册子曰，请您点击下面链接进行邮箱验证操作！ </p>
+        <br />
+        <p> <a href="{{ doc['main_url'] }}/check?email={{ doc['mail_to'] }}&token={{ doc['token'] }}">验证链接</a> </p>
+        <br />
+        <p> 或者将链接复制至地址栏完成邮箱激活：{{ doc['main_url'] }}/check?email={{ doc['mail_to'] }}&token={{ doc['token'] }} </p>
+    </body>
+</html>
