@@ -10,7 +10,7 @@ from afutils.security import *
 def with_nologin(operate):
     def wrapper(self, *args, **kwargs):
         if self.current_user:
-            self.redirect('/home')
+            self.redirect('/')
             return
         operate(self, *args, **kwargs)
         return

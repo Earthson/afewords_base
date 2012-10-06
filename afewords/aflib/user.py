@@ -306,10 +306,74 @@ class User(DataBox):
         self.favorite_lib.remove_obj(obj._id)
         obj.statistics.like_count -= 1
 
+    def is_follow(self, other_id):
+        '''self follows other?'''
+        return str(other_id) in self.lib.follow_user_lib.load_all().keys()
+
+    def is_follower(self, other_id):
+        '''other is self's follower?'''
+        return str(other_id) in self.lib.follower_user_lib.load_all().keys()
+
     #property for page&json
     @db_property
     def notify_user_info():
         def getter(self):
-            attrs = ['uid', 'name', 'draft_count', 'notice_count', 'thumb_name']
+            attrs = ['uid', 'name', 'draft_count', 
+                        'notice_count', 'thumb_name']
             return dict(zip(attrs, self.get_propertys(*attrs)))
+        return getter
+
+    @db_property
+    def basic_info():
+        '''for follow/follower display'''
+        def getter(self):
+            ans = dict()
+            ans['uid'] = self.uid
+            ans['name'] =self.name
+            ans['thumb'] = self.thumb_name
+            return ans
+        return getter
+
+    @db_property
+    def followers_info():
+        '''info to display followers'''
+        def getter(self):
+            follower_ids = self.lib.follower_user_lib.load_all().keys()
+            info_dicts = [self.find_one({'_id':ObjectId(each)}).basic_info 
+                            for each in follower_ids]
+            return info_dicts
+        return getter
+
+    @db_property
+    def follow_info():
+        '''info to display follow'''
+        def getter(self):
+            follow_ids = self.lib.follow_user_lib.load_all().keys()
+            info_dicts = [self.find_one({'_id':ObjectId(each)}).basic_info
+                            for each in follower_ids]
+            return info_dicts
+        return getter
+
+    @db_property
+    def blog_list_info():
+        '''info to display blog_list'''
+        from article.blog import Blog
+        def getter(self):
+            blog_list = self.lib.blog_list.load_all()
+            info_dicts = [Blog.find_one({'_id':ObjectId(each)}).basic_info
+                            for each in blog_list]
+            return info_dicts
+        return getter
+
+    @db_property
+    def draft_list_info():
+        def getter(self):
+            draft_items = self.lib.drafts_lib.load_all().items()
+            info_dicts = [dict(zip(['id', 'type'], each))
+                            for each in draft_items]
+            for each in info_dicts:
+                tmp = generator(each['id'], each['type'])
+                each['time'] = str(tmp.update_time)
+                each['title'] = tmp.title
+            return info_dicts
         return getter
