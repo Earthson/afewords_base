@@ -5,15 +5,16 @@ from email.mime.multipart import MIMEMultipart
 import smtplib
 import logging
 
+
 afewords_admin = 'afewords@afewords.com'
 
-def send_mail(to, subject, html_con):
+def send_mail(mail_from, mail_to, subject, html_body):
     msg = MIMEMultipart('alternative')
     msg['Subject'] = subject
-    msg['From'] = afewords_admin
-    msg['To'] = to
+    msg['From'] = mail_from
+    msg['To'] = mail_to
 
-    part_html = MIMEText(html_con,_subtype='html', _charset='utf-8')
+    part_html = MIMEText(html_body,_subtype='html', _charset='utf-8')
     #part_text = MIMEText(text_con,'plain')
     #msg.attach(part_text)
     msg.attach(part_html)

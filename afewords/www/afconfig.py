@@ -28,4 +28,6 @@ app_settings = {
 af_conf = {
     'debug' : True,
     'needinvite' : True,
+    'main_url' : r'http://www.afewords.com/',
+    'main_mail' : r'afewords@afewords.com',
 }
