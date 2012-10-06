@@ -1,5 +1,7 @@
 #coding=utf-8
 from tornado.escape import json_encode
+from tornado.template import Loader, Template
+from afconfig import af_conf
 
 def with_attr(cls):
     try:
@@ -15,8 +17,7 @@ class AFDocBase(object):
         #name : defaut
     }
 
-    def __init__(self, handler, doc=None):
-        self.handler = handler
+    def __init__(self, doc=None):
         self.doc = dict(self.doc)
         if doc:
             self.doc.update(doc)
@@ -36,8 +37,30 @@ class AFDocBase(object):
     def __unicode__(self):
         return unicode(self.doc)
 
+
+@with_attr
+class BaseMail(AFDocBase):
+    subject = u'Mail from afewords'
+    __template_file__ = ''
+    __loader__ = Loader('templates/mails')
+
+    doc = {
+        'main_url' : af_conf['main_url'],
+    }
+    
+    def render_string(self):
+        return self.__loader__.load(self.__template_file__).generate(doc=self.doc)
+    
+    __str__ = render_string
+    #__unicode__ = render_string
+
+
 @with_attr
 class BaseJson(AFDocBase):
+
+    def __init__(self, handler, doc=None):
+        super(BasePage, self).__init__(doc)
+        self.handler = handler
     
     def write(self):
         self.handler.write(json_encode(self.doc))
@@ -52,13 +75,15 @@ class BaseJson(AFDocBase):
 class BasePage(AFDocBase):
     __template_file__ = ''
     doc = {
+        'main_url' : af_conf['main_url'],
         'title' : '子曰', # the web page title
         'description' : '', # the web page description, maybe for SEO
         'user' : None, # the user's info, the value is returned by function user_to_dict
     }
 
     def __init__(self, handler, doc=None):
-        super(BasePage, self).__init__(handler, doc)
+        super(BasePage, self).__init__(doc)
+        self.handler = handler
         #self.doc['user'] = user_to_dict(self.handler.current_user)
         usr = self.handler.current_user
         if usr:
@@ -72,5 +97,5 @@ class BasePage(AFDocBase):
     def render_string(self):
         return self.handler.render_string(self.__template_file__, doc=self.doc)
 
-    __unicode__ = render_string
+    #__unicode__ = render_string
     __str__ = render_string

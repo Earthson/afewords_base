@@ -10,6 +10,7 @@ from tornado.ioloop import IOLoop
 import tornado.options
 
 from afconfig import *
+from app_conf import *
 
 def app_gen(handlers, settings, debug=False):
     

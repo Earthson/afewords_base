@@ -4,8 +4,8 @@ def id_generator(doctype):
     return lambda _id: doctype(doctype.datatype.one({'_id':ObjectId(_id)}))
 
 def index_generator(doctype):
-    def index_gen(**kwargs):
-        return doctype(doctype.datatype.one(kwargs))
+    def index_gen(*args, **kwargs):
+        return doctype(doctype.datatype.one(*args, **kwargs))
     return index_gen
 
 def generator(objid, objtype):

@@ -1,0 +1,16 @@
+<html>
+    <head></head>
+    
+    <body>
+        <p> 您的好友&nbsp;
+            <a href="{{ doc['main_url'] }}/bloger/{{ doc['invitor_id'] }}"> {{ doc['invitor'] }} </a>
+            &nbsp;邀请您注册 <a href="{{ doc['main_url'] }}">子曰</a>
+        </p>
+        <br />
+        <p>
+            <a href="{{ doc['main_url'] }}/reg?email={{ doc['invitee'] }}">注册链接</a>
+            或者将链接复制至地址栏进行注册<br />
+            {{ doc['main_url'] }}/reg?email={{ doc['invitee'] }}
+        </p>
+    </body>
+</html>

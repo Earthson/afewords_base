@@ -6,8 +6,6 @@ import smtplib
 import logging
 
 
-afewords_admin = 'afewords@afewords.com'
-
 def send_mail(mail_from, mail_to, subject, html_body):
     msg = MIMEMultipart('alternative')
     msg['Subject'] = subject
@@ -22,7 +20,7 @@ def send_mail(mail_from, mail_to, subject, html_body):
     
     try:
         smtp = smtplib.SMTP('localhost')
-        smtp.sendmail(afewords_admin, to, msg.as_string())
+        smtp.sendmail(mail_from, mail_to, msg.as_string())
         #print s.getreply()
     except smtplib.SMTPException, e:
         logging.error('+'*30)
@@ -30,9 +28,9 @@ def send_mail(mail_from, mail_to, subject, html_body):
         logging.error(e)
         logging.error('+'*30)
         smtp.quit()
-        return [1, '邮件服务器出问题了！']
+        return False
     else:
-        return [0, '']
+        return True
 
 def send_mail_reg(to, token, name):   
     subject = u'子曰--验证注册'
