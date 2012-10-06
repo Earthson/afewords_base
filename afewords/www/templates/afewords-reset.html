@@ -34,15 +34,15 @@
 
 
 </div>
+{#
 <div id="afw_info">
-
 <ul class="afw_info">
 {% for item in blog_list %}
 <li><a href="blog/{{ item['blog_id'] }}">{{ item['title'] }}</a>&nbsp;&nbsp;-&nbsp;&nbsp;<a href="/bloger/{{ item['author_id'] }}" >{{ item['author_name'] }}</a></li>
 {% end %}
 </ul>
-
 </div>
+#}
 
 </div>
 {% end %}

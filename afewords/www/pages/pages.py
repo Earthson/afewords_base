@@ -23,7 +23,7 @@ class RegisterPage(BasePage):
     '''
     __template_file__ = 'afewords-reg.html'
     doc = {
-        'blog_list' : [],
+        'blog_list' : [],   # see dataformat
     }
 
 
@@ -66,7 +66,7 @@ class IndexPage(BasePage):
     when we first enter afewords.com
     @get
     parameter
-        blog_list: list,
+        blog_list: list,    # see dataformat
             [
                 {
                     'title': '',    # unicode
@@ -87,6 +87,8 @@ class IndexPage(BasePage):
     doc = {
         'blog_list': [], # list, 
     }
+
+
 
 
 """ ++++++++++++ for user settings """
@@ -238,6 +240,20 @@ class AuthorPage(BasePage):
     }
 
 
+@with_attr
+class WritePage(BasePage):
+    '''
+    @login
+    @get
+    '''
+    __template_file__ = 'afewords-write.html'
+    doc = {
+        'article_src': dict,    # see the article_src
+        'isedit': False,        # bollean
+        'article_owner': dict,  # dict
+    }
+
+
 """ +++++++ for blog page """
 @with_attr
 class BlogPage(BasePage):
@@ -246,7 +262,11 @@ class BlogPage(BasePage):
     @get 
     '''
     __template_file__ = 'afewords-blog.html'
-    doc = {}
+    doc = {
+        'ispreview': False, # bollean 
+        'article': dict,    # see [[article]] definition in dataformat 
+        'recommend_list': list, # see [[blog_list]] definition in dataformat
+    }
 
 
 """ ++++++ for catalog(book) """

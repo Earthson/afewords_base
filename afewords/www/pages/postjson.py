@@ -46,3 +46,31 @@ class ResetJson(BaseJson):
         'info': '',     # unicode
     }
 
+
+@with_attr
+class UpdateArticleJson(BaseJson):
+    '''
+    @login
+    @ajax_post
+    '''
+    doc = {
+        'status': -1,   # int
+        'info': '',     # unicode
+    }
+
+@with_attr
+class GetCommentJson(BaseJson):
+    '''
+    @ajax_post
+    @parameter
+        info:
+            {
+                'comment_list': [], # see [[blog_list]]
+                'ref_comment_list':[],  # see [[blog_list]]
+            }
+    '''
+    doc = {
+        'status': -1,   # int
+        'info': '' or dict, # unicode or dict, unicode for error, dict for right
+    }
+    
