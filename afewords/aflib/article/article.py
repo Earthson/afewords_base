@@ -266,6 +266,13 @@ class Article(DataBox):
         return getter
 
     @db_property
+    def author():
+        def getter(self):
+            from user import User
+            return User.find_one({'_id':self.data['author_id']})
+        return getter
+
+    @db_property
     def father():
         def getter(self):
             return generator(self.data['father_type'],
@@ -318,4 +325,17 @@ class Article(DataBox):
     def abstract_viewbody():
         def getter(self):
             return self.normal_translator.translate(self.data['abstract'])
+        return getter
+
+    #property for page&json
+    @db_property
+    def basic_info():
+        def getter(self):
+            ans = dict()
+            ans['title'] = self.title
+            ans['summary'] = self.abstract_viewbody
+            ans['content'] = self.view_body
+            ans['release_time'] = str(self.release_time)
+            ans['author'] = self.author.basic_info
+            return ans
         return getter
