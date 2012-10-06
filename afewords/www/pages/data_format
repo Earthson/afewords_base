@@ -22,6 +22,7 @@ article:{}  /****** for blog, comment, topic, doc, .... ***********/
     'js_list': list,    # see js_list
     'relase_time': '',  # unicode
     'author': dict,     # see author
+    'comment_count':0,  # int
     'statistics': dict, # see statistics
     
     @for comment
@@ -35,7 +36,6 @@ article:{}  /****** for blog, comment, topic, doc, .... ***********/
 statistics: {}
 ---------------------------------
 {
-    'comment_count': 0,     # int
     'view_count':   0,      # int
     'like_count':   0,      # int
 }
