@@ -89,6 +89,8 @@ class IndexPage(BasePage):
     }
 
 
+
+
 """ ++++++++++++ for user settings """
 @with_attr
 class UserSettingsPage(BasePage):
@@ -238,6 +240,20 @@ class AuthorPage(BasePage):
     }
 
 
+@with_attr
+class WritePage(BasePage):
+    '''
+    @login
+    @get
+    '''
+    __template_file__ = 'afewords-write.html'
+    doc = {
+        'article_src': dict,    # see the article_src
+        'isedit': False,        # bollean
+        'article_owner': dict,  # dict
+    }
+
+
 """ +++++++ for blog page """
 @with_attr
 class BlogPage(BasePage):
@@ -246,7 +262,11 @@ class BlogPage(BasePage):
     @get 
     '''
     __template_file__ = 'afewords-blog.html'
-    doc = {}
+    doc = {
+        'ispreview': False, # bollean 
+        'article': dict,    # see [[article]] definition in dataformat 
+        'recommend_list': list, # see [[blog_list]] definition in dataformat
+    }
 
 
 """ ++++++ for catalog(book) """
