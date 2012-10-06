@@ -181,13 +181,6 @@ class User(DataBox):
         return getter
 
     @db_property
-    def notify_user_info():
-        def getter(self):
-            attrs = ['uid', 'name', 'draft_count', 'notice_count', 'thumb_name']
-            return dict(zip(attrs, self.get_propertys(*attrs)))
-        return getter
-
-    @db_property
     def about():
         '''introduction page to user'''
         def getter(self):
@@ -312,3 +305,11 @@ class User(DataBox):
             return None
         self.favorite_lib.remove_obj(obj._id)
         obj.statistics.like_count -= 1
+
+    #property for page&json
+    @db_property
+    def notify_user_info():
+        def getter(self):
+            attrs = ['uid', 'name', 'draft_count', 'notice_count', 'thumb_name']
+            return dict(zip(attrs, self.get_propertys(*attrs)))
+        return getter
