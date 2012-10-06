@@ -3,7 +3,7 @@ from invitation import Invitation
 
 from security import *
 from log_utils import *
-from mail_utils import *
+from mails import send_mail_email_verification
 
 def user_reg(email, password, sex, name):
     from afconfig import af_conf
@@ -27,8 +27,8 @@ def user_reg(email, password, sex, name):
     usr.set_propertys(**doc)
     usr.avatar.thumb_name = '/static/avatar/small/afewords-user.jpg'
     
-    m_status, m_info = send_mail_reg(email, token, name)
-    if m_status == 1:
+    m_status = send_mail_email_verification(usr)
+    if m_status is False:
         logging.error('+'*30) 
         logging.error('Email send Failed')
         logging.error('%s %s %s' % (email, token, name))
