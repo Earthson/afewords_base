@@ -23,7 +23,7 @@ class RegisterPage(BasePage):
     '''
     __template_file__ = 'afewords-reg.html'
     doc = {
-        'blog_list' : [],
+        'blog_list' : [],   # see dataformat
     }
 
 
@@ -66,7 +66,7 @@ class IndexPage(BasePage):
     when we first enter afewords.com
     @get
     parameter
-        blog_list: list,
+        blog_list: list,    # see dataformat
             [
                 {
                     'title': '',    # unicode

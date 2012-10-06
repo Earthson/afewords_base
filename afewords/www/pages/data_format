@@ -106,6 +106,7 @@ book_list: [dict, dict, ...]
 ---------------------------------
 [
     {
+        'bid': '',      # unicode
         'name': '',     # unicode
         'all_count': 0, # unicode
         'complete_count': 0,    # unicode
