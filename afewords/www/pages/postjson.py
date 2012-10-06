@@ -3,6 +3,10 @@ from basepage import with_attr, BaseJson
 
 @with_attr
 class RegisterJson(BaseJson):
+    '''
+    @nologin
+    @ajax_post
+    '''
     doc = {
         'status' : 0, #status: 1 for error
         'info' : '', #error info to display, when registration error occured
@@ -21,3 +25,24 @@ class RegisterJson(BaseJson):
         }
         self.doc['info'] = temp[info_type]
         self.doc['status'] = 0 if info_type == 0 else 1
+
+@with_attr
+class LoginJson(BaseJson):
+    '''
+    @nologin
+    @norrmal_post
+    '''
+    pass
+
+
+@with_attr
+class ResetJson(BaseJson):
+    '''
+    @nologin
+    @ajax_post
+    '''
+    doc = {
+        'status': -1,   # int
+        'info': '',     # unicode
+    }
+
