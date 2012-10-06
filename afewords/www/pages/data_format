@@ -1,7 +1,119 @@
 +++++++++++++++++++++ data format ++++++++++++++++++++++++++
 
+follow_list:[dict,dict,...]
+follower_list:[]
+-------------------------------
+[ 
+    {
+        'uid': '',      # unicode
+        'name': '',     # unicode
+        'thumb': '',    # unicode
+        'isfollow': False,  # Bollean
+        'isme': False,  # bollean
+    },
+    ...
+]
+-------------------------------
+
+author:{}
+--------------------------------
+{
+    'uid': '',  # unicode
+    'thumb': '',    # unicode
+    'name': '',     # unicode
+    'isfollow':False,  # bollean
+    'isme': False,  # bollean
+}
+--------------------------------
 
 
+blog_list: [dict, dict, ...]
+like_list: [dict, dict, ...]
+--------------------------------
+[
+    {
+        'title': '',    # unicode
+        'summary': '',  # unicode
+        'content': '',  # unicode
+        'release_time': '', # unicode
+        'author': dict , # see above
+    },
+    ...
+]
+---------------------------------
+
+
+draft_list: [dict, dict]
+---------------------------------
+[
+    {
+        'type': 'Blog', # unicode, Blog or Topic ...
+        'time': '',     # unicode
+        'id': '',       # unicode
+    },
+    ...
+]
+---------------------------------
+
+notice_list: [dict, dict]
+---------------------------------
+[
+    {
+        'index': 0, # int , for index the notification
+        'isread': False,    # bollean
+        'content': '',  # unicode
+    },
+    ...
+]
+---------------------------------
+
+
+tag_list: [unicode, unicode, ...]
+---------------------------------
+[ 'tag1', 'tag2' ]
+---------------------------------
+
+js_list: [ unicode, unicode, ... ]
+---------------------------------
+[ 'javascript', 'java' ]
+----------------------------------
+
+
+
+article:{}  /****** for blog, comment, topic, doc, .... ***********/
+---------------------------------
+{
+    'article_type': 'Blog', # unicode
+    'title': '',        # unicode
+    'summary': '',      # unicode
+    'js_list': list,    # see js_list
+    'relase_time': '',  # unicode
+    'author': dict,     # see author
+    'statistics': dict, # see statistics
+}
+---------------------------------
+
+statistics: {}
+---------------------------------
+{
+    'comment_count': 0,     # int
+    'view_count':   0,      # int
+    'like_count':   0,      # int
+}
+---------------------------------
+
+book_list: [dict, dict, ...]
+---------------------------------
+[
+    {
+        'name': '',     # unicode
+        'all_count': 0, # unicode
+        'complete_count': 0,    # unicode
+        'author': dict,     # see author definition
+    },
+    ...
+]
+---------------------------------
 
 
 
