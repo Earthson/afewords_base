@@ -3,6 +3,7 @@ import os
 from handlers.loginhandler import LoginHandler
 from handlers.vertifycodehandler import VertifyCodeHandler
 from handlers.registerhandler import RegisterHandler
+from handlers.testhandler import TestHandler
 
 app_handlers = {
     #(r'/', MainHandler),
@@ -10,6 +11,7 @@ app_handlers = {
     (r'/login', LoginHandler),
     (r'/code', VertifyCodeHandler),
     (r'/reg', RegisterHandler),
+    (r'/test', TestHandler),
 }
 
 app_settings = {
