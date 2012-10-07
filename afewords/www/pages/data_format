@@ -47,7 +47,7 @@ book: {}
 {
     'bid': '',      # unicode
     'name': '',     # unicode
-    'all_count': 0, # unicode
+    'all_catalog_count': 0, # unicode
     'complete_count': 0,    # unicode
     'author': dict,     # see author definition
 }
