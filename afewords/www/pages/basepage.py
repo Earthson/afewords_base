@@ -74,6 +74,7 @@ class BaseJson(AFDocBase):
 @with_attr
 class BasePage(AFDocBase):
     __template_file__ = ''
+    __loader__ = Loader('templates')
     doc = {
         'main_url' : af_conf['main_url'],
         'title' : '子曰', # the web page title
@@ -95,7 +96,7 @@ class BasePage(AFDocBase):
     show = render
 
     def render_string(self):
-        return self.handler.render_string(self.__template_file__, doc=self.doc)
+        return self.__loader__.load(self.__template_file__).generate(doc=self.doc)
 
     #__unicode__ = render_string
     __str__ = render_string
