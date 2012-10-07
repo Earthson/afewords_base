@@ -297,3 +297,15 @@ class Catalog(DataBox):
         del self.lib.parent_catalogs[str(catalog_obj._id)+'#'+node_id]
         catalog_obj.remove_subcatalog(node_id, relation_obj)
 
+    #property for page&json
+    @db_property
+    def basic_info():
+        def getter(self):
+            ans = dict()
+            ans['bid'] = self.uid
+            ans['name'] = self.name
+            ans['all_count'] = self.node_sum
+            ans['complete_count'] = self.complete_count
+            ans['author'] = self.owner.basic_info
+            return getter
+        return getter

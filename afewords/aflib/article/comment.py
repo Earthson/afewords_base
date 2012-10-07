@@ -25,3 +25,12 @@ class Comment(Article):
         def setter(self, value):
             self.data['ref_comments'] = value
         return getter, setter
+
+    #property for page&json
+    @db_property
+    def comment_info():
+        def getter(self):
+            ans = self.basic_info()
+            ans['ref_comment_list'] = self.ref_comments
+            return ans
+        return getter

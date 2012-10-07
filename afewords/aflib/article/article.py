@@ -327,15 +327,33 @@ class Article(DataBox):
             return self.normal_translator.translate(self.data['abstract'])
         return getter
 
+    @db_property
+    def comment_count():
+        def getter(self):
+            return len(self.lib.comment_list)
+        return getter
+
     #property for page&json
     @db_property
     def basic_info():
         def getter(self):
             ans = dict()
+            ans['article_type'] = self.__class__.__name__
+            ans['aid'] self.uid
             ans['title'] = self.title
             ans['summary'] = self.abstract_viewbody
             ans['content'] = self.view_body
             ans['release_time'] = str(self.release_time)
             ans['author'] = self.author.basic_info
+            ans['comment_count'] = self.comment_count
+            ans['statistics'] = self.statistics.basic_info
+            return ans
+        return getter
+
+    @db_property
+    def view_info():
+        def getter(self):
+            ans = self.basic_info()
+            ans['recommend_list'] = [] #Todo Earthson
             return ans
         return getter

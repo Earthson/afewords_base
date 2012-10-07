@@ -35,3 +35,11 @@ class Statistics(DataBox):
         'share_count' : True,
         'view_count' : True,
     }
+
+    #property for page&json
+    @db_property
+    def basic_info():
+        def getter(self):
+            attrs = self.mapper.keys()
+            return dict(zip(attrs, self.get_propertys(*attrs)))
+        return getter
