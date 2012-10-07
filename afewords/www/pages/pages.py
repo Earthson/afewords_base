@@ -69,23 +69,6 @@ class IndexPage(BasePage):
     '''
     when we first enter afewords.com
     @get
-    parameter
-        blog_list: list,    # see dataformat
-            [
-                {
-                    'title': '',    # unicode
-                    'summary': '',  # unicode
-                    'content': '',  # unicode
-                    'release_time': '', # unicode
-                    'author':   {
-                                    'uid': 'xxx',   # unicode
-                                    'thumb': '',    # unicode
-                                    'name': '',     # unicode
-                                    'isfollow': False,  # Bollean
-                                }
-                },
-                ...
-            ]
     '''
     __template_file__ = 'afewords-index.html'
     doc = {
