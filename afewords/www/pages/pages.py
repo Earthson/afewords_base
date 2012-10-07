@@ -35,7 +35,10 @@ class CheckPage(BasePage):
     check email or check reset password
     '''
     __template_file__ = 'afewords-check.html'
-    doc = {}
+    doc = {
+        'status': -1,   # int, describe the check code
+        'info': '',     # unicode, describe the check info
+    }
 
 
 @with_attr
