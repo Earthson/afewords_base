@@ -4,8 +4,6 @@ from basehandler import *
 from pages.pages import LoginPage
 from generator import id_generator, index_generator
 
-from afutils.security import *
-
 class LoginHandler(BaseHandler):
 
     @with_nologin

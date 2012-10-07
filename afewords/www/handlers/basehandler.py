@@ -58,8 +58,8 @@ class BaseHandler(RequestHandler):
         return self.request.protocol + "://" + \
                 self.request.host + self.request.uri
 
-    def get_esc_arg(self, name):
-        return arg_escape(self.get_argument(name, None))
+    def get_esc_arg(self, name, default=None):
+        return arg_escape(self.get_argument(name, default))
 
     def get(self):
         return self.redirect("/")
