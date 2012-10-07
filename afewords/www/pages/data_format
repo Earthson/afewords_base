@@ -19,6 +19,7 @@ article:{}  /****** for blog, comment, topic, doc, .... ***********/
     'aid': ''           # unicode
     'title': '',        # unicode
     'summary': '',      # unicode
+    'content': '',      # unicode
     'js_list': list,    # see js_list
     'relase_time': '',  # unicode
     'author': dict,     # see author
