@@ -58,7 +58,7 @@ class BaseMail(AFDocBase):
 @with_attr
 class BaseJson(AFDocBase):
 
-    def __init__(self, handler, doc=None):
+    def __init__(self, handler=None, doc=None):
         super(BasePage, self).__init__(doc)
         self.handler = handler
     
@@ -82,7 +82,7 @@ class BasePage(AFDocBase):
         'user' : None, # the user's info, the value is returned by function user_to_dict
     }
 
-    def __init__(self, handler, doc=None):
+    def __init__(self, handler=None, doc=None):
         super(BasePage, self).__init__(doc)
         self.handler = handler
         #self.doc['user'] = user_to_dict(self.handler.current_user)
