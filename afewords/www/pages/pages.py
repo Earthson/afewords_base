@@ -36,6 +36,7 @@ class CheckPage(BasePage):
     '''
     __template_file__ = 'afewords-check.html'
     doc = {
+        'check_type': 0,    # int , 0 for mail check, 1 for password reset
         'status': -1,   # int, describe the check code
         'info': '',     # unicode, describe the check info
     }
