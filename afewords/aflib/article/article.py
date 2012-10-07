@@ -339,7 +339,7 @@ class Article(DataBox):
         def getter(self):
             ans = dict()
             ans['article_type'] = self.__class__.__name__
-            ans['aid'] self.uid
+            ans['aid'] = self.uid
             ans['title'] = self.title
             ans['summary'] = self.abstract_viewbody
             ans['content'] = self.view_body
