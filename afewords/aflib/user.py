@@ -314,6 +314,12 @@ class User(DataBox):
         '''other is self's follower?'''
         return str(other_id) in self.lib.follower_user_lib.load_all().keys()
 
+    def as_viewer(self, user_info):
+        '''as viewer, update user infomation dict'''
+        user_info['isfollow'] = self.is_follow(user_info['uid'])
+        user_info['isme'] = (self.uid == user_info['uid'])
+        return user_info
+
     #property for page&json
     @db_property
     def notify_user_info():
