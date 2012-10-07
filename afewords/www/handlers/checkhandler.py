@@ -26,7 +26,7 @@ class CheckHandler(BaseHandler):
             usr = User.find_one({'email':email})
             if usr.data is None:
                 status_code = 1
-            else if usr.token == token:
+            elif usr.token == token:
                 usr.token = ''
             else:
                 status_code = 2 if check_type == 'mail' else 3

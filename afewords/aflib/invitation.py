@@ -12,13 +12,17 @@ class InvitationDoc(AFDocument):
     structure = {
         'email' : basestring,
         'date' : datetime,
-        'invitor' : basestring,
+        'invitor' : basestring, #email
     }
     required_fields = ['email']
     default_values = {
         'date' : datetime.now,
         'invitor' : '',
     }
+    indexes = [{
+        'fields' : 'email',
+        'unique' : True,
+    }]
 
 
 @with_mapper

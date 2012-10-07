@@ -3,7 +3,7 @@ import time
 from basehandler import *
 from pages.pages import RegisterPage
 from pages.postjson import RegisterJson
-from afutils.reg_utils import user_reg
+from afutils.user_utils import user_reg
 from generator import id_generator, index_generator
 
 
@@ -38,6 +38,8 @@ class RegisterHandler(BaseHandler):
                 status = user_reg(email, pwd, sex, name)
                 if status == 0:
                     self.set_cookie('repeat', str(time.time()))
+                    self.redirect('/login')
+                    return
                 info.set_info(status)
         info.write()
         return

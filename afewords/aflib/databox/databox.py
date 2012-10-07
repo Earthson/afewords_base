@@ -85,9 +85,9 @@ class DataBox(object):
         return cls.datatype.find_one(spec) is not None
 
     @classmethod
-    def find_one(cls, spec):
+    def find_one(cls, *args, **kwargs):
         from generator import *
-        return index_generator(cls)(spec)
+        return index_generator(cls)(*args, **kwargs)
 
     def __str__(self):
         return str(self.data)

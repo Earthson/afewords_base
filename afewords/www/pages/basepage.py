@@ -5,7 +5,7 @@ from afconfig import af_conf
 
 def with_attr(cls):
     try:
-        doc = super(cls, cls).doc
+        doc = dict(super(cls, cls).doc)
         doc.update(cls.doc)
         cls.doc = doc
         return cls
@@ -59,7 +59,7 @@ class BaseMail(AFDocBase):
 class BaseJson(AFDocBase):
 
     def __init__(self, handler=None, doc=None):
-        super(BasePage, self).__init__(doc)
+        super(BaseJson, self).__init__(doc)
         self.handler = handler
     
     def write(self):

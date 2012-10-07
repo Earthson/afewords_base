@@ -4,6 +4,7 @@ from handlers.loginhandler import LoginHandler
 from handlers.vertifycodehandler import VertifyCodeHandler
 from handlers.registerhandler import RegisterHandler
 from handlers.testhandler import TestHandler
+from handlers.checkhandler import CheckHandler
 
 app_handlers = {
     (r'/', LoginHandler), #MainHandler),
