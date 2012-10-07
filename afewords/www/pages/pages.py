@@ -36,10 +36,24 @@ class CheckPage(BasePage):
     '''
     __template_file__ = 'afewords-check.html'
     doc = {
+        'title' : u'子曰 - 验证邮件/密码重置',
         'check_type': 0,    # int , 0 for mail check, 1 for password reset
         'status': -1,   # int, describe the check code
         'info': '',     # unicode, describe the check info
     }
+
+    error_info = {
+        0 : u'', #successful
+        1 : u'用户不存在',
+        2 : u'抱歉，邮箱验证失败！',
+        3 : u'抱歉，密码重置失败！',
+        4 : u'非法参数！',
+    }
+
+    def set_args(self, error_code=0, **kwargs):
+        self['check_type'] = kwargs['check_type']
+        self['status'] = 1
+        self['info'] = self.error_info[error_code]
 
 
 @with_attr
