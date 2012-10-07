@@ -87,7 +87,7 @@ class IndexPage(BasePage):
                 ...
             ]
     '''
-    __template_file__ = 'afewords.html'
+    __template_file__ = 'afewords-index.html'
     doc = {
         'blog_list': [], # list, 
     }
