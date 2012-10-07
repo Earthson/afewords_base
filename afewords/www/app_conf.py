@@ -6,12 +6,13 @@ from handlers.registerhandler import RegisterHandler
 from handlers.testhandler import TestHandler
 
 app_handlers = {
-    #(r'/', MainHandler),
+    (r'/', LoginHandler), #MainHandler),
+    (r'/test', TestHandler),
     #(r'/home', HomeHandler),
     (r'/login', LoginHandler),
     (r'/code', VertifyCodeHandler),
     (r'/reg', RegisterHandler),
-    (r'/test', TestHandler),
+    (r'/check', CheckHandler),
 }
 
 app_settings = {

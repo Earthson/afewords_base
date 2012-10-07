@@ -5,6 +5,11 @@ from basepage import BasePage, with_attr
 new templates will use, only for get method
 '''
 
+@with_attr
+class TestPage(BasePage):
+    __template_file__ = 'afewords-login.html'
+    
+
 """+++++ login, register, reset password, check mail, repeat mail """ 
 @with_attr
 class LoginPage(BasePage):
