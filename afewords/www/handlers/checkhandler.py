@@ -28,6 +28,8 @@ class CheckHandler(BaseHandler):
                 status_code = 1
             elif usr.token == token:
                 usr.token = ''
+                if usr.account_status == u'unverified':
+                    usr.account_status = u'normal'
             else:
                 status_code = 2 if check_type == 'mail' else 3
         page.set_args(status_code, check_type=check_type)
