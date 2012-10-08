@@ -6,6 +6,8 @@ from datetime import datetime
 from security import *
 from log_utils import *
 
+from afconfig import af_conf
+
 def user_reg(email, password, sex, name):
     from afconfig import af_conf
     email = email.lower()
@@ -48,12 +50,18 @@ def invite_other(invitor, invitee_mail):
     from invitation import Invitation
     from mails import send_invite
     
-    if Invitation.is_exist({'email':invitee_mail}):
-        return 1 # already invited
-    invi = Invitation(attrs={'email' : invitee_mail})
-    invi.date = datetime.now()
-    invi.invitor = invitor.email
+    if not Invitation.is_exist({'email':invitee_mail}):
+        gcnt = global_info['invitations_count']
+        if gcnt >= af_conf['invitation_limit']:
+            return 1 #invitation not available, full
+        if invitor.invitations <= 0:
+            return 4 #your pool is empty
+        invi = Invitation(attrs={'email' : invitee_mail})
+        invi.date = datetime.now()
+        invi.invitor = invitor.email
+        global_info.inc('invitations_count')
 
+    invitor.invitations -= 1
     if send_invite(invitor, invitee_mail):
         return 0 #successfull
     return 2 #mail sending error

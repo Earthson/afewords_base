@@ -6,4 +6,5 @@ af_conf = {
     'main_url' : r'http://ipv6.earthson.net',
     #'main_mail' : r'afewords@afewords.com',
     'main_mail' : r'afewords@ipv6.earthson.net',
+    'invitation_limit' : 50,
 }
