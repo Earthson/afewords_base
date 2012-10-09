@@ -75,15 +75,6 @@ class ResetPage(BasePage):
     }
 
 
-@with_attr
-class RepeatMailPage(BasePage):
-    '''
-    @nologin
-    repeat send mail when register in afewords
-    '''
-    __template_file__ = ''
-    doc = {}
-
 
 """ ++++++++++ home page """
 @with_attr

@@ -59,6 +59,18 @@ class ResetJson(BaseJson):
 
 
 @with_attr
+class RepeatMailJson(BaseJson):
+    '''
+    @nologin
+    @ajax_post
+    '''
+    doc = {
+        'status': -1,   # int
+        'info': '',     # unicode
+    }
+
+
+@with_attr
 class UpdateArticleJson(BaseJson):
     '''
     @login
