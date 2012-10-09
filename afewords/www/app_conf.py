@@ -5,6 +5,7 @@ from handlers.vertifycodehandler import VertifyCodeHandler
 from handlers.registerhandler import RegisterHandler
 from handlers.testhandler import TestHandler
 from handlers.checkhandler import CheckHandler
+from handlers.resethandler import ResetHandler
 
 app_handlers = {
     (r'/', LoginHandler), #MainHandler),
@@ -14,6 +15,7 @@ app_handlers = {
     (r'/code', VertifyCodeHandler),
     (r'/reg', RegisterHandler),
     (r'/check', CheckHandler),
+    (r'/reset', ResetHandler),
 }
 
 app_settings = {

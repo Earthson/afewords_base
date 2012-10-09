@@ -49,7 +49,7 @@ class CheckPage(BasePage):
     }
 
     error_info = {
-        0 : u'', #successful
+        0 : u'验证成功', #successful
         1 : u'用户不存在',
         2 : u'抱歉，邮箱验证失败！',
         3 : u'抱歉，密码重置失败！',
@@ -70,7 +70,9 @@ class ResetPage(BasePage):
     reset password
     '''
     __template_file__ = 'afewords-reset.html'
-    doc = {}
+    doc = {
+        'title' : u'子曰 - 密码重置',
+    }
 
 
 @with_attr

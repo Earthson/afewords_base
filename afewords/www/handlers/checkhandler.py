@@ -18,18 +18,23 @@ class CheckHandler(BaseHandler):
         status_code = 0
         if check_type not in ('mail', 'reset'):
             check_type = 'mail'
-        if email is None or token is None:
+        if not email or not token:
             status_code = 4 #invalid check
         else:
             if check_type not in ('mail', 'reset'):
                 check_type = 'mail'
+            email = email.lower()
             usr = User.find_one({'email':email})
             if usr.data is None:
                 status_code = 1
             elif usr.token == token:
-                usr.token = ''
-                if usr.account_status == u'unverified':
-                    usr.account_status = u'normal'
+                if check_type == 'mail':
+                    usr.token = ''
+                    if usr.account_status == u'unverified':
+                        usr.account_status = u'normal'
+                else:
+                    pwd = usr.token[:40]
+                    usr.set_propertys(token='', password=pwd)
             else:
                 status_code = 2 if check_type == 'mail' else 3
         page.set_args(status_code, check_type=check_type)

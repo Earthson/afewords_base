@@ -45,6 +45,17 @@ class ResetJson(BaseJson):
         'status': -1,   # int
         'info': '',     # unicode
     }
+    error_info = {
+        0 : u'请登入邮箱完成密码重置', # normal
+        1 : u'请填写正确的邮箱！',
+        2 : u'请您设置新密码，4位以上！',
+        3 : u'邮箱尚未注册！',
+        4 : u'重置密码邮件发送错误！',
+    }
+
+    def by_status(self, status):
+        self['status'] = 1 if status != 0 else 0
+        self['info'] = self.error_info[status]
 
 
 @with_attr
