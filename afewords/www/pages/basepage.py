@@ -76,6 +76,7 @@ class BasePage(AFDocBase):
     __template_file__ = ''
     __loader__ = Loader('templates')
     doc = {
+        'page_type' : 'index',  # web page type, for nav chosed
         'main_url' : af_conf['main_url'],
         'title' : '子曰', # the web page title
         'description' : '', # the web page description, maybe for SEO

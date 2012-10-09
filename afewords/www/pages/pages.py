@@ -234,7 +234,7 @@ class AuthorPage(BasePage):
     '''
     __template_file__ = 'afewords-bloger.html'
     doc = {
-        'page_type': 'blog',
+        'bloger_type': 'blog',
         'author': {}, # see above
         # chosed one parameter from the comment
     }
