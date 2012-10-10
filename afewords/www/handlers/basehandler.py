@@ -65,8 +65,7 @@ class BaseHandler(RequestHandler):
         return self.redirect("/")
 
     def post(self):
-        result = {'kind':-1, 'info':'请您先登陆！'}
-        self.write(json_encode(result));
+        self.redirect('/')
         return
 
     def get_error_html(self, status_code=500, **kwargs):

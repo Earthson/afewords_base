@@ -1,5 +1,6 @@
 #coding=utf-8
 import os
+from handlers.indexhandler import IndexHandler
 from handlers.loginhandler import LoginHandler
 from handlers.vertifycodehandler import VertifyCodeHandler
 from handlers.registerhandler import RegisterHandler
@@ -9,7 +10,7 @@ from handlers.resethandler import ResetHandler
 from handlers.repeatresetmailhandler import RepeatResetMailHandler
 
 app_handlers = {
-    (r'/', LoginHandler), #MainHandler),
+    (r'/', IndexHandler), #MainHandler),
     (r'/test', TestHandler),
     #(r'/home', HomeHandler),
     (r'/login', LoginHandler),
