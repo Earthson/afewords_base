@@ -11,6 +11,8 @@ from article.avatar import Avatar
 
 from generator import *
 
+from authority import *
+
 
 @with_conn
 class UserLibDoc(AFDocument):
@@ -199,6 +201,7 @@ class User(DataBox):
             return UserLib(spec={'_id':self.data['lib_id']})
         return getter
 
+    @with_user_status
     def authority_verify(self, usr, **env):
         ret = 0
         if usr == None:

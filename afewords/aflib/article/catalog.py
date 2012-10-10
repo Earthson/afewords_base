@@ -172,6 +172,7 @@ class Catalog(DataBox):
             return self.data['node_count'] - self.data['remove_count']
         return getter
 
+    @with_user_status
     def authority_verify(self, usr, **env):
         ret = 0
         if usr == None:

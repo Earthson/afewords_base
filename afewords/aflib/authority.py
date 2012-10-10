@@ -25,3 +25,10 @@ def test_auth(self, auth):
     '''
     return (self & auth) == auth
 
+def with_user_status(operate):
+    def wrapper(self, usr, **env):
+        ans = operate(self, usr, **env)
+        if usr and usr.account_status in ['limitted', 'unverified']:
+            ans = unset_auth(ans, A_POST)
+        return ans
+    return wrapper

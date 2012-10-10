@@ -6,6 +6,7 @@ from handlers.registerhandler import RegisterHandler
 from handlers.testhandler import TestHandler
 from handlers.checkhandler import CheckHandler
 from handlers.resethandler import ResetHandler
+from handlers.repeatresetmailhandler import RepeatResetMailHandler
 
 app_handlers = {
     (r'/', LoginHandler), #MainHandler),
@@ -16,6 +17,7 @@ app_handlers = {
     (r'/reg', RegisterHandler),
     (r'/check', CheckHandler),
     (r'/reset', ResetHandler),
+    (r'/repeat-mail', RepeatResetMailHandler),
 }
 
 app_settings = {
