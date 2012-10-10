@@ -68,6 +68,18 @@ class RepeatMailJson(BaseJson):
         'status': -1,   # int
         'info': '',     # unicode
     }
+    error_info = {
+        0 : u'发送成功, 请登入邮箱完成验证',
+        1 : u'非法调用',
+        2 : u'请稍后尝试',
+        3 : u'邮箱不存在',
+        4 : u'邮件发送失败，请稍后再尝试',
+        5 : u'您无需验证，请尝试登入或者重置密码',
+    }
+
+    def by_status(status):
+        self['status'] = status
+        self['info'] = self.error_info[status]        
 
 
 @with_attr
