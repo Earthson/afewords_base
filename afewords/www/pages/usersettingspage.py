@@ -28,7 +28,7 @@ class UserSetingPasswordPage(UserSettingsPage):
 class UserSettingDomainPage(UserSettingsPage):
     doc = {
         'settings_type' : 'domain',
-        'domain' : None,
+        'domain' : '',
     }
 
 
@@ -44,6 +44,7 @@ class UserSettingAvatarPage(UserSettingsPage):
 class UserSettingFollowPage(UserSettingsPage):
     doc = {
         'settings_type' : 'follow',
+        'follow_list' : [], # see [[ follow_list ]] in data_format
     }
 
 
@@ -51,6 +52,7 @@ class UserSettingFollowPage(UserSettingsPage):
 class UserSettingTagPage(UserSettingsPage):
     doc = {
         'settings_type' : 'tag',
+        'tag_list' : [],   # see [[ tag_list ]] in data_format
     }
 
 
@@ -58,6 +60,7 @@ class UserSettingTagPage(UserSettingsPage):
 class UserSettingFollowerPage(UserSettingsPage):
     doc = {
         'settings_type' : 'follower',
+        'follower_list' : [],   # see [[ follower_list ]] in data_format
     }
 
 
@@ -65,6 +68,7 @@ class UserSettingFollowerPage(UserSettingsPage):
 class UserSettingNoticePage(UserSettingsPage):
     doc = {
         'settings_type' : 'notice',
+        'notice_list' : [], # see [[ notice_list ]] in data_format
     }
 
 
@@ -72,4 +76,5 @@ class UserSettingNoticePage(UserSettingsPage):
 class UserSettingDraftPage(UserSettingsPage):
     doc = {
         'settings_type' : 'draft',
+        'draft_list' : [],  # see [[ draft_list ]] in data_format
     }
