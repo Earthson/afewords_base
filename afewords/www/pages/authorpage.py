@@ -5,7 +5,7 @@ from basepage import BasePage, with_attr
 
 @with_attr
 class AuthorPage(BasePage):
-    __template_file__ = 'afewords-bloger.html'
+    __template_file__ = 'bloger.html'
     doc = {
         'bloger_type' : 'blog',
         'author' : {},  # see [[ author ]] in data_format
