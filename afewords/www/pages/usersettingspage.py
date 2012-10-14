@@ -4,6 +4,7 @@ from basepage import BasePage, with_attr
 
 @with_attr
 class UserSettingsPage(BasePage):
+    __template_file__ = 'afewords-settings.html'
     doc = {
         'settings_type' : '',
     }
