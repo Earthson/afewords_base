@@ -6,26 +6,29 @@
 <link type="text/css" rel="stylesheet" href="{{ static_url("css/code/shThemeEmacs.css") }}" />
 
 {% end %}
-
+{% set article = doc['article'] %}
+{% set author = article['author'] %}
+{% set statis = article['statistics'] %}
+{% set user = doc['user'] %}
 
 {% block middle_body %}
 
-{% if author is not None and blog is not None %}
+{% if author is not None and article is not None %}
 
 <div id="middle-blog-left">
 
 <div class="blog_tip" title="作者">
-<span class="blog_author"><a href="/bloger/{{ author._id }}">{{ author.name }}</a></span>
+<span class="blog_author"><a href="/bloger/{{ author['uid'] }}">{{ author['name'] }}</a></span>
 </div>
 
 <div class="blog_tip" title="发布时间">
-<span class="blog_tip_time">{{ str(blog.release_time)[:16] }}</span>
+<span class="blog_tip_time">{{ article['release_time'][:16] }}</span>
 </div>
 
-{% if blog.keywords is not None and blog.keywords != [] %}
+{% if article['keywords'] != [] %}
 <div class="blog_tip" title="关键词">
 <span class="bb_tag">
-{% for item in blog.keywords %}
+{% for item in article['keywords'] %}
 <span class="tag_one"><span class="tag-label"></span><span class="tag-text">{{ item }}</span></span>
 {% end %}
 </span>
@@ -33,13 +36,13 @@
 {% end %}
 
 
-{% if preview != 'yes' %}
+{% if doc['ispreview'] is False %}
     <div class="blog_tip"  title="喜欢人数">
-    <span class="blog_tip_like"><span>{{ statis.like_count }}</span>
-    {% if user is None or user.like_lib[str(blog._id)] is None %}
-        <span class="blog_tip_do" obj_id="{{ blog._id }}" do="like" kind="blog">+1</span>
+    <span class="blog_tip_like"><span>{{ statis['like_count'] }}</span>
+    {% if doc['islike'] is False %}
+        <span class="blog_tip_do" obj_id="{{ article['aid'] }}" do="like" kind="blog">+1</span>
     {% else %}
-        <span class="blog_tip_do" obj_id="{{ blog._id }}" do="unlike" kind="blog">-1</span>
+        <span class="blog_tip_do" obj_id="{{ article['aid'] }}" do="unlike" kind="blog">-1</span>
     {% end %}
     </span>
     </div>
@@ -47,18 +50,18 @@
 
 
 <div class="blog_tip" title="评论人数">
-<span class="blog_tip_comment"><span>{{ blog.comment_count }}</span>
-<span class="blog_tip_do" ref_type="blog"  father_id="{{ blog._id }}" father_type="blog">+1</span></span>
+<span class="blog_tip_comment"><span>{{ article['comment_count'] }}</span>
+<span class="blog_tip_do" ref_type="blog"  father_id="{{ article['aid'] }}" father_type="blog">+1</span></span>
 </div>
 
 
 <div class="blog_tip" title="浏览人数">
-<span class="blog_tip_view" do="view" obj_id="{{ blog._id }}" kind="blog">{{ statis.view_count }}</span>
+<span class="blog_tip_view" do="view" obj_id="{{ article['aid'] }}" kind="blog">{{ statis['view_count'] }}</span>
 </div>
 
 <div class="blog_tip" title="推荐到知识谱">
-<span class="blog_tip_star" do="recommend" obj_id="{{ blog._id }}" kind="blog">
-<a href="javascript:void(0);" article_id="{{ blog._id }}" article_type="blog">推荐到知识谱</a>
+<span class="blog_tip_star" do="recommend" obj_id="{{ article['aid'] }}" kind="blog">
+<a href="javascript:void(0);" article_id="{{ article['aid'] }}" article_type="blog">推荐到知识谱</a>
 </span>
 </div>
 
@@ -68,12 +71,12 @@
 </div>
 -->
 
-{% if recommender_list != [] %}
+{% if doc['recommend_list'] != [] %}
 <div class="blog_tip">
 <span>推荐</span>
 <ul class="blog-recom">
-{% for item in recommender_list %}
-    <li><a href="/blog/{{ item['blog_id'] }}">{{ item['blog_title'] }}</a></li>
+{% for item in doc['recommend_list'] %}
+    <li><a href="/blog/{{ item['aid'] }}">{{ item['title'] }}</a></li>
 {% end %}
 </ul>
 </div>
@@ -95,27 +98,27 @@
 <div id="middle-blog-right">
 <div id="middle-blog">
 
-{% if author is not None and blog is not None %}
-    {% if user is not None and user._id == author._id %}
+{% if author is not None and article is not None %}
+    {% if user is not None and user['uid'] == author['uid'] %}
         <div class="blog_edit_link">
-            <a href="/write?id={{ blog._id }}&edit=true" class="edit">修改</a>
-            <a href="javascript:void(0);" class="del" obj_id="{{ blog._id }}" want="del_blog" page="blog_view">删除</a>
+            <a href="/write?id={{ article['aid'] }}&edit=true" class="edit">修改</a>
+            <a href="javascript:void(0);" class="del" obj_id="{{ article['aid'] }}" want="del_blog" page="blog_view">删除</a>
         </div>
     {% end %}
-    <div id="blog_title">{{ blog.name }}</div>
+    <div id="blog_title">{{ article['name'] }}</div>
     
     <div id="blog_view">
     <div class="b_blog" style="margin-top:10px;">
 
     <div class="b_body">
-    {% if blog.privilege == "public" %}
+    {% if article['privilege'] == "public" %}
 
         <div class="bb_control">
 
-        {% if blog.abstract != '' and blog.abstract is not None %}
+        {% if article['summary'] != ''  %}
             <div class="bb_summary">
             <div class="summary">摘要</div>
-            {{ blog.abstract }}
+            {{ article['summary'] }}
             </div>
         {% end %}
 
@@ -123,22 +126,22 @@
 
 
         <div class="bb_con">
-        {{ blog.view_body }}
+        {{ article['content'] }}
         </div>
     {% else %}
         仅对站内用户开放，<a href="/reg" style="color:blue">点击注册</a>
     {% end %}
 
-    {% if preview != 'yes'%}
-        <div class="b_bottom_wrap" blog="{{ blog._id }}">
-            <span class="bot-comment" ref_type="blog" title="写评论" father_id="{{ blog._id }}" father_type="blog">写评论</span>
+    {% if doc['ispreview'] is False %}
+        <div class="b_bottom_wrap" blog="{{ article['aid'] }}">
+            <span class="bot-comment" ref_type="blog" title="写评论" father_id="{{ article['aid'] }}" father_type="blog">写评论</span>
             
-            <span class="bot-author-name"><a href="/bloger/{{ author._id }}">{{ author.name }}</a></span>
-            <span class="bot-time">{{ str(blog.release_time)[:16] }}&nbsp;/&nbsp;</span>
+            <span class="bot-author-name"><a href="/bloger/{{ author['uid'] }}">{{ author['name'] }}</a></span>
+            <span class="bot-time">{{ article['release_time'][:16] }}&nbsp;/&nbsp;</span>
         </div>
         </div>
 
-        <div class="b_com" blog_id="{{ blog._id }}">
+        <div class="b_com" blog_id="{{ article['aid'] }}">
 
         </div>
     {% else %}
@@ -191,7 +194,7 @@ $().ready(function(){
 
 
 <script type="text/javascript" src="{{ static_url("js/code/shCore.js") }}"></script>
-{%  for jjj in script  %}
+{%  for jjj in article['js_list']  %}
     <script type="text/javascript" src="{{ static_url("js/code/" + jjj) }}"></script>
 {% end %}
 <script type="text/javascript">

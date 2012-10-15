@@ -25,11 +25,11 @@ article:{}  /****** for blog, comment, topic, doc, .... ***********/
     'author': dict,     # see author
     'comment_count':0,  # int
     'statistics': dict, # see statistics
+    'keywords': list,   # [key1, key2]    
+    'privilege': 'public' # view privilege
     
     @for comment
     'ref_comment_list':[],  # list [index1, index2, ...]
-    @for blog view
-    'recommend_list': [],   # list, [article, article] see [[article]]
 }
 ---------------------------------
 

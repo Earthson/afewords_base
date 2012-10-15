@@ -112,9 +112,10 @@ class BlogPage(BasePage):
     blog page, show author blog
     @get 
     '''
-    __template_file__ = 'afewords-blog.html'
+    __template_file__ = 'blog.html'
     doc = {
         'ispreview': False, # bollean 
         'article': dict,    # see [[article]] definition in dataformat 
         'recommend_list': list, # see [[blog_list]] definition in dataformat
+        'islike' : False,   # islike or not
     }
