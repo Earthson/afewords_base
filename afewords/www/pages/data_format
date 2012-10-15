@@ -21,7 +21,7 @@ article:{}  /****** for blog, comment, topic, doc, .... ***********/
     'summary': '',      # unicode
     'content': '',      # unicode
     'js_list': list,    # see js_list
-    'relase_time': '',  # unicode
+    'release_time': '',  # unicode
     'author': dict,     # see author
     'comment_count':0,  # int
     'statistics': dict, # see statistics

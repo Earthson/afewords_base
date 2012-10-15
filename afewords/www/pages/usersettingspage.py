@@ -46,6 +46,7 @@ class UserSettingFollowPage(UserSettingsPage):
     doc = {
         'settings_type' : 'follow',
         'follow_list' : [], # see [[ follow_list ]] in data_format
+        'paging_html' : '',   # unicode, create paging html
     }
 
 
@@ -54,6 +55,7 @@ class UserSettingTagPage(UserSettingsPage):
     doc = {
         'settings_type' : 'tag',
         'tag_list' : [],   # see [[ tag_list ]] in data_format
+        'paging_html' : '', # unicode, for paging 
     }
 
 
@@ -62,6 +64,7 @@ class UserSettingFollowerPage(UserSettingsPage):
     doc = {
         'settings_type' : 'follower',
         'follower_list' : [],   # see [[ follower_list ]] in data_format
+        'paging_html' : '', # unicode, for paging
     }
 
 
@@ -70,6 +73,7 @@ class UserSettingNoticePage(UserSettingsPage):
     doc = {
         'settings_type' : 'notice',
         'notice_list' : [], # see [[ notice_list ]] in data_format
+        'paging_html' : '', # unicode, for paging
     }
 
 
@@ -78,4 +82,5 @@ class UserSettingDraftPage(UserSettingsPage):
     doc = {
         'settings_type' : 'draft',
         'draft_list' : [],  # see [[ draft_list ]] in data_format
+        'paging_html' : '', # unicode, for paging
     }

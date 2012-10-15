@@ -6,7 +6,7 @@
     <div class="page_nav"><span>喜欢</span></div>
     <div class="div-20"></div>
     {% if doc['like_list'] == [] %}
-        {% if page > 1 %}
+        {% if doc['current_page'] > 1 %}
             已经浏览完！
         {% else %}
             Nothing
@@ -19,7 +19,7 @@
             <span class="like_cancel" style="display:none" page="settings" do="unlike" obj_id="{{ like_one['aid'] }}">取消</span></li>
             {% end %}
         </ul>
-        {{ create_page_block('/settings-like?page=', current_page=page, sum_count=total_num) }} 
+        {{ doc['paging_html'] }} 
     {% end %}
     <div class="div-20"></div>
     </div>

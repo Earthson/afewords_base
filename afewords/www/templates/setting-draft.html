@@ -3,35 +3,32 @@
 
 {% block setting_html %}
 
-
     <div class="like draft margin-left-0">
     <div class="page_nav"><span>草稿</span></div>
     <div class="div-20"></div>
     {% if doc['draft_list'] != [] %}
         <ul>
         {% for kk in doc['draft_list'] %}
-            {% if kk['type'] == "Blog" %}
-                <li><a href="/write?id={{ kk['id'] }}" class="draft-link" target="_blank">未完成文章</a>
-                <span class="draft_time">{{ str(kk['time'])[:16] }}</span>
-                <a style="display:none" class="draft_del" href="javascript:void(0);" article_id="{{ kk['id'] }}" type="blog" onclick="do_draft_del(this)" target="_blank">删除</a>
+            {% if kk['article_type'] == "Blog" %}
+                <li>
+                <a href="/write?id={{ kk['aid'] }}" class="draft-link" target="_blank">{{ "未完成文章" if kk['title'] == '' else kk['title'] }}</a>
+                <span class="draft_time">{{ kk['releasetime'][:16] }}</span>
+                <a style="display:none" class="draft_del" href="javascript:void(0);" article_id="{{ kk['aid'] }}" type="blog" onclick="do_draft_del(this)" target="_blank">删除</a>
                 </li>
-            {% elif kk['type'] == "Comment" %}
-                <li><a href="/blog/{{ kk['father'] }}" class="draft-link"  target="_blank">未完成评论</a><span class="draft_time">{{ str(kk['time'])[:16] }}</span>
-                <a style="display:none" class="draft_del" href="javascript:void(0);" article_id="{{ kk['id'] }}" type="comment" onclick="do_draft_del(this)" target="_blank">删除</a></li>
-            {% elif kk['type'] == 'Feedback' %}
-                <li><a href="/write?id={{ kk['id'] }}&type=group-feedback" class="draft-link"  target="_blank">未完成反馈</a><span class="draft_time">{{ str(kk['time'])[:16] }}</span>
-                <a style="display:none" class="draft_del" href="javascript:void(0);" article_id="{{ kk['id'] }}" type="feedback" onclick="do_draft_del(this)" target="_blank">删除</a></li>
-            {% elif kk['type'] == 'Topic' %}
-                <li><a href="/write?id={{ kk['id'] }}&type=group-topic" class="draft-link"  target="_blank">未完成话题</a><span class="draft_time">{{ str(kk['time'])[:16] }}</span>
-                <a style="display:none" class="draft_del" href="javascript:void(0);" article_id="{{ kk['id'] }}" type="topic" onclick="do_draft_del(this)" target="_blank">删除</a></li>
+            {% elif kk['article_type'] == 'Feedback' %}
+                <li><a href="/write?id={{ kk['aid'] }}&type=group-feedback" class="draft-link"  target="_blank">{{ "未完成反馈" if kk['title'] == '' else kk['title'] }}</a><span class="draft_time">{{ kk['release_time'][:16] }}</span>
+                <a style="display:none" class="draft_del" href="javascript:void(0);" article_id="{{ kk['aid'] }}" type="feedback" onclick="do_draft_del(this)" target="_blank">删除</a></li>
+            {% elif kk['article_type'] == 'Topic' %}
+                <li><a href="/write?id={{ kk['aid'] }}&type=group-topic" class="draft-link"  target="_blank">{{ "未完成话题" if kk['title'] == '' else kk['title'] }}</a><span class="draft_time">{{ kk['release_time'][:16] }}</span>
+                <a style="display:none" class="draft_del" href="javascript:void(0);" article_id="{{ kk['aid'] }}" type="topic" onclick="do_draft_del(this)" target="_blank">删除</a></li>
             {% else %}
             
             {% end %}
         {% end %}
         </ul>
-        {{ create_page_block('/draft?page=', current_page=page, sum_count=total_num) }}
+        {{ doc['paging_html'] }}
     {% else %}
-        {% if page > 1 %}
+        {% if doc['current_page'] > 1 %}
            已经到最后了
         {% else %}
             草稿箱里没有内容
