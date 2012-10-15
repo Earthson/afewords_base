@@ -1,0 +1,15 @@
+{% if doc['page_list'] != [] %}
+    <div class="body_page"><span></span>
+    {% for ipage in doc['page_list']  %}
+        {% if doc['current_page'] == ipage %}
+        <span>
+            <a href="{{ doc['base_url'] + str(ipage) }}" class="current" target="_blank">{{ ipage }}</a>
+        </span>
+        {% else %}
+        <span>
+            <a href="{{ doc['base_url'] + str(ipage) }}" target="_blank">{{ ipage }}</a>
+        </span>
+        {% end %}
+    {% end %}
+    </div>
+{% end %}
