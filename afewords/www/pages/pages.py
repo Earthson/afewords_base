@@ -97,7 +97,7 @@ class WritePage(BasePage):
     @login
     @get
     '''
-    __template_file__ = 'afewords-write.html'
+    __template_file__ = 'write.html'
     doc = {
         'article_src': dict,    # see the article_src
         'isedit': False,        # bollean

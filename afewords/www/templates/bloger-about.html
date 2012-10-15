@@ -6,12 +6,15 @@
 {% end %}
 
 {% block blog_base_left_body %}
+{% set user = doc['user'] %}
+{% set author = doc['author'] %}
+{% set about = doc['about'] %}
 
 <!-- for about -->
-{% if author is not None %}
+{% if author != {} %}
 <div class="about">
-{% if user is not None and user._id == author._id %}
-<div class="page_name"><a href="/write?id={{ author.about_id }}&type=about">编辑</a></div>
+{% if user != {} and user['uid'] == author['uid'] %}
+<div class="page_name"><a href="/write?id={{ about['aid'] }}&type=about">编辑</a></div>
 {% else %}
 
 <div class="page_name">关于我</div>
@@ -19,7 +22,7 @@
 <div class="about_body">
 <div class="bb_con">
 
-{{ author.about_view_body}}
+{{ about['content']}}
 
 </div>
 </div>

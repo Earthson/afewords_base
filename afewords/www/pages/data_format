@@ -20,6 +20,7 @@ article:{}  /****** for blog, comment, topic, doc, .... ***********/
     'title': '',        # unicode
     'summary': '',      # unicode
     'content': '',      # unicode
+    'content_short': '',    # unicode, 200 letter for content
     'js_list': list,    # see js_list
     'release_time': '',  # unicode
     'author': dict,     # see author
@@ -50,6 +51,7 @@ book: {}
     'all_catalog_count': 0, # unicode
     'complete_count': 0,    # unicode
     'author': dict,     # see author definition
+    'complete_rate' : 75,   # 75 ==> 75%
 }
 ----------------------------------
 

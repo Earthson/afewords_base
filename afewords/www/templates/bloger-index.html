@@ -6,26 +6,29 @@
 <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/blog.css") }}" />
 {% end %}
 
+{% set author = doc['author'] %}
+{% set user = doc['user'] %}
+{% set blog_list = doc['blog_list'] %}
 
 {% block blog_base_left_body %}
 
-{% if author is not None %}
+{% if author != {} %}
 {# authot is not none start #}
 
 {% if blog_list != [] %}
 
     {% for blog_one in blog_list %}
         <div class="blog_one">
-        <div class="title"><a target="_blank" href="/blog/{{ blog_one['id'] }}">{{ blog_one['title'] }}</a></div>
+        <div class="title"><a target="_blank" href="/blog/{{ blog_one['aid'] }}">{{ blog_one['title'] }}</a></div>
         {% if blog_one['summary'] != '' %}
             <div class="summary">摘要：{{ blog_one['summary'] }}</div>
         {% end %}
-        <div class="content">{{ blog_one['view_body'] }}</div>
-        <div class="control"><span class="time">{{ str(blog_one['time'])[:10] }}</span></div>
+        <div class="content">{{ blog_one['content_short'] }}</div>
+        <div class="control"><span class="time">{{ blog_one['release_time'][:10] }}</span></div>
         </div>
     {% end %}
-
-    {{ create_page_block('/bloger/' + str(author._id) + '?tag='+ tag + '&page='  , current_page=page, sum_count=total_num, page_count=5) }}
+    
+    {{ doc['paging_html'] }}
 
 {% else %}
 

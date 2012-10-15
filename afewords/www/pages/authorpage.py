@@ -9,6 +9,10 @@ class AuthorPage(BasePage):
     doc = {
         'bloger_type' : 'blog',
         'author' : {},  # see [[ author ]] in data_format
+        'current_page' : 1, # int 
+        'paging_html' : '', # unicode, for paging
+        'tag_list' : [],    # see [[tag_list]]
+        'current_tag' : 'default' # unicode
     }
 
 

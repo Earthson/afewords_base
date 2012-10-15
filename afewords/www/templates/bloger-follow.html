@@ -1,11 +1,13 @@
 {% extends "blog-base.html" %}
 {# for blog page --- user follow and follower #}
 
-
+{% set author = doc['author'] %}
+{% set user = doc['user'] %}
+{% set follow_list = doc['follow_list'] %}
 
 {% block blog_base_left_body %}
 
-{% if author is not None %}
+{% if author != {} %}
 
 <!-- follow and follower -->
 
@@ -20,12 +22,12 @@
     <div class="follow_one">
     <img src="{{ follow_one['thumb'] }}"/>
     <div class="info">
-    <span class="name"><a href="/bloger/{{ follow_one['id'] }}" target="_blank">{{ follow_one['name'] }}</a></span>
-    {% if user is not None and user._id != follow_one['id'] %}
-        {% if user.follow_lib[str(follow_one['id'])] is not None %}
-            <span class="control"><a href="javascript:void(0);" do="unfollow" follow_id="{{ follow_one['id'] }}" page="follow">取消关注</a></span>
+    <span class="name"><a href="/bloger/{{ follow_one['uid'] }}" target="_blank">{{ follow_one['name'] }}</a></span>
+    {% if user != {} and user['uid'] != follow_one['uid'] %}
+        {% if follow_one['isfollow'] %}
+            <span class="control"><a href="javascript:void(0);" do="unfollow" follow_id="{{ follow_one['uid'] }}" page="follow">取消关注</a></span>
         {% else %}
-            <span class="control"><a href="javascript:void(0);" do="follow" follow_id="{{ follow_one['id'] }}" page="follow">关注</a></span>
+            <span class="control"><a href="javascript:void(0);" do="follow" follow_id="{{ follow_one['uid'] }}" page="follow">关注</a></span>
         {% end %}
     {% end %}
     <!--<span class="control"><a href="#" target="_blank">留言</a></span>-->
@@ -34,7 +36,7 @@
     </li>
     {% end %}
     </ul>
-    {{ create_page_block('/bloger/' + str(author._id) + '/follow?page='  , current_page=page, sum_count=total_num, page_cap=9) }}
+    {{ doc['paging_html'] }}
 {% end %}
 </div>
 
