@@ -1,0 +1,57 @@
+{% extends "setting-base.html" %}
+
+{% block setting_html %}
+
+
+    <!-- for avatar -->
+    <div class="settings margin-left-0">
+    <div class="page_nav"><span>头像</span></div>
+    <div id="self">
+    <div class="self-img-up">
+    <form action="/upload-image" method="post" target="self-iframe" enctype="multipart/form-data" >
+    <table style="margin-top:25px;">
+    <tr><td width="30%"><input type="file" name="picture" id="file-avatar" />
+    <input type="hidden" name="picture_type" value="avatar" />{{ xsrf_form_html() }}</td>
+    <td width="50%"><span class="self-upload-process">选择头像图片</span></td>
+    <td width="20%"><button class="self-button" type="submit" id="self-img-up-upb">上传头像</button></td>
+    </tr>
+    </table>
+    </form>
+    <iframe name="self-iframe" id="self-iframe" style="display:none;"></iframe>
+    </div>
+    {% if doc['avatar_path'] != '' %}
+        <div class="self-img-up" style="margin-top:20px;" id="self-img-up-tag">裁剪头像：</div>
+        <table style="margin-top:5px;" id="form-avatar">
+        <tr>
+        <td rowspan="5" id="crop-contain">
+        <img src="{{ doc['avatar_path'] }}" id="crop-obj" alt="Flowers" />
+        </td>
+        </tr>
+        <tr><td align="center" width="150px;">
+        <div style="width:120px;height:120px;overflow:hidden;">
+        <img src="{{ doc['avatar_path'] }}" id="preview-120" alt="Preview" />
+        </div>
+        </td>
+        </tr>
+        <tr><td align="center" height="100px;">
+        <div style="width:50px;height:50px;overflow:hidden;">
+        <img src="{{ doc['avatar_path'] }}" id="preview-50" alt="Preview" />
+        </div>
+        </td></tr>
+        <tr><td align="center" id="crop-process">&nbsp;</td></tr>
+        <tr><td align="center">
+        <input type="hidden" name="pos-x" id="pos-x" value="0" />
+        <input type="hidden" name="pos-y" id="pos-y" value="0" />
+        <input type="hidden" name="pos-w" id="pos-w" value="0" />
+        <input type="hidden" name="pos-time" id="pos-time" value="1" />
+        <button class="self-intro-button" style="float:none;">提交</button>
+        </td></tr>
+        </table>
+    {% end %}
+    </div>
+    <div class="div-20"></div>
+    <div class="div-20"></div>
+    </div>
+
+
+{% end %}
