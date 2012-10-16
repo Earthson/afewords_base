@@ -52,8 +52,25 @@ book: {}
     'complete_count': 0,    # unicode
     'author': dict,     # see author definition
     'complete_rate' : 75,   # 75 ==> 75%
+    'summary':{},   # see [[ article ]] 
+    'chapter_list':[],  # see [[ chapter_list ]]
 }
 ----------------------------------
+
+chapter: {}
+----------------------------------
+{
+    'sid': '',  # unicode, section id
+    'chapter': '1', # unicode, section chapter, like 1.2.1
+    'title': '',    # unicode, section title
+    'article_count': 0, # int
+    'article_list': [], # see [[ blog_list ]]
+    'sepc_article_count': 0,    # int
+    'subcatalog_count': 0,  # int 
+    'subcatalog_list': [],  # [ book1, book2 ]], book1 see [[ book ]]
+}
+----------------------------------
+
 
 
 tag_list: [unicode, unicode, ...]
@@ -119,6 +136,13 @@ book_list: [dict, dict, ...]
 ]
 ---------------------------------
 
-
+chapter_list: [dict, dict, ...]
+---------------------------------
+[
+    {
+        [[ chapter ]]
+    },
+    ...
+]
 
 
