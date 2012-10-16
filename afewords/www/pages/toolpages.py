@@ -15,13 +15,12 @@ class PagingPage(BaseToolPage):
     }
     
     def get_urls(self, base_url='', para_dic=None, page_list):
+        from afutils.url_utils import url_with_para
         self['page_list'] = [each for each in page_list]
         para_dic = dict() if para_dic is None else dict(para_dic)
         para_dics = [dict(para_dic.items()+('page', each)) 
                         for each in self['page_list']]
-        self['urls'] = [base_url+'?'+
-            '&'.join(ek+'='+ev for ek, ev in each.items())
-            for each in para_dics]
+        self['urls'] = [url_with_para(base_url, each) for each in para_dics]
 
 
 @with_attr
