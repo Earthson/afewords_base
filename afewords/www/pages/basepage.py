@@ -39,6 +39,21 @@ class AFDocBase(object):
 
 
 @with_attr
+class BaseToolPage(AFDocBase):
+    __template_file__ = ''
+    __loader__ = Loader('templates/tools')
+
+    doc = {
+        'main_url' : af_conf['main_url'],
+    }
+
+    def render_string(self):
+        return self.__loader__.load(self.__template_file__).generate(doc=self.doc)
+
+    __str__ = render_string
+
+
+@with_attr
 class BaseMail(AFDocBase):
     subject = u'Mail from afewords'
     __template_file__ = ''

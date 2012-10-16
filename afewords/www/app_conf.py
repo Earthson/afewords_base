@@ -8,6 +8,7 @@ from handlers.testhandler import TestHandler
 from handlers.checkhandler import CheckHandler
 from handlers.resethandler import ResetHandler
 from handlers.repeatresetmailhandler import RepeatResetMailHandler
+from handlers.userbloghandler import UserBlogLibHandler
 
 app_handlers = {
     (r'/', IndexHandler), #MainHandler),
@@ -19,6 +20,7 @@ app_handlers = {
     (r'/check', CheckHandler),
     (r'/reset', ResetHandler),
     (r'/repeat-mail', RepeatResetMailHandler),
+    (r'/home(.*)', UserBlogLibHandler),
 }
 
 app_settings = {

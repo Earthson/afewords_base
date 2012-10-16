@@ -1,9 +1,9 @@
 #coding=utf-8
 
-from basepage import BasePage, with_attr
+from basepage import BaseToolPage, with_attr
 
 @with_attr
-class PagingPage(BasePage):
+class PagingPage(BaseToolPage):
     '''
     create paging html
     '''
@@ -11,12 +11,21 @@ class PagingPage(BasePage):
     doc = {
         'current_page' : 1, # int , current_page
         'page_list' : [],   # list, [1,2,3,4,5]
-        'base_url' : '',    # unicode, like /like?page=
+        'urls' : [],    # unicode, like /like?page=
     }
+    
+    def get_urls(self, base_url='', para_dic=None, page_list):
+        self['page_list'] = [each for each in page_list]
+        para_dic = dict() if para_dic is None else dict(para_dic)
+        para_dics = [dict(para_dic.items()+('page', each)) 
+                        for each in self['page_list']]
+        self['urls'] = [base_url+'?'+
+            '&'.join(ek+'='+ev for ek, ev in each.items())
+            for each in para_dics]
 
 
 @with_attr
-class CatalogPage(BasePage):
+class CatalogPage(BaseToolPage):
     '''
     create catalog block html
     '''

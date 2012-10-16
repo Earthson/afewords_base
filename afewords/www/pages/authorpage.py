@@ -16,6 +16,7 @@ class AuthorPage(BasePage):
     }
 
 
+
 @with_attr
 class AuthorBlogPage(AuthorPage):
     __template_file__ = 'bloger-index.html'
