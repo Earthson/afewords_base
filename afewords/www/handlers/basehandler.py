@@ -6,6 +6,7 @@ from user import User
 from generator import id_generator, index_generator
 
 from afutils.security import *
+from afutils.url_utils import url_with_para
 
 def with_nologin(operate):
     def wrapper(self, *args, **kwargs):
@@ -24,6 +25,22 @@ def with_login(operate):
         operate(self, *args, **kwargs)
         return
     return wrapper
+
+class BaseHandlePara(object):
+    paradoc = {
+    }
+
+    def __init__(self, handler):
+        self.handler = handler
+        self.paradoc = dict(self.paradoc)
+        self.read_para()
+
+    def read_para(self):
+        pass
+
+    def verify(self):
+        return True
+
 
 class BaseHandler(RequestHandler):
     def redirect_with_para(self, url, paradoc):
