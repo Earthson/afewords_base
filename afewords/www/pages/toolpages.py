@@ -15,3 +15,14 @@ class PagingPage(BasePage):
     }
 
 
+@with_attr
+class CatalogPage(BasePage):
+    '''
+    create catalog block html
+    '''
+    __template_file__ = 'tool-catalog.html'
+    doc = {
+        'isedit': False,    # bollean
+        'node_list': [],    # list
+        'bid': '',  # unicode
+    }
