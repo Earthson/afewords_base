@@ -1,0 +1,58 @@
+{% set node_list = doc['node_list'] %}
+{% set edit = doc['isedit'] %}
+{% set book_id = doc['bid'] %}
+{% set nest = 1 %}
+{% set normal_li = '<li node_id="%s"><span class="num">%s</span><span><a href="/book/%s/catalog/%s">%s</a></span>%s%s</li>' %}
+{% set edit_li = '<span class="catalog_edit">修改</span><span class="catalog_del">删除</span></li>' %}
+{% set complete_point = '<span class="complete%s">%s/%s/%s&nbsp;%s</span>' %}
+
+{% if len(node_list) < 1 %} 
+    <ul class="catalog_ul" book_id="{{ book_id }}"></ul>
+{% else %}
+    {% if not edit %}
+        <ul class="catalog_ul" book_id="{{ book_id }}">
+    {% else %}
+        <ul class="catalog_ul catalog_eidt1" book_id="{{ book_id }}">
+    {% end %}
+    
+    {% for item in node_list %}
+        {% set tmp_nest = len(item['node_section'].split('.')) %}
+
+        {% set complete_str = complete_point % (int(item['node_spec_count'] > 0), item['node_spec_count'],item['node_article_count'], item['node_subcatalog_count'], ('&radic;' if item['node_spec_count'] > 0 else '&times;')) %}
+
+        {% set tmp_normal_li = normal_li % (item['node_id'], item['node_section'], book_id, item['node_id'], item['node_title'], complete_str, '') %}
+
+        {% set tmp_edit_li  = normal_li % (item['node_id'], item['node_section'], book_id, item['node_id'], item['node_title'], '', edit_li) %}
+
+        {% if tmp_nest >= nest }
+            {% if tmp_nest == nest %}
+                {% set nest = nest + 1 %}
+                <ul class="margin">
+            {% end %}
+            {% if not edit %}
+                {{ tmp_normal_li }}
+            {% else %}
+                {{ tmp_edit_li }}
+            {% end %}
+
+        {% else %}
+            {% for ii in range(nest - tmp_nest) %}
+                </ul>
+            {% set nest = tmp_nest %}
+            {% if not edit %}
+                {{ tmp_normal_li }}
+            {% else %}
+                {{ tmp_edit_li }}
+            {% end %}
+        {% end %}
+    {% end %}
+</ul>
+{% if nest != 1 %}
+    {% for item in range(nest -1) %}
+        </ul>
+    {% end %}
+{% end %}
+        
+            
+
+{% end %}
