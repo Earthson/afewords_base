@@ -1,0 +1,96 @@
+{% extends "group-base.html" %}
+
+
+{% block css_link_group_write %}
+<link type="text/css" rel="stylesheet" href="{{ static_url("css/code/shCore.css") }}" />
+<link type="text/css" rel="stylesheet" href="{{ static_url("css/code/shThemeEmacs.css") }}" />
+{% end %}
+
+{% block group_base_left_body %}
+
+<div id="body_content">
+<div class="group_content" style="padding-top:60px;">
+
+<div class="group_nav group_{{ group_base_type }}_img group_nav_img_right">
+
+<span class="group_nav_title">{{article.name}}</span>
+</div>
+{% if member_type is not None and str(user._id) == str(article.author_id) %}
+<div class="group_topic_edit"><a href="/write?id={{ article._id }}&type=group-{{ group_base_type }}"/>修改</a></div>
+{% end %}
+<div class="group_topic_con">
+
+<div class="bb_con">
+{{ article.view_body }}
+</div>
+
+<div class="b_bottom_wrap g_t_b_b_wrap" blog="{{ article._id }}">
+<span style="margin-left:10px;" class="bot-comment" ref_type="group-{{ group_base_type }}" 
+title="写评论" article_id="{{ article._id }}" father_type="group-{{ group_base_type }}" father_id="{{ article._id }}">写评论</span>
+<span class="bot-author-name"  style="margin-right:10px;"><a href="/bloger/{{ article.author_id }}">{{ article.author_name }}</a></span>
+
+<span class="bot-time">{{ str(article.release_time)[5:16] }}&nbsp;/&nbsp;</span>
+
+</div>
+
+<div class="b_com"  style="border-top:#ccc 1px dashed;">
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+</div>
+</div>
+{% end %}
+
+
+{% block group_one_script %}
+{% if article is not None %}
+    <script type="text/javascript" >
+    $(document).ready(function(){
+        current_load_blog = {
+            'id': '{{ article._id }}',
+            'comment': ''+ ((location.hash.match('#com-([^#]*)') !=null) ? location.hash.match('#com-([^#]*)')[1] : ''),
+        }
+        $("#write_textarea").CreateEditor('','comment','','{{ article._id }}');
+        var first_page = $('<span>&nbsp;</span>');
+        var load_one = current_load_blog['comment'] == '' ? "no" : "yes";
+        first_page.attr({"pos": current_load_blog['comment'], "load_one":load_one, 
+            'article_type':'group-{{ group_base_type }}', 'article_id':'{{ article._id }}'});
+        $Write.comment_get(first_page);
+    });
+    </script>
+    <script type="text/javascript" src="{{ static_url("js/code/shCore.js") }}"></script>
+    {%  for jjj in script  %}
+        <script type="text/javascript" src="{{ static_url("js/code/" + jjj) }}"></script>
+    {% end %}
+    <script type="text/javascript">
+    $().ready(function(){
+	   SyntaxHighlighter.all();
+    });
+    </script>
+    <script type="text/javascript" src="/static/js/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+        inlineMath: [ ['[math]', '[/math]']],
+        displayMath: [ ['[equation]', '[/equation]']],
+        processEscapes: true
+        },
+        "HTML-CSS": { availableFonts: ["TeX"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+    });
+    </script>
+    
+{% end %}
+
+{% end %}
