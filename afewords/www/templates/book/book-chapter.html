@@ -50,8 +50,8 @@
             <a href="#" >wenzhang</a>
         {% end %}
         {% if user != {} and user['uid'] == book['author']['uid'] %}
-        <span class="mark_article"><a href="javascript:void(0)" do="mark_recommend" relation_id="{{ item['article_relation_id'] }}">指定</a></span>
-        <span class="del_article"><a href="javascript:void(0)" do="del_recommend" relation_id="{{ item['article_relation_id'] }}">删除</a></span>
+        <span class="mark_article"><a href="javascript:void(0)" do="mark_recommend" relation_id="{{ item['relation_id'] }}">指定</a></span>
+        <span class="del_article"><a href="javascript:void(0)" do="del_recommend" relation_id="{{ item['relation_id'] }}">删除</a></span>
         {% end %}
         </li>
     {% end %}
@@ -63,19 +63,19 @@
 
 <div class="book_node_con_catalog con_current0">
 <div class="book_node_con_recommend">
-<a href="javascript:void(0)" book_id="{{ book._id }}" node_id="{{ current_node['node_id'] }}" want="catalog">我要推荐知识谱</a>
+<a href="javascript:void(0)" book_id="{{ book['bid'] }}" node_id="{{ current_chapter['cid'] }}" want="catalog">我要推荐知识谱</a>
 </div>
 
-{% if len(current_node['node_catalogs']) == 0 %}
-    暂无知识谱被推荐到章节{{ current_node['node_section'] }}中！
+{% if len(current_chapter['subcatalog_list']) == 0 %}
+    暂无知识谱被推荐到章节{{ current_chapter['subcatalog_list'] }}中！
 {% else %}
-    <ul class="node_style" book_id="{{ book._id }}" node_id="{{ current_node['node_id'] }}">
-    {% for item in current_node['node_catalogs'] %}
+    <ul class="node_style" book_id="{{ book['bid'] }}" node_id="{{ current_chapter['cid'] }}">
+    {% for item in current_chapter['subcatalog_list'] %}
         <li>
-            <a href="/book/{{ item['book_id'] }}" target="_blank">{{ item['book_name'] }}</a>
+            <a href="/book/{{ item['bid'] }}" target="_blank">{{ item['name'] }}</a>
 
-        {% if user is not None and user._id == book.owner_id %}
-        <span class="del_article"><a href="javascript:void(0)" do="del_recommend" relation_id="{{ item['book_relation_id'] }}">删除</a></span>
+        {% if user !={}  and user['uid'] == book['auhtor']['uid'] %}
+        <span class="del_article"><a href="javascript:void(0)" do="del_recommend" relation_id="{{ item['relation_id'] }}">删除</a></span>
         {% end %}
         </li>
     {% end %}
@@ -97,15 +97,13 @@
 
 {% block script_book_node_bottom %}
 <script type="text/javascript" src="{{ static_url("js/code/shCore.js") }}"></script>
-{%  for jjj in current_node['node_main_script']  %}
+{%  for jjj in current_chapter['js_list']  %}
     <script type="text/javascript" src="{{ static_url("js/code/" + jjj) }}"></script>
 {% end %}
-{#
 <script type="text/javascript">
 $().ready(function(){
 	SyntaxHighlighter.all();
 });
 </script>
-#}
 
 {%end %}
