@@ -11,6 +11,12 @@ author:{}
 }
 --------------------------------
 
+owner: {}
+--------------------------------
+{
+    'type': 'User',    # unicode, User or Group
+    'entity': {},   # dict, see [[ author ]] or [[ group ]]
+}
 
 article:{}  /****** for blog, comment, topic, doc, .... ***********/
 ---------------------------------
@@ -21,14 +27,15 @@ article:{}  /****** for blog, comment, topic, doc, .... ***********/
     'summary': '',      # unicode
     'content': '',      # unicode
     'content_short': '',    # unicode, 200 letter for content
-    'js_list': list,    # see js_list
+    'js_list': list,    # see  [[ js_list ]]
     'release_time': '',  # unicode
-    'author': dict,     # see author
+    'author': dict,     # see [[ author ]]
     'comment_count':0,  # int
-    'statistics': dict, # see statistics
+    'statistics': dict, # see [[ statistics ]]
     'keywords': list,   # [key1, key2]    
     'privilege': 'public' # view privilege
-    
+    'owner': {},    # see [[ owner ]]    
+
     @for comment
     'ref_comment_list':[],  # list [index1, index2, ...]
     
@@ -39,10 +46,60 @@ article:{}  /****** for blog, comment, topic, doc, .... ***********/
     'tableform_list': [],   # see [[ tableform ]]
     'reference_list': [],   # see [[ reference ]]
     'langcode_list': [],    # see [[ langcode ]]
+    
+    @for book
+    'relation_id': '', # unicode
+
 }
 ---------------------------------
 
+picture: {}
+--------------------------------
+{
+    'alias': 1, # int 
+    'name': '', # unicode
+    'thumb_name': '',   # unicode
+}
+--------------------------------
 
+equation: {}
+---------------------------------
+{
+    'alias': 1, # int
+    'name': '', # unicode
+    'mode': 'display',  # unicode, display or inline
+    'body': '', # unicode
+}
+---------------------------------
+
+reference: {}
+----------------------------------
+{
+    'alias': 1, # int
+    'name': '', # unicode
+    'url': '',  # unicode
+    'body': '', # unicode
+}
+----------------------------------
+
+langcode: {}
+-----------------------------------
+{
+    'alias': 1, # int
+    'name': '', # unicode
+    'lang': '', # unicode, 
+    'body': '', # unicode
+}
+---------------------------------
+
+tableform: {}
+---------------------------------
+{
+    'alias': 1, # int
+    'name': '', # unicode
+    'body': '', # unicode
+}
+---------------------------------
 statistics: {}
 ---------------------------------
 {
@@ -80,6 +137,16 @@ chapter: {}
 ----------------------------------
 
 
+group: {}
+---------------------------------
+{
+    'gid': '',  # unicode, group id
+    'name': '', # unicode, group name
+    'thumb': '',    # unicode, group avatar
+    'about': {},    # dict, see [[ article ]]
+    'tag_list': {}, # dict, see [[ tag_list ]]
+}
+---------------------------------
 
 tag_list: [unicode, unicode, ...]
 ---------------------------------
@@ -96,6 +163,7 @@ js_list: [ unicode, unicode, ... ]
 
 follow_list:[dict,dict,...]
 follower_list:[]
+member_list: []
 -------------------------------
 [ 
     {
@@ -109,6 +177,10 @@ follower_list:[]
 blog_list: [dict, dict, ...]
 like_list: [dict, dict, ...]
 draft_list: [dict, dict, ...]
+doc_list: [dict, ...] # for group
+feedback_list: [dict, ...] # for group, book
+bulletin_list: [dict, ...] # for group, book
+topic_list: [dict, ...] # for group, book
 --------------------------------
 [
     {
