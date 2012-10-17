@@ -149,6 +149,7 @@ group: {}
     'thumb': '',    # unicode, group avatar
     'about': {},    # dict, see [[ article ]]
     'tag_list': {}, # dict, see [[ tag_list ]]
+    'privilege': int,   # int, 
 }
 ---------------------------------
 
