@@ -7,7 +7,7 @@ class PagingPage(BaseToolPage):
     '''
     create paging html
     '''
-    __template_file__ = 'tool-paging.html'
+    __template_file__ = 'tools/tool-paging.html'
     doc = {
         'current_page' : 1, # int , current_page
         'page_list' : [],   # list, [1,2,3,4,5]
@@ -28,7 +28,7 @@ class CatalogPage(BaseToolPage):
     '''
     create catalog block html
     '''
-    __template_file__ = 'tool-catalog.html'
+    __template_file__ = 'tools/tool-catalog.html'
     doc = {
         'isedit': False,    # bollean
         'node_list': [],    # list
