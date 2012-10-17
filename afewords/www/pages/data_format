@@ -31,6 +31,14 @@ article:{}  /****** for blog, comment, topic, doc, .... ***********/
     
     @for comment
     'ref_comment_list':[],  # list [index1, index2, ...]
+    
+    @for edit
+    'body': '',
+    'picture_list': [],     # see [[ pictue ]]
+    'equation_list': [],    # see [[ equation ]]
+    'tableform_list': [],   # see [[ tableform ]]
+    'reference_list': [],   # see [[ reference ]]
+    'langcode_list': [],    # see [[ langcode ]]
 }
 ---------------------------------
 
@@ -60,8 +68,8 @@ book: {}
 chapter: {}
 ----------------------------------
 {
-    'sid': '',  # unicode, section id
-    'chapter': '1', # unicode, section chapter, like 1.2.1
+    'cid': '',  # unicode, section id
+    'chapter_num': '1', # unicode, section chapter, like 1.2.1
     'title': '',    # unicode, section title
     'article_count': 0, # int
     'article_list': [], # see [[ blog_list ]]

@@ -1,10 +1,14 @@
 {% extends "book-base.html" %}
 
+{% set book = doc['book'] %}
+{% set want = doc['want_page'] %}
+{% set user = doc['user'] %}
+{% set author = doc['book']['author'] %}
 
 {% block book_base_left_body %}
 
 <div class="book_nav_mark">
-{% if kind == "book-edit" %}
+{% if doc['isedit'] %}
 <span>修改知识谱</span>
 {% else %}
 <span>知识谱</span>
@@ -12,11 +16,11 @@
 </div>
 
 <div class="book_nav_title">
-<span class="book_name_tip"><a href="/book/{{ book._id }}">{{ book.name }}</a></span>
+<span class="book_name_tip"><a href="/book/{{ book['bid'] }}">{{ book['name' }}</a></span>
 </div>
 
 
-{% if want != "node" %}
+{% if want != "chapter" %}
 <div class="book_tip current_tip{{ int(want=="cover") }}">
 <span page="middle_book_cover">封面</span>
 </div>
@@ -43,18 +47,9 @@
 </div>
 #}
 {% else %}
-    {% for item in book.node_lib %}      
-        <div class="book_tip_normal current_tip{{ int(current_node['node_id'] == item['node_id']) }}">
-      
-        {#
-        {% if item['node_spec_count'] > 0 %}
-        <div class="book_node_process1">&radic;</div>
-        {% else %}
-        <div class="book_node_process">&times;</div>
-        {% end %}
-        #}
-        
-        <span class="book_node_tip"><a href="/book/{{book._id}}/catalog/{{ item['node_id'] }}">{{ item['node_section'] }}&nbsp;-&nbsp;{{ item['node_title'] }}</a></span>
+    {% for item in book['chapter_list'] %}      
+        <div class="book_tip_normal current_tip{{ int(doc['current_chapter']['cid'] == item['cid']) }}">
+        <span class="book_node_tip"><a href="/book/{{book['bid']}}/catalog/{{ item['cid'] }}">{{ item['chapter_num'] }}&nbsp;-&nbsp;{{ item['title'] }}</a></span>
         </div>
     {% end %}
 {% end %}
@@ -68,13 +63,13 @@
 {% block book_base_right_body %}
 
 <div id="middle_book" class="middle_book_cover current_middle{{ int(want=="cover") }}">
-<div id="book_name">{{ book.name }}</div>
-<div id="book_admin"><a href="/bloger/{{ book.owner_id }}">{{ book.owner_name }}</a>审</div>
+<div id="book_name">{{ book['name'] }}</div>
+<div id="book_admin"><a href="/bloger/{{ author['uid'] }}">{{ author['name'] }}</a>审</div>
 <div id="book_author">
 {#
 <a href="" >涂德巨</a>
 <span>联合著</span>
-#}<span>完成度 {{ book.complete }}% (指定章节{{ book.complete_count }}/总章节数{{ book.node_sum }})</span>
+#}<span>完成度 {{ book['complete_rate'] }}% (指定章节{{ book['complete_count'] }}/总章节数{{ book['all_catalog_count'] }})</span>
 </div>
 <div id="book_press">子曰出版社&reg;</div>
 </div>
@@ -82,24 +77,24 @@
 
 
 <div id="middle_book" class="middle_book_summary current_middle{{ int(want=="summary") }}">
-<div class="book_header"><span class="header_left">内容摘要</span><span class="header_right">{{ book.name }}</span></div>
+<div class="book_header"><span class="header_left">内容摘要</span><span class="header_right">{{ book['name'] }}</span></div>
 <div class="book_summary">
-{% if kind != "book-edit" %}
-    {% if user is not None and user._id == book.owner_id %}
-        <div class="book_do_a" book_id="{{ book._id }}"><a href="/book-edit/{{ book._id }}?want=summary">修改摘要</a></div>
+{% if not doc['isedit'] %}
+    {% if user != {} and user['uid'] == author['uid'] %}
+        <div class="book_do_a" book_id="{{ book['bid'] }}"><a href="/book-edit/{{ book['bid'] }}?want=summary">修改摘要</a></div>
     {% end %}
 {% end %}
 <div class="book_summary_tip">内容摘要</div>
 <div class="book_summary_con">
 
-{% if kind == "book-edit" %}
+{% if doc['isedit'] %}
 <div id="book_write_wrap">
-<textarea id="write_textarea" class="book_textarea">{{ book.about_body }}</textarea>
+<textarea id="write_textarea" class="book_textarea">{{ book['summary']['body'] }}</textarea>
 <button class="self-intro-button">提交</button><span class="self-info-process">&nbsp;</span>
 </div>
 {% else %}
 <div class="bb_con">
-{{ book.about_view_body  }}
+{{ book['summary']['content']  }}
 </div>
 {% end %}
 </div>
@@ -109,19 +104,19 @@
 
 
 <div id="middle_book" class="middle_book_catalog current_middle{{ int(want=="catalog") }}">
-<div class="book_header"><span class="header_left">目录</span><span class="header_right">{{ book.name }}</span></div>
+<div class="book_header"><span class="header_left">目录</span><span class="header_right">{{ book['name'] }}</span></div>
 <div class="book_catalog">
-{% if kind == "book-edit" %}
-<div class="book_catalog_add" book_id="{{ book._id }}">添加新目录</div>
+{% if doc['isedit'] %}
+<div class="book_catalog_add" book_id="{{ book['bid'] }}">添加新目录</div>
 {% else %}
-    {% if user is not None and user._id == book.owner_id %}
-        <div class="book_do_a" book_id="{{ book._id }}"><a href="/book-edit/{{ book._id }}?want=catalog">修改目录</a></div>
+    {% if user !={} and user['uid'] == author['uid'] %}
+        <div class="book_do_a" book_id="{{ book['bid'] }}"><a href="/book-edit/{{ book['bid'] }}?want=catalog">修改目录</a></div>
     {% end %}
 {% end %}
 <div class="book_catalog_tip">目录</div>
 <div class="book_catalog_con">
 
-{{ node_block_html }}
+{{ catalog_html }}
 
 <!--
 <ul class="catalog_ul catalog_edit1">
@@ -186,16 +181,17 @@
 
 
 {% block script_book_bottom %}
-    {% if kind == "book-edit" %}
+    {% if doc['isedit']  %}
         <script type="text/javascript" >
             $(document).ready(function(){
                 {#{{ article = book.about_object }}#}
-                $("#write_textarea").CreateEditor("{{ article._id }}","book-about",'', "0",'', "{{ book._id }}");
-                pic_lib = {{ json_encode(article.picture_lib) }};
-                math_lib = {{ json_encode(article.equation_lib) }};
-                table_lib = {{ json_encode(article.tableform_lib) }};
-                ref_lib = {{ json_encode(article.reference_lib) }};
-                code_lib = {{ json_encode( article.langcode_lib ) }};
+                {% set article = book['summary'] %}
+                $("#write_textarea").CreateEditor("{{ book['summary']['aid'] }}","book-about",'', "0",'', "{{ book['bid'] }}");
+                pic_lib = {{ json_encode(article['picture_list']) }};
+                math_lib = {{ json_encode(article['equation_list'] }};
+                table_lib = {{ json_encode(article['tableform_list'] }};
+                ref_lib = {{ json_encode(article['reference_list']) }};
+                code_lib = {{ json_encode( article['langcode_list'] ) }};
                 $("#write_textarea").lib_init(pic_lib, math_lib, table_lib, code_lib, ref_lib);	                  
             });
         </script>
@@ -206,7 +202,7 @@
     {% end %}
     {% block script_book_node_bottom %}{%end %}
     <script type="text/javascript" src="{{ static_url("js/code/shCore.js") }}"></script>
-    {%  for jjj in book.about_script  %}
+    {%  for jjj in book['summary']['js_list']  %}
     <script type="text/javascript" src="{{ static_url("js/code/" + jjj) }}"></script>
     {% end %}
 
