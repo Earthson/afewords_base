@@ -1,4 +1,13 @@
 +++++++++++++++++++++ data format ++++++++++++++++++++++++++
+user:{}
+-------------------------------
+{
+    'uid': '',  # unicode
+    'name': '', # unicode
+    'draft_count': 0,  # int
+    'notice_count': 0, # int
+    'thumb': '',    # unicode
+}
 
 author:{}
 --------------------------------
@@ -149,7 +158,7 @@ group: {}
     'thumb': '',    # unicode, group avatar
     'about': {},    # dict, see [[ article ]]
     'tag_list': {}, # dict, see [[ tag_list ]]
-    'privilege': int,   # int, 
+    'member_type': 'Member',   # unicode, Member or Manager or None
 }
 ---------------------------------
 

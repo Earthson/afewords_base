@@ -7,14 +7,14 @@ class GroupBasePage(BasePage):
     __template_file__ = 'group/group-base.html'
     doc = {
         'group': {},    # dict, see [[ group ]] in data_format
-        'group_page':'index', # unicode, index, feedback, topic, bulletin,..
+        'group_page':'home', # unicode, index, feedback, topic, bulletin,..
     }
 
 @with_attr
 class GroupIndexPage(GroupBasePage):
     __template_file__ = 'group/group-index.html'
     doc = {
-        'group_page': 'index', # unicode str
+        'group_page': 'home', # unicode str
         'topic_list': [],   # list, see [[ topic_list ]] in data_format
         'bulletin_list': [],    # list, see [[ bulletin_list ]] in data_format
     }
