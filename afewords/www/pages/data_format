@@ -1,4 +1,13 @@
 +++++++++++++++++++++ data format ++++++++++++++++++++++++++
+user:{}
+-------------------------------
+{
+    'uid': '',  # unicode
+    'name': '', # unicode
+    'draft_count': 0,  # int
+    'notice_count': 0, # int
+    'thumb': '',    # unicode
+}
 
 author:{}
 --------------------------------
@@ -8,10 +17,6 @@ author:{}
     'name': '',     # unicode
     'isfollow':False,  # bollean
     'isme': False,  # bollean
-    
-    @for user
-    'notice_count': 0,  # int 
-    'draft_count': 0,   # int
 }
 --------------------------------
 
