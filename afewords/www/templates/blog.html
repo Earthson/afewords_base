@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+
 {% block css_link %}
 <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/blog.css") }}" />
 <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/write.css") }}" />
@@ -12,6 +13,11 @@
 {% set user = doc['user'] %}
 
 {% block middle_body %}
+
+{% set article = doc['article'] %}
+{% set author = article['author'] %}
+{% set statis = article['statistics'] %}
+{% set user = doc['user'] %}
 
 {% if author is not None and article is not None %}
 
@@ -71,7 +77,8 @@
 </div>
 -->
 
-{% if doc['recommend_list'] != [] %}
+{% if doc['recommend_list'] and type(doc['recommend_list']) != list %}
+{{ doc['recommend_list'] }}
 <div class="blog_tip">
 <span>推荐</span>
 <ul class="blog-recom">

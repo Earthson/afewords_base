@@ -99,9 +99,9 @@ class WritePage(BasePage):
     '''
     __template_file__ = 'write.html'
     doc = {
-        'article_src': dict,    # see the article_src
+        'article_src': {},    # see the article_src
         'isedit': False,        # bollean
-        'article_owner': dict,  # dict
+        'article_owner': {},  # dict
     }
 
 
@@ -115,7 +115,7 @@ class BlogPage(BasePage):
     __template_file__ = 'blog.html'
     doc = {
         'ispreview': False, # bollean 
-        'article': dict,    # see [[article]] definition in dataformat 
-        'recommend_list': list, # see [[blog_list]] definition in dataformat
-        'islike' : False,   # islike or not
+        'article': {},    # dict, see [[article]] definition in dataformat 
+        'recommend_list': [], # list, see [[blog_list]] definition in dataformat
+        'islike' : False,   # bollean, islike or not
     }
