@@ -26,7 +26,7 @@ def with_login(operate):
         return
     return wrapper
 
-class BaseHandlePara(object):
+class BaseHandlerPara(object):
     paradoc = {
     }
 
@@ -44,8 +44,8 @@ class BaseHandlePara(object):
     def __getitem__(self, key):
         return self.paradoc[key]
 
-    def __setitem__(self, key, vaule):
-        return self.paradoc[key] = value
+    def __setitem__(self, key, value):
+        self.paradoc[key] = value
 
 
 class BaseHandler(RequestHandler):
