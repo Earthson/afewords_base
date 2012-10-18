@@ -333,7 +333,13 @@ class User(DataBox):
         def getter(self):
             attrs = ['uid', 'name', 'draft_count', 
                         'notice_count', 'thumb_name']
-            return dict(zip(attrs, self.get_propertys(*attrs)))
+            ans = dict()
+            ans['uid'] = self.uid
+            ans['name'] = self.name
+            ans['draft_count'] = self.draft_count
+            ans['notice_count'] = self.notice_count
+            ans['thumb'] = self.thumb_name
+            return ans
         return getter
 
     @db_property
