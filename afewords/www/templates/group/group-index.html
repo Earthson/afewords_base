@@ -1,6 +1,9 @@
 {% extends "group-base.html" %}
 
 
+{% set group = doc['group'] %}
+{% set notice_list = doc['bulletin_list'] %}
+{% set topic_list = doc['topic_list'] %}
 
 {% block group_base_left_body %}
 
@@ -16,17 +19,16 @@
 
 <div id="body_content">
 
-<!-- for about -->
 
 <div class="group_content" style="min-height:10px;">
 <div class="group_nav group_board_img"><span>公告板</span>
-{% if member_type =='Manager'  %}
-<span class="group_nav_right"><a href="/write?type=group-notice&group={{group._id}}">添加</a></span>
+{% if group['member_type'] =='Manager'  %}
+<span class="group_nav_right"><a href="/write?type=group-notice&group={{group['gid']}}">添加</a></span>
 {% end %}
 </div>
 <ul class="notice_style">
 {% for item in notice_list %}
-    <li><a href="/group/{{ group._id }}/notice/{{ item['notice_id'] }}">{{ item['notice_title'] }}</a></li>
+    <li><a href="/group/{{ group['gid'] }}/notice/{{ item['notice_id'] }}">{{ item['notice_title'] }}</a></li>
 {% end %}
 </ul>
 </div>
@@ -34,15 +36,15 @@
 
 <div class="group_content">
 <div class="group_nav group_topic_img"><span>话题</span>
-{% if member_type is not None %}
-<span class="group_nav_right"><a href="/write?type=group-topic&group={{group._id}}">写话题</a></span>
+{% if group['member_type'] is not None %}
+<span class="group_nav_right"><a href="/write?type=group-topic&group={{group['gid']}}">写话题</a></span>
 {% end %}
 </div>
 <table summary="" >
 <tr><th width="71%" align="left">话题</th><th width="8%" align="left">作者</th><th width="8%">回应</th><th width="13%" align="right">最后发言</th></tr>
 {% for item in topic_list %}
         <tr>
-            <td nowrap="nowrap"><a href="/group/{{ group._id }}/topic/{{ item['topic_id'] }}">{{ item['topic_title'] }}</a></td>
+            <td nowrap="nowrap"><a href="/group/{{ group['gid'] }}/topic/{{ item['topic_id'] }}">{{ item['topic_title'] }}</a></td>
             <td align="left" nowrap="nowrap"><a href="/bloger/{{ item['topic_author_id'] }}">{{ item['topic_author_name'] }}</a></td>
             <td align="center">{{ item['topic_comment_count'] }}</td>
             <td align="right">{{ str(item['topic_update_time'])[5:16] }}</td>
