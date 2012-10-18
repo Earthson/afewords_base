@@ -347,6 +347,7 @@ class Article(DataBox):
             ans['author'] = self.author.basic_info
             ans['comment_count'] = self.comment_count
             ans['statistics'] = self.statistics.basic_info
+            ans['keywords'] = self.keywords
             return ans
         return getter
 
