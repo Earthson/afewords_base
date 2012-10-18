@@ -77,8 +77,7 @@
 </div>
 -->
 
-{% if doc['recommend_list'] and type(doc['recommend_list']) != list %}
-{{ doc['recommend_list'] }}
+{% if doc['recommend_list'] %}
 <div class="blog_tip">
 <span>推荐</span>
 <ul class="blog-recom">
@@ -112,7 +111,7 @@
             <a href="javascript:void(0);" class="del" obj_id="{{ article['aid'] }}" want="del_blog" page="blog_view">删除</a>
         </div>
     {% end %}
-    <div id="blog_title">{{ article['name'] }}</div>
+    <div id="blog_title">{{ article['title'] }}</div>
     
     <div id="blog_view">
     <div class="b_blog" style="margin-top:10px;">
