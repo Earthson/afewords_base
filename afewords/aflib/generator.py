@@ -1,11 +1,23 @@
 from bson import ObjectId
+from bson.errors import InvalidId
 
 def id_generator(doctype):
-    return lambda _id: doctype(doctype.datatype.one({'_id':ObjectId(_id)}))
+    def id_gen(oid):
+        try:
+            data = doctype.datatype.one({'_id':ObjectId(oid)})
+            if data:
+                return doctype(data)
+            return None
+        except InvalidId:
+            return None
+    return id_gen
 
 def index_generator(doctype):
     def index_gen(*args, **kwargs):
-        return doctype(doctype.datatype.one(*args, **kwargs))
+        data = doctype.datatype.find_one(*args, **kwargs)
+        if data:
+            return doctype(data)
+        return None
     return index_gen
 
 def generator(objid, objtype):

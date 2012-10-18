@@ -1,10 +1,14 @@
+from databox.afdocument import AFDocument
+from databox.mongokit_utils import with_conn
+from databox.databox import *
+from emmongodict.emmongodict import EmMongoDict
 from databox.mongokit_utils import with_conn
 
 from article import ArticleDoc, Article
 
 
 @with_conn
-class CommentDoc(ArticelDoc.__clsobj__):
+class CommentDoc(ArticleDoc.__clsobj__):
     __collection__ = 'CommentDB'
 
     structure = {

@@ -269,7 +269,7 @@ class Article(DataBox):
     def author():
         def getter(self):
             from user import User
-            return User.find_one({'_id':self.data['author_id']})
+            return User.by_id(self.data['author_id'])
         return getter
 
     @db_property
@@ -353,7 +353,7 @@ class Article(DataBox):
     @db_property
     def view_info():
         def getter(self):
-            ans = self.basic_info()
+            ans = self.basic_info
             ans['recommend_list'] = [] #Todo Earthson
             return ans
         return getter

@@ -317,11 +317,15 @@ class User(DataBox):
         '''other is self's follower?'''
         return str(other_id) in self.lib.follower_user_lib.load_all().keys()
 
-    def as_viewer(self, user_info):
+    def as_viewer(self, other):
         '''as viewer, update user infomation dict'''
+        user_info = other.basic_info
         user_info['isfollow'] = self.is_follow(user_info['uid'])
         user_info['isme'] = (self.uid == user_info['uid'])
         return user_info
+
+    def is_like(self, obj):
+        return self.lib.favorite_lib[obj.uid] is not None
 
     #property for page&json
     @db_property
@@ -340,6 +344,8 @@ class User(DataBox):
             ans['uid'] = self.uid
             ans['name'] =self.name
             ans['thumb'] = self.thumb_name
+            ans['isfollow'] = False
+            ans['isme'] = False
             return ans
         return getter
 

@@ -81,7 +81,7 @@ class EmMongoList(object):
         return self.coll.update(spec=self.spec,
                         document={'$addToSet':{self.path:{'$each':objs}}})
 
-    @auto_coll_do
+    @auto_coll_do 
     def push(self, *objs):
         return self.coll.update(spec=self.spec,
                         document={'$pushAll':{self.path:objs}})
@@ -112,13 +112,16 @@ class EmMongoList(object):
                         document={'$pullAll':{self.path:objs}})
 
     def __len__(self):
-        return len(self.load_list())
+        tmp = self.load_list()
+        if tmp: return len(tmp)
+        return 0
 
     @auto_coll_do
     def load_list(self):
         '''load list as an instance of list'''
         ret = self.coll.find_one(spec_or_id=self.spec, fields={self.path:1})
-        return get_dict_property(ret, self.path)
+        if ret: return get_dict_property(ret, self.path)
+        return None
 
     load_all = load_list
 

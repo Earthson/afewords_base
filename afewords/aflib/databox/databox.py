@@ -86,8 +86,13 @@ class DataBox(object):
 
     @classmethod
     def find_one(cls, *args, **kwargs):
-        from generator import *
+        from generator import index_generator
         return index_generator(cls)(*args, **kwargs)
+
+    @classmethod
+    def by_id(cls, uid):
+        from generator import id_generator
+        return id_generator(cls)(uid)
 
     def __str__(self):
         return str(self.data)
