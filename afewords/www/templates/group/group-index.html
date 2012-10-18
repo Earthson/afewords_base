@@ -1,10 +1,6 @@
 {% extends "group-base.html" %}
 
 
-{% set group = doc['group'] %}
-{% set notice_list = doc['bulletin_list'] %}
-{% set topic_list = doc['topic_list'] %}
-
 {% block group_base_left_body %}
 
 <!--
@@ -16,6 +12,9 @@
 </div>
 -->
 
+{% set group = doc['group'] %}
+{% set notice_list = doc['bulletin_list'] %}
+{% set topic_list = doc['topic_list'] %}
 
 <div id="body_content">
 
@@ -28,7 +27,7 @@
 </div>
 <ul class="notice_style">
 {% for item in notice_list %}
-    <li><a href="/group/{{ group['gid'] }}/notice/{{ item['notice_id'] }}">{{ item['notice_title'] }}</a></li>
+    <li><a href="/group/{{ group['gid'] }}/notice/{{ item['aid'] }}">{{ item['title'] }}</a></li>
 {% end %}
 </ul>
 </div>
@@ -44,10 +43,10 @@
 <tr><th width="71%" align="left">话题</th><th width="8%" align="left">作者</th><th width="8%">回应</th><th width="13%" align="right">最后发言</th></tr>
 {% for item in topic_list %}
         <tr>
-            <td nowrap="nowrap"><a href="/group/{{ group['gid'] }}/topic/{{ item['topic_id'] }}">{{ item['topic_title'] }}</a></td>
-            <td align="left" nowrap="nowrap"><a href="/bloger/{{ item['topic_author_id'] }}">{{ item['topic_author_name'] }}</a></td>
-            <td align="center">{{ item['topic_comment_count'] }}</td>
-            <td align="right">{{ str(item['topic_update_time'])[5:16] }}</td>
+            <td nowrap="nowrap"><a href="/group/{{ group['gid'] }}/topic/{{ item['aid'] }}">{{ item['title'] }}</a></td>
+            <td align="left" nowrap="nowrap"><a href="/bloger/{{ item['author']['uid'] }}">{{ item['author']['name'] }}</a></td>
+            <td align="center">{{ item['comment_count'] }}</td>
+            <td align="right">{{ str(item['release_time'])[5:16] }}</td>
         </tr>
 {% end %}
 
