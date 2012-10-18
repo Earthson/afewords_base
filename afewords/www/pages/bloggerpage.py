@@ -12,9 +12,17 @@ class BloggerPage(BasePage):
         'current_page' : 1, # int 
         'paging_html' : '', # unicode, for paging
         'tag_list' : [],    # see [[tag_list]]
-        'current_tag' : 'default' # unicode
+        'current_tag' : 'default', # unicode
+        'page_list' : [],
+        'baseurl' : [],
+        'urlparas' : {},
     }
 
+    def page_init(self):
+        from toolpages import PagingPage
+        tmp = PagingPage()
+        tmp.set_by(self['baseurl'], self['urlparas'], self['page_list'])
+        self['paging_html'] = tmp.render_string()
 
 
 @with_attr

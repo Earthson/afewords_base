@@ -324,6 +324,16 @@ class User(DataBox):
         user_info['isme'] = (self.uid == user_info['uid'])
         return user_info
 
+    def as_viewer_to_uinfo(self, uinfo):
+        uinfo['isfollow'] = self.is_follow(uinfo['uid'])
+        uinfo['isme'] = (self.uid == uinfo['uid'])
+        return uinfo
+
+    def as_viewer_to_article_info(self, ainfo):
+        ainfo['author']['isfollow'] = self.is_follow(ainfo['author']['uid'])
+        ainfo['author']['isme'] = (self.uid == ainfo['author']['uid'])
+        return ainfo
+
     def is_like(self, obj):
         return self.lib.favorite_lib[obj.uid] is not None
 
@@ -385,7 +395,7 @@ class User(DataBox):
             for each in ids:
                 tmp = Blog.by_id(each)
                 if tmp: ans.append(tmp)
-                else topull.append(each)
+                else: topull.append(each)
             self.lib.blog_list.pull(*topull)
             return ans
         return getter
