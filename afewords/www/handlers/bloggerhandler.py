@@ -1,10 +1,10 @@
 #coding=utf-8
 
 from basehandler import *
-from pages.bloggerpage import BloggerPage
+from pages.bloggerpage import BloggerBlogPage
 
 
-class BloggerHandlerPara(BaseHandlerPara):
+class BloggerBlogPara(BaseHandlerPara):
     paradoc = {
         'page' : 1,
         'tag' : 'default',
@@ -20,7 +20,30 @@ class BloggerHandlerPara(BaseHandlerPara):
     def verify(self):
         return 0
 
-class BloggerHandler(BaseHandler):
+class BloggerBlogHandler(BaseHandler):
 
     def get(self, uid):
-        pass
+        from user import User
+        usr = self.current_user
+        if uid is None:
+            if usr is None:
+                self.redirect('/')    
+                return
+            author = usr
+        else:
+            author = User.by_id(uid)
+            if author is None:
+                self.send_error(404)
+                return
+        paras = BloggerBlogPara(self)
+        page = BloggerBlogPage(self)
+        page['current_page'] = paras['page']
+        if usr:
+            page['author'] = usr.as_viewer(author)
+        else:
+            page['author'] = author.basic_info
+        page['tag_list'] = author.lib.tag_lib.keys()
+        page['current_tag'] = paras['tag']
+        paradoc = dict()
+        if para['tag'] != 'default':
+            paradoc['tag'] = para['tag']

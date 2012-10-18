@@ -376,14 +376,25 @@ class User(DataBox):
         return getter
 
     @db_property
-    def blog_list_info():
-        '''info to display blog_list'''
+    def blogs():
         from article.blog import Blog
         def getter(self):
-            blog_list = self.lib.blog_list.load_all()
-            info_dicts = [Blog.find_one({'_id':ObjectId(each)}).basic_info
-                            for each in blog_list]
-            return info_dicts
+            ids = self.lib.blog_list.load_all()
+            ans = list()
+            topull = list()
+            for each in ids:
+                tmp = Blog.by_id(each)
+                if tmp: ans.append(tmp)
+                else topull.append(each)
+            self.lib.blog_list.pull(*topull)
+            return ans
+        return getter
+
+    @db_property
+    def blogs_info():
+        '''info to display blog_list'''
+        def getter(self):
+            return [each.basic_info for each in self.blogs]
         return getter
 
     @db_property
