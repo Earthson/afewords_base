@@ -2,91 +2,28 @@
 
 
 {% block group_base_left_body %}
+
+{% set group = doc['group'] %}
+{% set member_type = group['member_type'] %}
+{% set doc_list = doc['doc_list'] %}
+{% set tag_list = group['tag_list'] %}
+
 <div id="body_content">
 
 
-{% if group_base_type == "topic" %}
-    <!-- for topic lib -->
-    <div class="group_content">
-    <div class="group_nav group_topic_img"><span>话题</span>
-    {% if member_type is not None %}
-    <span class="group_nav_right"><a href='/write?type=group-topic&group={{ group._id }}'>写话题</a></span>
-    {% end %}
-    </div>
-    <table summary="" >
-    <tr><th width="71%" align="left">话题</th><th width="8%" align="left">作者</th><th width="8%">回应</th><th width="13%" align="right">最后发言</th></tr>
-    {% for item in topic_list %}
-        <tr>
-            <td nowrap="nowrap"><a href="/group/{{ group._id }}/topic/{{ item['topic_id'] }}">{{ item['topic_title'] }}</a></td>
-            <td align="left" nowrap="nowrap"><a href="/bloger/{{ item['topic_author_id'] }}">{{ item['topic_author_name'] }}</a></td>
-            <td align="center">{{ item['topic_comment_count'] }}</td>
-            <td align="right">{{ str(item['topic_update_time'])[5:16] }}</td>
-        </tr>
-    {% end %}
-    </table>
-    {{ create_page_block('/group/'+ str(group._id) +'/topic?page=', current_page=page, sum_count=total_num) }} 
-    </div>
-
-{% elif group_base_type == "member" %}
-    <!-- for member -->
-    <div class="group_content follow" style="background:none;">
-    <div class="group_nav group_member_img"><span>成员</span></div>
-    <div class="div-20"></div>
-    <ul>
-    {% for item in member_list %}
-        <li>
-        <div class="follow_one">
-        <img src="{{ item['user_avatar'] }}"/>
-        <div class="info">
-        <span class="name"><a href="/bloger/{{ item['user_id'] }}" target="_blank">{{ item['user_name'] }}</a></span>
-        {% if user is not None and str(user._id) == item['user_id'] %}
-            <span class="control">我自己</span>
-        {% else %}
-            {% if user is None or user.follow_lib[item['user_id']] is None %}
-            <span class="control"><a href="javascript:void(0);" do="follow" onclick="do_follow(this);" follow_id="{{ item['user_id'] }}">关注</a></span>
-            {% else %}
-            <span class="control"><a href="javascript:void(0);" do="unfollow" onclick="do_follow(this);" follow_id={{ item['user_id'] }}>取消关注</a></span>
-            {% end %}
-        {% end %}
-        </div>
-        </div>
-        </li>
-    {% end %}
-    
-    </ul>
-    {{ create_page_block('/group/'+ str(group._id) + '/member?page=', current_page=page, sum_count=total_num, page_cap=9) }}     
-    </div>
-
-{% elif group_base_type == "notice" %}
-    <!-- for notice -->
-    <div class="group_content">
-    <div class="group_nav group_board_img"><span>公告板</span>
-    {% if member_type == 'Manager'%}
-        <span class="group_nav_right"><a href="/write?type=group-notice&group={{ group._id }}">写公告</a></span>
-    {% end %}
-    </div>
-    <ul class="like_style">
-    {% for item in notice_list %}
-        <li><a href="/group/{{ group._id }}/notice/{{ item['notice_id'] }}">{{ item['notice_title'] }}</a></li>
-    {% end %} 
-    </ul>
-    {{ create_page_block('/group/'+ str(group._id) + '/notice?page=', current_page=page, sum_count=total_num) }} 
-    </div>
-
-{% elif group_base_type == "doc" %}
     <!-- for group doc -->
     <div id="left4_board">
     <!--<div class="top_line">&nbsp;</div>-->
     <div class="board_con">
     {% if member_type == 'Manager' %}
-        <span class="add_tag"><a href="javascript:void(0)" group_id="{{ group._id }}">添加分类</a></span>
+        <span class="add_tag"><a href="javascript:void(0)" group_id="{{ group['gid'] }}">添加分类</a></span>
     {% end %}
     
-    <span><a href="/group/{{ group._id }}/doc?tag=default">所有</a></span>
+    <span><a href="/group/{{ group['gid'] }}/doc?tag=default">所有</a></span>
     {% for item in tag_list %}
-        <span><a href="/group/{{ group._id }}/doc?tag={{ item }}">{{ item }}</a>
+        <span><a href="/group/{{ group['gid'] }}/doc?tag={{ item }}">{{ item }}</a>
         {% if member_type == 'Manager' %}
-            <a href="javascript:void(0)" class="del_tag" tag="{{ item }}" group_id="{{ group._id }}">删除</a>
+            <a href="javascript:void(0)" class="del_tag" tag="{{ item }}" group_id="{{ group['gid'] }}">删除</a>
         {% end %}
         </span>
     {% end %}   
@@ -96,12 +33,12 @@
     <div class="group_content">
     <div class="group_nav group_doc_img"><span>文档</span>
     {% if member_type == 'Manager' %}
-        <span class="group_nav_right"><a href="/write?type=group-doc&group={{ group._id }}">写文档</a></span>
+        <span class="group_nav_right"><a href="/write?type=group-doc&group={{ group['gid'] }}">写文档</a></span>
     {% end %}
     </div>
     <ul class="like_style">
     {% for item in doc_list %}
-        <li><a href="/group/{{ group._id }}/doc/{{ item['doc_id'] }}">{{ item['doc_title'] }}</a></li>
+        <li><a href="/group/{{ group['gid'] }}/doc/{{ item['aid'] }}">{{ item['title'] }}</a></li>
     {% end %}
     {#
     <li><a href="#" >test</a></li> 
@@ -109,50 +46,9 @@
       <li><a href="#" >test</a></li>    
     #}
     </ul>
-    {{ create_page_block('/group/'+ str(group._id) + '/doc?page=', current_page=page, sum_count=total_num) }} 
+    {{ doc['paging_html'] %}
     </div>
     
-{% elif group_base_type == "feedback" %}
-    <!-- for group feedback -->
-    <div class="group_content">
-    <div class="group_nav group_feedback_img"><span>反馈</span>
-    {% if member_type is not None %}
-        <span class="group_nav_right"><a href="/write?type=group-feedback&group={{ group._id }}">写反馈</a></span>
-    {% end %}
-    </div>
-    
-    <ul class="like_style">
-    {% for item in feedback_list %}
-        <li><a href="/group/{{ group._id }}/feedback/{{ item['feedback_id'] }}">{{ item['feedback_title'] }}</a></li>
-    {% end %}
-    <!--
-    <li><a href="#" >test</a></li> 
-     <li><a href="#" >test</a></li> 
-      <li><a href="#" >test</a></li>  -->  
-    </ul>
-    {{ create_page_block('/group/'+ str(group._id) + '/feedback?page=', current_page=page, sum_count=total_num) }} 
-    </div>
-{% elif group_base_type == "info" %}
-    <!-- for group info -->
-    <div class="group_content">
-    <div class="group_nav group_info_img"><span>关于</span>
-    {% if member_type == 'Manager' %}
-        <span class="group_nav_right"><a href="/write?type=group-info&id={{ group.about_id }}">修改</a></span>
-    {% end %}
-    </div>
-    <div style="float:left;margin-top:20px;margin-bottom:100px;width:100%;">
-    <div class="bb_con">
-        {{ group.about }}    
-    </div>
-    </div>
-    </div>
-
-{% else %}
-
-{% end %}
-
-
-
 
 
 </div>
