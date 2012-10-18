@@ -285,7 +285,12 @@ class Article(DataBox):
     @db_property
     def env():
         def getter(self):
-            return generator(self.data['env_type'], self.data['env_id'])
+            ans = generator(self.data['env_type'], self.data['env_id'])
+            if ans is None:
+                ans = self.author
+                self.data['env_id'], self.data['env_type'] = ungenerator(ans)
+                return ans, True
+            return ans
         def setter(self, val):
             self.data['env_id'] = val._id
             self.data['env_type'] = val.__class__.__name__
@@ -379,7 +384,7 @@ class Article(DataBox):
             return ans
         return getter
 
-    @db_proprety
+    @db_property
     def lang_list():
         def getter(self):
            return [self.lib.langcode_lib.generator(each).lang
