@@ -33,13 +33,19 @@ class BaseHandlePara(object):
     def __init__(self, handler):
         self.handler = handler
         self.paradoc = dict(self.paradoc)
-        self.read_para()
+        self.read()
 
-    def read_para(self):
+    def read(self):
         pass
 
     def verify(self):
-        return True
+        return 0
+
+    def __getitem__(self, key):
+        return self.paradoc[key]
+
+    def __setitem__(self, key, vaule):
+        return self.paradoc[key] = value
 
 
 class BaseHandler(RequestHandler):

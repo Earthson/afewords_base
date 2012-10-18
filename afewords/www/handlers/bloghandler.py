@@ -21,6 +21,5 @@ class BlogHandler(BaseHandler):
         if usr:
             page['article']['author'] = usr.as_viewer(blog_to.author)
             page['islike'] = usr.is_like(blog_to)
-        #print page['article']['author']
         page.render()
         return
