@@ -35,5 +35,5 @@ class LoginHandler(BaseHandler):
         self.set_cookie('UI', usr.uid, expires_days=7)
         self.set_secure_cookie('UT', usr.uid)
         self.set_secure_cookie('IT', self.request.remote_ip)
-        self.redirect('/')
+        self.redirect('/blogger')
         return

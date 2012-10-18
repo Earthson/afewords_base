@@ -44,7 +44,7 @@ class BaseHandlerPara(object):
     def __getitem__(self, key):
         return self.paradoc[key]
 
-    def __setitem__(self, key, vaule):
+    def __setitem__(self, key, value):
         self.paradoc[key] = value
 
 

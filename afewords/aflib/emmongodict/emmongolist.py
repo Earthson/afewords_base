@@ -121,7 +121,7 @@ class EmMongoList(object):
         '''load list as an instance of list'''
         ret = self.coll.find_one(spec_or_id=self.spec, fields={self.path:1})
         if ret: return get_dict_property(ret, self.path)
-        return None
+        return list()
 
     load_all = load_list
 
