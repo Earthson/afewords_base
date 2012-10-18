@@ -356,6 +356,9 @@ class Article(DataBox):
             ans['comment_count'] = self.comment_count
             ans['statistics'] = self.statistics.basic_info
             ans['keywords'] = self.keywords
+            ans['privilege'] = self.privilege
+            ans['owner'] = self.env_info
+            ans['js_list'] = self.lang_list
             return ans
         return getter
 
@@ -365,4 +368,20 @@ class Article(DataBox):
             ans = self.basic_info
             ans['recommend_list'] = [] #Todo Earthson
             return ans
+        return getter
+
+    @db_property
+    def env_info():
+        def getter(self):
+            ans = dict()
+            ans['type'] = self.data['env_type']
+            ans['entity'] = self.env.basic_info
+            return ans
+        return getter
+
+    @db_proprety
+    def lang_list():
+        def getter(self):
+           return [self.lib.langcode_lib.generator(each).lang
+                for each in self.lib.langcode_lib.load_doc().values()]
         return getter
