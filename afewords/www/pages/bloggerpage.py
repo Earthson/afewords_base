@@ -18,7 +18,7 @@ class BloggerPage(BasePage):
 
 
 @with_attr
-class BloggerBlogPage(AuthorPage):
+class BloggerBlogPage(BloggerPage):
     __template_file__ = 'blogger-index.html'
     doc = {
         'blogger_type' : 'blog',
@@ -27,7 +27,7 @@ class BloggerBlogPage(AuthorPage):
 
 
 @with_attr
-class BloggerLikePage(AuthorPage):
+class BloggerLikePage(BloggerPage):
     __template_file__ = 'blogger-like.html'
     doc = {
         'blogger_type' : 'like',
@@ -36,7 +36,7 @@ class BloggerLikePage(AuthorPage):
 
 
 @with_attr
-class BloggerBookPage(AuthorPage):
+class BloggerBookPage(BloggerPage):
     __template_file__ = 'blogger-book.html'
     doc = {
         'blogger_type' : 'book',
@@ -45,7 +45,7 @@ class BloggerBookPage(AuthorPage):
 
 
 @with_attr
-class BloggerFollowPage(AuthorPage):
+class BloggerFollowPage(BloggerPage):
     __template_file__ = 'blogger-follow.html'
     doc = {
         'blogger_type' : 'follow',
@@ -53,7 +53,7 @@ class BloggerFollowPage(AuthorPage):
     }
 
 @with_attr
-class BloggerAboutPage(AuthorPage):
+class BloggerAboutPage(BloggerPage):
     __template_file__ = 'blogger-about.html'
     doc = {
         'blogger_type' : 'about',
