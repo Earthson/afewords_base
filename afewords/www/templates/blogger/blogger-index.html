@@ -6,13 +6,14 @@
 <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/blog.css") }}" />
 {% end %}
 
+
+{% block blog_base_left_body %}
+
 {% set author = doc['author'] %}
 {% set user = doc['user'] %}
 {% set blog_list = doc['blog_list'] %}
 
-{% block blog_base_left_body %}
-
-{% if author != {} %}
+{% if author %}
 {# authot is not none start #}
 
 {% if blog_list != [] %}

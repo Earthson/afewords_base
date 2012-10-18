@@ -1,13 +1,13 @@
 {% extends "blog-base.html" %}
 {# for blog page --- user like #}
 
+{% block blog_base_left_body %}
+
 {% set author = doc['author'] %}
 {% set user = doc['user'] %}
 {% set like_list = doc['like_list'] %}
 
-{% block blog_base_left_body %}
-
-{% if author != {} %}
+{% if author %}
 
 <!-- like -->
 <div class="like">
@@ -24,7 +24,7 @@
     <ul>
         {% for like_one in like_list %}
            <li><a href="/blog/{{ like_one['aid'] }}" target="_blank">{{ like_one['title'] }}</a>
-           {% if user != {} and user['uid'] == author['uid'] %}
+           {% if user and user['uid'] == author['uid'] %}
            <span class="like_cancel" style="display:none" page="settings" do="unlike" obj_id="{{ like_one['aid'] }}">取消</span>
            {% end %}
            </li>

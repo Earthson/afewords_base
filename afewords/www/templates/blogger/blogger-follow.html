@@ -1,13 +1,14 @@
 {% extends "blog-base.html" %}
 {# for blog page --- user follow and follower #}
 
+
+{% block blog_base_left_body %}
+
 {% set author = doc['author'] %}
 {% set user = doc['user'] %}
 {% set follow_list = doc['follow_list'] %}
 
-{% block blog_base_left_body %}
-
-{% if author != {} %}
+{% if author %}
 
 <!-- follow and follower -->
 

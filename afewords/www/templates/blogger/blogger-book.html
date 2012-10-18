@@ -5,15 +5,15 @@
 <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/book.css") }}" />
 {% end %}
 
-{# for blog page --- user follow and follower #}
-{% set author = doc['author'] %}
-{% set user = doc['user'] %}
-{% set book_list = doc['book_list'] %}
 
 
 {% block blog_base_left_body %}
 
-{% if author != {} %}
+{% set author = doc['author'] %}
+{% set user = doc['user'] %}
+{% set book_list = doc['book_list'] %}
+
+{% if author %}
 
 
 <div class="like settings my_book_image">
@@ -37,7 +37,7 @@
             <span class="card_tip"><a href="#">文章</a></span>#}
             <span class="card_tip"><a href="/book/{{ item['bid'] }}?want=catalog">目录</a></span>
             <span class="card_tip">完成度 {{ item['complete_rate'] }}%({{ item['complete_count'] }}/{{ item['all_catalog_count'] }})</span>
-            {% if user != {} and user['uid'] == author['uid'] %}
+            {% if user  and user['uid'] == author['uid'] %}
             <span class="card_tip">
                 <a href="/book-edit/{{ item['bid'] }}?want=catalog" target="_blank" class="book_modify">修改目录</a>
                 <a href="/book-edit/{{ item['bid'] }}?want=summary" class="book_modify" target="_blank">修改摘要</a>

@@ -3,18 +3,18 @@
 {% block middle_body %}
 {% set user = doc['user'] %}
 {% set author = doc['author'] %}
-{% set bloger_type = doc['bloger_type'] %}
-{% if author != {} %}
+{% set blogger_type = doc['blogger_type'] %}
+{% if author %}
 
 <div id="left3">
 <div id="left3_nav">
 <ul>
 
-    <li><a href="/bloger/{{ author['uid'] }}" class="current{{ int(bloger_type=="blog") }}">文章</a></li>
-    <li><a href="/bloger/{{ author['uid'] }}/follow" class="current{{ int(bloger_type =="follow") }}">关注</a></li>
-    <li><a href="/bloger/{{ author['uid'] }}/like" class="current{{ int(bloger_type=="like") }}">喜欢</a></li>
-     <li><a href="/bloger/{{ author['uid'] }}/book" class="current{{ int(bloger_type=="book") }}">知识谱</a></li>
-    <li><a href="/bloger/{{ author['uid'] }}/about"  class="current{{ int(bloger_type=="about") }}">About</a></li>
+    <li><a href="/blogger/{{ author['uid'] }}" class="current{{ int(blogger_type=="blog") }}">文章</a></li>
+    <li><a href="/blogger/{{ author['uid'] }}/follow" class="current{{ int(blogger_type =="follow") }}">关注</a></li>
+    <li><a href="/blogger/{{ author['uid'] }}/like" class="current{{ int(blogger_type=="like") }}">喜欢</a></li>
+     <li><a href="/blogger/{{ author['uid'] }}/book" class="current{{ int(blogger_type=="book") }}">知识谱</a></li>
+    <li><a href="/blogger/{{ author['uid'] }}/about"  class="current{{ int(blogger_type=="about") }}">About</a></li>
 
 </ul>
 </div>
@@ -25,16 +25,16 @@
 <div id="left3_tag_nav">
 <!--<div id="left3_tag_tag">执笔：</div>-->
 <ul>
-{% if doc['current_tag'] == "default" and bloger_type == "blog" %}
-    <li><a href="/bloger/{{ author['uid'] }}?tag=default"  class="current">所有</a></li>
+{% if doc['current_tag'] == "default" and blogger_type == "blog" %}
+    <li><a href="/blogger/{{ author['uid'] }}?tag=default"  class="current">所有</a></li>
 {% else %}
-    <li><a href="/bloger/{{ author['uid'] }}?tag=default">所有</a></li>
+    <li><a href="/blogger/{{ author['uid'] }}?tag=default">所有</a></li>
 {% end %}
 {% for one_tag in doc['tag_list'] %}
     {% if doc['current_tag'] == one_tag %}
-        <li><a href="/bloger/{{ author['uid'] }}?tag={{ one_tag }}" class="current">{{ one_tag }}</a></li>
+        <li><a href="/blogger/{{ author['uid'] }}?tag={{ one_tag }}" class="current">{{ one_tag }}</a></li>
     {% else %}
-        <li><a href="/bloger/{{ author['uid'] }}?tag={{ one_tag }}">{{ one_tag }}</a></li>
+        <li><a href="/blogger/{{ author['uid'] }}?tag={{ one_tag }}">{{ one_tag }}</a></li>
     {% end %}
 {% end %}
 <!--
