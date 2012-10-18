@@ -5,7 +5,7 @@ from basepage import BasePage, with_attr
 
 @with_attr
 class BloggerPage(BasePage):
-    __template_file__ = 'blogger-base.html'
+    __template_file__ = 'blogger/blogger-base.html'
     doc = {
         'blogger_type' : 'blog',
         'author' : {},  # see [[ author ]] in data_format
@@ -19,7 +19,7 @@ class BloggerPage(BasePage):
 
 @with_attr
 class BloggerBlogPage(BloggerPage):
-    __template_file__ = 'blogger-index.html'
+    __template_file__ = 'blogger/blogger-index.html'
     doc = {
         'blogger_type' : 'blog',
         'blog_list' : [],   # see [[ blog_list ]] in data_format
@@ -28,7 +28,7 @@ class BloggerBlogPage(BloggerPage):
 
 @with_attr
 class BloggerLikePage(BloggerPage):
-    __template_file__ = 'blogger-like.html'
+    __template_file__ = 'blogger/blogger-like.html'
     doc = {
         'blogger_type' : 'like',
         'like_list' : [],   # see [[ like_list ]] in data_format
@@ -37,7 +37,7 @@ class BloggerLikePage(BloggerPage):
 
 @with_attr
 class BloggerBookPage(BloggerPage):
-    __template_file__ = 'blogger-book.html'
+    __template_file__ = 'blogger/blogger-book.html'
     doc = {
         'blogger_type' : 'book',
         'book_list' : [],   # see [[ book_list ]] in data_format
@@ -46,7 +46,7 @@ class BloggerBookPage(BloggerPage):
 
 @with_attr
 class BloggerFollowPage(BloggerPage):
-    __template_file__ = 'blogger-follow.html'
+    __template_file__ = 'blogger/blogger-follow.html'
     doc = {
         'blogger_type' : 'follow',
         'follow_list' : [], # see [[ follow_list ]] in data_format
@@ -54,7 +54,7 @@ class BloggerFollowPage(BloggerPage):
 
 @with_attr
 class BloggerAboutPage(BloggerPage):
-    __template_file__ = 'blogger-about.html'
+    __template_file__ = 'blogger/blogger-about.html'
     doc = {
         'blogger_type' : 'about',
         'about' : {},   # see [[ article ]] in data_format
