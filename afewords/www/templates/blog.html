@@ -174,6 +174,11 @@
 
 {% block script_bottom %}
 
+
+{% set article = doc['article'] %}
+{% set author = article['author'] %}
+{% set statis = article['statistics'] %}
+{% set user = doc['user'] %}
 <script type="text/javascript" >
 $().ready(function(){ 
     $('body').css({'background-image': 'url(/static/img/wrap.png)',
@@ -182,17 +187,17 @@ $().ready(function(){
 </script>
 
 <script type="text/javascript" src="{{ static_url("js/me/write.js") }}"></script>
-{% if blog is not None %}
+{% if article is not None %}
     <script type="text/javascript" >
     $(document).ready(function(){
         current_load_blog = {
-            'id': '{{ blog._id }}',
+            'id': '{{ article['aid'] }}',
             'comment': ''+ ((location.hash.match('#com-([^#]*)') !=null) ? location.hash.match('#com-([^#]*)')[1] : ''),
         }
-        $("#write_textarea").CreateEditor('','comment','','{{ blog._id }}');
+        $("#write_textarea").CreateEditor('','comment','','{{ article['aid'] }}');
         var first_page = $('<span>&nbsp;</span>');
         var load_one = current_load_blog['comment'] == '' ? "no" : "yes";
-        first_page.attr({"pos": current_load_blog['comment'], "load_one":load_one, 'article_id':'{{ blog._id }}'});
+        first_page.attr({"pos": current_load_blog['comment'], "load_one":load_one, 'article_id':'{{article['aid'] }}'});
         $Write.comment_get(first_page);
     });
     </script>
