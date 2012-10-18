@@ -314,6 +314,13 @@ class Article(DataBox):
         return getter
 
     @db_property
+    def view_body_short():
+        def getter(self):
+            from utils import strip_tags
+            return strip_tags(self.view_body, 200)
+        return getter
+
+    @db_property
     def abstract():
         def getter(self):
             return self.data['abstract']
@@ -343,6 +350,7 @@ class Article(DataBox):
             ans['title'] = self.title
             ans['summary'] = self.abstract_viewbody
             ans['content'] = self.view_body
+            ans['content_short'] = self.view_body_short
             ans['release_time'] = str(self.release_time)
             ans['author'] = self.author.basic_info
             ans['comment_count'] = self.comment_count
