@@ -20,7 +20,10 @@ class BloggerPage(BasePage):
 
     def page_init(self):
         from toolpages import PagingPage
+        if len(self['page_list']) <= 1:
+            self['page_list'] = []
         tmp = PagingPage()
+        tmp['current_page'] = self['current_page']
         tmp.set_by(self['baseurl'], self['urlparas'], self['page_list'])
         self['paging_html'] = tmp.render_string()
 

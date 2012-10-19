@@ -10,8 +10,6 @@ class BlogHandler(BaseHandler):
         from article.blog import Blog
         usr = self.current_user
         blog_to = Blog.by_id(bid)
-        print bid
-        print blog_to
         if(blog_to is None): 
             return self.send_error(404);
         preview = self.get_esc_arg('preview', 'no')

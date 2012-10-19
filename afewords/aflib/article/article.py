@@ -233,7 +233,7 @@ class Article(DataBox):
         self.normal_translator = normal_translator
 
     def __lt__(self, other):
-        return self.release_time < other.release_time
+        return self.release_time > other.release_time
 
     def refinder(self, reftype, refname):
         return self.lib.refinder(reftype, refname)
@@ -363,7 +363,7 @@ class Article(DataBox):
             ans['keywords'] = self.keywords
             ans['privilege'] = self.privilege
             ans['owner'] = self.env_info
-            ans['js_list'] = self.lang_list
+            ans['js_list'] = self.js_list
             return ans
         return getter
 
@@ -389,4 +389,11 @@ class Article(DataBox):
         def getter(self):
            return [self.lib.langcode_lib.generator(each).lang
                 for each in self.lib.langcode_lib.load_doc().values()]
+        return getter
+
+    @db_property
+    def js_list():
+        def getter(self):
+            code_dict = {'applescript':'AppleScript','as3':'AS3','bash':'Bash','coldfusion':'ColdFusion','c++':'Cpp', 'c#':'CSharp','css':'Css','delphi':'Delphi','diff':'Diff','erlang':'Erlang','groovy':'Groovy','java':'Java', 'javafx':'JavaFX','javascript':'JScript','lisp': 'Lisp','perl':'Perl','php':'Php','plain':'Plain','python':'Python', 'ruby':'Ruby','sass':'Sass','scala':'Scala','sql':'Sql','vb':'Vb','xml':'Xml'};
+            return ['shBrush'+code_dict[each]+'.js' for each in self.lang_list]
         return getter

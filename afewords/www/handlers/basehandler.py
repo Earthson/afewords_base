@@ -71,8 +71,8 @@ class BaseHandler(RequestHandler):
 
     @property
     def request_url(self):
-        return self.request.protocol + "://" + \
-                self.request.host + self.request.uri
+        return (self.request.protocol + "://" + \
+                self.request.host + self.request.uri).split('?')[0]
 
     def get_esc_arg(self, name, default=None):
         return arg_escape(self.get_argument(name, default))

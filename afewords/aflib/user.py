@@ -245,21 +245,45 @@ class User(DataBox):
 
     def add_to_tag(self, blogobj, tagname):
         blogobj.add_to_tag(tagname)
-        tagmem = self.tag_lib[tagname]
+        tagmem = self.lib.tag_lib[tagname]
         if tagmem is None:
-            self.tag_lib[tagname] = []
+            self.lib.tag_lib[tagname] = []
             tagmem = []
         tagmem = set(tagmem)
         tagmem.add(str(blogobj._id))
-        self.tag_lib[tagname] = list(tagmem)
+        self.lib.tag_lib[tagname] = list(tagmem)
 
     def remove_from_tag(self, blogobj, tagname):
         blogobj.remove_from_tag(tagname)
-        tagmem = self.tag_lib[tagname]
+        tagmem = self.lib.tag_lib[tagname]
         if tagmem is not None:
             tagmem = set(tagmem)
             tagmem.discard(str(blogobj._id))
-            self.tag_lib[tagname] = list(tagmem)
+            self.lib.tag_lib[tagname] = list(tagmem)
+
+        blogs.sort()
+        return blogs
+
+    def blogs_from_tag(self, tagname):
+        from article.blog import Blog
+        if not tagname:
+            return
+        ans = [Blog.by_id(each) for each in self.lib.tag_lib[tagname]]
+        if ans:
+            self.lib.tag_lib[tagname] = [each._id for each in ans]
+        return ans
+
+    def blogs_info_view_by(self, usr=None, tagname=None):
+        from article.blog import Blog
+        if tagname:
+            toview = self.blogs_from_tag(tagname)
+            toview.sort()
+        else:
+            toview = self.blogs
+        if usr: 
+            return [usr.as_viewer_to_article_info(each.basic_info) 
+                        for each in toview]
+        return [each.basic_info for each in toview]
 
     def post_status(self, statusobj):
         statusid = statusobj._id
