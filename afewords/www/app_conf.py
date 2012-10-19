@@ -16,6 +16,7 @@ app_handlers = {
     (r'/', IndexHandler), #MainHandler),
     (r'/test', TestHandler),
     #(r'/home', HomeHandler),
+    (r'/home', BloggerBlogHandler),
     (r'/login', LoginHandler),
     (r'/code', VertifyCodeHandler),
     (r'/reg', RegisterHandler),

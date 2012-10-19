@@ -11,7 +11,7 @@ from afutils.url_utils import url_with_para
 def with_nologin(operate):
     def wrapper(self, *args, **kwargs):
         if self.current_user:
-            self.redirect('/')
+            self.redirect('/home')
             return
         operate(self, *args, **kwargs)
         return
