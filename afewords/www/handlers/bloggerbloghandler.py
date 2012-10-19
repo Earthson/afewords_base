@@ -45,13 +45,14 @@ class BloggerBlogHandler(BaseHandler):
             page['author'] = author.basic_info
         page['tag_list'] = author.lib.tag_lib['alltags']
         page['current_tag'] = paras['tag']
+        blogs_info = author.blogs_info_view_by(usr, page['current_tag'])
+        page['blog_list'], page['page_list'] = page_split(blogs_info,
+                        page['current_page'], 10)
+        #for paging support 
         paradoc = dict()
         if paras['tag'] != 'default':
             paradoc['tag'] = paras['tag']
         page['urlparas'] = paradoc
-        blogs_info = author.blogs_info_view_by(usr, page['current_tag'])
-        page['blog_list'], page['page_list'] = page_split(blogs_info,
-                        page['current_page'], 10)
         page['baseurl'] = self.request_url
         page.page_init()
         page.render()
