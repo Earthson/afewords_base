@@ -73,6 +73,7 @@ class EmMongoDict(object):
     def sub_list(self, subpath, **kwargs):
         from emmongolist import EmMongoList
         path = subpath if not self.path else self.path+'.'+subpath
+        kwargs.update(self.db_info)
         return EmMongoList(spec=self.spec, path=path, **kwargs)
 
     @classmethod
@@ -173,8 +174,9 @@ class EmMongoDict(object):
         if self.path is None:
             ret = self.coll.find_one(spec_or_id=self.spec)
             return ret
-        ret = self.coll.find_one(spec_or_id=self.spec, fields={self.path:1})
-        return get_dict_property(ret, self.path)
+        ret = self.coll.find_one(spec_or_id=self.spec, fields=[self.path])
+        if ret: return get_dict_property(ret, self.path)
+        return None
 
     load_all = load_doc
 

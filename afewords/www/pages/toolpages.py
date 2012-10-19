@@ -18,7 +18,7 @@ class PagingPage(BaseToolPage):
         from afutils.url_utils import url_with_para
         self['page_list'] = [each for each in page_list]
         paradoc = dict() if paradoc is None else dict(paradoc)
-        paradocs = [dict(paradoc.items()+('page', each)) 
+        paradocs = [dict(paradoc, **{'page': each}) 
                         for each in self['page_list']]
         self['urls'] = [url_with_para(baseurl, each) for each in paradocs]
 

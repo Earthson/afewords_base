@@ -51,12 +51,13 @@ class BloggerBlogHandler(BaseHandler):
         page['current_tag'] = paras['tag']
         paradoc = dict()
         if paras['tag'] != 'default':
-            paradoc['tag'] = para['tag']
+            paradoc['tag'] = paras['tag']
         page['urlparas'] = paradoc
         each_page = 10
         st = each_page*page['current_page']
         ed = st + each_page
         blogs_info = author.blogs_info
+        print blogs_info
         if usr:
             blogs_info = [author.as_viewer_to_article_info(each)
                             for each in blogs_info]
