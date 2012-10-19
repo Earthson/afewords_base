@@ -11,8 +11,10 @@
 <ul>
 
     <li><a href="/blogger/{{ author['uid'] }}" class="current{{ int(blogger_type=="blog") }}">文章</a></li>
+{#
     <li><a href="/blogger/{{ author['uid'] }}/follow" class="current{{ int(blogger_type =="follow") }}">关注</a></li>
     <li><a href="/blogger/{{ author['uid'] }}/like" class="current{{ int(blogger_type=="like") }}">喜欢</a></li>
+#}
      <li><a href="/blogger/{{ author['uid'] }}/book" class="current{{ int(blogger_type=="book") }}">知识谱</a></li>
     <li><a href="/blogger/{{ author['uid'] }}/about"  class="current{{ int(blogger_type=="about") }}">About</a></li>
 
