@@ -43,6 +43,11 @@ class BloggerBlogHandler(BaseHandler):
         else:
             page['author'] = author.basic_info
         page['tag_list'] = author.lib.tag_lib.keys()
+        try:
+            page['tag_list'].remove('default')
+        except ValueError:
+            print 'tag: default not exist'
+            pass
         page['current_tag'] = paras['tag']
         paradoc = dict()
         if paras['tag'] != 'default':
