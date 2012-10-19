@@ -35,7 +35,7 @@
 </div>
 </div>
 {% set user = doc['user'] %}
-{% if user is not None %}
+{% if user %}
 <div id="feed-back"><a href="/help-feedback" target="_blank">反馈</a></div>
 {% end %}
 <div id="go-to-top">&nbsp;</div>
@@ -46,7 +46,7 @@
 <!-- head start -->
 <div id="head">
 <div class="left"><a href="/">子曰</a><span id="left-beta-style">Beta</span></div>
-{% if user is None %}
+{% if not user %}
     <div class="right-mid">
     <div class="reg" title="注册"><a href="/reg">注册</a></div>
     <div class="login" title="登录"><a href="/">登录</a></div>
@@ -57,13 +57,13 @@
     <div class="quit" title="退出"><a href="/quit" title="退出">退出</a></div>
     {% if user['draft_count'] > 0 %}
         {# draft notification #}
-        <div class="head_draft" title="草稿"><a href="/draft" title="草稿">{{ draft_count }}草稿</a></div>
+        <div class="head_draft" title="草稿"><a href="/draft" title="草稿">{{ user['draft_count'] }}草稿</a></div>
     {% end %}
 
     {% if user['notice_count'] > 0 %}
         {# notification notification #}
         
-        <div class="noti" title="消息"><a href="/notice" title="消息">{{ notice_count }}消息</a></div>
+        <div class="noti" title="消息"><a href="/notice" title="消息">{{ user['notice_count'] }}消息</a></div>
     {% end %}
 
     <div class="myself manage" title="管理"><a href="/settings-invite">管理</a></div>
