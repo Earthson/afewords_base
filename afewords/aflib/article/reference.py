@@ -87,3 +87,14 @@ class Reference(DataBox):
             self.data['view_body'] = ret
             return self.data['view_body'], True
         return getter
+
+    @db_property
+    def basic_info():
+        def getter(self):
+            ans = dict()
+            ans['alias'] = self.alias
+            ans['name'] = self.name
+            ans['url'] = self.url
+            ans['body'] = self.body
+            return ans
+        return getter

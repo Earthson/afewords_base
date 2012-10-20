@@ -43,3 +43,14 @@ class Equation(DataBox):
             return ret
         return getter
 
+
+    @db_property
+    def basic_info():
+        def getter(self):
+            ans = dict()
+            ans['alias'] = self.alias
+            ans['name'] = self.name
+            ans['mode'] = self.mode
+            ans['body'] = self.equation
+            return ans
+        return getter

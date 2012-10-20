@@ -79,3 +79,12 @@ class Tableform(DataBox):
             return ret
         return getter
 
+    @db_property
+    def basic_info():
+        def getter(self):
+            ans = dict()
+            ans['alias'] = self.alias
+            ans['name'] = self.name
+            ans['body'] = self.body
+            return ans
+        return getter

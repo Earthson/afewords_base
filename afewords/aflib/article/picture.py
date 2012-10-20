@@ -59,3 +59,13 @@ class Picture(DataBox):
         def getter(self):
             return self.pic_path + self.thumb_name
         return getter
+
+    @db_property
+    def basic_info():
+        def getter(self):
+            ans = dict()
+            ans['alias'] = self.alias
+            ans['name'] = self.name
+            ans['thumb_name'] = self.thumb_url
+            return ans
+        return getter
