@@ -65,11 +65,11 @@
 <div class="w-nav" title="给文档归档，方便您对文档的管理">归档<span class="px-12 color-blue cursor-pointer" title="添加新的分类">&nbsp;&nbsp;添加新分类</span></div>
 <div>
 {% if not isedit %}
-    {% for tmp_tag in  doc['owner']['_tag'] %}
+    {% for tmp_tag in  owner['entity']['tag_list'] %}
     <span class="w-class"><label><input type="checkbox" name="classes" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
     {% end %}
 {% else %}
-    {% for tmp_tag in  doc['owner_tag'] %}
+    {% for tmp_tag in  owner['entity']['tag_list'] %}
         {% if tmp_tag in article['tag_list'] %}
             <span class="w-class"><label><input type="checkbox" name="classes" checked="checked" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
         {% else %}
@@ -88,11 +88,11 @@
 <div class="w-nav" title="给文章归类，方便您对文章的管理">归类<span class="px-12 color-blue cursor-pointer" title="添加新的分类">&nbsp;&nbsp;添加新分类</span></div>
 <div>
 {% if not isedit %}
-    {% for tmp_tag in  doc['owner_tag'] %}
+    {% for tmp_tag in  owner['entity']['tag_list'] %}
     <span class="w-class"><label><input type="checkbox" name="classes" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
     {% end %}
 {% else %}
-    {% for tmp_tag in  doc['owner_tag'] %}
+    {% for tmp_tag in  owner['entity']['tag_list'] %}
         {% if tmp_tag in article['tag_list'] %}
             <span class="w-class"><label><input type="checkbox" name="classes" checked="checked" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
         {% else %}
@@ -131,6 +131,11 @@
 
 
 {% block script_bottom %}
+
+{% set article = doc['article'] %}
+{% set isedit = doc['isedit'] %}
+{% set article_type = doc['article_type'] %}
+{% set owner = doc['owner'] %}
 <script type="text/javascript" >
 $().ready(function(){ 
     $('body').css({'background-image': 'url(/static/img/wrap.png)',
@@ -147,7 +152,7 @@ $("#right").css("border-left-width",'0');
         $("#write_textarea").CreateEditor("-1","{{ article_type }}", "", 0);
         
     {% elif  article_type in ['group-about', 'group-doc', 'group-topic', 'group-bulletin', 'group-feedback'] %}
-        $("#write_textarea").CreateEditor("-1","{{ article_type }}", "", 0, '', "{{ article['owner']['gid'] }}");        
+        $("#write_textarea").CreateEditor("-1","{{ article_type }}", "", 0, '', "{{ owner['entity']['gid'] }}");        
     {% end %}
     $("#write_textarea").summary_title_init();
     var isedit = false;
@@ -158,7 +163,7 @@ $("#right").css("border-left-width",'0');
     {% if article_type in ['about', 'blog'] %}
         init_target.CreateEditor("{{ article['aid'] }}","{{ article_type }}", "", 0);
     {% elif article_type in ['group-about', 'group-doc', 'group-topic', 'group-bulletin', 'group-feedback'] %}
-        $("#write_textarea").CreateEditor("{{ article['aid'] }}","{{ article_type }}", "", 0, '', "{{ article['owner']['gid'] }}");        
+        $("#write_textarea").CreateEditor("{{ article['aid'] }}","{{ article_type }}", "", 0, '', "{{ owner['entity']['gid'] }}");        
     {% end %}
 
 init_target.summary_title_init();
