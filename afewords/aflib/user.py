@@ -206,9 +206,8 @@ class User(DataBox):
         ret = 0
         if usr == None:
             ret = set_auth(ret, A_READ)
-        elif self._id == user._id:
-            ret = set_auth(ret, A_READ | A_WRITE | A_MANAGE | A_DEL)
-        ret |= BaseClass.authority_verify(self, user, **env)
+        elif self._id == usr._id:
+            ret = set_auth(ret, A_READ | A_WRITE | A_DEL)
         return ret
 
     def post_blog(self, blogobj):

@@ -11,6 +11,8 @@ from article_utils import *
 from generator import *
 from translator.trans import *
 
+from authority import *
+
 @with_conn
 class ArticleLibDoc(AFDocument):
     __collection__ = 'ArticleLib'
@@ -62,7 +64,7 @@ class ArticleLib(EmMongoDict):
     def get_libname(self, reftype):
         if reftype not in self.ref_map.keys():
             return None
-        return self.ref_map[reftype]
+       return self.ref_map[reftype]
 
     def refinder(self, reftype, refname):
         '''this method is required by translator, require self.ref_map'''
@@ -235,6 +237,17 @@ class Article(DataBox):
     def __lt__(self, other):
         return self.release_time > other.release_time
 
+    @with_user_status
+    def authority_verify(self, usr, **env):
+        ret = 0
+        if not usr:
+            ret = set_auth(ret, A_READ)
+        elif self.author._id == usr._id:
+            ret = set_auth(ret, A_READ | A_WRITE | A_DEL)
+        #with env test
+        #todo Earthson
+        return ret
+
     def refinder(self, reftype, refname):
         return self.lib.refinder(reftype, refname)
 
@@ -364,6 +377,57 @@ class Article(DataBox):
             ans['privilege'] = self.privilege
             ans['owner'] = self.env_info
             ans['js_list'] = self.js_list
+            return ans
+        return getter
+
+    @db_property
+    def picutres():
+        def getter(self):
+            from picture import Picture
+            return Picture.by_ids(self.lib.picture_lib.values())
+        return getter
+
+    @db_property
+    def equations():
+        def getter(self):
+            from equation import Equation
+            return Equation.by_ids(self.lib.equation_lib.values())
+        return getter
+
+    @db_property
+    def tableforms():
+        def getter(self):
+            from tableform import Tableform
+            return Tableform.by_ids(self.lib.tableform_lib.values())
+        return getter
+
+    @db_property
+    def references():
+        def getter(self):
+            from reference import Reference
+            return Reference.by_ids(self.lib.reference_lib.values())
+        return getter
+
+    @db_property
+    def langcodes():
+        def getter(self):
+            from langcode import Landcode
+            return Landcode.by_ids(self.lib.langcode_lib.values())
+        return getter
+
+    @db_property
+    def edit_info():
+        def getter(self):
+            ans = self.basic_info
+            ans['body'] = self.body
+            ans['picture_list'] = [each.basic_info for each in self.pictures]
+            ans['equation_list'] = [each.basic_info for each in self.equations]
+            ans['tableform_list'] = [each.basic_info 
+                                        for each in self.tableforms]
+            ans['reference_list'] = [each.basic_info 
+                                        for each in self.references]
+            ans['langcode_list'] = [each.basic_nifo
+                                        for each in self.langcodes]
             return ans
         return getter
 

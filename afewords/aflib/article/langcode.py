@@ -48,3 +48,13 @@ class Langcode(DataBox):
             return displaycode
         return getter
 
+    @db_property
+    def basic_info():
+        def getter(self):
+            ans = dict()
+            ans['alias'] = self.alias
+            ans['name'] = self.name
+            ans['lang'] = self.lang
+            ans['body'] = self.code
+            return ans
+        return getter
