@@ -7,6 +7,7 @@ user:{}
     'draft_count': 0,  # int
     'notice_count': 0, # int
     'thumb': '',    # unicode
+    'tag_list': [], # list
 }
 
 author:{}

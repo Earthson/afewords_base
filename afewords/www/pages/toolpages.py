@@ -34,3 +34,24 @@ class CatalogPage(BaseToolPage):
         'node_list': [],    # list
         'bid': '',  # unicode
     }
+
+@with_attr
+class WriteTitlePage(BaseToolPage):
+	''' 
+	title in write page
+	'''
+	article_type_dict = {
+		'blog': "文章",
+		'about': "关于",
+		'group-about': "关于",
+		'group-feedback': "反馈",
+		'group-doc': "文档",
+		'group-bulletin': "公告",
+		'group-topic': "话题",
+	}
+	doc = {
+		'isedit': False,
+		'owner': {},	# dict
+		'article_type': 'blog',	# unicode
+		'article_type_dict': article_type_dict,
+	}

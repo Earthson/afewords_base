@@ -101,8 +101,9 @@ class WritePage(BasePage):
     doc = {
         'article': {},    # see the [[ article ]] in data_format
         'isedit': False,        # bollean
-		'owner_tag': [],	# list,
-		'do_title': '',		# unicode
+        'owner': {},    # dict, [[ owner ]]
+        'do_title': '',		# unicode
+        'article_type': 'blog',	# unicode
     }
 
 
