@@ -77,6 +77,9 @@ class BaseHandler(RequestHandler):
     def get_esc_arg(self, name, default=None):
         return arg_escape(self.get_argument(name, default))
 
+    def get_esc_args(self, name):
+        return [arg_escape(each) for each in self.get_arguments(name)]
+
     def get(self):
         return self.redirect("/")
 
