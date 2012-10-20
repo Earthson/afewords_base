@@ -107,7 +107,7 @@
 {% if author is not None and article is not None %}
     {% if user is not None and user['uid'] == author['uid'] %}
         <div class="blog_edit_link">
-            <a href="/write?id={{ article['aid'] }}&edit=true" class="edit">修改</a>
+            <a href="/write?id={{ article['aid'] }}" class="edit">修改</a>
             <a href="javascript:void(0);" class="del" obj_id="{{ article['aid'] }}" want="del_blog" page="blog_view">删除</a>
         </div>
     {% end %}
