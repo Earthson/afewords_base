@@ -48,6 +48,7 @@ def generator(objid, objtype):
 
     if objtype not in types_all.keys():
         return None
+    objtype = types_all[objtype]
     return id_generator(objtype)(objid)
 
 def ungenerator(obj):

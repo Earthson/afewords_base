@@ -320,6 +320,15 @@ class Article(DataBox):
         return getter
 
     @db_property
+    def body():
+        def getter(self):
+            return self.data['body']
+        def setter(self, value):
+            self.data['body'] = value
+            self.data['body_version'] += 1
+        return getter, setter
+
+    @db_property
     def view_body():
         def getter(self):
             if self.data['view_body_version'] == self.data['body_version']:
@@ -382,7 +391,7 @@ class Article(DataBox):
         return getter
 
     @db_property
-    def picutres():
+    def pictures():
         def getter(self):
             from picture import Picture
             return Picture.by_ids(self.lib.picture_lib.values())
@@ -412,8 +421,8 @@ class Article(DataBox):
     @db_property
     def langcodes():
         def getter(self):
-            from langcode import Landcode
-            return Landcode.by_ids(self.lib.langcode_lib.values())
+            from langcode import Langcode
+            return Langcode.by_ids(self.lib.langcode_lib.values())
         return getter
 
     @db_property
@@ -427,7 +436,7 @@ class Article(DataBox):
                                         for each in self.tableforms]
             ans['reference_list'] = [each.basic_info 
                                         for each in self.references]
-            ans['langcode_list'] = [each.basic_nifo
+            ans['langcode_list'] = [each.basic_info
                                         for each in self.langcodes]
             return ans
         return getter

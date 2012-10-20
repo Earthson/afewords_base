@@ -1,7 +1,8 @@
 #coding=utf-8
-
 from basehandler import *
 from pages.pages import WritePage
+
+from authority import *
 
 def type_trans(src):
     from article.blog import Blog
@@ -42,15 +43,15 @@ class ArticleWriteHandler(BaseHandler):
         pageparas['env_type'] = type_trans(pageparas['env_type'])
         pageparas['type'] = type_trans(pageparas['type'])
         if not pageparas['type']:
-            self.send_error(404, u'Invalid Article Type') #todo Earthson
+            self.send_error(404, error_info=u'Invalid Article Type') #todo Earthson
             return
         if not pageparas['env_id'] and not pageparas['env_type']:
             page['owner'] = usr.as_env
-            env_info = (usr.__class__.__name__, usr._id)
+            env_info = (usr._id, usr.__class__.__name__)
         else:
             env = generator(pageparas['env_id'], pageparas['env_type'])
             if not env:
-                self.send_error(404, u'Invalid Envirenment')
+                self.send_error(404, error_info=u'Invalid Envirenment')
                 return
             env_info = (env.__class__.__name__, env._id)
             page['owner'] = env.as_env
@@ -59,16 +60,17 @@ class ArticleWriteHandler(BaseHandler):
             page.page_init()
             page.render()
             return
+        page['isedit'] = True
         toedit = generator(pageparas['id'], pageparas['type'])
         if toedit is None:
-            self.send_error(404, u'Article Not Found')
+            self.send_error(404, error_info=u'Article Not Found')
             return
         if (toedit.env_id, toedit.env_type) != env_info:
-            self.send_error(404, u'Invalid Envirenment')
+            self.send_error(404, error_info=u'Invalid Envirenment')
             return
-        auth_ret = todeit.authority_verify(usr)
+        auth_ret = toedit.authority_verify(usr)
         if not test_auth(auth_ret, A_WRITE):
-            self.send_error(404, u'Permission Denied')
+            self.send_error(404, error_info=u'Permission Denied')
             return
         page['article'] = toedit.edit_info
         page.page_init()
