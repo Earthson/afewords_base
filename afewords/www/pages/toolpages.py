@@ -40,6 +40,7 @@ class WriteTitlePage(BaseToolPage):
 	''' 
 	title in write page
 	'''
+    __tempate_file__ = 'tools/tool-writetitle.html'
 	article_type_dict = {
 		'blog': "文章",
 		'about': "关于",

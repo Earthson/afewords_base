@@ -11,7 +11,8 @@
 
 {% set article = doc['article'] %}
 {% set isedit = doc['isedit'] %}
-{% set article_type = article['article_type'] %}
+{% set article_type = doc['article_type'] %}
+{% set owner = doc['owner'] %}
 
 <!-- left body start -->
 <div id="left" style="border-right-width:0;">
@@ -64,7 +65,7 @@
 <div class="w-nav" title="给文档归档，方便您对文档的管理">归档<span class="px-12 color-blue cursor-pointer" title="添加新的分类">&nbsp;&nbsp;添加新分类</span></div>
 <div>
 {% if not isedit %}
-    {% for tmp_tag in  doc['owner_tag'] %}
+    {% for tmp_tag in  doc['owner']['_tag'] %}
     <span class="w-class"><label><input type="checkbox" name="classes" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
     {% end %}
 {% else %}
