@@ -43,6 +43,7 @@ article:{}  /****** for blog, comment, topic, doc, .... ***********/
     'statistics': dict, # see [[ statistics ]]
     'keywords': list,   # [key1, key2]    
     'privilege': 'public' # view privilege
+	'tag_list': list,	# see [[ tag_list ]]
     'owner': {},    # see [[ owner ]]    
 
     @for comment
