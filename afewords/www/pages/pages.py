@@ -99,9 +99,8 @@ class WritePage(BasePage):
     '''
     __template_file__ = 'write.html'
     doc = {
-        'article_src': {},    # see the article_src
+        'article': {},    # see the [[ article ]] in data_format
         'isedit': False,        # bollean
-        'article_owner': {},  # dict
     }
 
 
