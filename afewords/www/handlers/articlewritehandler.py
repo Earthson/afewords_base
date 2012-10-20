@@ -30,6 +30,30 @@ class ArticleWritePara(BaseHandlerPara):
         self['env_type'] = self.handler.get_esc_arg('env_type', None)
         self['env_id'] = self.handler.get_esc_arg('env_id', None)
 
+class ArticleWritePostPara(BaseHandlerPara):
+    paradoc = {
+        'do': 'preview',    # unicode, preview or post
+        'article_id': '-1', # unicode
+        'article_type': 'blog', # unicode
+        'title': '',    # unicode
+        'body': '',     # unicode
+        'summary': '',  # unicode
+        'keywords': [], # list  self.get_arguments("keywords")
+        'tags': [],     # list
+        'env_id': '-1', # unicode
+        'env_type': 'user', # unicode
+        'privilege': 'public', # unicode
+        
+        #@comment
+        'fahter_id': '-1',  # unicode
+        'father_type': 'blog',  # unicode
+        'ref_comments': [], # list
+    }
+
+    def read(self):
+        self.paradoc = [(ek, self.handler.get_esc_arg(ek, ev)) 
+                                    for ek, ev in self.paradoc]
+
 
 class ArticleWriteHandler(BaseHandler):
     
