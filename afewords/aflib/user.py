@@ -385,6 +385,7 @@ class User(DataBox):
             ans['thumb'] = self.thumb_name
             ans['isfollow'] = False
             ans['isme'] = False
+            ans['tag_list'] = self.lib.tag_lib['alltags']
             return ans
         return getter
 
@@ -411,5 +412,14 @@ class User(DataBox):
             ids = self.lib.blog_list.load_all()
             ans = Blog.by_ids(ids)
             self.lib.blog_list.set_all([each._id for each in ans])
+            return ans
+        return getter
+
+    @db_property
+    def as_env():
+        def getter(self):
+            ans = dict()
+            ans['type'] = self.__class__.__name__
+            ans['entity'] = self.basic_info
             return ans
         return getter

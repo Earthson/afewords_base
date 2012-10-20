@@ -62,8 +62,8 @@ class ArticleLib(EmMongoDict):
     }
 
     def get_libname(self, reftype):
-        if reftype not in self.ref_map.keys():
-            return None
+       if reftype not in self.ref_map.keys():
+           return None
        return self.ref_map[reftype]
 
     def refinder(self, reftype, refname):
@@ -366,7 +366,7 @@ class Article(DataBox):
             ans['article_type'] = self.__class__.__name__
             ans['aid'] = self.uid
             ans['title'] = self.title
-            ans['summary'] = self.abstract_viewbody
+            ans['summary'] = self.abstract
             ans['content'] = self.view_body
             ans['content_short'] = self.view_body_short
             ans['release_time'] = str(self.release_time)
@@ -374,6 +374,7 @@ class Article(DataBox):
             ans['comment_count'] = self.comment_count
             ans['statistics'] = self.statistics.basic_info
             ans['keywords'] = self.keywords
+            ans['tag_list'] = self.tag
             ans['privilege'] = self.privilege
             ans['owner'] = self.env_info
             ans['js_list'] = self.js_list
