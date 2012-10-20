@@ -86,13 +86,13 @@
 <div class="w-class">
 <div class="w-nav" title="给文章归类，方便您对文章的管理">归类<span class="px-12 color-blue cursor-pointer" title="添加新的分类">&nbsp;&nbsp;添加新分类</span></div>
 <div>
-{% if isedit is False %}
-    {% for tmp_tag in  user.tag_lib %}
+{% if not isedit %}
+    {% for tmp_tag in  doc['owner_tag'] %}
     <span class="w-class"><label><input type="checkbox" name="classes" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
     {% end %}
 {% else %}
-    {% for tmp_tag in  user.tag_lib %}
-        {% if tmp_tag in blog.tag %}
+    {% for tmp_tag in  doc['owner_tag'] %}
+        {% if tmp_tag in article['tag_list'] %}
             <span class="w-class"><label><input type="checkbox" name="classes" checked="checked" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
         {% else %}
             <span class="w-class"><label><input type="checkbox" name="classes" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
@@ -107,10 +107,10 @@
 
 <div class="w-key" id="write-keys">
 <div class="w-nav">标签<span class="px-12 color-blue">&nbsp;&nbsp;多个请用,或者，分开</span></div>
-{% if isedit is False %}
+{% if not isedit %}
 <span><textarea class="k-text" spellcheck="false" name="keys"></textarea></span>
 {% else %}
-<span><textarea class="k-text" spellcheck="false" name="keys">{{ ",".join(blog.keywords) }}</textarea></span>
+<span><textarea class="k-text" spellcheck="false" name="keys">{{ ",".join(article['keywords']) }}</textarea></span>
 {% end %}
 </div>
 
@@ -141,12 +141,12 @@ $().ready(function(){
 $("#right").css("border-left-width",'0');
 
 
-{% if isedit is False %}
+{% if not isedit %}
     {% if article_type in  ['about', 'blog'] %}
         $("#write_textarea").CreateEditor("-1","{{ article_type }}", "", 0);
         
-    {% elif  article_type in ['group-info', 'group-doc', 'group-topic', 'group-notice', 'group-feedback'] %}
-        $("#write_textarea").CreateEditor("-1","{{ article_type }}", "", 0, '', "{{ env._id }}");        
+    {% elif  article_type in ['group-about', 'group-doc', 'group-topic', 'group-bulletin', 'group-feedback'] %}
+        $("#write_textarea").CreateEditor("-1","{{ article_type }}", "", 0, '', "{{ article['owner']['gid'] }}");        
     {% end %}
     $("#write_textarea").summary_title_init();
     var isedit = false;
@@ -155,18 +155,18 @@ $("#right").css("border-left-width",'0');
 
     var init_target = $("#write_textarea");
     {% if article_type in ['about', 'blog'] %}
-        init_target.CreateEditor("{{ blog._id }}","{{ article_type }}", "", 0);
-    {% elif article_type in ['group-info', 'group-doc', 'group-topic', 'group-notice', 'group-feedback'] %}
-        $("#write_textarea").CreateEditor("{{ blog._id }}","{{ article_type }}", "", 0, '', "{{ env._id }}");        
+        init_target.CreateEditor("{{ article['aid'] }}","{{ article_type }}", "", 0);
+    {% elif article_type in ['group-about', 'group-doc', 'group-topic', 'group-bulletin', 'group-feedback'] %}
+        $("#write_textarea").CreateEditor("{{ article['aid'] }}","{{ article_type }}", "", 0, '', "{{ article['owner']['gid'] }}");        
     {% end %}
 
 init_target.summary_title_init();
 
-pic_lib = {{ json_encode(blog.picture_lib) }};
-math_lib = {{ json_encode(blog.equation_lib) }};
-table_lib = {{ json_encode(blog.tableform_lib) }};
-ref_lib = {{ json_encode(blog.reference_lib) }};
-code_lib = {{ json_encode(blog.langcode_lib) }};
+pic_lib = {{ json_encode(articlei['picture_list']) }};
+math_lib = {{ json_encode(article['equation_list']) }};
+table_lib = {{ json_encode(article['tableform_list']) }};
+ref_lib = {{ json_encode(article['reference_list']) }};
+code_lib = {{ json_encode(article['langcode_list']) }};
 
 init_target.lib_init(pic_lib, math_lib, table_lib, code_lib, ref_lib);	
 $Write.window_close_alert();
