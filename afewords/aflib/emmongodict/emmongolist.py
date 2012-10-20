@@ -126,6 +126,13 @@ class EmMongoList(object):
     load_all = load_list
 
     @auto_coll_do
+    def set_list(self, newlist):
+        return self.coll.update(spec=self.spec, 
+                    document={'$set':{self.path:newlist}})
+
+    set_all = set_list
+
+    @auto_coll_do
     def remove(self):
         '''remove list from db'''
         return self.coll.remove(spec_or_id=self.spec)

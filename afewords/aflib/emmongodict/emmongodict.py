@@ -180,6 +180,16 @@ class EmMongoDict(object):
 
     load_all = load_doc
 
+    @auto_coll_do
+    def set_doc(self, newdoc):
+        if not self.path:
+            return self.coll.update(spec=self.spec,
+                    document=newdoc)
+        return self.coll.update(spec=self.spec,
+                    document={'$set':{self.path:newdoc}})
+
+    set_all = set_doc
+
     @classmethod
     @auto_coll_do
     def load_docs(cls, spec_key=None, spec_values=None):

@@ -261,16 +261,16 @@ class User(DataBox):
             tagmem.discard(str(blogobj._id))
             self.lib.tag_lib[tagname] = list(tagmem)
 
-        blogs.sort()
-        return blogs
-
     def blogs_from_tag(self, tagname):
         from article.blog import Blog
         if not tagname:
             return
-        ans = [Blog.by_id(each) for each in self.lib.tag_lib[tagname]]
+        ans = Blog.by_ids(self.lib.tag_lib[tagname])
+        #ans = [Blog.by_id(each) for each in self.lib.tag_lib[tagname]]
         if ans:
-            self.lib.tag_lib[tagname] = [each._id for each in ans]
+            self.lib.tag_lib.sub_list(tagname).set_all([each._id 
+                                                    for each in ans])
+            #self.lib.tag_lib[tagname] = [each._id for each in ans]
         return ans
 
     def blogs_info_view_by(self, usr=None, tagname=None):
@@ -335,11 +335,11 @@ class User(DataBox):
 
     def is_follow(self, other_id):
         '''self follows other?'''
-        return str(other_id) in self.lib.follow_user_lib.load_all().keys()
+        return str(other_id) in self.lib.follow_user_lib
 
     def is_follower(self, other_id):
         '''other is self's follower?'''
-        return str(other_id) in self.lib.follower_user_lib.load_all().keys()
+        return str(other_id) in self.lib.follower_user_lib
 
     def as_viewer(self, other):
         '''as viewer, update user infomation dict'''
@@ -359,7 +359,7 @@ class User(DataBox):
         return ainfo
 
     def is_like(self, obj):
-        return self.lib.favorite_lib[obj.uid] is not None
+        return obj.uid in self.lib.favorite_lib
 
     #property for page&json
     @db_property
@@ -390,23 +390,19 @@ class User(DataBox):
         return getter
 
     @db_property
-    def followers_info():
-        '''info to display followers'''
+    def followers():
+        '''users followed self'''
         def getter(self):
             follower_ids = self.lib.follower_user_lib.load_all().keys()
-            info_dicts = [self.find_one({'_id':ObjectId(each)}).basic_info 
-                            for each in follower_ids]
-            return info_dicts
+            return self.by_ids(follower_ids)
         return getter
 
     @db_property
-    def follow_info():
-        '''info to display follow'''
+    def follows():
+        '''users self followed'''
         def getter(self):
             follow_ids = self.lib.follow_user_lib.load_all().keys()
-            info_dicts = [self.find_one({'_id':ObjectId(each)}).basic_info
-                            for each in follower_ids]
-            return info_dicts
+            return self.by_ids(follow_ids)
         return getter
 
     @db_property
@@ -414,32 +410,7 @@ class User(DataBox):
         from article.blog import Blog
         def getter(self):
             ids = self.lib.blog_list.load_all()
-            ans = list()
-            topull = list()
-            for each in ids:
-                tmp = Blog.by_id(each)
-                if tmp: ans.append(tmp)
-                else: topull.append(each)
-            self.lib.blog_list.pull(*topull)
+            ans = Blog.by_ids(ids)
+            self.lib.blog_list.set_all([each._id for each in ans])
             return ans
-        return getter
-
-    @db_property
-    def blogs_info():
-        '''info to display blog_list'''
-        def getter(self):
-            return [each.basic_info for each in self.blogs]
-        return getter
-
-    @db_property
-    def draft_list_info():
-        def getter(self):
-            draft_items = self.lib.drafts_lib.load_all().items()
-            info_dicts = [dict(zip(['id', 'type'], each))
-                            for each in draft_items]
-            for each in info_dicts:
-                tmp = generator(each['id'], each['type'])
-                each['time'] = str(tmp.update_time)
-                each['title'] = tmp.title
-            return info_dicts
         return getter

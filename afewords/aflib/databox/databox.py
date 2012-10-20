@@ -94,6 +94,18 @@ class DataBox(object):
         from generator import id_generator
         return id_generator(cls)(uid)
 
+    @classmethod
+    def by_ids(cls, uids):
+        from bson import ObjectId
+        oids = [ObjectId(each) for each in uids if ObjectId.is_valid(each)]
+        datas = cls.datatype.find({'_id':{'$in':oids}})
+        return [cls(data=each) for each in datas]
+
+    @classmethod
+    def by_indexes(cls, idx_name, idx_values):
+        datas = cls.datatype.find({idx_name:{'$in':idx_values}})
+        return [cls(data=each) for each in datas]
+
     def __str__(self):
         return str(self.data)
 
