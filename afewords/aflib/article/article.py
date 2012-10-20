@@ -62,9 +62,9 @@ class ArticleLib(EmMongoDict):
     }
 
     def get_libname(self, reftype):
-       if reftype not in self.ref_map.keys():
-           return None
-       return self.ref_map[reftype]
+        if reftype not in self.ref_map.keys():
+            return None
+        return self.ref_map[reftype]
 
     def refinder(self, reftype, refname):
         '''this method is required by translator, require self.ref_map'''

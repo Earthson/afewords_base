@@ -10,6 +10,7 @@ from handlers.resethandler import ResetHandler
 from handlers.repeatresetmailhandler import RepeatResetMailHandler
 from handlers.bloghandler import BlogHandler
 from handlers.bloggerhandlers import BloggerBlogHandler
+from handlers.articlewritehandler import ArticleWriteHandler
 
 app_handlers = {
     (r'/', IndexHandler), #MainHandler),
@@ -26,6 +27,7 @@ app_handlers = {
     (r'/blogger/(.+)/blog', BloggerBlogHandler),
     (r'/blogger/(.+)', BloggerBlogHandler),
     (r'/blogger', BloggerBlogHandler),
+    (r'/write', ArticleWriteHandler),
     #(r'/home(.*)', UserBlogLibHandler),
 }
 
