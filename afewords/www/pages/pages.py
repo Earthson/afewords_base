@@ -106,6 +106,14 @@ class WritePage(BasePage):
         'article_type': 'blog',	# unicode
     }
 
+    def page_init(self):
+        from toolpages import WriteTitlePage
+        tmp = WriteTitlePage()
+        tmp['isedit'] = self['isedit']
+        tmp['owner'] = self['owner']
+        tmp['article_type'] = self['article_type']
+        self['do_title'] = tmp.render_string()
+
 
 """ +++++++ for blog page """
 @with_attr
