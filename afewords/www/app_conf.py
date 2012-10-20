@@ -9,7 +9,7 @@ from handlers.checkhandler import CheckHandler
 from handlers.resethandler import ResetHandler
 from handlers.repeatresetmailhandler import RepeatResetMailHandler
 from handlers.bloghandler import BlogHandler
-from handlers.bloggerbloghandler import BloggerBlogHandler
+from handlers.bloggerhandlers import BloggerBlogHandler
 
 app_handlers = {
     (r'/', IndexHandler), #MainHandler),
