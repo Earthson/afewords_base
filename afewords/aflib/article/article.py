@@ -386,7 +386,8 @@ class Article(DataBox):
             'keywords' : 'keywords',
             'privilege' : 'privilege',
         }
-        self.set_propertys(**dict([ev, info_dic[ek]) for ek, ev in info_mapper])
+        self.set_propertys(**dict((ev, info_dic[ek]) 
+                for ek, ev in info_mapper))
 
     #property for page&json
     @db_property

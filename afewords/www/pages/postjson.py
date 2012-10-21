@@ -119,7 +119,7 @@ class UpdateArticleJson(BaseJson):
 
     def by_status(self, status):
         self['status'] = status
-        self['info'] = error_info['status']
+        self['info'] = self.error_info[status]
 
     def as_new(self, article_id):
         self['isnew'] = 1

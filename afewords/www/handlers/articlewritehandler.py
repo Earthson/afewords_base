@@ -88,24 +88,25 @@ class ArticleUpdatePara(BaseHandlerPara):
     }
 
     def read(self):
-        self.paradoc = [(ek, self.handler.get_esc_arg(ek, ev)) 
-                                    for ek, ev in self.paradoc]
+        self.paradoc = dict([(ek, self.handler.get_esc_arg(ek, ev)) 
+                                    for ek, ev in self.paradoc.items()])
         self['keywords'] = self.handler.get_esc_args('keywords[]')
         self['tags'] = self.handler.get_esc_args('tags[]')
         self['ref_comments'] = self.handler.get_esc_args('ref_comments[]')
 
 
-from pages.postjson import UpdateArticlejson
+from pages.postjson import UpdateArticleJson
 
 class ArticleUpdateHandler(BaseHandler):
 
     @with_login
-    def post(self)
+    def post(self):
         from generator import generator, cls_gen
         from article.article import Article
         handler_paras = ArticleUpdatePara(self)
         handler_json = UpdateArticleJson(self)
         usr = self.current_user
+        print handler_paras['env_id'], type_trans(handler_paras['env_type'])
         env = generator(handler_paras['env_id'], 
                         type_trans(handler_paras['env_type']))
         if not env:

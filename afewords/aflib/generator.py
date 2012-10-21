@@ -3,6 +3,8 @@ from bson.errors import InvalidId
 
 def id_generator(doctype):
     def id_gen(oid):
+        if doctype is None:
+            return None
         try:
             data = doctype.datatype.one({'_id':ObjectId(oid)})
             if data:
@@ -51,7 +53,7 @@ def cls_gen(objtype):
     return types_all[objtype]
 
 def generator(objid, objtype):
-    return id_generator(cls_gen(obj_type))(objid)
+    return id_generator(cls_gen(objtype))(objid)
 
 def ungenerator(obj):
     return obj._id, obj.__class__.__name__
