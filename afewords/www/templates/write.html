@@ -148,22 +148,24 @@ $("#right").css("border-left-width",'0');
 
 
 {% if not isedit %}
+    {% set json_article = { "article_id": -1, "article_type": article_type, "env_type": owner['type'], "env_id": owner['entity']['gid'] if owner['type'] == 'group' else owner['entity']['uid'] } %}
     {% if article_type in  ['about', 'blog'] %}
-        $("#write_textarea").CreateEditor("-1","{{ article_type }}", "", 0);
+        $("#write_textarea").CreateEditor({{ json_encode(json_article) }});
         
     {% elif  article_type in ['group-about', 'group-doc', 'group-topic', 'group-bulletin', 'group-feedback'] %}
-        $("#write_textarea").CreateEditor("-1","{{ article_type }}", "", 0, '', "{{ owner['entity']['gid'] }}");        
+        $("#write_textarea").CreateEditor({{ json_encode(json_article) }});        
     {% end %}
     $("#write_textarea").summary_title_init();
     var isedit = false;
 
 {% else %}
 
+    {% set json_article = { "article_id": article['aid'], "article_type": article_type, "env_type": owner['type'], "env_id": owner['entity']['gid'] if owner['type'] == 'group' else owner['entity']['uid'], 'body': article['body'] } %}
     var init_target = $("#write_textarea");
     {% if article_type in ['about', 'blog'] %}
-        init_target.CreateEditor("{{ article['aid'] }}","{{ article_type }}", "", 0);
+        init_target.CreateEditor({{ json_encode(json_article) }});
     {% elif article_type in ['group-about', 'group-doc', 'group-topic', 'group-bulletin', 'group-feedback'] %}
-        $("#write_textarea").CreateEditor("{{ article['aid'] }}","{{ article_type }}", "", 0, '', "{{ owner['entity']['gid'] }}");        
+        $("#write_textarea").CreateEditor({{ json_encode(json_article) }});        
     {% end %}
 
 init_target.summary_title_init();
@@ -174,7 +176,12 @@ table_lib = {{ json_encode(article['tableform_list']) }};
 ref_lib = {{ json_encode(article['reference_list']) }};
 code_lib = {{ json_encode(article['langcode_list']) }};
 
-init_target.lib_init(pic_lib, math_lib, table_lib, code_lib, ref_lib);	
+init_target.lib_init({  "image_list": pic_lib , 
+                        "math_list": math_lib, 
+                        "table_list": table_lib, 
+                        "code_list": code_lib, 
+                        "reference_list": ref_lib
+                    });	
 $Write.window_close_alert();
 
 {% end %}
