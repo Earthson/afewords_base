@@ -238,14 +238,16 @@ class Article(DataBox):
         return self.release_time > other.release_time
 
     @with_user_status
-    def authority_verify(self, usr, **env):
+    def authority_verify(self, usr, env=None, **kwargs):
         ret = 0
         if not usr:
             ret = set_auth(ret, A_READ)
         elif self.author._id == usr._id:
             ret = set_auth(ret, A_READ | A_WRITE | A_DEL)
-        #with env test
-        #todo Earthson
+        if env:
+            tmp = env.authority_verify(usr)
+            if test_auth(tmp, A_POST):
+                ret = set_auth(ret, A_POST)
         return ret
 
     def refinder(self, reftype, refname):
@@ -263,6 +265,9 @@ class Article(DataBox):
         tagall = set(self.tag)
         tagall.discard(tagname)
         self.tag = list(tagall)
+
+    def do_post(self):
+        self.set_propertys(is_posted=True, release_time=datetime.now())
 
     @db_property
     def title():
@@ -308,6 +313,12 @@ class Article(DataBox):
             self.data['env_id'] = val._id
             self.data['env_type'] = val.__class__.__name__
         return getter, setter
+
+    @db_property
+    def env_info():
+        def getter(self):
+            return (self.data['env_id'], self.data['env_type'])
+        return getter
 
     @db_property
     def statistics():
@@ -366,6 +377,16 @@ class Article(DataBox):
         def getter(self):
             return len(self.lib.comment_list)
         return getter
+
+    def set_by_info(self, info_dic):
+        info_mapper = {
+            'title' : 'title',
+            'body' : 'body',
+            'summary' : 'abstract',
+            'keywords' : 'keywords',
+            'privilege' : 'privilege',
+        }
+        self.set_propertys(**dict([ev, info_dic[ek]) for ek, ev in info_mapper])
 
     #property for page&json
     @db_property

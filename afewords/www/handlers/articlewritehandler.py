@@ -101,9 +101,66 @@ class ArticleUpdateHandler(BaseHandler):
 
     @with_login
     def post(self)
-        from generator import generator
+        from generator import generator, cls_gen
+        from article.article import Article
         handler_paras = ArticleUpdatePara(self)
         handler_json = UpdateArticleJson(self)
         usr = self.current_user
         env = generator(handler_paras['env_id'], 
                         type_trans(handler_paras['env_type']))
+        if not env:
+            handler_json.by_status(14)
+            handler_json.write()
+            return #Invalid Env Arguments
+        if not Article.is_valid_id(handler_paras['article_id']):
+            acls = cls_gen(trans_type(handler_paras['article_type']))
+            if not acls:
+                handler_json.by_status(11)
+                handler_json.write()
+                return #Invalid Article Type
+            if not test_auth(env.authority_verify(usr), A_POST):
+                handler_json.by_status(12)
+                handler_json.write()
+                return #Permission Denied
+            article_obj = acls()
+            article_obj.set_propertys(env=env, author=usr)
+            if article_obj is None:
+                handler_json.by_status(13)
+                handler_json.write()
+                return #Article Create Failed
+            handler_json.as_new(article_obj.uid) 
+            #new Article Created
+        else:
+            article_obj = genereator(handler_paras['article_id'],
+                        type_trans(handler_paras['article_type']))
+            if article_obj is None:
+                handler_json.by_status(4)
+                handler_json.write()
+                return #Article Not Exist
+            if article_obj.env_info != env.obj_info:
+                handler_json.by_status(15)
+                handler_json.write()
+                return #Invalid Env
+            if not test_auth(article_obj.authority_verify(usr, env),
+                            A_WRITE):
+                handler_json.by_status(16)
+                handler_json.write()
+                return #WRITE Permission Denied
+        article_obj.set_by_info(handler_paras.load_doc())   
+        author = article_obj.author
+        if article_obj.is_posted is False:
+            article_obj.tag = set(author.alltags) & \
+                        set(handler_paras['tags'])
+            if handler_paras['do'] == 'post':
+                auth_ans = article_obj.authority_verify(usr, env)
+                if not test_auth(auth_ans, A_POST):
+                    handler_json.by_status(17)
+                    handler_json.write()
+                    return #Post Permission Denied
+                author.post_article(article_obj) #try Post
+        else:
+            author.with_new_tags(article_obj, handler_paras['tags'])
+
+        handler_json.by_status(0)
+        handler_json.write()
+        return #Return

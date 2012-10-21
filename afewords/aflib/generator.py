@@ -20,7 +20,7 @@ def index_generator(doctype):
         return None
     return index_gen
 
-def generator(objid, objtype):
+def cls_gen(objtype):
     from article.blog import Blog
     from article.comment import Comment
     from article.about import About
@@ -48,8 +48,10 @@ def generator(objid, objtype):
 
     if objtype not in types_all.keys():
         return None
-    objtype = types_all[objtype]
-    return id_generator(objtype)(objid)
+    return types_all[objtype]
+
+def generator(objid, objtype):
+    return id_generator(cls_gen(obj_type))(objid)
 
 def ungenerator(obj):
     return obj._id, obj.__class__.__name__
