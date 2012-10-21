@@ -107,3 +107,26 @@ class ArticleUpdateHandler(BaseHandler):
         usr = self.current_user
         env = generator(handler_paras['env_id'], 
                         type_trans(handler_paras['env_type']))
+
+class ArticleSrcPara(BaseHandlerPara):
+    paradoc = {
+        'do': 'new',    # unicode
+        'article_id': '',   # unicode
+        'article_type': 'blog', # unicode
+        'env_id': '',   # unicode
+        'env_type': 'user', # unicode
+        'father_id': '',    # unicode
+        'father_type': 'blog',  # unicode
+        'src_type': 'equation', # unicode
+        'src_alias': '',   # unicode, alias
+        'title': '',    # unicode
+        'body': '', # unicode
+        
+        #@for reference
+        'source': '',  # unicode
+        #@for langcode
+        'code_type': 'python',  # unicode
+        #@for equation
+        'math_mode': 'display', # unicode
+    }
+

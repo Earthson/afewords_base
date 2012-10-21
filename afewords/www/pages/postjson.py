@@ -120,6 +120,37 @@ class UpdateArticleJson(BaseJson):
 
 
 @with_attr
+class ArticleSrcJson(BaseJson):
+    '''
+    @login
+    '''
+    doc = {
+        'status': -1, # -1 for error, 0 for right
+        'info': '', # error code
+        'article_isnew': 0, # int, 0 for False, 1 for True
+        'article_id': '',   # unicode
+        'src_isnew': 0, # int, 0 for False, 1 for True
+        'src_alias': '',    # unicode
+    }    
+    error_info = {
+        0: '',
+        1: '请登陆！',
+        2: '不支持当前资源类型！',
+        3: '不支持当前文章类型！',
+        4: '名称不能为空！',
+        5: '内容不能为空！',
+        6: '请填写链接地址或者引用内容！',
+        7: '请选择代码种类！',
+        8: '小组不存在！',
+        9: '文章不存在！',
+        10: '知识谱不存在！',
+        11: '无权操作他人文章！',
+        12: '无权操作！',
+
+    }
+
+
+@with_attr
 class GetCommentJson(BaseJson):
     '''
     @ajax_post
@@ -135,3 +166,5 @@ class GetCommentJson(BaseJson):
         'info': '' or dict, # unicode or dict, unicode for error, dict for right
     }
     
+
+

@@ -466,8 +466,8 @@ jQuery.fn.extend({
             html = paras_html+
                    '<p class="first">添加数学式--<font size="12px">数学式采用latex规则</font><span class="all_example" title="说明"><a href="/help-editor-math" target="_blank">说明</a></span></p>'+
                         '<p title="设置名称">名称<input type="text" name="title" autocomplete="off" /></p>'+
-                        '<p title="设置名称">样式<label><input type="radio" name="math_type" checked="checked" value="display" />行间</label>'+
-                        '<label><input type="radio" name="math_type" value="inline" />行内</label></p>'+
+                        '<p title="设置名称">样式<label><input type="radio" name="math_mode" checked="checked" value="display" />行间</label>'+
+                        '<label><input type="radio" name="math_mode" value="inline" />行内</label></p>'+
                         '<p title="数学式latex内容"><textarea resize="none" autocomplete="off" name="body" ></textarea></p>'+
                         '<p><span><button type="submit">提交</button></span><span class="m_process">&nbsp;</span></p>';
             wd = 450, hg = 380;
@@ -555,18 +555,18 @@ jQuery.fn.extend({
         case 'math':
             var math_name = $.encode(obj_one.find("#otitle").val());
             var math_body = $.encode(obj_one.find("#obody").val());
-            var math_type = $.encode(obj_one.find("#math_type").val());
+            var math_mode = $.encode(obj_one.find("#math_mode").val());
 
             html = paras_html +
                     '<p class="first">修改数学式--<font size="12px">数学式采用latex规则</font></p>'+
                     '<p title="设置名称">名称<input type="text" name="title" value="'+math_name+'" /></p>'+
                     '<p title="设置样式">样式';
-                    if(math_type == "inline"){
-                        html += '<label><input type="radio" name="math_type"  value="display" />行间</label>'+
-                            '<label><input type="radio" name="math_type" checked="checked" value="inline" />行内</label>';
+                    if(math_mode == "inline"){
+                        html += '<label><input type="radio" name="math_mode"  value="display" />行间</label>'+
+                            '<label><input type="radio" name="math_mode" checked="checked" value="inline" />行内</label>';
                     }else{
-                        html += '<label><input type="radio" name="math_type" checked="checked" value="display" />行间</label>'+
-                            '<label><input type="radio" name="math_type" value="inline" />行内</label>';
+                        html += '<label><input type="radio" name="math_mode" checked="checked" value="display" />行间</label>'+
+                            '<label><input type="radio" name="math_mode" value="inline" />行内</label>';
                     }
                   html +='</p>'+
                     '<p title="数学式latex内容"><textarea resize="none" name="body" >'+math_body+'</textarea></p>'+
@@ -815,7 +815,7 @@ jQuery.fn.extend({
                 '<div><span class="cname">数式'+ tmp.alias +'</span></div>'+
                 '<div class="control"><span class="cdel" title="删除">删除</span>' +
                 '<span class="cedit" title="修改">修改</span><span class="cinsert">插入</span></div>'+
-                '<div><span><input type="text" id="otitle" readonly="readonly" value="'+ tmp.name +'"><input type="hidden" id="math_type" value="'+ tmp.mode +'" /></span>'+
+                '<div><span><input type="text" id="otitle" readonly="readonly" value="'+ tmp.name +'"><input type="hidden" id="math_mode" value="'+ tmp.mode +'" /></span>'+
                 '<textarea id="obody">'+ tmp.body +'</textarea></div></div>';
         }
         target_math.html(_html);
@@ -1117,19 +1117,19 @@ $Write.new_lib_src_submit = function(obj)
                 var current_textarea = write_menu.siblings("#write_textarea");  
                 $Write.window_close_alert();
                 var info = response.info;
-                if(response.info.isnew == true){
-                    write_menu.attr("article_id",info.article);
+                if(response.article_isnew == 1){
+                    write_menu.attr("article_id",response.article_id);
                 }
                 var obj_bar = write_menu.find(list[type]);
                 var obj_body = obj_bar.find("#crtm");
                 var obj_one = $('<div></div>');
-                obj_one.attr({"class":'one','oid':info.alias,"type":type});
+                obj_one.attr({"class":'one','oid':response.src_alias,"type":type});
                 var obj_html= '';
-                
+                var alias = response.src_alias;
                 //alert(type);
                 switch(type){
                     case 'reference':
-                        obj_html =  '<div><span class="cname">引用'+ info.alias+'</span></div>'+
+                        obj_html =  '<div><span class="cname">引用'+ alias+'</span></div>'+
                             '<div class="control"><span class="cdel" title="删除">删除</span>'+
                             '<span class="cedit" title="修改">修改</span>'+
                             '<span class="cinsert">插入</span></div>'+
@@ -1138,7 +1138,7 @@ $Write.new_lib_src_submit = function(obj)
                             '<input type="hidden" id="osource" value="'+mes['source']+'" /><textarea id="obody">'+mes['body']+'</textarea></div>';
                         break;
                     case 'code':
-                        obj_html = '<div><span class="cname">代码'+ info.alias +'</span></div>'+
+                        obj_html = '<div><span class="cname">代码'+ alias +'</span></div>'+
                                 '<div  class="control"><span class="cdel" title="删除">删除</span>'+
                                 '<span class="cedit" title="修改">修改</span>'+
                                 '<span class="cinsert">插入</span></div>'+
@@ -1149,7 +1149,7 @@ $Write.new_lib_src_submit = function(obj)
                                 '</div>';
                         break;
                     case 'table':
-                        obj_html = '<div><span class="cname">表'+info.alias+'</span></div>'+
+                        obj_html = '<div><span class="cname">表'+alias+'</span></div>'+
                                 '<div  class="control"><span class="cdel" title="删除">删除</span>'+
                                 '<span class="cedit" title="修改">修改</span>'+
                                 '<span class="cinsert">插入</span></div>'+
@@ -1159,13 +1159,13 @@ $Write.new_lib_src_submit = function(obj)
                                 '</div>';
                         break;
                     case 'math':
-                        obj_html = '<div><span class="cname">数式'+info.alias+'</span></div>'+
+                        obj_html = '<div><span class="cname">数式'+alias+'</span></div>'+
                                 '<div class="control"><span class="cdel" title="删除">删除</span>'+
                                 '<span class="cedit" title="修改" >修改</span>'+
                                 '<span class="cinsert">插入</span></div>'+
                                 //'<div><span class="cdes">名称：</span></div>'+
                                 '<div><span><input type="text" id="otitle" readonly="readonly" value="'+mes['title']+'" />'+
-                                    '<input type="hidden" id="math_type" value="'+ mes['math_type'] +'" /></span>'+
+                                    '<input type="hidden" id="math_mode" value="'+ mes['math_mode'] +'" /></span>'+
                                 '<textarea id="obody">'+mes['body']+'</textarea>'+                              
                                 '</div>';
                         //alert(obj_html);
@@ -1288,8 +1288,8 @@ $Write.update_lib_src_submit = function( obj )
                     case 'math':
                         obj_one.find("#otitle").val(mes['title']);
                         obj_one.find("#obody").val(mes['body']);
-                        obj_one.find("#math_type").val(mes['math_type']);
-                        //alert(mes['math_type']);
+                        obj_one.find("#math_mode").val(mes['math_mode']);
+                        //alert(mes['math_mode']);
                         break;
                 }
                 pop_page_close();
@@ -1494,6 +1494,7 @@ $Write.post_write = function(obj){
 }
 
 $Write.post_write_all = function(obj){
+    /*********** 发布博客*******************/
     var $obj = $(obj), $menu = $('#write_menu'), $text=$('#write_textarea'), 
         $process = $("div.w-submit-result");
     var mes = {};
@@ -1527,29 +1528,29 @@ $Write.post_write_all = function(obj){
             if(response.kind != 0){
                 wrong(response.info);            
             }else{
-                $menu.attr('article_id', response.info);
+                if(response.isnew != 0) $menu.attr('article_id', response.article_id);
                 preview_url = '';
                 switch(mes['article_type']){
                     case 'blog':
-                        preview_url = '/blog/'+ response.info; 
+                        preview_url = '/blog/'+ response.article_id; 
                         break;
                     case 'about':
                         preview_url = '/bloger';
                         break;
                     case 'group-info':
-                        preview_url = '/group/'+mes['group_id']+'/info'
+                        preview_url = '/group/'+mes['env_id']+'/info'
                         break;
                     case 'group-topic':
-                        preview_url = '/group/'+ mes['group_id'] + '/topic/' + response.info
+                        preview_url = '/group/'+ mes['env_id'] + '/topic/' + response.article_id
                         break;
                     case 'group-notice':
-                        preview_url = '/group/' + mes['group_id'] + '/notice/' + response.info
+                        preview_url = '/group/' + mes['env_id'] + '/notice/' + response.article_id
                         break;
                     case 'group-feedback':
-                        preview_url = '/group/' + mes['group_id'] + '/feedback/' + response.info
+                        preview_url = '/group/' + mes['env_id'] + '/feedback/' + response.article_id
                         break;
                     case 'group-doc':
-                        preview_url = '/group/' + mes['group_id'] + '/doc/' + response.info
+                        preview_url = '/group/' + mes['env_id'] + '/doc/' + response.article_id
                         break;                
                 }
                 if(mes['do'] == 'preview'){
