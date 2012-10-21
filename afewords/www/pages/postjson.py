@@ -90,10 +90,14 @@ class UpdateArticleJson(BaseJson):
     '''
     doc = {
         'status': -1,   # int
-        'info': 0,     # int or dict 
+        'info': '',     # int or dict 
+
+        'isnew': 0, # 1 for True, <=0 for False
+        #for new write
+        'article_id': '',   # unicode
     }
     error_info = {  # int info 
-        0: '请先登陆！',
+        0: '',
         1: '请填写标题！',
         2: '请填写正文！',
         3: '无权操作他人的文章',
@@ -102,12 +106,17 @@ class UpdateArticleJson(BaseJson):
         6: '你不是该小组成员！',
         7: '你不是小组管理员，无权操作！',
         8: '不支持当前操作！', 
+        9: '请先登陆！',
+        10: '非法参数!',
     }
 
-    dict_info = {   # for right 
-        'isnew': 1, # 1 for True, <=0 for False
-        'article_id': '',   # unicode
-    }
+    def by_status(self, status):
+        self['status'] = status
+        self['info'] = error_info['status']
+
+    def as_new(self, article_id):
+        self['isnew'] = 1
+        self['article_id'] = article_id
 
 
 @with_attr
