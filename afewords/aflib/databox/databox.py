@@ -18,7 +18,7 @@ class db_property(object):
         if isinstance(ret, tuple):
             if ret[1] == True:
                 obj.data.save()
-            ret = ret[0]
+                ret = ret[0]
         return ret
 
     def __set__(self, obj, value):
@@ -161,6 +161,12 @@ class DataBox(object):
     def uid():
         def getter(self):
             return unicode(self.data['_id'])
+        return getter
+
+    @db_property
+    def obj_info():
+        def getter(self):
+            return (self._id, self.__class__.__name__)
         return getter
 
     @db_property

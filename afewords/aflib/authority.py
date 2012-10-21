@@ -1,7 +1,7 @@
 '''
 A_WRITE | A_POST | A_DEL | A_MANAGE | A_READ
 
-obj.authority_verify(usr, **env) is a method to get permission level to spec obj
+obj.authority_verify(usr, env, **kwargs) is a method to get permission level to spec obj
 
 use test_auth() to judge whether you have permission
 '''
@@ -26,8 +26,8 @@ def test_auth(self, auth):
     return (self & auth) == auth
 
 def with_user_status(operate):
-    def wrapper(self, usr, **env):
-        ans = operate(self, usr, **env)
+    def wrapper(self, usr, env=None, **kwargs):
+        ans = operate(self, usr, env, **kwargs)
         if usr and usr.account_status in ['limitted', 'unverified']:
             ans = unset_auth(ans, A_POST)
         return ans

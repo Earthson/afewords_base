@@ -201,20 +201,35 @@ class User(DataBox):
             return UserLib(spec={'_id':self.data['lib_id']})
         return getter
 
+    @db_property
+    def alltags():
+        def getter(self):
+            return self.lib.tag_lib['alltags']
+        return getter
+
     @with_user_status
-    def authority_verify(self, usr, **env):
+    def authority_verify(self, usr, env=None, **kwargs):
         ret = 0
         if usr == None:
             ret = set_auth(ret, A_READ)
         elif self._id == usr._id:
-            ret = set_auth(ret, A_READ | A_WRITE | A_DEL)
+            ret = set_auth(ret, A_READ | A_WRITE | A_DEL | A_POST)
         return ret
+
+    def post_article(self, article_type, article_obj):
+        from article.blog import Blog
+        from article.comment import Comment
+        a_mapper = {
+            Blog.__name__ : self.post_blog,
+            Comment.__name__ : self.post_comment,
+        }
+        return a_mapper[article_type](article_obj)
 
     def post_blog(self, blogobj):
         #from article.blog import Blog
         blogid = blogobj._id
-        self.drafts_lib.remove_obj(blogid)
-        self.blog_list.push(blogid)
+        del self.lib.drafts_lib[blogid]
+        self.lib.blog_list.push(blogid)
         blogobj.do_post()
         for each in blogobj.tag:
             tmp = self.tag_lib[each]
@@ -259,6 +274,24 @@ class User(DataBox):
             tagmem = set(tagmem)
             tagmem.discard(str(blogobj._id))
             self.lib.tag_lib[tagname] = list(tagmem)
+
+    def add_tags(self, new_tags):
+        new_tags = set(new_tags)
+        if not new_tags.issubset(set(self.alltags)):
+            all_tags = set(self.alltags) | new_tags
+            self.lib.tag_lib['alltags'] = all_tags
+
+    def remove_tags(self, rm_tags):
+        rm_tags = set(rm_tags)
+        self.lib.tag_lib['alltags'] = set(self.alltags) - rm_tags
+
+    def with_new_tags(self, blogobj, new_tags):
+        old_tags = set(blogobj.tag)
+        new_tags = set(new_tags) & set(self.alltags)
+        for each in old_tags - new_tags:
+            self.remove_from_tag(blogobj, each)
+        for each in new_tags - old_tags:
+            self.add_to_tag(blogobj, each)
 
     def blogs_from_tag(self, tagname):
         from article.blog import Blog
@@ -385,7 +418,7 @@ class User(DataBox):
             ans['thumb'] = self.thumb_name
             ans['isfollow'] = False
             ans['isme'] = False
-            ans['tag_list'] = self.lib.tag_lib['alltags']
+            ans['tag_list'] = self.alltags
             return ans
         return getter
 

@@ -41,6 +41,9 @@ class BaseHandlerPara(object):
     def verify(self):
         return 0
 
+    def load_doc(self):
+        return self.paradoc
+
     def __getitem__(self, key):
         return self.paradoc[key]
 
