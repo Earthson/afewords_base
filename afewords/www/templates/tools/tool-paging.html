@@ -3,11 +3,11 @@
     {% for ipage in zip(doc['page_list'], doc['urls'])  %}
         {% if doc['current_page'] == ipage[0] %}
         <span>
-            <a href="{{ ipage[1] }}" class="current" target="_blank">{{ ipage[0] }}</a>
+            <a href="{{ ipage[1] }}" class="current">{{ ipage[0] }}</a>
         </span>
         {% else %}
         <span>
-            <a href="{{ ipage[1] }}" target="_blank">{{ ipage[0] }}</a>
+            <a href="{{ ipage[1] }}">{{ ipage[0] }}</a>
         </span>
         {% end %}
     {% end %}

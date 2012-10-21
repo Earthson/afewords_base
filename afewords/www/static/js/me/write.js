@@ -760,8 +760,19 @@ jQuery.fn.extend({
         }
     },
     /*********** lib init ******************/
-    lib_init:function(pic_lib, math_lib, table_lib, code_lib, ref_lib)
+    lib_init:function(paras)
     {
+        var default_paras = {
+            "image_list": [],
+            "math_list": [],
+            "table_list":[],
+            "code_list": [],
+            "reference_list": []        
+        }
+        if(typeof paras != "object") paras = {};
+        for(var ii in default_paras){
+            default_paras[ii] = paras[ii] || default_paras[ii];        
+        }
         var self_textarea = this;
         var target = this.siblings("#write_menu").children("#write_lib_bar");
         var target_img = target.children("#write_image_bar").find(".i");
@@ -771,8 +782,8 @@ jQuery.fn.extend({
         var target_ref = target.children("#write_ref_bar").find("#crtm");
         var tmp;
         var _html = '';
-        for(i in pic_lib){
-            tmp = pic_lib[i];
+        for(var i in default_paras["image_list"]){
+            tmp = default_paras["image_list"][i];
             _html += '<div class="one" oid="'+ tmp.alias +'" type="image">'+
             '<div class="ileft"><span class="ititle">图' + tmp.alias + '</span></div>'+
             '<div class="icontrol">'+
@@ -798,8 +809,8 @@ jQuery.fn.extend({
 
 
         _html = '';
-        for(i in math_lib){
-            tmp = math_lib[i];
+        for(var i in default_paras["math_list"]){
+            tmp = default_paras["math_list"][i];
             _html += '<div class="one" oid="'+ tmp.alias + '" type="math">'+
                 '<div><span class="cname">数式'+ tmp.alias +'</span></div>'+
                 '<div class="control"><span class="cdel" title="删除">删除</span>' +
@@ -818,8 +829,8 @@ jQuery.fn.extend({
         });
 
         _html = '';
-        for(i in table_lib){
-            tmp = table_lib[i];
+        for(var i in default_paras["table_list"]){
+            tmp = default_paras["table_list"][i];
             _html += '<div class="one" oid="'+ tmp.alias +'" type="table">'+
             '<div><span class="cname">表'+ tmp.alias +'</span></div>'+
             '<div class="control"><span class="cdel" title="删除">删除</span>'+
@@ -839,8 +850,8 @@ jQuery.fn.extend({
         });
 
         _html = '';
-        for(i in ref_lib){
-            tmp = ref_lib[i];
+        for(var i in default_paras["reference_list"]){
+            tmp = default_paras["reference_list"][i];
             _html += '<div class="one" oid="'+ tmp.alias +'" type="reference">'+
             '<div><span class="cname">引用'+ tmp.alias +'</span></div>'+
             '<div class="control"><span class="cdel" title="删除">删除</span>'+
@@ -861,8 +872,8 @@ jQuery.fn.extend({
 
 
         _html = '';
-        for(i in code_lib){
-            tmp = code_lib[i];
+        for(var i in default_paras["code_list"]){
+            tmp = default_paras["code_list"][i];
             _html += '<div class="one" oid="'+ tmp.alias +'" type="code">'+
             '<div><span class="cname">代码'+ tmp.alias +'</span></div>'+
             '<div class="control"><span class="cdel" title="删除">删除</span>'+
@@ -1592,7 +1603,7 @@ $Write.send_write_blog = function(before_handler,right_handler,error_handler, ar
     mes['article_id'] = article_id;
     mes['article_type'] = art_type;
     mes['keywords'] = keywords;
-    mes['permission'] = permission;
+    mes['privilege'] = permission;
     mes['father_id'] = father_id;
     mes['father_type'] = father_type;
     mes['env_id'] = env_id;
