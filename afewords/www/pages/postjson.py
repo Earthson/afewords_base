@@ -90,8 +90,25 @@ class UpdateArticleJson(BaseJson):
     '''
     doc = {
         'status': -1,   # int
-        'info': '',     # unicode
+        'info': 0,     # int or dict 
     }
+    error_info = {  # int info 
+        0: '请先登陆！',
+        1: '请填写标题！',
+        2: '请填写正文！',
+        3: '无权操作他人的文章',
+        4: '文章不存在！',
+        5: '小组不存在！',
+        6: '你不是该小组成员！',
+        7: '你不是小组管理员，无权操作！',
+        8: '不支持当前操作！', 
+    }
+
+    dict_info = {   # for right 
+        'isnew': 1, # 1 for True, <=0 for False
+        'article_id': '',   # unicode
+    }
+
 
 @with_attr
 class GetCommentJson(BaseJson):

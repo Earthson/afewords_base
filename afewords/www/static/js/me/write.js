@@ -65,19 +65,19 @@ $Write.word_list4 = function(){
 }
 
 
-/***************toggle the title and summary *******************************/
+/**************toggle the title and summary ******************************/
 
 $Write.write_toggle_title = function(obj){
     var target = $(obj).attr("to") || 'head';
     if (target=="summary"){
         var $summary = $("textarea.w_summary");
-	   if($summary.css("display")=='none'){
-		  $(obj).html('隐藏摘要');	
-	   }else{
-		  $(obj).html('展开摘要');
-	   }
-	   $summary.slideToggle("slow");
-	}else{
+       if($summary.css("display")=='none'){
+          $(obj).html('隐藏摘要');  
+       }else{
+          $(obj).html('展开摘要');
+       }
+       $summary.slideToggle("slow");
+    }else{
         var $head = $("#head");
         if($head.css('display')=="none"){
             $(obj).html('隐藏页头');        
@@ -85,7 +85,7 @@ $Write.write_toggle_title = function(obj){
             $(obj).html('展开页头');        
         }
         $head.slideToggle("slow");
-	}	
+    }   
 
 }
 
@@ -111,8 +111,8 @@ $Write.close_window_close_alert = function(){
 
 /****************console the writearea dom cursor *****************************************/
 jQuery.fn.extend({
-	/******* set the cursor in between pos_s and pos_e *********/
-	setPosition:function(pos_s , pos_e) {  
+    /******* set the cursor in between pos_s and pos_e *********/
+    setPosition:function(pos_s , pos_e) {  
         var e=$(this).get(0);  
         e.focus();  
         if (e.setSelectionRange) {  
@@ -155,183 +155,182 @@ jQuery.fn.extend({
     },
     /*************** get the  between pos_s and pos_e string ********************/
     getPositionString:function(pos_s,pos_e){
-    	 this.setPosition(pos_s,pos_e);
-    	 return this.getPosition().text;
+         this.setPosition(pos_s,pos_e);
+         return this.getPosition().text;
     },
     /************ insert the string ***************/
-	insertFormatString:function(type){
+    insertFormatString:function(type){
         //alert(type);
         //var type = parseInt($(obj).attr("kind"));
-		pos_s = this.getPosition().start;
-		pos_e =  this.getPosition().end;
-		var string = '';
-		var pre_str = '', end_str = '';
-		lef = len = 0;
-		var text_len = pos_e - pos_s;
-		len = pos_e - pos_s;
-		var last = false;
-		if(this.val() == '内容'){ this.val(''); }
-		switch(type){
-			case 1: if(text_len >0 ){ pre_str='++'; end_str = '++';}; break;
-			case 2:  if(text_len >0 ){ pre_str = end_str ='//'; }; break;
-			case 3:  if(text_len >0 ){ pre_str = end_str = '__';}; break;
-			case 4:  if(text_len >0 ){ pre_str = end_str = '--'; }; break;
-			case 11: if(text_len > 0 ){ pre_str = '^{'; end_str = '}';  }; break;
-			case 12: if(text_len > 0) { pre_str = '_{'; end_str = '}'; }; break;
-			case 21:
-			         if(!text_len > 0) break;
-					if(pos_s == 0 || this.getPositionString(pos_s - 1, pos_s) == '\n')
-					{ pre_str = '#';}
-					else{ pre_str='\n#';}				
-					break;
-			case 22: 
-			         if(!text_len > 0) break;
-					if(pos_s == 0 || this.getPositionString(pos_s - 1, pos_s) == '\n'){
-						pre_str = '*';		
-					}else{
-						pre_str = '\n*';
-					}				
-					break;
-			case 31:
-					if(pos_e == 0||this.getPositionString(pos_e - 1, pos_e) == '\n'){
-					   //alert(pos_s);
-						end_str = '~~~~~~~~~~\n';
-					}else{
-					   end_str = '\n~~~~~~~~~~\n'; 
-					}
-					last = true;
-					break;
-			case 32: 
-			         if(!text_len > 0) break;
-			         if(pos_s==0||this.getPositionString(pos_s - 1, pos_s) == '\n')
-					{ 
-					   pre_str = end_str = '==';			
-					}
-					else{ 
+        pos_s = this.getPosition().start;
+        pos_e =  this.getPosition().end;
+        var string = '';
+        var pre_str = '', end_str = '';
+        lef = len = 0;
+        var text_len = pos_e - pos_s;
+        len = pos_e - pos_s;
+        var last = false;
+        if(this.val() == '内容'){ this.val(''); }
+        switch(type){
+            case 1: if(text_len >0 ){ pre_str='++'; end_str = '++';}; break;
+            case 2:  if(text_len >0 ){ pre_str = end_str ='//'; }; break;
+            case 3:  if(text_len >0 ){ pre_str = end_str = '__';}; break;
+            case 4:  if(text_len >0 ){ pre_str = end_str = '--'; }; break;
+            case 11: if(text_len > 0 ){ pre_str = '^{'; end_str = '}';  }; break;
+            case 12: if(text_len > 0) { pre_str = '_{'; end_str = '}'; }; break;
+            case 21:
+                     if(!text_len > 0) break;
+                    if(pos_s == 0 || this.getPositionString(pos_s - 1, pos_s) == '\n')
+                    { pre_str = '#';}
+                    else{ pre_str='\n#';}               
+                    break;
+            case 22: 
+                     if(!text_len > 0) break;
+                    if(pos_s == 0 || this.getPositionString(pos_s - 1, pos_s) == '\n'){
+                        pre_str = '*';      
+                    }else{
+                        pre_str = '\n*';
+                    }               
+                    break;
+            case 31:
+                    if(pos_e == 0||this.getPositionString(pos_e - 1, pos_e) == '\n'){
+                       //alert(pos_s);
+                        end_str = '~~~~~~~~~~\n';
+                    }else{
+                       end_str = '\n~~~~~~~~~~\n'; 
+                    }
+                    last = true;
+                    break;
+            case 32: 
+                     if(!text_len > 0) break;
+                     if(pos_s==0||this.getPositionString(pos_s - 1, pos_s) == '\n')
+                    { 
+                       pre_str = end_str = '==';            
+                    }
+                    else{ 
                         pre_str = '\n==';
-                        end_str = '==';					
-					} 
-					break;
-			case 33: 
-			     if(!text_len > 0) break;
-			     if(pos_s==0||this.getPositionString(pos_s - 1, pos_s) == '\n')
-					{ pre_str = end_str = '==='; }
-					else{ pre_str = '\n==='; end_str = '===';}
-					 break;
-			case 34: 
-			     if(!text_len > 0) break;
-			     if(pos_s==0||this.getPositionString(pos_s - 1, pos_s) == '\n')
-					{ pre_str = end_str = '====';}
-					else{ pre_str = '\n===='; end_str = '===='; }
-					break;
+                        end_str = '==';                 
+                    } 
+                    break;
+            case 33: 
+                 if(!text_len > 0) break;
+                 if(pos_s==0||this.getPositionString(pos_s - 1, pos_s) == '\n')
+                    { pre_str = end_str = '==='; }
+                    else{ pre_str = '\n==='; end_str = '===';}
+                     break;
+            case 34: 
+                 if(!text_len > 0) break;
+                 if(pos_s==0||this.getPositionString(pos_s - 1, pos_s) == '\n')
+                    { pre_str = end_str = '====';}
+                    else{ pre_str = '\n===='; end_str = '===='; }
+                    break;
             
-			case 35: 
-			     if(!text_len > 0) break;
-			     if(pos_s==0||this.getPositionString(pos_s - 1, pos_s) == '\n')
-					{ pre_str = '>>';}
-					else{ pre_str = '\n>>';}
-				 break;
+            case 35: 
+                 if(!text_len > 0) break;
+                 if(pos_s==0||this.getPositionString(pos_s - 1, pos_s) == '\n')
+                    { pre_str = '>>';}
+                    else{ pre_str = '\n>>';}
+                 break;
             
-			case 41:
-			case 42:
-			case 43:
-			case 44:
-			case 45:
-					var oid = arguments[1];
-					var type_list = ['table','img','ref','code','math'];
-					type_list[type-41] ;
-					if(pos_e==0||this.getPositionString(pos_e - 1, pos_e) == '\n'){
-						end_str = '['+	type_list[type-41] +':' + oid + ']\n';
-					}else{
-						end_str = '\n['+	type_list[type-41] +':' + oid + ']\n';	
-					}
-					last = true;
-					break;
+            case 41:
+            case 42:
+            case 43:
+            case 44:
+            case 45:
+                    var oid = arguments[1];
+                    var type_list = ['table','img','ref','code','math'];
+                    type_list[type-41] ;
+                    if(pos_e==0||this.getPositionString(pos_e - 1, pos_e) == '\n'){
+                        end_str = '['+  type_list[type-41] +':' + oid + ']\n';
+                    }else{
+                        end_str = '\n['+    type_list[type-41] +':' + oid + ']\n';  
+                    }
+                    last = true;
+                    break;
             case 81:
                     string = arguments[1];
                     if(pos_s==0||this.getPositionString(pos_s - 1, pos_s) == '\n'){
-						string = string + '\n';
+                        string = string + '\n';
                         lef = string.length + 1;
-					}else{
-						string = '\n'+ string +'\n';
-                        lef = string.length + 2;	
-					}
+                    }else{
+                        string = '\n'+ string +'\n';
+                        lef = string.length + 2;    
+                    }
                     len = 0;
                     break;
-			case 91: 
-					end_str = arguments[1];
-					last = true;
-					break;
-		}
+            case 91: 
+                    end_str = arguments[1];
+                    last = true;
+                    break;
+        }
 
-		var $t = $(this)[0];
-		if (document.selection) {
-				this.focus();
-				sel = document.selection.createRange(pos_s , pos_s);
-				//sel.text = string;
-				sel.text = pre_str;
-				sel2 = document.selection.createRange(pos_e + pre_str.length, pos_e + pre_str.length);
-				//sel2.text = string;
-				sel2.text = end_str;
-				//this.focus();
-				//console.log('in a');
-			}
-		else{
-		      //console.log('in b');
-			if ($t.selectionStart || $t.selectionStart == '0') {
+        var $t = $(this)[0];
+        if (document.selection) {
+                this.focus();
+                sel = document.selection.createRange(pos_s , pos_s);
+                //sel.text = string;
+                sel.text = pre_str;
+                sel2 = document.selection.createRange(pos_e + pre_str.length, pos_e + pre_str.length);
+                //sel2.text = string;
+                sel2.text = end_str;
+                //this.focus();
+                //console.log('in a');
+            }
+        else{
+              //console.log('in b');
+            if ($t.selectionStart || $t.selectionStart == '0') {
                 var startPos = pos_s;//$t.selectionStart;
                 var endPos = pos_e;//$t.selectionEnd;
-							//var scrollTop = $t.scrollTop;
-			    $t.value = $t.value.substring(0, startPos) + pre_str + 
-				    $t.value.substring(startPos, endPos) + end_str + $t.value.substring(endPos, $t.value.length);
-				//this.focus();
-				//$t.selectionStart = startPos + string.length;
-				//t.selectionEnd = startPos + string.length;
-				//console.log('in c');
-							//$t.scrollTop = scrollTop;
-			}
-			else {
-				this.value += pre_str;
-				this.value += end_str;
-						//this.focus();
-						//console.log('in d');
-			}
-	   }
-	   if(last){ this.setPosition( pos_e + pre_str.length+end_str.length, pos_e + pre_str.length+end_str.length);	}
-	   else{
-	       this.setPosition(pos_s, pos_e + pre_str.length+end_str.length);	
-	   }
-	},
-	/******* Create Editor ********/
-	CreateEditor:function(art_id, art_type, art_con, father_id, father_type, group_id){
-            if(art_con != '') this.val(art_con);
-			this.attr("spellcheck","false");
-			if(arguments.length < 3){
-                alert('编辑参数少于3个');
-                return false;			
-			}else{
-			     switch(arguments.length){
-			         case 3:
-			             var group_id = '-1';
-			             var father_id = '-1';
-			             var father_type = 'blog';
-			             break;
-                    case 4:
-                        var father_type = 'blog';
-                        var group_id = '-1';		
-                        break;
-                    case 5:
-                        var group_id = '-1';
-                        break;	     
-			     }		
-			}
-			var _Menu = $('<div></div>'); // the menu parent
- 			_Menu.attr({"id":"write_menu","menu_id": $Write.get_menu_id(),
- 			        "article_id":art_id, "article_type":art_type, "father_id":father_id,
- 			        "father_type":father_type, "group_id": group_id});	
- 			        
- 			var _Menu_base = $('<div></div>'); // base menu tool
- 			_Menu_base.attr("id","write_menu_base");
+                            //var scrollTop = $t.scrollTop;
+                $t.value = $t.value.substring(0, startPos) + pre_str + 
+                    $t.value.substring(startPos, endPos) + end_str + $t.value.substring(endPos, $t.value.length);
+                //this.focus();
+                //$t.selectionStart = startPos + string.length;
+                //t.selectionEnd = startPos + string.length;
+                //console.log('in c');
+                            //$t.scrollTop = scrollTop;
+            }
+            else {
+                this.value += pre_str;
+                this.value += end_str;
+                        //this.focus();
+                        //console.log('in d');
+            }
+       }
+       if(last){ this.setPosition( pos_e + pre_str.length+end_str.length, pos_e + pre_str.length+end_str.length);   }
+       else{
+           this.setPosition(pos_s, pos_e + pre_str.length+end_str.length);  
+       }
+    },
+    /******* Create Editor ********/
+    CreateEditor:function(paras){
+        var default_paras = {
+            "article_type": 'blog',
+            "article_id": '-1',
+            "env_type": "user",
+            "env_id": '-1',
+            "father_id": "-1",
+            "father_type": 'blog',
+            "body": ''        
+        }
+        if(typeof paras != "object") paras = {};
+        for(var key in default_paras){
+            default_paras[key] = paras[key] || default_paras[key];        
+        }
+        this.attr("spellcheck","false");
+
+        var _Menu = $('<div></div>'); // the menu parent
+        _Menu.attr({"id":"write_menu",
+                    "menu_id": $Write.get_menu_id(),
+                            "article_id":default_paras["article_id"],
+                    "article_type":default_paras["article_type"], 
+                    "father_id":default_paras["father_id"],
+                    "father_type":default_paras["father_type"], 
+                    "env_id": default_paras["env_id"], 
+                    "env_type": default_paras["env_type"]});
+                        
+        var _Menu_base = $('<div></div>'); // base menu tool
+        _Menu_base.attr("id","write_menu_base");
             var _Menu_base_bar_array = [];
             _Menu_base_bar_array.push('<ul>');
             _Menu_base_bar_array.push('<li kind="1" class="bold" title="加粗">&nbsp;</li>');
@@ -346,13 +345,13 @@ jQuery.fn.extend({
             _Menu_base_bar_array.push('<li kind="22" class="ul" title="无序列表">&nbsp;</li>');
             _Menu_base_bar_array.push('<li class="split">&nbsp;</li>');
             _Menu_base_bar_array.push('<li kind="31" class="part" title="分隔线">~~</li>');
-             if(art_type!='comment'){
+             if(default_paras["article_type"] !='comment'){
                 _Menu_base_bar_array.push('<li kind="32" class="title" title="二级标题">T<sub><small>2</small></sub></li>');
                 _Menu_base_bar_array.push('<li kind="33" class="title" title="三级标题">T<sub><small>3</small></sub></li>');
                 _Menu_base_bar_array.push('<li kind="34" class="title" title="四级标题">T<sub><small>4</small></sub></li>');
             }
             _Menu_base_bar_array.push('<li kind="35" class="indent" title="段落缩进">&nbsp;</li>');
-            if(art_type!='comment'){
+            if( default_paras["article_type"]!='comment'){
                 _Menu_base_bar_array.push('<li class="split">&nbsp;</li>');
                 _Menu_base_bar_array.push('<li class="table" title="表格库" kind="t">&nbsp;</li>');
                 _Menu_base_bar_array.push('<li class="split">&nbsp;</li>');
@@ -368,207 +367,160 @@ jQuery.fn.extend({
                 
             }
             _Menu_base_bar_array.push('</ul>');
-			_Menu_base.html(_Menu_base_bar_array.join(''));
-			_Menu_base.appendTo(_Menu);
-			_Menu.insertBefore(this);
+            _Menu_base.html(_Menu_base_bar_array.join(''));
+            _Menu_base.appendTo(_Menu);
+            _Menu.insertBefore(this);
 
-			var $lib_bar = $('<div></div>');
-			$lib_bar.attr("id","write_lib_bar").css("display","none");
-			
-			var $letter_bar = $('<div></div>');
-			$letter_bar.attr("id","write_letter_bar").css("display","none");
-			
-			var l_html= '<div id="bar_nav">'+
-						'<span id="l1" class="lbutton" kind="word4">希腊字符</span>'+			
-						'<span class="lbutton" kind="word1">拉丁字符</span> ' +
-						'<span class="lbutton" kind="word2">国际音标</span>' +
-						'<span class="lbutton" kind="word3">字符</span>' +
-						'</div>'+
-						'<div id="bar_body"><div class="l"></div></div>';	
-			$letter_bar.html(l_html).appendTo($lib_bar);
-			
-			var $image_bar = $('<div></div>');
-			$image_bar.attr("id","write_image_bar").css("display","none");
-			var i_html = '<div id="bar_nav"><div class="new" title="添加新图片" type="image">添加</div>'+
-						'<div class="div" title="图片库">图片库</div></div><div id="bar_body"><div class="i"></div></div>';
-			$image_bar.html(i_html).appendTo($lib_bar);
-			
-			var $code_bar = $('<div></div>');
-			$code_bar.attr("id","write_code_bar").css("display","none");
-			var c_html = '<div id="bar_nav"><div class="new" title="添加新代码" type="code">添加</div>'+
-						 '<div class="div" title="代码库">代码库</div></div><div id="bar_body"><div id="crtm"></div></div>';
-			$code_bar.html(c_html).appendTo($lib_bar);
-			
-			var $math_bar= $('<div></div>');
-			$math_bar.attr("id","write_math_bar").css("display","none");
-			var m_html = '<div id="bar_nav"><div class="new" title="添加新数学式" type="math">添加</div>'+
-						 '<div class="div" title="数学式库">数学式库</div></div><div id="bar_body"><div id="crtm"></div></div>';
-			$math_bar.html(m_html).appendTo($lib_bar);
-			
-			var $ref_bar =$('<div></div>');
-			$ref_bar.attr("id","write_ref_bar").css("display","none");
-			var r_html = '<div id="bar_nav"><div class="new" title="添加新引用" type="reference">添加</div>'+
-						'<div class="div" title="引用库">引用库</div></div><div id="bar_body"><div id="crtm"></div></div>';
-			$ref_bar.html(r_html).appendTo($lib_bar);
-			
-			var $table_bar = $('<div></div>');
-			$table_bar.attr("id","write_table_bar").css("display","none");
-			var t_html = '<div id="bar_nav"><div class="new" title="添加新表格" type="table">添加</div>'+
-						'<div class="div" title="表格库">表格库</div></div><div id="bar_body"><div id="crtm"></div></div>';
-			$table_bar.html(t_html).appendTo($lib_bar);
+            var $lib_bar = $('<div></div>');
+            $lib_bar.attr("id","write_lib_bar").css("display","none");
+            
+            var $letter_bar = $('<div></div>');
+            $letter_bar.attr("id","write_letter_bar").css("display","none");
+            
+            var l_html= '<div id="bar_nav">'+
+                        '<span id="l1" class="lbutton" kind="word4">希腊字符</span>'+           
+                        '<span class="lbutton" kind="word1">拉丁字符</span> ' +
+                        '<span class="lbutton" kind="word2">国际音标</span>' +
+                        '<span class="lbutton" kind="word3">字符</span>' +
+                        '</div>'+
+                        '<div id="bar_body"><div class="l"></div></div>';   
+            $letter_bar.html(l_html).appendTo($lib_bar);
+            
+            var $image_bar = $('<div></div>');
+            $image_bar.attr("id","write_image_bar").css("display","none");
+            var i_html = '<div id="bar_nav"><div class="new" title="添加新图片" type="image">添加</div>'+
+                        '<div class="div" title="图片库">图片库</div></div><div id="bar_body"><div class="i"></div></div>';
+            $image_bar.html(i_html).appendTo($lib_bar);
+            
+            var $code_bar = $('<div></div>');
+            $code_bar.attr("id","write_code_bar").css("display","none");
+            var c_html = '<div id="bar_nav"><div class="new" title="添加新代码" type="code">添加</div>'+
+                         '<div class="div" title="代码库">代码库</div></div><div id="bar_body"><div id="crtm"></div></div>';
+            $code_bar.html(c_html).appendTo($lib_bar);
+            
+            var $math_bar= $('<div></div>');
+            $math_bar.attr("id","write_math_bar").css("display","none");
+            var m_html = '<div id="bar_nav"><div class="new" title="添加新数学式" type="math">添加</div>'+
+                         '<div class="div" title="数学式库">数学式库</div></div><div id="bar_body"><div id="crtm"></div></div>';
+            $math_bar.html(m_html).appendTo($lib_bar);
+            
+            var $ref_bar =$('<div></div>');
+            $ref_bar.attr("id","write_ref_bar").css("display","none");
+            var r_html = '<div id="bar_nav"><div class="new" title="添加新引用" type="reference">添加</div>'+
+                        '<div class="div" title="引用库">引用库</div></div><div id="bar_body"><div id="crtm"></div></div>';
+            $ref_bar.html(r_html).appendTo($lib_bar);
+            
+            var $table_bar = $('<div></div>');
+            $table_bar.attr("id","write_table_bar").css("display","none");
+            var t_html = '<div id="bar_nav"><div class="new" title="添加新表格" type="table">添加</div>'+
+                        '<div class="div" title="表格库">表格库</div></div><div id="bar_body"><div id="crtm"></div></div>';
+            $table_bar.html(t_html).appendTo($lib_bar);
 
-			$lib_bar.appendTo(_Menu);	
+            $lib_bar.appendTo(_Menu);   
         this.bind_function_init();
         this.self_init();
         //this.focus();
-	},
+    },
     /********** insert src to textarea ************************/
     insert_src_to_textarea:function(obj){
         var obj_one = $(obj).parent().parent();
-	    var kind = obj_one.attr('type'), oid = obj_one.attr('oid');
-	    
-	    switch(kind){
-		  case 'image':
-			this.insertFormatString(42,oid);
-			break;
-		case 'math':
-			this.insertFormatString(45,oid);
-			break;
-		case 'code':
-			this.insertFormatString(44,oid);
-			break;
-		case 'table':
-			this.insertFormatString(41,oid);
-			break;
-		case 'reference':
-			this.insertFormatString(43,oid);
-			break;	
-	   }	
+        var kind = obj_one.attr('type'), oid = obj_one.attr('oid');
+        var kind_dict = {"image": 42, "math": 45, "code": 44, "table": 41, "reference": 43};
+        this.inserFormatString(kind_dic[kind], oid);
     },
     /******** create new src ***********************/
     create_new_src: function(obj){
         var self_textarea = this;
         var $menu = this.siblings("#write_menu");
-	    var mid = $menu.attr("menu_id"), article_id = $menu.attr("article_id"), art_type = $menu.attr("article_type"); 
-        var father_id = $menu.attr("father_id"), father_type=$menu.attr("father_type"), kind = $(obj).attr("type");
-        var group_id = $menu.attr('group_id') || -1;
-	    var $body = $('<div></div>');
-	    var wd = 200, hg = 200;
-        var html = '';
-	    switch(kind){
-		   case 'image':
-			/** new image **/
-			$body.attr({"id":"pop_insert_pic","menu_id":mid});
-			//alert(0);
-			html =  
-			'<p class="first">添加图片<span class="all_example" title="说明"><a target="_blank" href="/help-editor-picture">说明</a></span></p>'+
-			'<form action="/upload-image" id="up_picture" enctype="multipart/form-data" method="post" target="up_picture_iframe">'+
+        var mid = $menu.attr("menu_id"), article_id = $menu.attr("article_id"), article_type = $menu.attr("article_type"), 
+            father_id = $menu.attr("father_id"), father_type= $menu.attr("father_type"), kind = $(obj).attr("type"),
+            env_type = $menu.attr("env_type"), env_id = $menu.attr("env_id");
+        var hidden_paras = {"article_id": article_id, "article_type": article_type, "env_id": env_id, "env_type": env_type,
+            "father_id": father_id, "father_type": father_type, "src_type": kind, "do": "new"};
+        var id_dict = {"image": "pic", "math": "math", "code":"code", "table":"table", "reference": "ref"};
+        var $body = $('<div></div>');
+        $body.attr({"id": "pop_insert_"+ id_dict[kind], "menu_id": mid});
+        var wd = 200, hg = 200;
+        var html = '', paras_html = '';
+        for(var ii in hidden_paras){
+            paras_html += '<input type="hidden" name="'+ ii +'" value="'+ $.encode(hidden_paras[ii]) +'" />';        
+        }
+        switch(kind){
+           case 'image':
+            /** new image **/
+            html =  
+            '<p class="first">添加图片<span class="all_example" title="说明"><a target="_blank" href="/help-editor-picture">说明</a></span></p>'+
+            '<form action="/upload-image" id="up_picture" enctype="multipart/form-data" method="post" target="up_picture_iframe">'+
             '<input type="hidden" name="picture_type" value="article" />' +
-			'<input type="hidden" name="article_id" value="'+$.encode(article_id)+'" />' + '<input type="hidden" name="src_type" value="image" />' +
-            '<input type="hidden" name="article_type" value="'+ $.encode(art_type) +'" />' +
-            '<input type="hidden" name="father_id" value="'+ $.encode(father_id) +'" />' +
-            '<input type="hidden" name="father_type" value="'+ $.encode(father_type) +'" />' +
             '<input type="hidden" name="_xsrf" value="' + $.getCookie("_xsrf") + '" />'+
-            '<input type="hidden" name="group_id" value="' + group_id + '" />'+
-			'<p><input class="i_file" type="file" name="picture" onclick=clear_process(this,"i"); /></p>'+
-			'<p>标题<input class="i_title" name="title" autocomplete="off" type="text" onfocus=clear_process(this,"i"); /></p>'+
-			'<p><span class="i_button"><button type="button" onclick="picture_check(this);">上传图片</button>'+
-			'<button type="submit" style="display:none">提交</button></span><span class="i_process">&nbsp;</span></p></form>'+
-			'<iframe name="up_picture_iframe" id="up_picture_iframe" style="display:none"></iframe>';
-			wd = 360, hg = 240;
-            
-			break;
-		case 'math':
-			/** new math **/
-			$body.attr({"id":"pop_insert_math","menu_id":mid});
-			html = '<input type="hidden" name="article_id" value="'+$.encode(article_id) +'" />' + 
-			     '<input type="hidden" name="src_type" value="math" />' +
-                        '<input type="hidden" name="article_type" value="'+ $.encode(art_type) +'" />' +
-                        '<input type="hidden" name="father_id" value="'+ $.encode(father_id) +'" />' +
-                        '<input type="hidden" name="father_type" value="'+ $.encode(father_type) +'" />' +
-                        '<input type="hidden" name="group_id" value="' + group_id + '" />'+
-						'<p class="first">添加数学式--<font size="12px">数学式采用latex规则</font><span class="all_example" title="说明"><a href="/help-editor-math" target="_blank">说明</a></span></p>'+
-						'<p title="设置名称">名称<input type="text" name="title" autocomplete="off" /></p>'+
+            paras_html + 
+            '<p><input class="i_file" type="file" name="picture" onclick=clear_process(this,"i"); /></p>'+
+            '<p>标题<input class="i_title" name="title" autocomplete="off" type="text" onfocus=clear_process(this,"i"); /></p>'+
+            '<p><span class="i_button"><button type="button" onclick="picture_check(this);">上传图片</button>'+
+            '<button type="submit" style="display:none">提交</button></span><span class="i_process">&nbsp;</span></p></form>'+
+            '<iframe name="up_picture_iframe" id="up_picture_iframe" style="display:none"></iframe>';
+            wd = 360, hg = 240;
+            break;
+        case 'math':
+            /** new math **/
+            html = paras_html+
+                   '<p class="first">添加数学式--<font size="12px">数学式采用latex规则</font><span class="all_example" title="说明"><a href="/help-editor-math" target="_blank">说明</a></span></p>'+
+                        '<p title="设置名称">名称<input type="text" name="title" autocomplete="off" /></p>'+
                         '<p title="设置名称">样式<label><input type="radio" name="math_type" checked="checked" value="display" />行间</label>'+
                         '<label><input type="radio" name="math_type" value="inline" />行内</label></p>'+
-						'<p title="数学式latex内容"><textarea resize="none" autocomplete="off" name="body" ></textarea></p>'+
-						'<p><span><button type="submit">提交</button></span><span class="m_process">&nbsp;</span></p>';
-			wd = 450, hg = 380;
+                        '<p title="数学式latex内容"><textarea resize="none" autocomplete="off" name="body" ></textarea></p>'+
+                        '<p><span><button type="submit">提交</button></span><span class="m_process">&nbsp;</span></p>';
+            wd = 450, hg = 380;
+            break;
+        case 'code':
+            /** new code **/
             
-			break;
-		case 'code':
-			/** new code **/
-			
-			var select_html = '';
+            var select_html = '';
             var CodeType = $Write.code_type;
-			for(ii=0;ii<CodeType.length;ii++){
-				if(CodeType[ii].toLowerCase()=='python'){
-					select_html += '<option selected value="' + CodeType[ii].toLowerCase()+'">' + CodeType[ii] +'</option>';	
-					continue;
-				}
-				select_html += '<option value="' + CodeType[ii].toLowerCase()+'">' + CodeType[ii] +'</option>';	
-			}
-			$body.attr({"id":"pop_insert_code","menu_id":mid});
-			html ='<input type="hidden" name="article_id" value="'+article_id+'" />' + '<input type="hidden" name="src_type" value="code" />' +
-            '<input type="hidden" name="article_type" value="'+ art_type +'" />' +
-            '<input type="hidden" name="father_id" value="'+ father_id +'" />' +
-            '<input type="hidden" name="father_type" value="'+ $.encode(father_type) +'" />' +
-            '<input type="hidden" name="group_id" value="' + group_id + '" />'+
-			'<p class="first">添加代码 <span class="all_example" title="说明"><a target="_blank" href="/help-editor-code">说明</a></span></p>'+
-			'<p title="代码名称">名称<input type="text" autocomplete="off" name="title" /></p>'+
-			'<p title="代码种类">种类<select name="code_type">'+ select_html+
-			'</select></p>'+
-			'<p title="代码"><textarea name="body" autocomplete="off"></textarea></p>'+
-			'<p><span><button type="submit">提交</button></span>'+
+            for(ii=0;ii<CodeType.length;ii++){
+                if(CodeType[ii].toLowerCase()=='python'){
+                    select_html += '<option selected value="' + CodeType[ii].toLowerCase()+'">' + CodeType[ii] +'</option>';    
+                    continue;
+                }
+                select_html += '<option value="' + CodeType[ii].toLowerCase()+'">' + CodeType[ii] +'</option>'; 
+            }
+            html = paras_html+
+            '<p class="first">添加代码 <span class="all_example" title="说明"><a target="_blank" href="/help-editor-code">说明</a></span></p>'+
+            '<p title="代码名称">名称<input type="text" autocomplete="off" name="title" /></p>'+
+            '<p title="代码种类">种类<select name="code_type">'+ select_html+
+            '</select></p>'+
+            '<p title="代码"><textarea name="body" autocomplete="off"></textarea></p>'+
+            '<p><span><button type="submit">提交</button></span>'+
             '<span class="c_process">&nbsp;</span></p>';
-			wd = 760, hg = 400;
-			break;
-		case 'table':
-			/** new table **/
-			$body.attr({"id":"pop_insert_table","menu_id":mid});
-			html = '<input type="hidden" name="article_id" value="'+article_id+'" />' + '<input type="hidden" name="src_type" value="table" />' +
-                    '<input type="hidden" name="article_type" value="'+ art_type +'" />' +
-                    '<input type="hidden" name="father_id" value="'+ father_id +'" />' +
-                    '<input type="hidden" name="father_type" value="'+ $.encode(father_type) +'" />' +
-                    '<input type="hidden" name="group_id" value="' + group_id + '" />'+
-					'<p class="first">添加表格 <span class="all_example" title="查看表格实例"><a target="_blank" href="/help-editor-table">实例</a></span></p>'+
-					'<div style="display:block">'+
-					'<p title="表格名称">表名<input type="text" name="title" autocomplete="off" /></p>' +
-					'<p title="表格内容"><textarea name="body" autocomplete="off"></textarea></p>'+
-					'<p><span><button type="submit">提交</button></span><span class="t_process">&nbsp;</span></p>'+
-					'</div>'+
-					'<div style="display:none">'+
-					'<p></p>'+
-					'<p>'+
-					'</p>'+
-					'</div>';
-			wd = 450, hg = 390;
-			break;
-		case 'reference':
-			/** new reference **/
-			$body.attr({"id":"pop_insert_ref","menu_id":mid});
-			html ='<input type="hidden" name="article_id" value="'+article_id+'" />' + '<input type="hidden" name="src_type" value="reference" />' +
-                    '<input type="hidden" name="article_type" value="'+ art_type +'" />' +
-                    '<input type="hidden" name="father_id" value="'+ father_id +'" />' +
-                    '<input type="hidden" name="father_type" value="'+ $.encode(father_type) +'" />' +
-                    '<input type="hidden" name="group_id" value="' + group_id + '" />'+
-					'<p class="first">添加引用 <span class="all_example" title="查看说明"><a href="/help-editor-reference" target="_blank">说明</a></span></p>'+
-					'<div style="display:block">'+
-					'<p title="设置引用的名称">名称<input type="text" name="title" autocomplete="off" /></p>'+
-					'<p title="出处">出处<input type="text" name="source" autocomplete="off" /></p>'+
-					'<p title="引用内容"><textarea name="body" autocomplete="off"></textarea></p>'+
-					'<p><span><button type="submit">提交</button></span><span class="r_process">&nbsp;</span></p>'+
-					'</div>'+
-					'<div style="display:none">' + 
-					'<p>引用</p>' +
-					'</div>';
-			wd = 450, hg = 390;
-            
-			break;
-	   }	
+            wd = 760, hg = 400;
+            break;
+        case 'table':
+            /** new table **/
+            html = paras_html +
+                    '<p class="first">添加表格 <span class="all_example" title="查看表格实例"><a target="_blank" href="/help-editor-table">实例</a></span></p>'+
+                    '<div style="display:block">'+
+                    '<p title="表格名称">表名<input type="text" name="title" autocomplete="off" /></p>' +
+                    '<p title="表格内容"><textarea name="body" autocomplete="off"></textarea></p>'+
+                    '<p><span><button type="submit">提交</button></span><span class="t_process">&nbsp;</span></p>'+
+                    '</div>';
+            wd = 450, hg = 390;
+            break;
+        case 'reference':
+            /** new reference **/
+            html = paras_html +
+                    '<p class="first">添加引用 <span class="all_example" title="查看说明"><a href="/help-editor-reference" target="_blank">说明</a></span></p>'+
+                    '<div style="display:block">'+
+                    '<p title="设置引用的名称">名称<input type="text" name="title" autocomplete="off" /></p>'+
+                    '<p title="出处">出处<input type="text" name="source" autocomplete="off" /></p>'+
+                    '<p title="引用内容"><textarea name="body" autocomplete="off"></textarea></p>'+
+                    '<p><span><button type="submit">提交</button></span><span class="r_process">&nbsp;</span></p>'+
+                    '</div>';
+            wd = 450, hg = 390;
+            break;
+       }    
        var $html = jQuery(html);
-	   $body.html($html); 
-	   pop_page(wd,hg,$body);
+       $body.html($html); 
+       pop_page(wd,hg,$body);
        if(kind!='image') $html.find('button').bind('click', function(){   $Write.new_lib_src_submit(this); });
     },
     /******************** update old src *****************************/
@@ -576,40 +528,38 @@ jQuery.fn.extend({
         var obj_one = $(obj).parent().parent();
         var self_textarea = this;
         var $menu = this.siblings("#write_menu");
-	    var mid = $menu.attr("menu_id"), article_id = $menu.attr("article_id"), 
-	       art_type = $menu.attr("article_type"), group_id=$menu.attr('group_id')||'';
-        var father_id = $menu.attr("father_id"), father_type=$menu.attr("father_type"), kind = obj_one.attr('type'), oid = obj_one.attr('oid');
-	    var $body = $('<div></div>');
-	    var wd = 200, hg = 200;
-	    switch(kind){
-		 case 'image':
-			var image_name = $.encode($(obj).parent().siblings(".iright").attr("title"));
-			$body.attr({"id":"pop_insert_pic","menu_id":mid});
-			html = '<p class="first">修改图片属性</p>'+
-					'<input type="hidden" name="article_id" value="'+article_id+'" />' + '<input type="hidden" name="src_type" value="image" />' +
-					'<input type="hidden" name="oid" value="'+ oid +'" />' +
-                    '<input type="hidden" name="article_type" value="'+ art_type +'" />' +
-                    '<input type="hidden" name="father_id" value="'+ father_id +'" />' +
-                    '<input type="hidden" name="father_type" value="'+ $.encode(father_type) +'" />' +
-                    '<input type="hidden" name="group_id" value="' + group_id + '" />'+
-					'<p>标题<input class="i_title" name="title" type="text" onfocus=clear_process(this,"i"); value="'+image_name+'" /></p>'+
-					'<p><span class="i_button"><button type="button">确认修改</button>'+
-					'</span><span class="i_process">&nbsp;</span></p>';
-			wd = 360,hg = 200;
-			break;
-		case 'math':
-			var math_name = $.encode(obj_one.find("#otitle").val());
-			var math_body = $.encode(obj_one.find("#obody").val());
+        var mid = $menu.attr("menu_id"), article_id = $menu.attr("article_id"), 
+            article_type = $menu.attr("article_type"), env_id= $menu.attr('group_id'), env_type= $menu.attr("env_type"), 
+            father_id = $menu.attr("father_id"), father_type = $menu.attr("father_type"),
+            kind = obj_one.attr('type'), oid = obj_one.attr('oid');
+        var hidden_paras = {"article_id": article_id, "article_type": article_type, "env_id": env_id, "env_type": env_type,
+            "father_id": father_id, "father_type": father_type, "src_type": kind, "do": "update", "oid": oid};
+        var id_dict = {"image": "pic", "math": "math", "code":"code", "table":"table", "reference": "ref"};
+        var $body = $('<div></div>');
+        $body.attr({"id": "pop_insert_"+ id_dict[kind], "menu_id": mid});
+        var html = '', paras_html = '';
+        for(var ii in hidden_paras){
+            paras_html += '<input type="hidden" name="'+ ii +'" value="'+ $.encode(hidden_paras[ii]) +'" />';        
+        }
+        var wd = 200, hg = 200;
+        switch(kind){
+         case 'image':
+            var image_name = $.encode($(obj).parent().siblings(".iright").attr("title"));
+            html = '<p class="first">修改图片属性</p>'+
+                    paras_html +
+                    '<p>标题<input class="i_title" name="title" type="text"  value="'+image_name+'" /></p>'+
+                    '<p><span class="i_button"><button type="button">确认修改</button>'+
+                    '</span><span class="i_process">&nbsp;</span></p>';
+            wd = 360,hg = 200;
+            break;
+        case 'math':
+            var math_name = $.encode(obj_one.find("#otitle").val());
+            var math_body = $.encode(obj_one.find("#obody").val());
             var math_type = $.encode(obj_one.find("#math_type").val());
-			$body.attr({"id":"pop_insert_math","menu_id":mid});
-			html = '<input type="hidden" name="article_id" value="'+article_id+'" />' + '<input type="hidden" name="src_type" value="math" />' +
-					'<input type="hidden" name="oid" value="'+ oid +'" />' +
-                    '<input type="hidden" name="article_type" value="'+ art_type +'" />' +
-                    '<input type="hidden" name="group_id" value="' + group_id + '" />'+
-                    '<input type="hidden" name="father_id" value="'+ father_id +'" />' +
-                    '<input type="hidden" name="father_type" value="'+ $.encode(father_type) +'" />' +
-					'<p class="first">修改数学式--<font size="12px">数学式采用latex规则</font></p>'+
-					'<p title="设置名称">名称<input type="text" name="title" value="'+math_name+'" /></p>'+
+
+            html = paras_html +
+                    '<p class="first">修改数学式--<font size="12px">数学式采用latex规则</font></p>'+
+                    '<p title="设置名称">名称<input type="text" name="title" value="'+math_name+'" /></p>'+
                     '<p title="设置样式">样式';
                     if(math_type == "inline"){
                         html += '<label><input type="radio" name="math_type"  value="display" />行间</label>'+
@@ -619,129 +569,96 @@ jQuery.fn.extend({
                             '<label><input type="radio" name="math_type" value="inline" />行内</label>';
                     }
                   html +='</p>'+
-					'<p title="数学式latex内容"><textarea resize="none" name="body" >'+math_body+'</textarea></p>'+
-					'<p><span><button type="submit">确认</button></span><span class="m_process">&nbsp;</span></p>';
-			wd = 450,hg = 380;
-			break;
-		case 'code':
-			var code_title = $.encode(obj_one.find("#otitle").val());
-			var code_type = obj_one.find("#otype").val();
-			var code_body = $.encode(obj_one.find("#obody").val());
-			
-			var CodeType = $Write.code_type;
-			var select_html = '';
-			for(ii=0;ii<CodeType.length;ii++){
-				if(CodeType[ii].toLowerCase() == code_type){
-					select_html += '<option selected value="' + CodeType[ii].toLowerCase()+'">' + CodeType[ii] +'</option>';	
-					continue;
-				}
-				select_html += '<option value="' + CodeType[ii].toLowerCase()+'">' + CodeType[ii] +'</option>';	
-			}
-			
-			$body.attr({"id":"pop_insert_code","menu_id":mid});
-			html ='<input type="hidden" name="article_id" value="'+article_id+'" />' + '<input type="hidden" name="src_type" value="code" />' +
-			'<input type="hidden" name="oid" value="'+ oid +'" />' +
-            '<input type="hidden" name="article_type" value="'+ art_type +'" />' +
-            '<input type="hidden" name="father_id" value="'+ father_id +'" />' +
-            '<input type="hidden" name="father_type" value="'+ $.encode(father_type) +'" />' +
-            '<input type="hidden" name="group_id" value="' + group_id + '" />'+
-			'<p class="first">修改代码 <span class="all_example" title="说明" onclick="toggle_example(this);">说明</span></p>'+
-			'<p title="代码名称">名称<input type="text" name="title" value="'+code_title+'" /></p>'+
-			'<p title="代码种类">种类<select name="code_type">'+ select_html+
-			'</select></p>'+
-			'<p title="代码"><textarea name="body">'+code_body+'</textarea></p>'+
-			'<p><span><button type="submit">确认</button></span><span class="c_process">&nbsp;</span></p>';
-			wd = 760, hg = 400;
-			break;
-		case 'table':
-			var table_title = $.encode(obj_one.find("#otitle").val());
-			var table_body = $.encode(obj_one.find("#obody").val());
-			$body.attr({"id":"pop_insert_table","menu_id":mid});
-			html = '<input type="hidden" name="article_id" value="'+article_id+'" />' + '<input type="hidden" name="src_type" value="table" />' +
-					'<input type="hidden" name="oid" value="'+oid+'" />' +
-                    '<input type="hidden" name="article_type" value="'+ art_type +'" />' +
-                    '<input type="hidden" name="father_id" value="'+ father_id +'" />' +
-                    '<input type="hidden" name="father_type" value="'+ $.encode(father_type) +'" />' +
-                    '<input type="hidden" name="group_id" value="' + group_id + '" />'+
-					'<p class="first">修改表格 <span class="all_example" title="查看表格实例" onclick="toggle_example(this);">实例</span></p>'+
-					'<div style="display:block">'+
-					'<p title="表格名称">表名<input type="text" name="title" value="'+table_title+'" /></p>' +
-					'<p title="表格内容"><textarea name="body">'+ table_body +'</textarea></p>'+
-					'<p><span><button type="submit">提交</button></span><span class="t_process">&nbsp;</span></p>'+
-					'</div>'+
-					'<div style="display:none">'+
-					'<p>(())</p>'+
-					'<p>'+
-					'<table>'+
-					'<tr><td></td></tr>'+
-					'</table>'+
-					'</p>'+
-					'</div>';
-			wd = 450, hg = 390;
-			break;
-		case 'reference':
-			var ref_name = $.encode(obj_one.find("#otitle").val());
-			var ref_source = $.encode(obj_one.find("#osource").val());
-			var ref_body = $.encode(obj_one.find("#obody").val());
-			$body.attr({"id":"pop_insert_ref","menu_id":mid});
-			html ='<input type="hidden" name="article_id" value="'+article_id+'" />' + '<input type="hidden" name="src_type" value="reference" />' +
-					'<input type="hidden" name="oid" value="'+oid+'" />' +
-                    '<input type="hidden" name="article_type" value="'+ art_type +'" />' +
-                    '<input type="hidden" name="father_id" value="'+ father_id +'" />' +
-                    '<input type="hidden" name="father_type" value="'+ $.encode(father_type) +'" />' +
-                    '<input type="hidden" name="group_id" value="' + group_id + '" />'+
-					'<p class="first">添加引用 <span class="all_example" title="查看说明" onclick="toggle_example(this);">说明</span></p>'+
-					'<div style="display:block">'+
-					'<p title="设置引用的名称">名称<input type="text" name="title" value="'+ ref_name+'" /></p>'+
-					'<p title="出处">出处<input type="text" name="source" value="'+ ref_source+'" /></p>'+
-					'<p title="引用内容"><textarea name="body">'+ref_body+'</textarea></p>'+
-					'<p><span><button type="submit">确认</button></span><span class="r_process">&nbsp;</span></p>'+
-					'</div>'+
-					'<div style="display:none">' + 
-					'<p>引用</p>' +
-					'' +
-					'</div>';
-			wd = 450, hg = 390;
-			break;
-	   }
-	   $body.html(html);
-	   pop_page(wd,hg,$body);
+                    '<p title="数学式latex内容"><textarea resize="none" name="body" >'+math_body+'</textarea></p>'+
+                    '<p><span><button type="submit">确认</button></span><span class="m_process">&nbsp;</span></p>';
+            wd = 450,hg = 380;
+            break;
+        case 'code':
+            var code_title = $.encode(obj_one.find("#otitle").val());
+            var code_type = obj_one.find("#otype").val();
+            var code_body = $.encode(obj_one.find("#obody").val());
+            
+            var CodeType = $Write.code_type;
+            var select_html = '';
+            for(ii=0;ii<CodeType.length;ii++){
+                if(CodeType[ii].toLowerCase() == code_type){
+                    select_html += '<option selected value="' + CodeType[ii].toLowerCase()+'">' + CodeType[ii] +'</option>';    
+                    continue;
+                }
+                select_html += '<option value="' + CodeType[ii].toLowerCase()+'">' + CodeType[ii] +'</option>'; 
+            }
+            
+            html = paras_html +
+            '<p class="first">修改代码 <span class="all_example" title="说明" onclick="toggle_example(this);">说明</span></p>'+
+            '<p title="代码名称">名称<input type="text" name="title" value="'+code_title+'" /></p>'+
+            '<p title="代码种类">种类<select name="code_type">'+ select_html+
+            '</select></p>'+
+            '<p title="代码"><textarea name="body">'+code_body+'</textarea></p>'+
+            '<p><span><button type="submit">确认</button></span><span class="c_process">&nbsp;</span></p>';
+            wd = 760, hg = 400;
+            break;
+        case 'table':
+            var table_title = $.encode(obj_one.find("#otitle").val());
+            var table_body = $.encode(obj_one.find("#obody").val());
+            html =  paras_html + 
+                    '<p class="first">修改表格 <span class="all_example" title="查看表格实例" onclick="toggle_example(this);">实例</span></p>'+
+                    '<div style="display:block">'+
+                    '<p title="表格名称">表名<input type="text" name="title" value="'+table_title+'" /></p>' +
+                    '<p title="表格内容"><textarea name="body">'+ table_body +'</textarea></p>'+
+                    '<p><span><button type="submit">提交</button></span><span class="t_process">&nbsp;</span></p>'+
+                    '</div>';
+            wd = 450, hg = 390;
+            break;
+        case 'reference':
+            var ref_name = $.encode(obj_one.find("#otitle").val());
+            var ref_source = $.encode(obj_one.find("#osource").val());
+            var ref_body = $.encode(obj_one.find("#obody").val());
+            html = paras_html +
+                    '<p class="first">添加引用 <span class="all_example" title="查看说明" onclick="toggle_example(this);">说明</span></p>'+
+                    '<div style="display:block">'+
+                    '<p title="设置引用的名称">名称<input type="text" name="title" value="'+ ref_name+'" /></p>'+
+                    '<p title="出处">出处<input type="text" name="source" value="'+ ref_source+'" /></p>'+
+                    '<p title="引用内容"><textarea name="body">'+ref_body+'</textarea></p>'+
+                    '<p><span><button type="submit">确认</button></span><span class="r_process">&nbsp;</span></p>'+
+                    '</div>';
+            wd = 450, hg = 390;
+            break;
+       }
+       $body.html(html);
+       pop_page(wd,hg,$body);
        $body.find('button').bind('click', function(){ $Write.update_lib_src_submit(this); });
     },
 
     /*********** delete lib src ************************/
     delete_lib_src:function(obj){
         var obj_one = $(obj).parent().parent();
-	    var obj_root = this.siblings("#write_menu");
-	
-	   var oid = obj_one.attr("oid"), kind = obj_one.attr("type"), article_id = obj_root.attr("article_id");
-	   var group_id = obj_root.attr('group_id') || '-1';
-        var article_type = obj_root.attr("article_type");
-	   if(article_id == '' || kind == '' || oid ==''){
-		  return false;	
-	   }
-	   result = confirm("确认删除？");
-	   if(result){
-		var mes = {};
-		mes['article_id'] = article_id;
-		mes['oid'] = oid;
-		mes['src_type'] = kind;	
-		//alert(kind);
-		mes['group_id'] = group_id;
-        mes['article_type'] = article_type;
-        mes['do'] = 'delete';
-		$.postJSON('/article-src-control',mes,
-			function(){},
-			function(response){
-				if(response.kind == 0){
-					obj_one.remove();
-				}else{
-					alert(response.info);	
-				}	
-			},
-			function(response){ alert('数据提交出错！'); }
-		);
-	}
+        var $menu = this.siblings("#write_menu");
+    
+       var oid = obj_one.attr("oid"), kind = obj_one.attr("type"), article_id = $menu.attr("article_id"),
+            env_id = $menu.attr('env_id'), article_type = $menu.attr("article_type"), env_type = $menu.attr("env_type"),
+            father_id = $menu.attr("father_id"), father_type = $menu.attr("father_type");
+       result = confirm("确认删除？");
+        if(result){
+            var mes = {
+                "oid": oid,
+                "do": "delete",
+                "src_type": src_type,
+                "article_id": article_id, "article_type": article_type,
+                "father_id": father_id, "father_type": father_type,
+                "env_id": env_id, "env_type": env_type            
+            };
+        $.postJSON('/article-src-control',mes,
+            function(){},
+            function(response){
+                if(response.kind == 0){
+                    obj_one.remove();
+                }else{
+                    alert(response.info);   
+                }   
+            },
+            function(response){ alert('数据提交出错！'); }
+        );
+    }
     },
     /******** bind function init *****************/
     bind_function_init:function(){
@@ -772,36 +689,36 @@ jQuery.fn.extend({
                          //manage_lib_bar(this, tmp_kind);
                         $(this).addClass("menu_focus").siblings("li").removeClass("menu_focus");
                         
-	                    var letter_bar = lib_bar.find("#write_letter_bar"), code_bar = lib_bar.find("#write_code_bar");
-	                    var image_bar =lib_bar.find("#write_image_bar"), math_bar = lib_bar.find("#write_math_bar");
-	                    var ref_bar = lib_bar.find("#write_ref_bar"), table_bar = lib_bar.find("#write_table_bar");
-	                    var list = [{ kind:'m',obj:math_bar},{kind:'i',obj:image_bar},
-				                     {kind:'r',obj:ref_bar},{kind:'t',obj:table_bar},
-				                    {kind:'c',obj:code_bar},{kind:'l',obj:letter_bar}];
-	                    var list_o = {'m':math_bar,'i':image_bar,'r':ref_bar,'t':table_bar,'c':code_bar,'l':letter_bar};
-	                    if(lib_bar.css("display")=='none'){
-		                    for(var i = 0; i<list.length;i++){
-			                      cur_list = list[i];
-			                      if( cur_list.kind==tmp_kind) continue;		
-			                      cur_list.obj.hide();
-		                    }
-		                    list_o[tmp_kind].show();
-		                    lib_bar.slideDown("slow");
-	                    }else{
-		                    if(list_o[tmp_kind].css("display")=='block'){		
-			                      lib_bar.slideUp("slow");
+                        var letter_bar = lib_bar.find("#write_letter_bar"), code_bar = lib_bar.find("#write_code_bar");
+                        var image_bar =lib_bar.find("#write_image_bar"), math_bar = lib_bar.find("#write_math_bar");
+                        var ref_bar = lib_bar.find("#write_ref_bar"), table_bar = lib_bar.find("#write_table_bar");
+                        var list = [{ kind:'m',obj:math_bar},{kind:'i',obj:image_bar},
+                                     {kind:'r',obj:ref_bar},{kind:'t',obj:table_bar},
+                                    {kind:'c',obj:code_bar},{kind:'l',obj:letter_bar}];
+                        var list_o = {'m':math_bar,'i':image_bar,'r':ref_bar,'t':table_bar,'c':code_bar,'l':letter_bar};
+                        if(lib_bar.css("display")=='none'){
+                            for(var i = 0; i<list.length;i++){
+                                  cur_list = list[i];
+                                  if( cur_list.kind==tmp_kind) continue;        
+                                  cur_list.obj.hide();
+                            }
+                            list_o[tmp_kind].show();
+                            lib_bar.slideDown("slow");
+                        }else{
+                            if(list_o[tmp_kind].css("display")=='block'){       
+                                  lib_bar.slideUp("slow");
                                   $(this).removeClass("menu_focus");
-		                    }
-		                    else
-		                    { // hide other 
-			                     for(var i = 0; i<list.length;i++){
-				                    cur_list = list[i];
-				                    if( cur_list.kind==tmp_kind) continue;		
-					                cur_list.obj.hide();
-			                     }
-			                     list_o[tmp_kind].fadeIn("slow");
-		                    }	
-	                   }
+                            }
+                            else
+                            { // hide other 
+                                 for(var i = 0; i<list.length;i++){
+                                    cur_list = list[i];
+                                    if( cur_list.kind==tmp_kind) continue;      
+                                    cur_list.obj.hide();
+                                 }
+                                 list_o[tmp_kind].fadeIn("slow");
+                            }   
+                       }
 
 
                     } 
@@ -819,16 +736,16 @@ jQuery.fn.extend({
                        $(this).addClass("wsc_chosed");
                         //this.className = this.("class", "wsc_chosed");
                        // this.setAttribute("className", "wsc_chosed");
-	                   $(this).siblings().removeClass("wsc_chosed");
-	                   var _string = '';
+                       $(this).siblings().removeClass("wsc_chosed");
+                       var _string = '';
                        var Word = dict_letter[$(this).attr("kind")];
                        var target_ = $(this).parent().siblings("#bar_body").children(".l");
                        target_.html('');
-	                   for(var i=0;i<Word.length;i++){
+                       for(var i=0;i<Word.length;i++){
                           var tmp_string = $('<span></span>');
                           tmp_string.html(Word[i]);
                           tmp_string.bind('click', function(){
-                                self_textarea.insertFormatString(91,$(this).html());	
+                                self_textarea.insertFormatString(91,$(this).html());    
                           });
                           tmp_string.appendTo(target_);
                         }
@@ -968,18 +885,18 @@ jQuery.fn.extend({
         var write_ = $(this);
         if(write_.val() == '' || write_.val() == '内容'){
             write_.css({"line-height":'200px','text-align':'center','color':'#ccc'}).val('内容')
-		  .change(function(){clear_content_process();})
-		  .focus(function(){ 
-				$(this).css({"color":"#000","line-height":"25px",'text-align':'left'});
-					if($(this).val() == '内容') {
-						$(this).val('');
-						}
-					})
-		  .blur(function(){ 
-			if($.trim($(this).val())==''){
-				$(this).css({"color":"#ccc","line-height":'200px','text-align':'center'}).val('内容'); 		
-			}		
-		  });	 
+          .change(function(){clear_content_process();})
+          .focus(function(){ 
+                $(this).css({"color":"#000","line-height":"25px",'text-align':'left'});
+                    if($(this).val() == '内容') {
+                        $(this).val('');
+                        }
+                    })
+          .blur(function(){ 
+            if($.trim($(this).val())==''){
+                $(this).css({"color":"#ccc","line-height":'200px','text-align':'center'}).val('内容');      
+            }       
+          });    
         }
     },
     summary_title_init: function(){
@@ -989,49 +906,49 @@ jQuery.fn.extend({
             summary.css({"line-height":'100px','text-align':'center','color':'#ccc'}).val('摘要')
             .change(function(){clear_content_process();})
             .focus(function(){
-	           $(this).css({"color":"#000","line-height":"25px",'text-align':'left'});
-	               if($(this).val()=='摘要') $(this).val('');
-	           })
+               $(this).css({"color":"#000","line-height":"25px",'text-align':'left'});
+                   if($(this).val()=='摘要') $(this).val('');
+               })
             .blur(function(){
-		      if($.trim($(this).val())==''){
-		          $(this).css({"color":"#ccc","line-height":'100px','text-align':'center'}).val('摘要'); 		}
-	       });
+              if($.trim($(this).val())==''){
+                  $(this).css({"color":"#ccc","line-height":'100px','text-align':'center'}).val('摘要');        }
+           });
         }
         
         var tmp_title = $(this).siblings(".w_title");
         tmp_title.focus(function(){
-	       $(this).css("color","#000");
-	           if($(this).val()=='标题') $(this).val('');
-	       }).blur(function(){
-		      if($.trim($(this).val())==''){ $(this).css("color","#ccc").val('标题');}
-	   });
+           $(this).css("color","#000");
+               if($(this).val()=='标题') $(this).val('');
+           }).blur(function(){
+              if($.trim($(this).val())==''){ $(this).css("color","#ccc").val('标题');}
+       });
 
     },
 
 
     
-	
+    
 })
 
 
 
 //write tool function
 /******************************************
-	this function  is userd for to insert kinds of string to the textarea
-	* (0 ,bold),(1,italic),(2,underline),(3,del),(4,superscript),(5,suberscript),(6,indent),(7,ol),(8,ul),(9,h2)
-	* (10,h3),(11,h4),(12,h5),(13,page),..........
+    this function  is userd for to insert kinds of string to the textarea
+    * (0 ,bold),(1,italic),(2,underline),(3,del),(4,superscript),(5,suberscript),(6,indent),(7,ol),(8,ul),(9,h2)
+    * (10,h3),(11,h4),(12,h5),(13,page),..........
 ******************************************/
 
 
 /***************Toggle help or note page in the pop page ******************/
 toggle_example = function(obj){
-	$(obj).parent().siblings().toggle();
+    $(obj).parent().siblings().toggle();
 }
 
 //Insert Help
 want_help = function( _obj )
 {
-	alert('help');
+    alert('help');
 }
 
 
@@ -1043,82 +960,82 @@ want_help = function( _obj )
 /******************check the picture right or not the user want to upload *************************/
 $Write.picture_check = picture_check =  function(obj){
 
-	var image = $(obj).parent().parent().siblings().children(".i_file");
-	var title = $(obj).parent().parent().siblings().children(".i_title");
-	var process = $(obj).parent().siblings(".i_process");
-	var src = $.trim(image.val());
-	if( src == ''){
-		process.html('请选择图片！');
-		process.css("color","red");
-		//$(obj).removeAttr("disabled").css("color","#000");
-		return false;
-	}
-	var img_reg = /.*\.(jpg|png|jpeg|gif)$/ig;
-	
-	if(src.match(img_reg) == null ){
-		process.html('图片格式为jpg,png,jpeg,gif！');
-		process.css("color","red");
-		//$(obj).removeAttr("disabled").css("color","#000");
-		return false;
-	}
-	if($.trim(title.val())==''){
-		process.html('请设置标题！');
-		process.css("color","red");
-		//$(obj).removeAttr("disabled").css("color","#000");
-		return false;	
-	}
-	//$(obj).attr("type","submit");
-	$(obj).attr("disabled","disabled").css("color","#ccc");
-	process.html('<img src="/static/img/ajax.gif" title="执行中" />');
-	$(obj).next().click();
-	//alert('in test');
-	return true;
+    var image = $(obj).parent().parent().siblings().children(".i_file");
+    var title = $(obj).parent().parent().siblings().children(".i_title");
+    var process = $(obj).parent().siblings(".i_process");
+    var src = $.trim(image.val());
+    if( src == ''){
+        process.html('请选择图片！');
+        process.css("color","red");
+        //$(obj).removeAttr("disabled").css("color","#000");
+        return false;
+    }
+    var img_reg = /.*\.(jpg|png|jpeg|gif)$/ig;
+    
+    if(src.match(img_reg) == null ){
+        process.html('图片格式为jpg,png,jpeg,gif！');
+        process.css("color","red");
+        //$(obj).removeAttr("disabled").css("color","#000");
+        return false;
+    }
+    if($.trim(title.val())==''){
+        process.html('请设置标题！');
+        process.css("color","red");
+        //$(obj).removeAttr("disabled").css("color","#000");
+        return false;   
+    }
+    //$(obj).attr("type","submit");
+    $(obj).attr("disabled","disabled").css("color","#ccc");
+    process.html('<img src="/static/img/ajax.gif" title="执行中" />');
+    $(obj).next().click();
+    //alert('in test');
+    return true;
 }
 
 
 /****************** upload picture response handler ****************************/
 picture_upload_handler = function(type, info, alias, name ,isnew , article_id ){
     //alert('in img up handler');
-	var obj = $("#pop_insert_pic");
-	var menuid = obj.attr("menu_id");
-	var process = obj.find("span.i_process");
-	var buttons = obj.find("span.i_button").find('button');
-	var str = "#write_menu[menu_id="+menuid+"]";
-	var menu = $("body").find(str);
-	if (isnew >= 0) {
-		menu.attr("article_id",article_id);
-	}
-	var image_bar = menu.find("#write_image_bar").find(".i");
+    var obj = $("#pop_insert_pic");
+    var menuid = obj.attr("menu_id");
+    var process = obj.find("span.i_process");
+    var buttons = obj.find("span.i_button").find('button');
+    var str = "#write_menu[menu_id="+menuid+"]";
+    var menu = $("body").find(str);
+    if (isnew >= 0) {
+        menu.attr("article_id",article_id);
+    }
+    var image_bar = menu.find("#write_image_bar").find(".i");
     buttons.removeAttr("disabled").css("color","#000");
-	if(type == 1){
-		process.html(info).css("color","red");	
-			
-	}else{
+    if(type == 1){
+        process.html(info).css("color","red");  
+            
+    }else{
         var current_textarea = menu.siblings("#write_textarea");
         $Write.window_close_alert();
-		process.html('处理成功！').css("color","blue");
-			
-		
-		// insert a new image in the image lib
-		var new_image = $('<div></div>');
-		new_image.attr({'class':'one','oid':alias,'type':'image'});
-		
-		var new_image_html = //'<div class="one" oid ="'+ alias +'" type="i">'+
-								'<div class="ileft">'+
-								'<span class="ititle">图'+ alias+'</span>'+
-								'</div>'+								
-								'<div class="icontrol">' +
-								'<span class="idel" title="删除此图片">删除</span>'+
-								'<span class="imodify">修改</span>'+
-								'<span class="iinsert">插入</span>'+
-								'</div>' +
+        process.html('处理成功！').css("color","blue");
+            
+        
+        // insert a new image in the image lib
+        var new_image = $('<div></div>');
+        new_image.attr({'class':'one','oid':alias,'type':'image'});
+        
+        var new_image_html = //'<div class="one" oid ="'+ alias +'" type="i">'+
+                                '<div class="ileft">'+
+                                '<span class="ititle">图'+ alias+'</span>'+
+                                '</div>'+                               
+                                '<div class="icontrol">' +
+                                '<span class="idel" title="删除此图片">删除</span>'+
+                                '<span class="imodify">修改</span>'+
+                                '<span class="iinsert">插入</span>'+
+                                '</div>' +
 
-								'<div class="iright" title="'+ $.encode(name) +'"><table><tr><td><img src="'+ $.encode(info) +'" /></td></tr></table></div>';
-								//'<div class="ibottom"><input title="描述" type="text" value="'+ name +'" readonly="readonly" /><div class="iname">插入</div></div>'+
-								//'</div>';
-		new_image.html(new_image_html);
-		image_bar.append(new_image);
-        	
+                                '<div class="iright" title="'+ $.encode(name) +'"><table><tr><td><img src="'+ $.encode(info) +'" /></td></tr></table></div>';
+                                //'<div class="ibottom"><input title="描述" type="text" value="'+ name +'" readonly="readonly" /><div class="iname">插入</div></div>'+
+                                //'</div>';
+        new_image.html(new_image_html);
+        image_bar.append(new_image);
+            
         new_image.find(".imodify").bind('click',function(){
              current_textarea.update_old_src(this);
         }).end().find(".iinsert").bind('click', function(){
@@ -1126,8 +1043,8 @@ picture_upload_handler = function(type, info, alias, name ,isnew , article_id ){
        }).click().end().find(".idel").bind('click', function(){
            current_textarea.delete_lib_src(this);
        });
-	   pop_page_close();
-	}
+       pop_page_close();
+    }
 }
 
 
@@ -1135,126 +1052,119 @@ picture_upload_handler = function(type, info, alias, name ,isnew , article_id ){
 /**************** insert a new source : submit moudle ******************/
 $Write.new_lib_src_submit = function(obj)
 {
-	//$(obj).attr("disabled","disabled").css("color","#ccc");
-	var mes = {};
-	var warn = {'table':"表","math":'数学式',"code":"代码","reference":'引用'};
-	mes = $("#pop-content").DivToDict();
-	var process = $(obj).parent().next("span");
-	var type = mes['src_type'];
-	//alert(mes['code_type']);
-	//alert(type);
-	if(mes['article_id'] == '' || type == '' ){
-			process.html("出现错误！").css("color","red");
-			//$(obj).removeAttr("disabled").css("color","#000");
-			return false;
-	}
+    //$(obj).attr("disabled","disabled").css("color","#ccc");
+    var mes = {};
+    var warn = {'table':"表","math":'数学式',"code":"代码","reference":'引用'};
+    mes = $("#pop-content").DivToDict();
+    var process = $(obj).parent().next("span");
+    var type = mes['src_type'];
 
-	if(mes['title'] == ''){
-		process.html("请填写"+ warn[type]+"名称！").css("color","red");
-		//$(obj).removeAttr("disabled").css("color","#000");
-		return false;			
-	}
-	if(type == 'reference'){
-		if(mes['source'] == ''){
-			process.html("请填写" + warn[type] + "出处！").css("color","red");
-			//$(obj).removeAttr("disabled").css("color","#000");
-			return false;
-		}	
-	}
-	if(mes['body'] == ''){
-		if(type != 'reference'){
-			process.html("请填写" + warn[type] + "内容！").css("color","red");
-			//$(obj).removeAttr("disabled").css("color","#000");
-			return false;	
-		}else{
-			var url_reg = /^(http|https|ftp):\/\/.+$/ig;
-			if(!url_reg.test(mes['source'])){
-				process.html("请填写链接地址或者引用真实内容！").css("color","red");
-				//$(obj).removeAttr("disabled").css("color","#000");
-				return false;			
-			}	
-		}
-	}
+    if(mes['title'] == ''){
+        process.html("请填写"+ warn[type]+"名称！").css("color","red");
+        //$(obj).removeAttr("disabled").css("color","#000");
+        return false;           
+    }
+    if(type == 'reference'){
+        if(mes['source'] == ''){
+            process.html("请填写" + warn[type] + "出处！").css("color","red");
+            //$(obj).removeAttr("disabled").css("color","#000");
+            return false;
+        }   
+    }
+    if(mes['body'] == ''){
+        if(type != 'reference'){
+            process.html("请填写" + warn[type] + "内容！").css("color","red");
+            //$(obj).removeAttr("disabled").css("color","#000");
+            return false;   
+        }else{
+            var url_reg = /^(http|https|ftp):\/\/.+$/ig;
+            if(!url_reg.test(mes['source'])){
+                process.html("请填写链接地址或者引用真实内容！").css("color","red");
+                //$(obj).removeAttr("disabled").css("color","#000");
+                return false;           
+            }   
+        }
+    }
 
-	var mid = $("#pop-content").children().attr("menu_id");
-	var write_str = '#write_menu[menu_id="' + mid + '"]';
-	var write_menu = $("body").find(write_str);	
-	var list = {'math':'#write_math_bar','reference':'#write_ref_bar',
-	           'table':'#write_table_bar','code':'#write_code_bar'};
-	mes['do'] = 'new';
-	/** send the mes **/
-	$.postJSON('/article-src-control', mes,
-		function(){ 
+    var mid = $("#pop-content").children().attr("menu_id");
+    var write_str = '#write_menu[menu_id="' + mid + '"]';
+    var write_menu = $("body").find(write_str); 
+    var list = {'math':'#write_math_bar','reference':'#write_ref_bar',
+               'table':'#write_table_bar','code':'#write_code_bar'};
+    mes['do'] = 'new';
+    /** send the mes **/
+    $.postJSON('/article-src-control', mes,
+        function(){ 
         process.html('<img src="/static/img/ajax.gif" title="执行中" />');
         $(obj).attr("disabled","disabled").css("color","#ccc");
     },
-		function(response){
-			//alert(response.kind);
-		    mes = $.encode(mes);
-			if(response.kind==0){
-				// right 	
-                var current_textarea = write_menu.siblings("#write_textarea");	
+        function(response){
+            //alert(response.kind);
+            mes = $.encode(mes);
+            if(response.kind==0){
+                // right    
+                var current_textarea = write_menu.siblings("#write_textarea");  
                 $Write.window_close_alert();
-				var info = response.info;
-				if(response.info.isnew == true){
-					write_menu.attr("article_id",info.article);
-				}
-				var obj_bar = write_menu.find(list[type]);
-				var obj_body = obj_bar.find("#crtm");
-				var obj_one = $('<div></div>');
-				obj_one.attr({"class":'one','oid':info.alias,"type":type});
-				var obj_html= '';
-				
-				//alert(type);
-				switch(type){
-					case 'reference':
-						obj_html = 	'<div><span class="cname">引用'+ info.alias+'</span></div>'+
-							'<div class="control"><span class="cdel" title="删除">删除</span>'+
-							'<span class="cedit" title="修改">修改</span>'+
-							'<span class="cinsert">插入</span></div>'+
-							//'<div><span class="cdes">名称：</span></div>'+
-							'<div><span><input type="text" id="otitle" readonly="readonly" value="'+mes['title']+'" /></span>' + 
-							'<input type="hidden" id="osource" value="'+mes['source']+'" /><textarea id="obody">'+mes['body']+'</textarea></div>';
-						break;
-					case 'code':
-						obj_html = '<div><span class="cname">代码'+ info.alias +'</span></div>'+
-								'<div  class="control"><span class="cdel" title="删除">删除</span>'+
-								'<span class="cedit" title="修改">修改</span>'+
-								'<span class="cinsert">插入</span></div>'+
-								//'<div><span class="cdes">名称：</span></div>'+
-								'<div><span><input type="text" id="otitle" readonly="readonly" value="'+mes['title']+'" /></span>'+
-								'<input type="hidden" id="otype" value="'+ mes['code_type'] +'" />' +
-								'<textarea id="obody">'+mes['body'] +'</textarea>' +
-								'</div>';
-						break;
-					case 'table':
-						obj_html = '<div><span class="cname">表'+info.alias+'</span></div>'+
-								'<div  class="control"><span class="cdel" title="删除">删除</span>'+
-								'<span class="cedit" title="修改">修改</span>'+
-								'<span class="cinsert">插入</span></div>'+
-								//'<div><span class="cdes">名称：</span></div>'+
-								'<div><span><input type="text" id="otitle" readonly="readonly" value="'+mes['title']+'" /></span>'+
-								'<textarea id="obody">'+mes['body']+'</textarea>'+								
-								'</div>';
-						break;
-					case 'math':
-						obj_html = '<div><span class="cname">数式'+info.alias+'</span></div>'+
-								'<div class="control"><span class="cdel" title="删除">删除</span>'+
-								'<span class="cedit" title="修改" >修改</span>'+
-								'<span class="cinsert">插入</span></div>'+
-								//'<div><span class="cdes">名称：</span></div>'+
-								'<div><span><input type="text" id="otitle" readonly="readonly" value="'+mes['title']+'" />'+
+                var info = response.info;
+                if(response.info.isnew == true){
+                    write_menu.attr("article_id",info.article);
+                }
+                var obj_bar = write_menu.find(list[type]);
+                var obj_body = obj_bar.find("#crtm");
+                var obj_one = $('<div></div>');
+                obj_one.attr({"class":'one','oid':info.alias,"type":type});
+                var obj_html= '';
+                
+                //alert(type);
+                switch(type){
+                    case 'reference':
+                        obj_html =  '<div><span class="cname">引用'+ info.alias+'</span></div>'+
+                            '<div class="control"><span class="cdel" title="删除">删除</span>'+
+                            '<span class="cedit" title="修改">修改</span>'+
+                            '<span class="cinsert">插入</span></div>'+
+                            //'<div><span class="cdes">名称：</span></div>'+
+                            '<div><span><input type="text" id="otitle" readonly="readonly" value="'+mes['title']+'" /></span>' + 
+                            '<input type="hidden" id="osource" value="'+mes['source']+'" /><textarea id="obody">'+mes['body']+'</textarea></div>';
+                        break;
+                    case 'code':
+                        obj_html = '<div><span class="cname">代码'+ info.alias +'</span></div>'+
+                                '<div  class="control"><span class="cdel" title="删除">删除</span>'+
+                                '<span class="cedit" title="修改">修改</span>'+
+                                '<span class="cinsert">插入</span></div>'+
+                                //'<div><span class="cdes">名称：</span></div>'+
+                                '<div><span><input type="text" id="otitle" readonly="readonly" value="'+mes['title']+'" /></span>'+
+                                '<input type="hidden" id="otype" value="'+ mes['code_type'] +'" />' +
+                                '<textarea id="obody">'+mes['body'] +'</textarea>' +
+                                '</div>';
+                        break;
+                    case 'table':
+                        obj_html = '<div><span class="cname">表'+info.alias+'</span></div>'+
+                                '<div  class="control"><span class="cdel" title="删除">删除</span>'+
+                                '<span class="cedit" title="修改">修改</span>'+
+                                '<span class="cinsert">插入</span></div>'+
+                                //'<div><span class="cdes">名称：</span></div>'+
+                                '<div><span><input type="text" id="otitle" readonly="readonly" value="'+mes['title']+'" /></span>'+
+                                '<textarea id="obody">'+mes['body']+'</textarea>'+                              
+                                '</div>';
+                        break;
+                    case 'math':
+                        obj_html = '<div><span class="cname">数式'+info.alias+'</span></div>'+
+                                '<div class="control"><span class="cdel" title="删除">删除</span>'+
+                                '<span class="cedit" title="修改" >修改</span>'+
+                                '<span class="cinsert">插入</span></div>'+
+                                //'<div><span class="cdes">名称：</span></div>'+
+                                '<div><span><input type="text" id="otitle" readonly="readonly" value="'+mes['title']+'" />'+
                                     '<input type="hidden" id="math_type" value="'+ mes['math_type'] +'" /></span>'+
-								'<textarea id="obody">'+mes['body']+'</textarea>'+								
-								'</div>';
-						//alert(obj_html);
-						break;
-				}	
-                		
-				obj_one.html(obj_html);
-				obj_one.appendTo(obj_body);
-				process.html('添加成功！').css("color",'blue');
-				
+                                '<textarea id="obody">'+mes['body']+'</textarea>'+                              
+                                '</div>';
+                        //alert(obj_html);
+                        break;
+                }   
+                        
+                obj_one.html(obj_html);
+                obj_one.appendTo(obj_body);
+                process.html('添加成功！').css("color",'blue');
+                
                 
                 obj_one.find(".cedit").bind('click',function(){
                     current_textarea.update_old_src(this);
@@ -1265,19 +1175,19 @@ $Write.new_lib_src_submit = function(obj)
                 obj_one.find(".cdel").bind('click', function(){
                     current_textarea.delete_lib_src(this);
                 });
-				pop_page_close();
-			}else{
-				process.html(response.info).css("color","red");	
-				$(obj).removeAttr("disabled").css("color","#000");
-				return false;
-			}
-		},
-		function(response){
-			process.html('数据提交出错！').css("color","red");	
-			$(obj).removeAttr("disabled").css("color","#000");
-			return false;
-		}
-	);	
+                pop_page_close();
+            }else{
+                process.html(response.info).css("color","red"); 
+                $(obj).removeAttr("disabled").css("color","#000");
+                return false;
+            }
+        },
+        function(response){
+            process.html('数据提交出错！').css("color","red");  
+            $(obj).removeAttr("disabled").css("color","#000");
+            return false;
+        }
+    );  
 }
 
 
@@ -1287,146 +1197,145 @@ $Write.new_lib_src_submit = function(obj)
 /**************** update the  source : insert moudle ******************/
 $Write.update_lib_src_submit = function( obj )
 {
-	$(obj).attr("disabled","disabled").css("color","#ccc");
-	var mes = {};
-	var warn = {'table':"表","math":'数学式',"code":"代码","reference":'引用','image':'图片'};
-	mes = $("#pop-content").DivToDict();
-	var process = $(obj).parent().next("span");
-	var type = mes['src_type'];
-	var oid = mes['oid'];
-	if(mes['article_id'] == '' || type == '' || oid == ''){
-			process.html("出现错误！").css("color","red");
-			$(obj).removeAttr("disabled").css("color","#000");
-			return false;
-	}
-	
-	var url = '/article-src-control';
-	mes['do'] = 'update';
-	
-	if(mes['title'] == ''){
-		process.html("请填写"+ warn[type]+"名称！").css("color","red");
-		$(obj).removeAttr("disabled").css("color","#000");
-		return false;			
-	}
-	if(type == 'reference'){
-		if(mes['source'] == ''){
-			process.html("请填写" + warn[type] + "出处！").css("color","red");
-			$(obj).removeAttr("disabled").css("color","#000");
-			return false;
-		}	
-	}
-	if(mes['body'] == ''){
-		if(type!='reference'){
-			process.html("请填写" + warn[type] + "内容！").css("color","red");
-			$(obj).removeAttr("disabled").css("color","#000");
-			return false;
-		}else{
-			var url_reg = /^(http|https|ftp):\/\/.+$/ig;
-			if(!url_reg.test(mes['source'])){
-				process.html("请填写链接地址或者引用真实内容！").css("color","red");
-				$(obj).removeAttr("disabled").css("color","#000");
-				return false;			
-			}
-		}
-	}
-	var menu_id = $("#pop-content").children().attr("menu_id");
-	var str = "#write_menu[menu_id="+menu_id+"]";
-	var menu = $("body").find(str);
-	var list = {'image':'#write_image_bar','math':'#write_math_bar',
-	           'reference':'#write_ref_bar','code':'#write_code_bar','table':'#write_table_bar'};
-	
-	/** send the mes **/
-	$.postJSON(url,mes,
-		function(){ process.html('<img src="/static/img/ajax.gif" title="执行中" />'); },
-		function(response){
-			/** right response **/	
-			 //mes = $.encode(mes);		 
-			 if(response.kind == 0){
-			 	process.html('修改成功！').css("color","blue");
-			 	var obj_bar = menu.find(list[type]);
-			 	var obj_one_str = ".one[oid="+mes['oid']+"]";
-			 	var obj_one = obj_bar.find(obj_one_str);
-			 	//alert(obj_one.html());
-			 	switch(type){
-			 		case 'image':
-			 			obj_one.find(".iright").attr("title",mes['title']);
-			 			break;
-			 		case 'reference':
-			 			obj_one.find("#otitle").val(mes['title']);
-			 			obj_one.find("#osource").val(mes['source']);
-			 			//alert(mes['body']);
-			 			obj_one.find("#obody").val(mes['body']);
-			 			break;	
-			 		case 'code':
-			 			obj_one.find("#otitle").val(mes['title']);
-			 			obj_one.find("#otype").val(mes['code_type']);
-			 			
-			 			obj_one.find("#obody").val(mes['body']);
-			 			break;
-			 		case 'table':
-			 		case 'math':
-			 			obj_one.find("#otitle").val(mes['title']);
-			 			obj_one.find("#obody").val(mes['body']);
+    $(obj).attr("disabled","disabled").css("color","#ccc");
+    var mes = {};
+    var warn = {'table':"表","math":'数学式',"code":"代码","reference":'引用','image':'图片'};
+    mes = $("#pop-content").DivToDict();
+    var process = $(obj).parent().next("span");
+    var type = mes['src_type'];
+    var oid = mes['oid'];
+    if(mes['article_id'] == '' || type == '' || oid == ''){
+            process.html("出现错误！").css("color","red");
+            $(obj).removeAttr("disabled").css("color","#000");
+            return false;
+    }
+    
+    var url = '/article-src-control';
+    mes['do'] = 'update';
+    
+    if(mes['title'] == ''){
+        process.html("请填写"+ warn[type]+"名称！").css("color","red");
+        $(obj).removeAttr("disabled").css("color","#000");
+        return false;           
+    }
+    if(type == 'reference'){
+        if(mes['source'] == ''){
+            process.html("请填写" + warn[type] + "出处！").css("color","red");
+            $(obj).removeAttr("disabled").css("color","#000");
+            return false;
+        }   
+    }
+    if(mes['body'] == ''){
+        if(type!='reference'){
+            process.html("请填写" + warn[type] + "内容！").css("color","red");
+            $(obj).removeAttr("disabled").css("color","#000");
+            return false;
+        }else{
+            var url_reg = /^(http|https|ftp):\/\/.+$/ig;
+            if(!url_reg.test(mes['source'])){
+                process.html("请填写链接地址或者引用真实内容！").css("color","red");
+                $(obj).removeAttr("disabled").css("color","#000");
+                return false;           
+            }
+        }
+    }
+    var menu_id = $("#pop-content").children().attr("menu_id");
+    var str = "#write_menu[menu_id="+menu_id+"]";
+    var menu = $("body").find(str);
+    var list = {'image':'#write_image_bar','math':'#write_math_bar',
+               'reference':'#write_ref_bar','code':'#write_code_bar','table':'#write_table_bar'};
+    
+    /** send the mes **/
+    $.postJSON(url,mes,
+        function(){ process.html('<img src="/static/img/ajax.gif" title="执行中" />'); },
+        function(response){
+            /** right response **/  
+             //mes = $.encode(mes);      
+             if(response.kind == 0){
+                process.html('修改成功！').css("color","blue");
+                var obj_bar = menu.find(list[type]);
+                var obj_one_str = ".one[oid="+mes['oid']+"]";
+                var obj_one = obj_bar.find(obj_one_str);
+                //alert(obj_one.html());
+                switch(type){
+                    case 'image':
+                        obj_one.find(".iright").attr("title",mes['title']);
+                        break;
+                    case 'reference':
+                        obj_one.find("#otitle").val(mes['title']);
+                        obj_one.find("#osource").val(mes['source']);
+                        //alert(mes['body']);
+                        obj_one.find("#obody").val(mes['body']);
+                        break;  
+                    case 'code':
+                        obj_one.find("#otitle").val(mes['title']);
+                        obj_one.find("#otype").val(mes['code_type']);
+                        
+                        obj_one.find("#obody").val(mes['body']);
+                        break;
+                    case 'table':
+                    case 'math':
+                        obj_one.find("#otitle").val(mes['title']);
+                        obj_one.find("#obody").val(mes['body']);
                         obj_one.find("#math_type").val(mes['math_type']);
                         //alert(mes['math_type']);
-			 			break;
-			 	}
-			 	pop_page_close();
-			 }else{
-			 	process.html(response.info).css("color","red");
-			 	$(obj).removeAttr("disabled").css("color","#000");	
-			 	return false;
-			 }
-			 
-		},
-		function(response){
-			process.html('数据提交出错！').css("color","red");
-			$(obj).removeAttr("disabled").css("color","#000");
-			return false;
-		}
-	);		
+                        break;
+                }
+                pop_page_close();
+             }else{
+                process.html(response.info).css("color","red");
+                $(obj).removeAttr("disabled").css("color","#000");  
+                return false;
+             }
+             
+        },
+        function(response){
+            process.html('数据提交出错！').css("color","red");
+            $(obj).removeAttr("disabled").css("color","#000");
+            return false;
+        }
+    );      
 }
 
 
 
 /***************** clear the process *************************/
 clear_process = function(obj,type){
-	switch(type){
-		case 'i':
-			var process = $(obj).parent().siblings().find(".i_process");
-			process.css("color","#000").html('');	
-			break;
-	}
+    switch(type){
+        case 'i':
+            var process = $(obj).parent().siblings().find(".i_process");
+            process.css("color","#000").html('');   
+            break;
+    }
 }
 
 
 /**************** write preview **************************/
 $Write.preview_write = function(obj){
-	var process = $(".w-submit-result");
+    var process = $(".w-submit-result");
     var submit_button = $(".w-submit").find("button");
     //alert(submit_button.html());
-	$Write.send_write_blog(
+    $Write.send_write_blog(
     function(){
-		process.html('<img src="/static/img/ajax.gif" />');
-		$(obj).next('span').html('');
+        process.html('<img src="/static/img/ajax.gif" />');
+        $(obj).next('span').html('');
          submit_button.attr("disabled","disabled").css("color","#ccc");
-		},function(response){
-        submit_button.removeAttr("disabled").css("color","#000");	
-		if(response.kind == 0){
-			process.html('存储成功！<a href="/blog/'+response.info+'?preview=yes" target="_blank" >预览地址</a>').css("color",'blue');
-		    $("#write_menu").attr("article_id",response.info);	
-			string = '<a href="/blog/'+response.info+'?preview=yes" target="_blank" >预览地址</a>'
-			$(obj).next('span').html(string);
+        },function(response){
+        submit_button.removeAttr("disabled").css("color","#000");   
+        if(response.kind == 0){
+            process.html('存储成功！<a href="/blog/'+response.info+'?preview=yes" target="_blank" >预览地址</a>').css("color",'blue');
+            $("#write_menu").attr("article_id",response.info);  
+            string = '<a href="/blog/'+response.info+'?preview=yes" target="_blank" >预览地址</a>'
+            $(obj).next('span').html(string);
             $Write.window_close_alert();
-		}else{
-			process.html(response.info).css("color",'red');	
-		}
-	},
-	function(response){
-        submit_button.removeAttr("disabled").css("color","#000");	
-		process.html('提交出现错误！').css("color",'red');	
-	}, {'do':'preview'});
- 	
+        }else{
+            process.html(response.info).css("color",'red'); 
+        }
+    },
+    function(response){
+        submit_button.removeAttr("disabled").css("color","#000");   
+        process.html('提交出现错误！').css("color",'red');  
+    }, {'do':'preview'});
 }
 
 $Write.new_tag = function(page, obj){
@@ -1548,29 +1457,29 @@ $Write.delete_tag_submit = function(obj){
 $Write.post_write = function(obj){
     var process = $(".w-submit-result");
     //
-	$Write.send_write_blog(
+    $Write.send_write_blog(
         function(){
-		process.html('<img src="/static/img/ajax.gif" />');
-		  $(obj).next('span').html('');
+        process.html('<img src="/static/img/ajax.gif" />');
+          $(obj).next('span').html('');
           $(obj).attr("disabled","disabled").css("color","#ccc");
           
-		},function(response){
+        },function(response){
         
-		if(response.kind == 0){
-			process.html('文章发布成功！').css("color",'blue');
-		    $("#write_menu").attr("article_id",response.info);
+        if(response.kind == 0){
+            process.html('文章发布成功！').css("color",'blue');
+            $("#write_menu").attr("article_id",response.info);
             $Write.close_window_close_alert();
             newurl = "/blog/" + response.info;
             setTimeout('location.href=' + 'newurl', 1000);
-		}else{
-			process.html(response.info).css("color",'red');	
-            $(obj).removeAttr("disabled").css("color","#000");	
-		}
-	},
-	function(response){
-		process.html('提交出现错误！').css("color",'red');	
-        $(obj).removeAttr("disabled").css("color","#000");	
-	}, {'do':'post'});
+        }else{
+            process.html(response.info).css("color",'red'); 
+            $(obj).removeAttr("disabled").css("color","#000");  
+        }
+    },
+    function(response){
+        process.html('提交出现错误！').css("color",'red');  
+        $(obj).removeAttr("disabled").css("color","#000");  
+    }, {'do':'post'});
 }
 
 $Write.post_write_all = function(obj){
@@ -1579,24 +1488,25 @@ $Write.post_write_all = function(obj){
     var mes = {};
     mes['do'] = $obj.attr("do") || 'post', mes['father_id'] = $menu.attr('father_id')|| '-1',
     mes['father_type'] = $menu.attr('father_type'), mes['group_id'] = $menu.attr('group_id') || '-1',
+    mes['env_type'] = $menu.attr("env_type"), mes['env_id'] = $menu.attr("env_id"),
     mes['article_type'] = $menu.attr('article_type'), mes['article_id'] = $menu.attr('article_id');
-    mes['permisson'] = $('#write-permission').DivToDict()['permission'] || 'public';
+    mes['privilege'] = $('#write-permission').DivToDict()['permission'] || 'public';
     var classes = $("div.w-class").DivToDict();
-	if('classes' in classes)  classes = classes['classes'];
-	else classes = [];
-	mes['classes'] = classes;
-	mes['title'] = $.trim($(".w_title").val()) || '', mes['summary'] = $.trim($(".w_summary").val()) || '',
-	mes['text'] = $.trim($("#write_textarea").val()) || '', mes['keys']=$("#write-keys").DivToDict()['keys']||'';
-	
-	if(mes['title']=='' || mes['title']=='标题'){
+    if('classes' in classes)  classes = classes['classes'];
+    else classes = [];
+    mes['tags'] = classes;
+    mes['title'] = $.trim($(".w_title").val()) || '', mes['summary'] = $.trim($(".w_summary").val()) || '',
+    mes['body'] = $.trim($("#write_textarea").val()) || '', mes['keywords']=$("#write-keys").DivToDict()['keys']||'';
+    
+    if(mes['title']=='' || mes['title']=='标题'){
         if( mes['article_type'] != 'about' && mes['article_type'] != 'group-info'){
             wrong('请您填写标题！');
             return false;        
         }
-	}
-	if(mes['text'] == '' || mes['text'] == '内容'){
-        wrong('请您填写内容！'); return false;	
-	}
+    }
+    if(mes['body'] == '' || mes['body'] == '内容'){
+        wrong('请您填写内容！'); return false;  
+    }
     var  str = '存储成功！<a href="/blog/?preview=yes" target="_blank" >预览地址</a>';
     $.postJSON('/update-article', mes, 
         function(){
@@ -1659,62 +1569,62 @@ $Write.post_write_all = function(obj){
 /**************** send the write **************************************/
 $Write.send_write_blog = function(before_handler,right_handler,error_handler, arg){
     var arg = arg || {} ;
-	var title = $.trim($(".w_title").val());
-	var summary = $.trim($(".w_summary").val());
-	var body = $.trim($("#write_textarea").val());
-	//alert(body);
-	//var mid = $("")
-	var article_id = $("#write_menu").attr("article_id");
-    var art_type = $("#write_menu").attr("article_type");
-    var father = $("#write_menu").attr("father");
-    var permission = $("#write-permission").DivToDict()['permission'];
-    var keys = $("#write-keys").DivToDict()['keys'];
-	var classes = $("div.w-class").DivToDict();
-	if('classes' in classes)  classes = classes['classes'];
-	else classes = [];
-	//alert(classes['classes']);
-	var process = $(".w-submit-result");
-	var mes = {};
-	mes['classes'] = classes;
-	//alert(mes['classes']);
-	//alert(typeof mes['classes']);
-	mes['title'] = title;
-	mes['summary'] = summary;
-	mes['text'] = body;
-	mes['article_id'] = article_id;
+    var title = $.trim($(".w_title").val());
+    var summary = $.trim($(".w_summary").val());
+    var body = $.trim($("#write_textarea").val());
+    var $menu = $("#write_menu");
+    var article_id = $menu.attr("article_id"), article_type = $menu.attr("article_type"),
+        env_id = $menu.attr("env_id"), env_type = $menu.attr("env_type"),
+        father_id = $menu.attr("father_id"), father_type = $menu.attr("father_type"),
+        keywords = $("#write-keys").DivToDict()['keys'], permission = $("#write-permission").DivToDict()['permission'];
+       var tags = $("div.w-class").DivToDict();
+       if('classes' in tags)  tags = tags['classes'];
+       else tags = [];
+    //alert(classes['classes']);
+       var process = $(".w-submit-result");
+       var mes = {};
+       mes['tags'] = tags;
+    //alert(mes['classes']);
+    //alert(typeof mes['classes']);
+    mes['title'] = title;
+    mes['summary'] = summary;
+    mes['body'] = body;
+    mes['article_id'] = article_id;
     mes['article_type'] = art_type;
-    mes['keys'] = keys;
+    mes['keywords'] = keywords;
     mes['permission'] = permission;
-    mes['father'] = father;
-    //alert(mes['body']);
-    //alert(mes['father']);
+    mes['father_id'] = father_id;
+    mes['father_type'] = father_type;
+    mes['env_id'] = env_id;
+    mes['env_type'] = env_type;
+       
     if(mes['title'] == '' || mes['title'] == '标题'){
-		process.html('请填写标题！').css("color",'red');
-		return false;	
+        process.html('请填写标题！').css("color",'red');
+        return false;   
     }
-	if(mes['body'] == '' || mes['body'] == '内容'){
-		process.html('请写正文！').css("color",'red');
+    if(mes['body'] == '' || mes['body'] == '内容'){
+        process.html('请写正文！').css("color",'red');
         //alert("in body");
-		return false;	
-	}
+        return false;   
+    }
     var url = '/update-article'
-	jQuery.extend(mes, arg);
-	$.postJSON(url,mes,
-		function(){ before_handler(); },
-		function(response){
-			right_handler(response);
-		},
-		function(response){
-			error_handler(response);
-		}
-	);	
+       jQuery.extend(mes, arg);
+           $.postJSON(url,mes,
+              function(){ before_handler(); },
+              function(response){
+            right_handler(response);
+        },
+        function(response){
+            error_handler(response);
+        }
+       );   
 }
 
 
 
 clear_content_process = function(){
-	var process = $(".w-submit-result");
-	process.html('');	
+    var process = $(".w-submit-result");
+    process.html('');   
 }
 
 
@@ -1835,8 +1745,8 @@ $Write.comment_post = function(tag){
     var $button = $tag.find('button');
     var ref_comment = $("#ref_comment_input").val() || '';
     var mes = {};
-	mes['text'] = textarea.val();
-	mes['article_id'] = menu.attr("aritcle_id")||0;;
+    mes['text'] = textarea.val();
+    mes['article_id'] = menu.attr("aritcle_id")||0;;
     mes['article_type'] = 'comment';
     mes['father_id'] = menu.attr("father_id")||0;
     mes['father_type'] = menu.attr('father_type') || 'blog';
@@ -1847,25 +1757,25 @@ $Write.comment_post = function(tag){
         return false;
     }
     $.postJSON('/update-article',mes,
-		function(){ 
+        function(){ 
             process.html('<img src="/static/img/ajax.gif" />');
             $button.attr("disabled","disabled").css("color","#ccc");
         },
-		function(response){
+        function(response){
             if(response.kind==0){
                 process.html('评论成功，评论框2s后关闭！').css('color','blue');
                 setTimeout('', 2000);
                 setTimeout("$('body').find('#write_comment_zone').slideUp('slow',function(){ $(this).remove(); });", 1000);
             }else{
-                process.html(response.info).css("color",'red');	
-                $button.removeAttr("disabled").css("color","#000");	
+                process.html(response.info).css("color",'red'); 
+                $button.removeAttr("disabled").css("color","#000"); 
             }
-		},
-		function(response){
-          process.html('提交出现错误！').css("color",'red');	
-          $button.removeAttr("disabled").css("color","#000");	
-		}
-	);	
+        },
+        function(response){
+          process.html('提交出现错误！').css("color",'red');    
+          $button.removeAttr("disabled").css("color","#000");   
+        }
+    );  
 }
 
 
@@ -2022,9 +1932,9 @@ $Write.group_write_post = function(){
 
     
     var classes = $("#group_write_class").DivToDict();
-	if('classes' in classes)  classes = classes['classes'];
-	else classes = [];
-	
+    if('classes' in classes)  classes = classes['classes'];
+    else classes = [];
+    
     if($title.length==0){ title_value='title'; } else{ title_value= $.trim($title.val()); };
     var $text = $('#write_textarea'), text_value=$.trim($text.val());
     var $button = $('button.self-intro-process');
