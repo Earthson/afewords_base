@@ -130,7 +130,7 @@ class ArticleUpdateHandler(BaseHandler):
             handler_json.as_new(article_obj.uid) 
             #new Article Created
         else:
-            article_obj = genereator(handler_paras['article_id'],
+            article_obj = generator(handler_paras['article_id'],
                         type_trans(handler_paras['article_type']))
             if article_obj is None:
                 handler_json.by_status(4)
