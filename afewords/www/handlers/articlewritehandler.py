@@ -3,18 +3,7 @@ from basehandler import *
 from pages.pages import WritePage
 
 from authority import *
-
-def type_trans(src):
-    from article.blog import Blog
-    from user import User
-    trans_doc = {
-        'blog' : Blog.__name__,
-        'user' : User.__name__,
-    }
-    try:
-        return trans_doc[src]
-    except KeyError:
-        return None
+from afutils.type_utils import type_trans
 
 class ArticleWritePara(BaseHandlerPara):
     paradoc = {
@@ -29,33 +18,6 @@ class ArticleWritePara(BaseHandlerPara):
         self['type'] = self.handler.get_esc_arg('type', 'blog')
         self['env_type'] = self.handler.get_esc_arg('env_type', None)
         self['env_id'] = self.handler.get_esc_arg('env_id', None)
-
-class ArticleWritePostPara(BaseHandlerPara):
-    paradoc = {
-        'do': 'preview',    # unicode, preview or post
-        'article_id': '-1', # unicode
-        'article_type': 'blog', # unicode
-        'title': '',    # unicode
-        'body': '',     # unicode
-        'summary': '',  # unicode
-        'keywords': [], # list  self.get_arguments("keywords")
-        'tags': [],     # list
-        'env_id': '-1', # unicode
-        'env_type': 'user', # unicode
-        'privilege': 'public', # unicode
-        
-        #@comment
-        'fahter_id': '-1',  # unicode
-        'father_type': 'blog',  # unicode
-        'ref_comments': [], # list
-    }
-
-    def read(self):
-        self.paradoc = [(ek, self.handler.get_esc_arg(ek, ev)) 
-                                    for ek, ev in self.paradoc]
-        self['keywords'] = self.handler.get_esc_args('keywords')
-        self['tags'] = self.handler.get_esc_args('tags')
-        self['ref_comments'] = self.handler.get_esc_args('ref_comments')
 
 
 class ArticleWriteHandler(BaseHandler):
@@ -103,3 +65,45 @@ class ArticleWriteHandler(BaseHandler):
         page.page_init()
         page.render()
         return
+
+
+class ArticleUpdatePara(BaseHandlerPara):
+    paradoc = {
+        'do': 'preview',    # unicode, preview or post
+        'article_id': '-1', # unicode
+        'article_type': 'blog', # unicode
+        'title': '',    # unicode
+        'body': '',     # unicode
+        'summary': '',  # unicode
+        'keywords': [], # list  self.get_arguments("keywords")
+        'tags': [],     # list
+        'env_id': '-1', # unicode
+        'env_type': 'user', # unicode
+        'privilege': 'public', # unicode
+        
+        #@comment
+        'fahter_id': '-1',  # unicode
+        'father_type': 'blog',  # unicode
+        'ref_comments': [], # list
+    }
+
+    def read(self):
+        self.paradoc = [(ek, self.handler.get_esc_arg(ek, ev)) 
+                                    for ek, ev in self.paradoc]
+        self['keywords'] = self.handler.get_esc_args('keywords[]')
+        self['tags'] = self.handler.get_esc_args('tags[]')
+        self['ref_comments'] = self.handler.get_esc_args('ref_comments[]')
+
+
+from pages.postjson import UpdateArticlejson
+
+class ArticleUpdateHandler(BaseHandler):
+
+    @with_login
+    def post(self)
+        from generator import generator
+        handler_paras = ArticleUpdatePara(self)
+        handler_json = UpdateArticleJson(self)
+        usr = self.current_user
+        env = generator(handler_paras['env_id'], 
+                        type_trans(handler_paras['env_type']))

@@ -43,6 +43,11 @@ class EmMongoDict(object):
             return data['_id']
         return cls.coll.insert(doc_or_docs=doc)
 
+    @staticmethod
+    def is_valid_id(oid):
+        from bson import ObjectId
+        return ObjectId.is_valid(oid)
+
     @auto_coll_do
     def is_exist(self):
         '''test whether spec is in db'''

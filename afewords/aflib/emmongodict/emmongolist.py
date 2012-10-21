@@ -20,6 +20,11 @@ class EmMongoList(object):
         self.path = path
         self.generator = None
 
+    @staticmethod
+    def is_valid_id(oid):
+        from bson import ObjectId
+        return ObjectId.is_valid(oid)
+
     @auto_coll_do
     def is_exist(self):
         '''test whether spec is in db'''

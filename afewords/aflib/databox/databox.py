@@ -84,6 +84,11 @@ class DataBox(object):
     def is_exist(cls, spec):
         return cls.datatype.find_one(spec) is not None
 
+    @staticmethod
+    def is_valid_id(oid):
+        from bson import ObjectId
+        return ObjectId.is_valid(oid)
+
     @classmethod
     def find_one(cls, *args, **kwargs):
         from generator import index_generator
