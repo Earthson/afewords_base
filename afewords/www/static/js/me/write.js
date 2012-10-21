@@ -1525,11 +1525,11 @@ $Write.post_write_all = function(obj){
             $process.html('<img src="/static/img/ajax.gif" />');
             $('button').attr('disabled', 'disabled').css('color', '#ccc');
         }, function(response){
-            if(response.kind != 0){
+            if(response.status != 0){
                 wrong(response.info);            
             }else{
                 if(response.isnew != 0) $menu.attr('article_id', response.article_id);
-                preview_url = '';
+                var preview_url = '';
                 switch(mes['article_type']){
                     case 'blog':
                         preview_url = '/blog/'+ response.article_id; 
