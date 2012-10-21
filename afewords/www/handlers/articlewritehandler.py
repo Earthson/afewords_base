@@ -106,15 +106,13 @@ class ArticleUpdateHandler(BaseHandler):
         handler_paras = ArticleUpdatePara(self)
         handler_json = UpdateArticleJson(self)
         usr = self.current_user
-        print handler_paras['env_id'], type_trans(handler_paras['env_type'])
-        env = generator(handler_paras['env_id'], 
-                        type_trans(handler_paras['env_type']))
+        env = generator(handler_paras['env_id'], handler_paras['env_type'])
         if not env:
             handler_json.by_status(14)
             handler_json.write()
             return #Invalid Env Arguments
         if not Article.is_valid_id(handler_paras['article_id']):
-            acls = cls_gen(trans_type(handler_paras['article_type']))
+            acls = cls_gen(type_trans(handler_paras['article_type']))
             if not acls:
                 handler_json.by_status(11)
                 handler_json.write()
@@ -150,8 +148,8 @@ class ArticleUpdateHandler(BaseHandler):
         article_obj.set_by_info(handler_paras.load_doc())   
         author = article_obj.author
         if article_obj.is_posted is False:
-            article_obj.tag = set(author.alltags) & \
-                        set(handler_paras['tags'])
+            article_obj.tag = list(set(author.alltags) & 
+                        set(handler_paras['tags']))
             if handler_paras['do'] == 'post':
                 auth_ans = article_obj.authority_verify(usr, env)
                 if not test_auth(auth_ans, A_POST):

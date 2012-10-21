@@ -279,11 +279,11 @@ class User(DataBox):
         new_tags = set(new_tags)
         if not new_tags.issubset(set(self.alltags)):
             all_tags = set(self.alltags) | new_tags
-            self.lib.tag_lib['alltags'] = all_tags
+            self.lib.tag_lib['alltags'] = list(all_tags)
 
     def remove_tags(self, rm_tags):
         rm_tags = set(rm_tags)
-        self.lib.tag_lib['alltags'] = set(self.alltags) - rm_tags
+        self.lib.tag_lib['alltags'] = list(set(self.alltags) - rm_tags)
 
     def with_new_tags(self, blogobj, new_tags):
         old_tags = set(blogobj.tag)

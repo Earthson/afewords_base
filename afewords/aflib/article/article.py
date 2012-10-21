@@ -288,7 +288,9 @@ class Article(DataBox):
         def getter(self):
             from user import User
             return User.by_id(self.data['author_id'])
-        return getter
+        def setter(self, value):
+            self.data['author_id'] = value._id
+        return getter, setter
 
     @db_property
     def father():
@@ -386,8 +388,8 @@ class Article(DataBox):
             'keywords' : 'keywords',
             'privilege' : 'privilege',
         }
-        self.set_propertys(**dict((ev, info_dic[ek]) 
-                for ek, ev in info_mapper))
+        tmp = [(ev, info_dic[ek]) for ek, ev in info_mapper.items()]
+        self.set_propertys(**dict(tmp))
 
     #property for page&json
     @db_property
