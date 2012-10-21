@@ -102,7 +102,7 @@ class EmMongoDict(object):
 
     @auto_coll_do
     def __getitem__(self, key):
-        toget = key
+        toget = str(key)
         if self.path is not None:
             toget = self.path+'.'+toget
         ret = self.coll.find_one(spec_or_id=self.spec, fields={toget:1})
@@ -112,27 +112,27 @@ class EmMongoDict(object):
     def get_propertys(self, keylist):
         togets = keylist
         if self.path is not None:
-            togets = dict((self.path+'.'+each, 1) for each in togets)
+            togets = dict((self.path+'.'+str(each), 1) for each in togets)
         else:
-            togets = dict((each, 1) for each in togets)
+            togets = dict((str(each), 1) for each in togets)
         ret = self.coll.find_one(spec_or_id=self.spec, fields={toget:1})
         return [get_dict_property(ret, each) for each in togets]
 
     @auto_coll_do
     def __setitem__(self, key, value):
         if self.path is not None:
-            key = self.path+'.'+key
+            key = self.path+'.'+str(key)
         return self.coll.update(spec=self.spec, document={'$set':{key:value}})
 
     @auto_coll_do
     def delete_propertys(self, keylist):
         if self.path is not None:
-            keylist = [self.path+'.'+each for each in keylist]
+            keylist = [self.path+'.'+str(each) for each in keylist]
         return coll_delete_keys(self.coll, keys=keylist, spec=self.spec)
 
     @auto_coll_do
     def __delitem__(self, key):
-        return self.delete_propertys(key)
+        return self.delete_propertys([str(key)])
 
     @auto_coll_do
     def inc(self, key, step=1):

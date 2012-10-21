@@ -232,12 +232,12 @@ class User(DataBox):
         self.lib.blog_list.push(blogid)
         blogobj.do_post()
         for each in blogobj.tag:
-            tmp = self.tag_lib[each]
+            tmp = self.lib.tag_lib[each]
             if tmp is None:
                 tmp = []
             tmp = set(tmp)
             tmp.add(blogobj._id)
-            self.tag_lib[each] = list(tmp)
+            self.lib.tag_lib[each] = list(tmp)
 
     def post_topic(self, topicobj, group):
         topicid = topicobj._id

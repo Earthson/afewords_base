@@ -156,7 +156,8 @@ class ArticleUpdateHandler(BaseHandler):
                     handler_json.by_status(17)
                     handler_json.write()
                     return #Post Permission Denied
-                author.post_article(article_obj) #try Post
+                author.post_article(article_obj.obj_info[1], 
+                                article_obj) #try Post
         else:
             author.with_new_tags(article_obj, handler_paras['tags'])
 
