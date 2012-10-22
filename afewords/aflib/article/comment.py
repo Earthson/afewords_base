@@ -22,6 +22,11 @@ class CommentDoc(ArticleDoc.__clsobj__):
 class Comment(Article):
     datatype = CommentDoc
 
+
+    def set_by_info(self, infodoc):
+        Article.set_by_info(self, infodoc)
+        self.ref_comments = infodoc['ref_comments']
+        
     @db_property
     def ref_comments():
         def getter(self):

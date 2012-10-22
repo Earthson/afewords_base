@@ -8,6 +8,7 @@ def type_trans(src):
     trans_doc = {
         'blog' : Blog.__name__,
         'user' : User.__name__,
+        'comment' : Comment.__name__,
     }
     try:
         return trans_doc[src]

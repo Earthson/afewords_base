@@ -108,10 +108,18 @@ class ArticleUpdateHandler(BaseHandler):
         handler_json = UpdateArticleJson(self)
         usr = self.current_user
         env = generator(handler_paras['env_id'], handler_paras['env_type'])
+        handler_paras['article_id'] = handler_paras['article_id']
         if not env:
             handler_json.by_status(14)
             handler_json.write()
             return #Invalid Env Arguments
+        if handler_paras['article_type'] == 'comment':
+            father = generator(handler_paras['father_id'], 
+                                type_trans(handler_paras['father_type'])
+            if father is None:
+                handler_json.by_status(18)
+                handler_json.write()
+                return #Invalid father
         if not Article.is_valid_id(handler_paras['article_id']):
             acls = cls_gen(type_trans(handler_paras['article_type']))
             if not acls:

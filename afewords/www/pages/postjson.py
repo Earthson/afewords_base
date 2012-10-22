@@ -115,6 +115,7 @@ class UpdateArticleJson(BaseJson):
         15: '环境不匹配',
         16: '您无权操作该文章',
         17: '您无权在此发布',
+        18: '无法评论该对象，可能不存在',
     }
 
     def by_status(self, status):

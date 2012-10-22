@@ -385,7 +385,7 @@ class Article(DataBox):
             return len(self.lib.comment_list)
         return getter
 
-    def set_by_info(self, info_dic):
+    def set_by_info(self, infodoc):
         info_mapper = {
             'title' : 'title',
             'body' : 'body',
@@ -393,7 +393,7 @@ class Article(DataBox):
             'keywords' : 'keywords',
             'privilege' : 'privilege',
         }
-        tmp = dict([(ev, info_dic[ek]) for ek, ev in info_mapper.items()])
+        tmp = dict([(ev, infodoc[ek]) for ek, ev in info_mapper.items()])
         tmp['update_time'] = datetime.now()
         self.set_propertys(**tmp)
 
