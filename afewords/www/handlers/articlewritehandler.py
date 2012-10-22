@@ -187,7 +187,7 @@ class ArticleSrcPara(BaseHandlerPara):
         'env_type': 'user', # unicode
         'father_id': '',    # unicode
         'father_type': 'blog',  # unicode
-        'src_type': 'equation', # unicode
+        'src_type': 'math', # unicode, math/code/table/ref
         'src_alias': '',   # unicode, alias
         'title': '',    # unicode
         'body': '', # unicode
@@ -199,6 +199,8 @@ class ArticleSrcPara(BaseHandlerPara):
         #@for equation
         'math_mode': 'display', # unicode
     }
+
+    src_types = ['math', 'code', 'table', 'ref']
 
     def read(self):
         self.paradoc = dict([(ek, self.handler.get_esc_arg(ek, ev)) 
