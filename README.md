@@ -8,3 +8,4 @@ Depends
 =======
 * PyMongo 2.3+
 * tornado 2.0+(?)
+* MongoKit 0.8.0+(?)
