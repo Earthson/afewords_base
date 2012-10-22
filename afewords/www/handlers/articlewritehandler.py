@@ -180,7 +180,7 @@ class ArticleUpdateHandler(BaseHandler):
 
 class ArticleSrcPara(BaseHandlerPara):
     paradoc = {
-        'do': 'new',    # unicode
+        'do': 'new',    # unicode, new/edit/remove
         'article_id': '',   # unicode
         'article_type': 'blog', # unicode
         'env_id': '',   # unicode
@@ -218,3 +218,15 @@ class ArticleSrcHandler(BaseHandler):
             handler_json.by_status(status)
             handler_json.write()
             return #Error
+        if handler_paras['do'] not in ['new', 'edit', 'remove']:
+            handler_json.by_status(8)
+            handler_json.write()
+            return #Unsupported Operation
+        if handler_paras['do'] == 'new':
+            scls = cls_gen(trans_type(handler_paras['src_type']))
+            if scls is None:
+                handler_json.by_status(5)
+                handler_json.write()
+                return #Unsupported Ref Type
+            src_obj = scls()
+            self.article_obj.add_ref(handler_paras['src_type'], src_obj)

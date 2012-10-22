@@ -260,6 +260,9 @@ class Article(DataBox):
     def add_ref(self, reftype, refobj):
         return self.lib.add_ref(reftype, refobj)
 
+    def remove_ref(self, retype, refalias):
+        return self.lib.remove_ref(reftype, refalias)
+
     def add_to_tag(self, tagname):
         tagall = set(self.tag)
         tagall.add(tagname)

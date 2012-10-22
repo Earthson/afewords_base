@@ -323,8 +323,8 @@ class User(DataBox):
 
     def post_comment(self, commentobj):
         father = generator(commentobj.father_id, commentobj.father_type)
-        self.drafts_lib.remove_obj(commentobj._id)
-        father.comment_list.push(commentobj._id)
+        self.lib.drafts_lib.remove_obj(commentobj._id)
+        father.lib.comment_list.push(commentobj._id)
         commentobj.do_post()
 
     def follow_user(self, usr):
