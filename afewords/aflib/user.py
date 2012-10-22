@@ -228,16 +228,11 @@ class User(DataBox):
     def post_blog(self, blogobj):
         #from article.blog import Blog
         blogid = blogobj._id
-        del self.lib.drafts_lib[blogid]
         self.lib.blog_list.push(blogid)
         blogobj.do_post()
+        del self.lib.drafts_lib[blogid]
         for each in blogobj.tag:
-            tmp = self.lib.tag_lib[each]
-            if tmp is None:
-                tmp = []
-            tmp = set(tmp)
-            tmp.add(blogobj._id)
-            self.lib.tag_lib[each] = list(tmp)
+            self.lib.tag_lib.sub_list(each).add_to_set(blogobj._id)
 
     def post_topic(self, topicobj, group):
         topicid = topicobj._id
@@ -307,7 +302,7 @@ class User(DataBox):
 
     def blogs_info_view_by(self, usr=None, tagname=None):
         from article.blog import Blog
-        if tagname:
+        if tagname and tagname != 'default':
             toview = self.blogs_from_tag(tagname)
             toview.sort()
         else:
@@ -445,7 +440,7 @@ class User(DataBox):
             ids = self.lib.blog_list.load_all()
             ans = Blog.by_ids(ids)
             self.lib.blog_list.set_all([each._id for each in ans])
-            return ans
+            return ans[::-1]
         return getter
 
     @db_property

@@ -93,6 +93,7 @@ class ArticleUpdatePara(BaseHandlerPara):
         self['keywords'] = self.handler.get_esc_args('keywords[]')
         self['tags'] = self.handler.get_esc_args('tags[]')
         self['ref_comments'] = self.handler.get_esc_args('ref_comments[]')
+        self['tags'].append('default')
 
 
 from pages.postjson import UpdateArticleJson
@@ -136,8 +137,6 @@ class ArticleUpdateHandler(BaseHandler):
                 handler_json.by_status(4)
                 handler_json.write()
                 return #Article Not Exist
-            print article_obj.env_obj_info
-            print env.obj_info
             if article_obj.env_obj_info != env.obj_info:
                 handler_json.by_status(15)
                 handler_json.write()
@@ -163,6 +162,7 @@ class ArticleUpdateHandler(BaseHandler):
         else:
             author.with_new_tags(article_obj, handler_paras['tags'])
 
+        handler_json['article_id'] = article_obj.uid
         handler_json.by_status(0)
         handler_json.write()
         return #Return
