@@ -388,7 +388,7 @@ jQuery.fn.extend({
             
             var $image_bar = $('<div></div>');
             $image_bar.attr("id","write_image_bar").css("display","none");
-            var i_html = '<div id="bar_nav"><div class="new" title="添加新图片" type="image">添加</div>'+
+            var i_html = '<div id="bar_nav"><div class="new" title="添加新图片" type="img">添加</div>'+
                         '<div class="div" title="图片库">图片库</div></div><div id="bar_body"><div class="i"></div></div>';
             $image_bar.html(i_html).appendTo($lib_bar);
             
@@ -406,7 +406,7 @@ jQuery.fn.extend({
             
             var $ref_bar =$('<div></div>');
             $ref_bar.attr("id","write_ref_bar").css("display","none");
-            var r_html = '<div id="bar_nav"><div class="new" title="添加新引用" type="reference">添加</div>'+
+            var r_html = '<div id="bar_nav"><div class="new" title="添加新引用" type="ref">添加</div>'+
                         '<div class="div" title="引用库">引用库</div></div><div id="bar_body"><div id="crtm"></div></div>';
             $ref_bar.html(r_html).appendTo($lib_bar);
             
@@ -425,7 +425,7 @@ jQuery.fn.extend({
     insert_src_to_textarea:function(obj){
         var obj_one = $(obj).parent().parent();
         var kind = obj_one.attr('type'), oid = obj_one.attr('oid');
-        var kind_dict = {"image": 42, "math": 45, "code": 44, "table": 41, "reference": 43};
+        var kind_dict = {"img": 42, "math": 45, "code": 44, "table": 41, "ref": 43};
         this.inserFormatString(kind_dic[kind], oid);
     },
     /******** create new src ***********************/
@@ -437,7 +437,7 @@ jQuery.fn.extend({
             env_type = $menu.attr("env_type"), env_id = $menu.attr("env_id");
         var hidden_paras = {"article_id": article_id, "article_type": article_type, "env_id": env_id, "env_type": env_type,
             "father_id": father_id, "father_type": father_type, "src_type": kind, "do": "new"};
-        var id_dict = {"image": "pic", "math": "math", "code":"code", "table":"table", "reference": "ref"};
+        var id_dict = {"img": "pic", "math": "math", "code":"code", "table":"table", "ref": "ref"};
         var $body = $('<div></div>');
         $body.attr({"id": "pop_insert_"+ id_dict[kind], "menu_id": mid});
         var wd = 200, hg = 200;
@@ -446,6 +446,7 @@ jQuery.fn.extend({
             paras_html += '<input type="hidden" name="'+ ii +'" value="'+ $.encode(hidden_paras[ii]) +'" />';        
         }
         switch(kind){
+           case 'img':
            case 'image':
             /** new image **/
             html =  
@@ -505,6 +506,7 @@ jQuery.fn.extend({
                     '</div>';
             wd = 450, hg = 390;
             break;
+        case 'ref':
         case 'reference':
             /** new reference **/
             html = paras_html +
@@ -533,8 +535,8 @@ jQuery.fn.extend({
             father_id = $menu.attr("father_id"), father_type = $menu.attr("father_type"),
             kind = obj_one.attr('type'), oid = obj_one.attr('oid');
         var hidden_paras = {"article_id": article_id, "article_type": article_type, "env_id": env_id, "env_type": env_type,
-            "father_id": father_id, "father_type": father_type, "src_type": kind, "do": "update", "oid": oid};
-        var id_dict = {"image": "pic", "math": "math", "code":"code", "table":"table", "reference": "ref"};
+            "father_id": father_id, "father_type": father_type, "src_type": kind, "do": "update", "oid": oid, "src_alias": oid};
+        var id_dict = {"img": "pic", "math": "math", "code":"code", "table":"table", "ref": "ref"};
         var $body = $('<div></div>');
         $body.attr({"id": "pop_insert_"+ id_dict[kind], "menu_id": mid});
         var html = '', paras_html = '';
@@ -544,6 +546,7 @@ jQuery.fn.extend({
         var wd = 200, hg = 200;
         switch(kind){
          case 'image':
+         case 'img':
             var image_name = $.encode($(obj).parent().siblings(".iright").attr("title"));
             html = '<p class="first">修改图片属性</p>'+
                     paras_html +
@@ -610,6 +613,7 @@ jQuery.fn.extend({
             wd = 450, hg = 390;
             break;
         case 'reference':
+        case 'ref':
             var ref_name = $.encode(obj_one.find("#otitle").val());
             var ref_source = $.encode(obj_one.find("#osource").val());
             var ref_body = $.encode(obj_one.find("#obody").val());
@@ -641,8 +645,9 @@ jQuery.fn.extend({
         if(result){
             var mes = {
                 "oid": oid,
-                "do": "delete",
+                "do": "remove",
                 "src_type": src_type,
+                "src_alias": oid,
                 "article_id": article_id, "article_type": article_type,
                 "father_id": father_id, "father_type": father_type,
                 "env_id": env_id, "env_type": env_type            
@@ -784,7 +789,7 @@ jQuery.fn.extend({
         var _html = '';
         for(var i in default_paras["image_list"]){
             tmp = default_paras["image_list"][i];
-            _html += '<div class="one" oid="'+ tmp.alias +'" type="image">'+
+            _html += '<div class="one" oid="'+ tmp.alias +'" type="img">'+
             '<div class="ileft"><span class="ititle">图' + tmp.alias + '</span></div>'+
             '<div class="icontrol">'+
                 '<span class="idel" title="删除此图片">删除</span>'+
@@ -852,7 +857,7 @@ jQuery.fn.extend({
         _html = '';
         for(var i in default_paras["reference_list"]){
             tmp = default_paras["reference_list"][i];
-            _html += '<div class="one" oid="'+ tmp.alias +'" type="reference">'+
+            _html += '<div class="one" oid="'+ tmp.alias +'" type="ref">'+
             '<div><span class="cname">引用'+ tmp.alias +'</span></div>'+
             '<div class="control"><span class="cdel" title="删除">删除</span>'+
             '<span class="cedit" title="修改">修改</span>'+
@@ -1020,7 +1025,6 @@ picture_upload_handler = function(type, info, alias, name ,isnew , article_id ){
     buttons.removeAttr("disabled").css("color","#000");
     if(type == 1){
         process.html(info).css("color","red");  
-            
     }else{
         var current_textarea = menu.siblings("#write_textarea");
         $Write.window_close_alert();
@@ -1029,7 +1033,7 @@ picture_upload_handler = function(type, info, alias, name ,isnew , article_id ){
         
         // insert a new image in the image lib
         var new_image = $('<div></div>');
-        new_image.attr({'class':'one','oid':alias,'type':'image'});
+        new_image.attr({'class':'one','oid':alias,'type':'img'});
         
         var new_image_html = //'<div class="one" oid ="'+ alias +'" type="i">'+
                                 '<div class="ileft">'+
@@ -1065,7 +1069,7 @@ $Write.new_lib_src_submit = function(obj)
 {
     //$(obj).attr("disabled","disabled").css("color","#ccc");
     var mes = {};
-    var warn = {'table':"表","math":'数学式',"code":"代码","reference":'引用'};
+    var warn = {'table':"表","math":'数学式',"code":"代码","reference":'引用',"ref":'引用'};
     mes = $("#pop-content").DivToDict();
     var process = $(obj).parent().next("span");
     var type = mes['src_type'];
@@ -1075,7 +1079,7 @@ $Write.new_lib_src_submit = function(obj)
         //$(obj).removeAttr("disabled").css("color","#000");
         return false;           
     }
-    if(type == 'reference'){
+    if(type == 'reference' || type == 'ref'){
         if(mes['source'] == ''){
             process.html("请填写" + warn[type] + "出处！").css("color","red");
             //$(obj).removeAttr("disabled").css("color","#000");
@@ -1100,9 +1104,10 @@ $Write.new_lib_src_submit = function(obj)
     var mid = $("#pop-content").children().attr("menu_id");
     var write_str = '#write_menu[menu_id="' + mid + '"]';
     var write_menu = $("body").find(write_str); 
-    var list = {'math':'#write_math_bar','reference':'#write_ref_bar',
+    var list = {'math':'#write_math_bar','reference':'#write_ref_bar', 'ref':'#write_ref_bar',
                'table':'#write_table_bar','code':'#write_code_bar'};
     mes['do'] = 'new';
+    mes['src_alias'] = mes['oid'];
     /** send the mes **/
     $.postJSON('/article-src-control', mes,
         function(){ 
@@ -1129,6 +1134,7 @@ $Write.new_lib_src_submit = function(obj)
                 //alert(type);
                 switch(type){
                     case 'reference':
+                    case 'ref':
                         obj_html =  '<div><span class="cname">引用'+ alias+'</span></div>'+
                             '<div class="control"><span class="cdel" title="删除">删除</span>'+
                             '<span class="cedit" title="修改">修改</span>'+
@@ -1210,7 +1216,7 @@ $Write.update_lib_src_submit = function( obj )
 {
     $(obj).attr("disabled","disabled").css("color","#ccc");
     var mes = {};
-    var warn = {'table':"表","math":'数学式',"code":"代码","reference":'引用','image':'图片'};
+    var warn = {'table':"表","math":'数学式',"code":"代码","reference":'引用','image':'图片',"ref":'引用','img':'图片'};
     mes = $("#pop-content").DivToDict();
     var process = $(obj).parent().next("span");
     var type = mes['src_type'];
@@ -1229,7 +1235,7 @@ $Write.update_lib_src_submit = function( obj )
         $(obj).removeAttr("disabled").css("color","#000");
         return false;           
     }
-    if(type == 'reference'){
+    if(type == 'reference' || type == 'ref'){
         if(mes['source'] == ''){
             process.html("请填写" + warn[type] + "出处！").css("color","red");
             $(obj).removeAttr("disabled").css("color","#000");
@@ -1237,7 +1243,7 @@ $Write.update_lib_src_submit = function( obj )
         }   
     }
     if(mes['body'] == ''){
-        if(type!='reference'){
+        if(type!='reference' && type != 'ref'){
             process.html("请填写" + warn[type] + "内容！").css("color","red");
             $(obj).removeAttr("disabled").css("color","#000");
             return false;
@@ -1253,7 +1259,7 @@ $Write.update_lib_src_submit = function( obj )
     var menu_id = $("#pop-content").children().attr("menu_id");
     var str = "#write_menu[menu_id="+menu_id+"]";
     var menu = $("body").find(str);
-    var list = {'image':'#write_image_bar','math':'#write_math_bar',
+    var list = {'image':'#write_image_bar','math':'#write_math_bar', 'img':'#write_image_bar', 'ref':'#write_ref_bar',
                'reference':'#write_ref_bar','code':'#write_code_bar','table':'#write_table_bar'};
     
     /** send the mes **/
@@ -1270,9 +1276,11 @@ $Write.update_lib_src_submit = function( obj )
                 //alert(obj_one.html());
                 switch(type){
                     case 'image':
+                    case 'img':
                         obj_one.find(".iright").attr("title",mes['title']);
                         break;
                     case 'reference':
+                    case 'ref':
                         obj_one.find("#otitle").val(mes['title']);
                         obj_one.find("#osource").val(mes['source']);
                         //alert(mes['body']);
@@ -1285,6 +1293,9 @@ $Write.update_lib_src_submit = function( obj )
                         obj_one.find("#obody").val(mes['body']);
                         break;
                     case 'table':
+                        obj_one.find("#otitle").val(mes['title']);
+                        obj_one.find("#obody").val(mes['body']);
+                        break;
                     case 'math':
                         obj_one.find("#otitle").val(mes['title']);
                         obj_one.find("#obody").val(mes['body']);
