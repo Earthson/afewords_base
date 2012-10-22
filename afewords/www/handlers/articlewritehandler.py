@@ -136,7 +136,9 @@ class ArticleUpdateHandler(BaseHandler):
                 handler_json.by_status(4)
                 handler_json.write()
                 return #Article Not Exist
-            if article_obj.env_info != env.obj_info:
+            print article_obj.env_obj_info
+            print env.obj_info
+            if article_obj.env_obj_info != env.obj_info:
                 handler_json.by_status(15)
                 handler_json.write()
                 return #Invalid Env
@@ -164,6 +166,7 @@ class ArticleUpdateHandler(BaseHandler):
         handler_json.by_status(0)
         handler_json.write()
         return #Return
+
 
 class ArticleSrcPara(BaseHandlerPara):
     paradoc = {
