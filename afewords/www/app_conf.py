@@ -6,8 +6,7 @@ from handlers.vertifycodehandler import VertifyCodeHandler
 from handlers.registerhandler import RegisterHandler
 from handlers.testhandler import TestHandler
 from handlers.checkhandler import CheckHandler
-from handlers.resethandler import ResetHandler
-from handlers.repeatresetmailhandler import RepeatResetMailHandler
+from handlers.resethandler import ResetHandler, RepeatResetMailHandler
 from handlers.bloghandler import BlogHandler
 from handlers.bloggerhandlers import BloggerBlogHandler
 from handlers.articlewritehandler import ArticleWriteHandler

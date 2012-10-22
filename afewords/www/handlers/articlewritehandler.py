@@ -90,10 +90,10 @@ class ArticleUpdatePara(BaseHandlerPara):
     def read(self):
         self.paradoc = dict([(ek, self.handler.get_esc_arg(ek, ev)) 
                                     for ek, ev in self.paradoc.items()])
-        self['keywords'] = self.handler.get_esc_args('keywords[]')
         self['tags'] = self.handler.get_esc_args('tags[]')
         self['ref_comments'] = self.handler.get_esc_args('ref_comments[]')
         self['tags'].append('default')
+        self['keywords'] = self['keywords'].replace(u'，', u',').split(u',')
 
 
 from pages.postjson import UpdateArticleJson
