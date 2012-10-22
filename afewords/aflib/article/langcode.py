@@ -15,7 +15,7 @@ class LangcodeDoc(AFDocument):
         'lang' : basestring,
         'code' : basestring,
     }
-    required_fields = ['code']
+    required_fields = [] #['code']
     default_values = {
         'name' : '',
         'alias' : '',

@@ -31,6 +31,12 @@ def cls_gen(objtype):
     #from article.bulletin import Bulletin
     #from article.topic import Topic
 
+    from article.picture import Picture
+    from article.langcode import Langcode
+    from article.equation import Equation
+    from article.tableform import Tableform
+    from article.reference import Reference
+
     from user import User
     #from group.basicgroup import BasicGroup
     #from catalog import Catalog
@@ -43,6 +49,11 @@ def cls_gen(objtype):
     #    Feedback.__name__:Feedback,
     #    Bulletin.__name__:Bulletin,
     #    Topic.__name__:Topic,
+        Picture.__name__:User,
+        Langcode.__name__:Langcode,
+        Equation.__name__:Equation,
+        Tableform.__name__:Tableform,
+        Reference.__name__:Reference,
         User.__name__:User,
     #    BasicGroup.__name__:BasicGroup,
     #    Catalog.__name__:Catalog,

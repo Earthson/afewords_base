@@ -13,7 +13,7 @@ class EquationDoc(AFDocument):
         'mode' : basestring,
         'equation' : basestring,
     }
-    required_fields = ['equation']
+    required_fields = [] #['equation']
     default_values = {
         'name' : '',
         'alias' : '',

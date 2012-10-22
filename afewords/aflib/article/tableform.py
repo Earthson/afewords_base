@@ -16,7 +16,7 @@ class TableformDoc(AFDocument):
         'alias' : basestring,
         'tableform' : basestring,
     }
-    required_fields = ['tableform']
+    required_fields = [] #['tableform']
     default_values = {
         'name' : '',
         'alias' : '',

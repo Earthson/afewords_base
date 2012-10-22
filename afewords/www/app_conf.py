@@ -11,6 +11,7 @@ from handlers.bloghandler import BlogHandler
 from handlers.bloggerhandlers import BloggerBlogHandler
 from handlers.articlewritehandler import ArticleWriteHandler
 from handlers.articlewritehandler import ArticleUpdateHandler
+from handlers.articlewritehandler import ArticleSrcHandler
 
 
 app_handlers = {
@@ -30,6 +31,7 @@ app_handlers = {
     (r'/blogger', BloggerBlogHandler),
     (r'/write', ArticleWriteHandler),
     (r'/update-article', ArticleUpdateHandler),
+    (r'/article-src-control', ArticleSrcHandler),
     #(r'/home(.*)', UserBlogLibHandler),
 }
 

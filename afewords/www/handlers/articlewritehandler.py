@@ -69,35 +69,6 @@ class ArticleWriteHandler(BaseHandler):
         return
 
 
-class ArticleUpdatePara(BaseHandlerPara):
-    paradoc = {
-        'do': 'preview',    # unicode, preview or post
-        'article_id': '-1', # unicode
-        'article_type': 'blog', # unicode
-        'title': '',    # unicode
-        'body': '',     # unicode
-        'summary': '',  # unicode
-        'keywords': [], # list  self.get_arguments("keywords")
-        'tags': [],     # list
-        'env_id': '-1', # unicode
-        'env_type': 'user', # unicode
-        'privilege': 'public', # unicode
-        
-        #@comment
-        'father_id': '-1',  # unicode
-        'father_type': 'blog',  # unicode
-        'ref_comments': [], # list
-    }
-
-    def read(self):
-        self.paradoc = dict([(ek, self.handler.get_esc_arg(ek, ev)) 
-                                    for ek, ev in self.paradoc.items()])
-        self['tags'] = self.handler.get_esc_args('tags[]')
-        self['ref_comments'] = self.handler.get_esc_args('ref_comments[]')
-        self['tags'].append('default')
-        self['keywords'] = self['keywords'].replace(u'，', u',').split(u',')
-        if self['privilege'] not in ['public', 'private']:
-            self['privilege'] = 'public'
 
 
 def article_env_init(handler, handler_paras, handler_json):
@@ -141,7 +112,38 @@ def article_env_init(handler, handler_paras, handler_json):
         handler.article_obj.father = father
     return 0
 
+
+class ArticleUpdatePara(BaseHandlerPara):
+    paradoc = {
+        'do': 'preview',    # unicode, preview or post
+        'article_id': '-1', # unicode
+        'article_type': 'blog', # unicode
+        'title': '',    # unicode
+        'body': '',     # unicode
+        'summary': '',  # unicode
+        'keywords': [], # list  self.get_arguments("keywords")
+        'tags': [],     # list
+        'env_id': '-1', # unicode
+        'env_type': 'user', # unicode
+        'privilege': 'public', # unicode
+        
+        #@comment
+        'father_id': '-1',  # unicode
+        'father_type': 'blog',  # unicode
+        'ref_comments': [], # list
+    }
+
+    def read(self):
+        self.paradoc = dict([(ek, self.handler.get_esc_arg(ek, ev)) 
+                                    for ek, ev in self.paradoc.items()])
+        self['tags'] = self.handler.get_esc_args('tags[]')
+        self['ref_comments'] = self.handler.get_esc_args('ref_comments[]')
+        self['tags'].append('default')
+        self['keywords'] = self['keywords'].replace(u'，', u',').split(u',')
+        if self['privilege'] not in ['public', 'private']:
+            self['privilege'] = 'public'
     
+
 from pages.postjson import UpdateArticleJson
 
 class ArticleUpdateHandler(BaseHandler):
@@ -230,7 +232,7 @@ class ArticleSrcHandler(BaseHandler):
             handler_json.write()
             return #Unsupported Ref Type
         if handler_paras['do'] == 'new':
-            scls = cls_gen(trans_type(handler_paras['src_type']))
+            scls = cls_gen(type_trans(handler_paras['src_type']))
             if scls is None:
                 handler_json.by_status(5)
                 handler_json.write()

@@ -141,6 +141,10 @@ class ArticleSrcJson(BaseJson):
         'src_alias': '',    # unicode
     }    
 
+    def by_status(self, status):
+        self['status'] = status
+        self['info'] = self.error_info[status]
+
     def as_new(self, article_obj):
         '''for article'''
         self['article_isnew'] = 1
