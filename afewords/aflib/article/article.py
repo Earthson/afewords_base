@@ -149,6 +149,17 @@ class ArticleLib(EmMongoDict):
                 return True
         return False
 
+    def get_ref(self, reftype, refalias):
+        libname = self.get_libname(reftype)
+        if not libname:
+            return None
+        inlib = getattr(self, libname)
+        objid = inlib[refalias]
+        if not objid:
+            return None
+        obj = inlib.generator(objid)
+        return obj
+
     def remove_ref(self, reftype, refalias):
         libname = self.get_libname(reftype)
         if not libname:
@@ -156,8 +167,11 @@ class ArticleLib(EmMongoDict):
         inlib = getattr(self, libname)
         objid = inlib[refalias]
         if objid:
-            obj = inlib.generator(objid)
-            obj.remove()
+            try:
+                obj = inlib.generator(objid)
+                obj.remove()
+            except:
+                pass
         del inlib[refalias]
 
 @with_conn

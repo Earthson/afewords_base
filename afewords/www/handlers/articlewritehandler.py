@@ -216,6 +216,7 @@ class ArticleSrcHandler(BaseHandler):
         handler_json = ArticleSrcJson(self)
         usr = self.current_user
         status = article_env_init(self, handler_paras, handler_json)
+        handler_json['src_alias'] = handler_paras['src_alias']
         if status != 0:
             handler_json.by_status(status)
             handler_json.write()
@@ -224,6 +225,10 @@ class ArticleSrcHandler(BaseHandler):
             handler_json.by_status(8)
             handler_json.write()
             return #Unsupported Operation
+        if handler_paras['src_type'] not in handler_paras.src_types:
+            handler_json.by_status(5)
+            handler_json.write()
+            return #Unsupported Ref Type
         if handler_paras['do'] == 'new':
             scls = cls_gen(trans_type(handler_paras['src_type']))
             if scls is None:
@@ -232,3 +237,28 @@ class ArticleSrcHandler(BaseHandler):
                 return #Unsupported Ref Type
             src_obj = scls()
             self.article_obj.add_ref(handler_paras['src_type'], src_obj)
+            handler_json.as_new_src(src_obj)
+            src_obj.set_by_info(handler_paras.load_doc())
+            handler_json.by_status(0)
+            handler_json.write()
+            return #0
+        elif handler_paras['do'] == 'remove':
+            self.article_obj.remove_ref(handler_paras['src_type'],
+                                handler_paras['src_alias'])
+            handler_json.by_status(0)
+            handler_json.write()
+            return #0
+        elif handler_paras['do'] == 'edit':
+            src_obj = self.article_obj.get_ref(handler_paras['src_type'],
+                                handler_paras['src_alias']) 
+            if src_obj is None:
+                handler_json.by_status(18)
+                handler_json.write()
+                return #Src Not Exist
+            src_obj.set_by_info(handler_paras.load_doc())
+            handler_json.by_status(0)
+            handler_json.write()
+            return #0
+        handler_json.by_status(8)
+        handler.write()
+        return #Unexpected Operation
