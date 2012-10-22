@@ -36,7 +36,8 @@ class BaseHandlerPara(object):
         self.read()
 
     def read(self):
-        pass
+        self.paradoc = dict([(ek, self.handler.get_esc_arg(ek, ev))
+                                    for ek, ev in self.paradoc.items()])
 
     def verify(self):
         return 0

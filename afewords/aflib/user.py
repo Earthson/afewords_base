@@ -216,6 +216,9 @@ class User(DataBox):
             ret = set_auth(ret, A_READ | A_WRITE | A_DEL | A_POST)
         return ret
 
+    def add_to_drafts(self, obj):
+        self.lib.drafts_lib[obj.uid] = obj.__class__.__name__
+
     def post_article(self, article_type, article_obj):
         from article.blog import Blog
         from article.comment import Comment
