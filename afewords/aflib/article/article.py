@@ -237,6 +237,10 @@ class Article(DataBox):
     def __lt__(self, other):
         return self.release_time > other.release_time
 
+    @property
+    def translator(self):
+        return ArticleTranslator(self.refinder)
+
     @with_user_status
     def authority_verify(self, usr, env=None, **kwargs):
         ret = 0
@@ -255,6 +259,9 @@ class Article(DataBox):
 
     def add_ref(self, reftype, refobj):
         return self.lib.add_ref(reftype, refobj)
+
+    def remove_ref(self, retype, refalias):
+        return self.lib.remove_ref(reftype, refalias)
 
     def add_to_tag(self, tagname):
         tagall = set(self.tag)
@@ -317,7 +324,8 @@ class Article(DataBox):
         return getter, setter
 
     @db_property
-    def env_info():
+    def env_obj_info():
+        '''return (env_id, env_type)'''
         def getter(self):
             return (self.data['env_id'], self.data['env_type'])
         return getter
@@ -380,7 +388,7 @@ class Article(DataBox):
             return len(self.lib.comment_list)
         return getter
 
-    def set_by_info(self, info_dic):
+    def set_by_info(self, infodoc):
         info_mapper = {
             'title' : 'title',
             'body' : 'body',
@@ -388,8 +396,9 @@ class Article(DataBox):
             'keywords' : 'keywords',
             'privilege' : 'privilege',
         }
-        tmp = [(ev, info_dic[ek]) for ek, ev in info_mapper.items()]
-        self.set_propertys(**dict(tmp))
+        tmp = dict([(ev, infodoc[ek]) for ek, ev in info_mapper.items()])
+        tmp['update_time'] = datetime.now()
+        self.set_propertys(**tmp)
 
     #property for page&json
     @db_property

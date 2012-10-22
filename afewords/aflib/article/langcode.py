@@ -34,6 +34,13 @@ class Langcode(DataBox):
         'code' : True,
     }
 
+    def set_by_info(self, infodoc):
+        ans = dict()
+        ans['name'] = infodoc['title']
+        ans['lang'] = infodoc['code_type']
+        ans['code'] = infodoc['body']
+        self.set_propertys(**ans)
+
     @db_property
     def view_body():
         def getter(self):

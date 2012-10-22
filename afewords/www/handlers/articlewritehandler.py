@@ -5,6 +5,9 @@ from pages.pages import WritePage
 from authority import *
 from afutils.type_utils import type_trans
 
+from generator import generator, cls_gen
+from article.article import Article
+
 class ArticleWritePara(BaseHandlerPara):
     paradoc = {
         'id': None,
@@ -24,7 +27,6 @@ class ArticleWriteHandler(BaseHandler):
     
     @with_login
     def get(self):
-        from generator import generator
         pageparas = ArticleWritePara(self)
         page = WritePage(self)
         usr = self.current_user
@@ -82,7 +84,7 @@ class ArticleUpdatePara(BaseHandlerPara):
         'privilege': 'public', # unicode
         
         #@comment
-        'fahter_id': '-1',  # unicode
+        'father_id': '-1',  # unicode
         'father_type': 'blog',  # unicode
         'ref_comments': [], # list
     }
@@ -90,90 +92,102 @@ class ArticleUpdatePara(BaseHandlerPara):
     def read(self):
         self.paradoc = dict([(ek, self.handler.get_esc_arg(ek, ev)) 
                                     for ek, ev in self.paradoc.items()])
-        self['keywords'] = self.handler.get_esc_args('keywords[]')
         self['tags'] = self.handler.get_esc_args('tags[]')
         self['ref_comments'] = self.handler.get_esc_args('ref_comments[]')
+        self['tags'].append('default')
+        self['keywords'] = self['keywords'].replace(u'，', u',').split(u',')
+        if self['privilege'] not in ['public', 'private']:
+            self['privilege'] = 'public'
 
 
+def article_env_init(handler, handler_paras, handler_json):
+    handler_json['article_id'] = handler_paras['article_id']
+    usr = handler.current_user
+    if usr is None:
+        return 9#Not Login
+    env = generator(handler_paras['env_id'], handler_paras['env_type'])
+    handler.env = env
+    if not env:
+        return 14#Invalid Env Arguments
+    father = generator(handler_paras['father_id'], 
+                type_trans(handler_paras['father_type']))
+    if handler_paras['article_type'] == 'comment':
+        if father is None:
+            return 18#Invalid father
+    if not Article.is_valid_id(handler_paras['article_id']):
+        acls = cls_gen(type_trans(handler_paras['article_type']))
+        if not acls:
+            return 11#Invalid Article Type
+        if not test_auth(env.authority_verify(usr), A_POST):
+            return 12#Permission Denied
+        handler.article_obj = acls()
+        handler.article_obj.set_propertys(env=env, author=usr)
+        usr.add_to_drafts(handler.article_obj)
+        if handler.article_obj is None:
+            return 13#Article Create Failed
+        handler_json.as_new(handler.article_obj.uid) 
+        #new Article Created
+    else:
+        handler.article_obj = generator(handler_paras['article_id'],
+                    type_trans(handler_paras['article_type']))
+        if handler.article_obj is None:
+            return 4#Article Not Exist
+        if handler.article_obj.env_obj_info != env.obj_info:
+            return 15#Invalid Env
+        if not test_auth(handler.article_obj.authority_verify(usr, env),
+                        A_WRITE):
+            return 16#WRITE Permission Denied
+    if father:
+        handler.article_obj.father = father
+    return 0
+
+    
 from pages.postjson import UpdateArticleJson
 
 class ArticleUpdateHandler(BaseHandler):
 
-    @with_login
     def post(self):
-        from generator import generator, cls_gen
-        from article.article import Article
         handler_paras = ArticleUpdatePara(self)
         handler_json = UpdateArticleJson(self)
         usr = self.current_user
-        env = generator(handler_paras['env_id'], handler_paras['env_type'])
-        if not env:
-            handler_json.by_status(14)
+        status = article_env_init(self, handler_paras, handler_json)
+        if status != 0:
+            handler_json.by_status(status)
             handler_json.write()
-            return #Invalid Env Arguments
-        if not Article.is_valid_id(handler_paras['article_id']):
-            acls = cls_gen(type_trans(handler_paras['article_type']))
-            if not acls:
-                handler_json.by_status(11)
-                handler_json.write()
-                return #Invalid Article Type
-            if not test_auth(env.authority_verify(usr), A_POST):
-                handler_json.by_status(12)
-                handler_json.write()
-                return #Permission Denied
-            article_obj = acls()
-            article_obj.set_propertys(env=env, author=usr)
-            if article_obj is None:
-                handler_json.by_status(13)
-                handler_json.write()
-                return #Article Create Failed
-            handler_json.as_new(article_obj.uid) 
-            #new Article Created
-        else:
-            article_obj = genereator(handler_paras['article_id'],
-                        type_trans(handler_paras['article_type']))
-            if article_obj is None:
-                handler_json.by_status(4)
-                handler_json.write()
-                return #Article Not Exist
-            if article_obj.env_info != env.obj_info:
-                handler_json.by_status(15)
-                handler_json.write()
-                return #Invalid Env
-            if not test_auth(article_obj.authority_verify(usr, env),
-                            A_WRITE):
-                handler_json.by_status(16)
-                handler_json.write()
-                return #WRITE Permission Denied
-        article_obj.set_by_info(handler_paras.load_doc())   
-        author = article_obj.author
-        if article_obj.is_posted is False:
-            article_obj.tag = list(set(author.alltags) & 
+            return #Error
+        #try article update
+        self.article_obj.set_by_info(handler_paras.load_doc())    
+        author = self.article_obj.author
+        if self.article_obj.is_posted is False:
+            self.article_obj.tag = list(set(author.alltags) & 
                         set(handler_paras['tags']))
             if handler_paras['do'] == 'post':
-                auth_ans = article_obj.authority_verify(usr, env)
+                auth_ans = self.article_obj.authority_verify(usr, self.env)
                 if not test_auth(auth_ans, A_POST):
                     handler_json.by_status(17)
                     handler_json.write()
                     return #Post Permission Denied
-                author.post_article(article_obj) #try Post
+                author.post_article(self.article_obj.obj_info[1], 
+                                self.article_obj) #try Post
         else:
-            author.with_new_tags(article_obj, handler_paras['tags'])
+            author.with_new_tags(self.article_obj, handler_paras['tags'])
 
+        handler_json['article_id'] = self.article_obj.uid
         handler_json.by_status(0)
         handler_json.write()
         return #Return
 
+
 class ArticleSrcPara(BaseHandlerPara):
     paradoc = {
-        'do': 'new',    # unicode
+        'do': 'new',    # unicode, new/edit/remove
         'article_id': '',   # unicode
         'article_type': 'blog', # unicode
         'env_id': '',   # unicode
         'env_type': 'user', # unicode
         'father_id': '',    # unicode
         'father_type': 'blog',  # unicode
-        'src_type': 'equation', # unicode
+        'src_type': 'math', # unicode, math/code/table/ref
         'src_alias': '',   # unicode, alias
         'title': '',    # unicode
         'body': '', # unicode
@@ -185,3 +199,36 @@ class ArticleSrcPara(BaseHandlerPara):
         #@for equation
         'math_mode': 'display', # unicode
     }
+
+    src_types = ['math', 'code', 'table', 'ref']
+
+    def read(self):
+        self.paradoc = dict([(ek, self.handler.get_esc_arg(ek, ev)) 
+                                    for ek, ev in self.paradoc.items()])
+
+
+from pages.postjson import ArticleSrcJson
+
+class ArticleSrcHandler(BaseHandler):
+    '''for article lib: picture langcode math and etc.'''
+    def post(self):
+        handler_paras = ArticleSrcPara(self)
+        handler_json = ArticleSrcJson(self)
+        usr = self.current_user
+        status = article_env_init(self, handler_paras, handler_json)
+        if status != 0:
+            handler_json.by_status(status)
+            handler_json.write()
+            return #Error
+        if handler_paras['do'] not in ['new', 'edit', 'remove']:
+            handler_json.by_status(8)
+            handler_json.write()
+            return #Unsupported Operation
+        if handler_paras['do'] == 'new':
+            scls = cls_gen(trans_type(handler_paras['src_type']))
+            if scls is None:
+                handler_json.by_status(5)
+                handler_json.write()
+                return #Unsupported Ref Type
+            src_obj = scls()
+            self.article_obj.add_ref(handler_paras['src_type'], src_obj)

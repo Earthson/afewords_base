@@ -43,6 +43,13 @@ class Reference(DataBox):
 
     translator = reference_translator
 
+    def set_by_info(self, infodoc):
+        ans = dict()
+        ans['name'] = ans['title']
+        ans['body'] = ans['body']
+        ans['url'] = ans['source']
+        self.set_propertys(**ans)
+
     @db_property
     def body():
         def getter(self):

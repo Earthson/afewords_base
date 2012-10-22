@@ -216,6 +216,9 @@ class User(DataBox):
             ret = set_auth(ret, A_READ | A_WRITE | A_DEL | A_POST)
         return ret
 
+    def add_to_drafts(self, obj):
+        self.lib.drafts_lib[obj.uid] = obj.__class__.__name__
+
     def post_article(self, article_type, article_obj):
         from article.blog import Blog
         from article.comment import Comment
@@ -228,16 +231,11 @@ class User(DataBox):
     def post_blog(self, blogobj):
         #from article.blog import Blog
         blogid = blogobj._id
-        del self.lib.drafts_lib[blogid]
         self.lib.blog_list.push(blogid)
         blogobj.do_post()
+        del self.lib.drafts_lib[blogid]
         for each in blogobj.tag:
-            tmp = self.tag_lib[each]
-            if tmp is None:
-                tmp = []
-            tmp = set(tmp)
-            tmp.add(blogobj._id)
-            self.tag_lib[each] = list(tmp)
+            self.lib.tag_lib.sub_list(each).add_to_set(blogobj._id)
 
     def post_topic(self, topicobj, group):
         topicid = topicobj._id
@@ -307,7 +305,7 @@ class User(DataBox):
 
     def blogs_info_view_by(self, usr=None, tagname=None):
         from article.blog import Blog
-        if tagname:
+        if tagname and tagname != 'default':
             toview = self.blogs_from_tag(tagname)
             toview.sort()
         else:
@@ -325,8 +323,8 @@ class User(DataBox):
 
     def post_comment(self, commentobj):
         father = generator(commentobj.father_id, commentobj.father_type)
-        self.drafts_lib.remove_obj(commentobj._id)
-        father.comment_list.push(commentobj._id)
+        self.lib.drafts_lib.remove_obj(commentobj._id)
+        father.lib.comment_list.push(commentobj._id)
         commentobj.do_post()
 
     def follow_user(self, usr):
@@ -445,7 +443,7 @@ class User(DataBox):
             ids = self.lib.blog_list.load_all()
             ans = Blog.by_ids(ids)
             self.lib.blog_list.set_all([each._id for each in ans])
-            return ans
+            return ans[::-1]
         return getter
 
     @db_property

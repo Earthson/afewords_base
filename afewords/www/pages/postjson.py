@@ -115,6 +115,7 @@ class UpdateArticleJson(BaseJson):
         15: '环境不匹配',
         16: '您无权操作该文章',
         17: '您无权在此发布',
+        18: '无法评论该对象，可能不存在',
     }
 
     def by_status(self, status):
@@ -139,21 +140,35 @@ class ArticleSrcJson(BaseJson):
         'src_isnew': 0, # int, 0 for False, 1 for True
         'src_alias': '',    # unicode
     }    
+
+    def as_new(self, article_obj):
+        '''for article'''
+        self['article_isnew'] = 1
+        self['article_id'] = article_obj.uid
+
+    def as_new_src(self, src_obj):
+        self['src_isnew'] = 1
+        self['src_alias'] = src_obj.alias
+
     error_info = {
         0: '',
-        1: '请登陆！',
-        2: '不支持当前资源类型！',
-        3: '不支持当前文章类型！',
-        4: '名称不能为空！',
-        5: '内容不能为空！',
-        6: '请填写链接地址或者引用内容！',
-        7: '请选择代码种类！',
-        8: '小组不存在！',
-        9: '文章不存在！',
-        10: '知识谱不存在！',
-        11: '无权操作他人文章！',
-        12: '无权操作！',
-
+        1: '请填写标题！',
+        2: '请填写正文！',
+        3: '无权操作他人的文章',
+        4: '文章不存在！',
+        5: '不支持的资源类型',
+        6: '你不是该小组成员！',
+        7: '你不是小组管理员，无权操作！',
+        8: '不支持当前操作！', 
+        9: '请先登陆！',
+        10: '非法参数!',
+        11: '不支持的文章类型',
+        12: '您无权在此创建文章',
+        13: '文章创建失败',
+        14: '非法环境参数',
+        15: '环境不匹配',
+        16: '您无权操作该文章',
+        17: '您无权在此发布',
     }
 
 

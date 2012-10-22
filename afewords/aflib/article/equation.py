@@ -17,7 +17,7 @@ class EquationDoc(AFDocument):
     default_values = {
         'name' : '',
         'alias' : '',
-        'mode' : 'display',
+        'mode' : 'display', # inline/display
     }
 
 
@@ -31,6 +31,16 @@ class Equation(DataBox):
         'mode' : True,
         'equation' : True,
     }
+
+
+    def set_by_info(self, infodoc):
+        ans = dict()
+        ans['name'] = infodoc['title']
+        ans['mode'] = infodoc['math_mode']
+        if ans['mode'] not in ['display', 'inline']:
+            ans['mode'] = 'display'
+        ans['equation'] = infodoc['body']
+        self.set_propertys(**ans)
 
     @db_property
     def view_body():
