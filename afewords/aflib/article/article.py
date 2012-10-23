@@ -293,6 +293,19 @@ class Article(DataBox):
     def do_post(self):
         self.set_propertys(is_posted=True, release_time=datetime.now())
 
+    def comments_info_view_by(self, usr=None):
+        if usr:
+            return [usr.as_viewer_to_article_info(each.comment_info)
+                        for each in self.comments]
+        return [each.comment_info for each in self.comments]     
+
+    @db_property
+    def comments():
+        def getter(self):
+            from comment import Comment
+            return Comment.by_ids(self.lib.comment_list.load_all())
+        return getter
+    
     @db_property
     def title():
         def getter(self):
