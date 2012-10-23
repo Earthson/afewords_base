@@ -232,7 +232,7 @@ class ArticleSrcHandler(BaseHandler):
         usr = self.current_user
         status = article_env_init(self, handler_paras, handler_json)
         handler_json['src_alias'] = handler_paras['src_alias']
-        if status == 0 && handler_paras.error_code > 0:
+        if status == 0 and handler_paras.error_code > 0:
             #data read error
             status = handler_paras.error_code
         if status != 0:
@@ -248,7 +248,9 @@ class ArticleSrcHandler(BaseHandler):
             handler_json.write()
             return #Unsupported Ref Type
         if handler_paras['do'] == 'new':
+            print type_trans(handler_paras['src_type'])
             scls = cls_gen(type_trans(handler_paras['src_type']))
+            print '###', scls.__name__
             if scls is None:
                 handler_json.by_status(5)
                 handler_json.write()
@@ -257,6 +259,8 @@ class ArticleSrcHandler(BaseHandler):
             self.article_obj.add_ref(handler_paras['src_type'], src_obj)
             handler_json.as_new_src(src_obj)
             src_obj.set_by_info(handler_paras.load_doc())
+            if handler_paras['src_type'] == 'img':
+                handler_json['img_url'] = src_obj.thumb_url
             handler_json.by_status(0)
             handler_json.write()
             return #0
@@ -274,6 +278,8 @@ class ArticleSrcHandler(BaseHandler):
                 handler_json.write()
                 return #Src Not Exist
             src_obj.set_by_info(handler_paras.load_doc())
+            if handler_paras['src_type'] == 'img':
+                handler_json['img_url'] = src_obj.thumb_url
             handler_json.by_status(0)
             handler_json.write()
             return #0

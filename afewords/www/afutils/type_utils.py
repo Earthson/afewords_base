@@ -17,7 +17,7 @@ def type_trans(src):
         'math' : Equation.__name__,
         'code' : Langcode.__name__,
         'ref' : Reference.__name__,
-        'pic' : Picture.__name__,
+        'img' : Picture.__name__,
         'table' : Tableform.__name__,
     }
     try:

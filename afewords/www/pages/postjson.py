@@ -139,6 +139,7 @@ class ArticleSrcJson(BaseJson):
         'article_id': '',   # unicode
         'src_isnew': 0, # int, 0 for False, 1 for True
         'src_alias': '',    # unicode
+        'img_url' : '', #for image upload
     }    
 
     def by_status(self, status):

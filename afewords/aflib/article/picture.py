@@ -39,11 +39,36 @@ class Picture(DataBox):
     pic_path = 'static/picture/normal/'
     thumb_path = 'static/picture/small/'
 
+    def set_by_info(self, infodoc):
+        ans = dict()
+        ans['name'] = infodoc['title']
+        if infodoc['picture'] is not None:
+            ans['thumb_file'] = infodoc['picture']
+            ans['pic_file'] = infodoc['picture']
+
     def file_name_gen(self, pic_format, is_thumb=False):
         if is_thumb:
             return self.thumb_path+'afw_thumb_'+ \
                     str(self.data['_id'])+pic_format.lower()
         return self.pic_path+'afw_pic'+str(self.data['_id'])+pic_format.lower()
+
+    def remove(self):
+        import os
+        os.remove(self.file_os_path)
+        os.remove(self.thumb_os_path)
+        DataBox.remove(self)
+
+    @db_property
+    def thumb_os_path():
+        def getter(self):
+            return self.thumb_path + self.data['thumb_name']
+        return getter
+
+    @db_property
+    def file_os_path():
+        def getter(self):
+            return self.pic_path + self.data['file_name']
+        return getter
 
     @db_property
     def thumb_file():
