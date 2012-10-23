@@ -646,7 +646,7 @@ jQuery.fn.extend({
             var mes = {
                 "oid": oid,
                 "do": "remove",
-                "src_type": src_type,
+                "src_type": kind,
                 "src_alias": oid,
                 "article_id": article_id, "article_type": article_type,
                 "father_id": father_id, "father_type": father_type,
