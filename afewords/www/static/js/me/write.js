@@ -655,7 +655,7 @@ jQuery.fn.extend({
         $.postJSON('/article-src-control',mes,
             function(){},
             function(response){
-                if(response.kind == 0){
+                if(response.status == 0){
                     obj_one.remove();
                 }else{
                     alert(response.info);   
@@ -1117,7 +1117,7 @@ $Write.new_lib_src_submit = function(obj)
         function(response){
             //alert(response.kind);
             mes = $.encode(mes);
-            if(response.kind==0){
+            if(response.status==0){
                 // right    
                 var current_textarea = write_menu.siblings("#write_textarea");  
                 $Write.window_close_alert();
@@ -1268,7 +1268,7 @@ $Write.update_lib_src_submit = function( obj )
         function(response){
             /** right response **/  
              //mes = $.encode(mes);      
-             if(response.kind == 0){
+             if(response.status == 0){
                 process.html('修改成功！').css("color","blue");
                 var obj_bar = menu.find(list[type]);
                 var obj_one_str = ".one[oid="+mes['oid']+"]";
@@ -1505,7 +1505,7 @@ $Write.post_write = function(obj){
 }
 
 $Write.post_write_all = function(obj){
-    /*********** 发布博客*******************/
+    /*********** post article *******************/
     var $obj = $(obj), $menu = $('#write_menu'), $text=$('#write_textarea'), 
         $process = $("div.w-submit-result");
     var mes = {};
