@@ -45,9 +45,9 @@ class Reference(DataBox):
 
     def set_by_info(self, infodoc):
         ans = dict()
-        ans['name'] = ans['title']
-        ans['body'] = ans['body']
-        ans['url'] = ans['source']
+        ans['name'] = infodoc['title']
+        ans['body'] = infodoc['body']
+        ans['url'] = infodoc['source']
         self.set_propertys(**ans)
 
     @db_property
