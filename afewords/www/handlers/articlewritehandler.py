@@ -180,6 +180,7 @@ class ArticleUpdateHandler(BaseHandler):
         handler_json.write()
         return #Return
 
+from afutils.img_utils import upload_img
 
 class ArticleSrcPara(BaseHandlerPara):
     paradoc = {
@@ -190,7 +191,7 @@ class ArticleSrcPara(BaseHandlerPara):
         'env_type': 'user', # unicode
         'father_id': '',    # unicode
         'father_type': 'blog',  # unicode
-        'src_type': 'math', # unicode, math/code/table/ref
+        'src_type': 'math', # unicode, math/code/table/ref/img
         'src_alias': '',   # unicode, alias
         'title': '',    # unicode
         'body': '', # unicode
@@ -201,14 +202,25 @@ class ArticleSrcPara(BaseHandlerPara):
         'code_type': 'python',  # unicode
         #@for equation
         'math_mode': 'display', # unicode
+        #@for picture
+        'picture' : None, #handler.requeset.files['picture']
     }
 
-    src_types = ['math', 'code', 'table', 'ref']
+    src_types = ['img', 'math', 'code', 'table', 'ref']
 
     def read(self):
         self.paradoc = dict([(ek, self.handler.get_esc_arg(ek, ev)) 
                                     for ek, ev in self.paradoc.items()])
-
+        try:
+            self.paradoc['picture'] = self.handler.request.files['picture'][0]
+        except KeyError, e:
+            self.paradoc['picture'] = None
+        self.error_code = 0
+        if self.paradoc:
+            status, info = upload_img(self.paradoc['picture'])
+            if status == 0:
+                self.paradoc['picture'] = info
+            self.error_code = status
 
 from pages.postjson import ArticleSrcJson
 
@@ -220,6 +232,9 @@ class ArticleSrcHandler(BaseHandler):
         usr = self.current_user
         status = article_env_init(self, handler_paras, handler_json)
         handler_json['src_alias'] = handler_paras['src_alias']
+        if status == 0 && handler_paras.error_code > 0:
+            #data read error
+            status = handler_paras.error_code
         if status != 0:
             handler_json.by_status(status)
             handler_json.write()
