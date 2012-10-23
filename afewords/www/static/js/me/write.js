@@ -457,7 +457,7 @@ jQuery.fn.extend({
             paras_html + 
             '<p><input class="i_file" type="file" name="picture" onclick=clear_process(this,"i"); /></p>'+
             '<p>标题<input class="i_title" name="title" autocomplete="off" type="text" onfocus=clear_process(this,"i"); /></p>'+
-            '<p><span class="i_button"><button type="button" onclick="picture_check(this);">上传图片</button>'+
+            '<p><span class="i_button"><button type="submit">上传图片</button>'+
             '<button type="submit" style="display:none">提交</button></span><span class="i_process">&nbsp;</span></p></form>'+
             '<iframe name="up_picture_iframe" id="up_picture_iframe" style="display:none"></iframe>';
             wd = 360, hg = 240;
@@ -528,24 +528,80 @@ jQuery.fn.extend({
             var $image_form = $body.find('form');
             var $process = $image_form.find('.i_process');
             var $button  = $image_form.find('button');
-            
+            alert($button.html());
+            alert($process.html())
+            var image_title = $image_form.find(".i_title").val() || '';
+            var image_path = $image_form.find(".i_file").val() || '';
             $image_form.submit( function(){
                             
-                $(this).ajaxSubmit({
+              $(this).ajaxSubmit({
                 dataType: 'json',
-                beforeSend: function(){ $process.html('图片上传中！');  },
+                beforeSend: function(){ 
+                    var img_reg = /.*\.(jpg|png|jpeg|gif)$/ig;
+    
+                    if(image_path.match(img_reg)){
+                        $process.html('图片格式为jpg,png,jpeg,gif！').css("color","red");
+                        return false;
+                    }
+                    if($.trim(image_title)==''){
+                        $process.html('请设置标题！').css("color","red");
+                        return false;   
+                    }
+                    $button.attr("disabled","disabled").css("color","#ccc");
+                    $process.html('<img src="/static/img/ajax.gif" title="执行中" />');
+                    //$process.html('图片上传中...');  
+                },
                 complete: function(xhr){
                     var response = eval('(' + xhr.responseText + ')');
                     if(response.status = 0){
-                        $process.html("图片上传成功！").css('color', 'blue');                    
+                        $process.html("图片上传成功！").css('color', 'blue');
+                        if(response.article_isnew == 1){
+                            $menu.attr("article_id", response.article_id);                        
+                        }
+                        /****** append to the image lib *****/
+                        var current_textarea = $menu.siblings("#write_textarea");
+                        $Write.window_close_alert();
+                        $process.html('处理成功！').css("color","blue");
+            
+        
+                        // insert a new image in the image lib
+                        var new_image = $('<div></div>');
+                        new_image.attr({'class':'one','oid':response.src_alias,'type':'img'});
+        
+                        var new_image_html = //'<div class="one" oid ="'+ response.src_alias +'" type="i">'+
+                                '<div class="ileft">'+
+                                '<span class="ititle">图'+ response.src_alias+'</span>'+
+                                '</div>'+                               
+                                '<div class="icontrol">' +
+                                '<span class="idel" title="删除此图片">删除</span>'+
+                                '<span class="imodify">修改</span>'+
+                                '<span class="iinsert">插入</span>'+
+                                '</div>' +
+
+                                '<div class="iright" title="'+ $.encode(image_title) +'"><table><tr><td><img src="'+ $.encode(response.info) +'" /></td></tr></table></div>';
+                                //'<div class="ibottom"><input title="描述" type="text" value="'+ name +'" readonly="readonly" /><div class="iname">插入</div></div>'+
+                                //'</div>';
+                        new_image.html(new_image_html);
+                        image_bar.append(new_image);
+            
+                        new_image.find(".imodify").bind('click',function(){
+                            current_textarea.update_old_src(this);
+                        }).end().find(".iinsert").bind('click', function(){
+                            current_textarea.insert_src_to_textarea(this);
+                        }).click().end().find(".idel").bind('click', function(){
+                            current_textarea.delete_lib_src(this);
+                        });
+                        pop_page_close();            
                     }else{
-                        $process.html(response.info).css("color", "red");                    
-                    }                
-                }            
-                });
-                return false;
+                        $process.html(response.info).css("color", "red"); 
+                        $button.removeAttr("disabled","disabled").css("color", "black");               
+                    }            
+               }
+               });
+               return false;
            });
        }
+
     },
     /******************** update old src *****************************/
     update_old_src:function(obj){
