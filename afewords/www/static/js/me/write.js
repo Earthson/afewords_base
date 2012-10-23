@@ -426,7 +426,7 @@ jQuery.fn.extend({
         var obj_one = $(obj).parent().parent();
         var kind = obj_one.attr('type'), oid = obj_one.attr('oid');
         var kind_dict = {"img": 42, "math": 45, "code": 44, "table": 41, "ref": 43};
-        this.inserFormatString(kind_dic[kind], oid);
+        this.insertFormatString(kind_dict[kind], oid);
     },
     /******** create new src ***********************/
     create_new_src: function(obj){
@@ -531,11 +531,11 @@ jQuery.fn.extend({
         var self_textarea = this;
         var $menu = this.siblings("#write_menu");
         var mid = $menu.attr("menu_id"), article_id = $menu.attr("article_id"), 
-            article_type = $menu.attr("article_type"), env_id= $menu.attr('group_id'), env_type= $menu.attr("env_type"), 
+            article_type = $menu.attr("article_type"), env_id= $menu.attr('env_id'), env_type= $menu.attr("env_type"), 
             father_id = $menu.attr("father_id"), father_type = $menu.attr("father_type"),
             kind = obj_one.attr('type'), oid = obj_one.attr('oid');
         var hidden_paras = {"article_id": article_id, "article_type": article_type, "env_id": env_id, "env_type": env_type,
-            "father_id": father_id, "father_type": father_type, "src_type": kind, "do": "update", "oid": oid, "src_alias": oid};
+            "father_id": father_id, "father_type": father_type, "src_type": kind, "do": "edit", "oid": oid, "src_alias": oid};
         var id_dict = {"img": "pic", "math": "math", "code":"code", "table":"table", "ref": "ref"};
         var $body = $('<div></div>');
         $body.attr({"id": "pop_insert_"+ id_dict[kind], "menu_id": mid});
@@ -1228,7 +1228,6 @@ $Write.update_lib_src_submit = function( obj )
     }
     
     var url = '/article-src-control';
-    mes['do'] = 'update';
     
     if(mes['title'] == ''){
         process.html("请填写"+ warn[type]+"名称！").css("color","red");
