@@ -274,6 +274,9 @@ class Article(DataBox):
     def add_ref(self, reftype, refobj):
         return self.lib.add_ref(reftype, refobj)
 
+    def get_ref(self, reftype, refalias):
+        return self.lib.get_ref(reftype, refalias)
+
     def remove_ref(self, retype, refalias):
         return self.lib.remove_ref(reftype, refalias)
 
