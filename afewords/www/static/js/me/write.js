@@ -1505,7 +1505,7 @@ $Write.post_write = function(obj){
 }
 
 $Write.post_write_all = function(obj){
-    /*********** 发布博客*******************/
+    /*********** post article *******************/
     var $obj = $(obj), $menu = $('#write_menu'), $text=$('#write_textarea'), 
         $process = $("div.w-submit-result");
     var mes = {};
