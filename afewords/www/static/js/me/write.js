@@ -528,18 +528,18 @@ jQuery.fn.extend({
             var $image_form = $body.find('form');
             var $process = $image_form.find('.i_process');
             var $button  = $image_form.find('button');
-            alert($image_form.html());
+            
             $image_form.submit( function(){
                             
                 $(this).ajaxSubmit({
                 dataType: 'json',
-                beforeSend: function(){},
+                beforeSend: function(){ $process.html('图片上传中！');  },
                 complete: function(xhr){
                     var response = eval('(' + xhr.responseText + ')');
                     if(response.status = 0){
-                        alert("图片上传成功！");                    
+                        $process.html("图片上传成功！").css('color', 'blue');                    
                     }else{
-                        alert(response.info);                    
+                        $process.html(response.info).css("color", "red");                    
                     }                
                 }            
                 });
