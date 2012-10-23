@@ -277,7 +277,7 @@ class Article(DataBox):
     def get_ref(self, reftype, refalias):
         return self.lib.get_ref(reftype, refalias)
 
-    def remove_ref(self, retype, refalias):
+    def remove_ref(self, reftype, refalias):
         return self.lib.remove_ref(reftype, refalias)
 
     def add_to_tag(self, tagname):
