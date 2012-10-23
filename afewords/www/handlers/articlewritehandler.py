@@ -138,6 +138,7 @@ class ArticleUpdatePara(BaseHandlerPara):
                                     for ek, ev in self.paradoc.items()])
         self['tags'] = self.handler.get_esc_args('tags[]')
         self['ref_comments'] = self.handler.get_esc_args('ref_comments[]')
+        #self['keywords'] = self.handler.get_esc_args('keywords[]')
         self['tags'].append('default')
         self['keywords'] = self['keywords'].replace(u'，', u',').split(u',')
         if self['privilege'] not in ['public', 'private']:
