@@ -448,10 +448,10 @@ jQuery.fn.extend({
         switch(kind){
            case 'img':
            case 'image':
-            /** new image **/
+            /** new image /upload-image**/
             html =  
             '<p class="first">添加图片<span class="all_example" title="说明"><a target="_blank" href="/help-editor-picture">说明</a></span></p>'+
-            '<form action="/upload-image" id="up_picture" enctype="multipart/form-data" method="post" target="up_picture_iframe">'+
+            '<form action="/article-src-control" id="up_picture" enctype="multipart/form-data" method="post">'+
             '<input type="hidden" name="picture_type" value="article" />' +
             '<input type="hidden" name="_xsrf" value="' + $.getCookie("_xsrf") + '" />'+
             paras_html + 
@@ -523,7 +523,29 @@ jQuery.fn.extend({
        var $html = jQuery(html);
        $body.html($html); 
        pop_page(wd,hg,$body);
-       if(kind!='image') $html.find('button').bind('click', function(){   $Write.new_lib_src_submit(this); });
+       if(kind!='image' && kind != 'img') $html.find('button').bind('click', function(){   $Write.new_lib_src_submit(this); });
+       if(kind == 'image' || kind == 'img'){
+            var $image_form = $body.find('form');
+            var $process = $image_form.find('.i_process');
+            var $button  = $image_form.find('button');
+            alert($image_form.html());
+            $image_form.submit( function(){
+                            
+                $(this).ajaxSubmit({
+                dataType: 'json',
+                beforeSend: function(){},
+                complete: function(xhr){
+                    var response = eval('(' + xhr.responseText + ')');
+                    if(response.status = 0){
+                        alert("图片上传成功！");                    
+                    }else{
+                        alert(response.info);                    
+                    }                
+                }            
+                });
+                return false;
+           });
+       }
     },
     /******************** update old src *****************************/
     update_old_src:function(obj){
