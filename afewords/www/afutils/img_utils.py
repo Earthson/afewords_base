@@ -3,13 +3,13 @@ import Image
 import tempfile
 
 image_type_doc = {
-    'image/gif' : 'gif',
-    'image/jpeg' : 'jpg',
-    'image/pjpeg' : 'jpg',
-    'image/bmp' : 'bmp',
-    'image/png' : 'png',
-    'image/x-png' : 'png',
-    'image/x-icon' : 'ico',
+    'image/gif' : 'GIF',
+    'image/jpeg' : 'JPEG',
+    'image/pjpeg' : 'JPEG',
+    'image/bmp' : 'BMP',
+    'image/png' : 'PNG',
+    'image/x-png' : 'PNG',
+    'image/x-icon' : 'ICO',
 }
 
 def upload_img(uploaded_file, wl=100, wh=2000, hl=100, hh=2000):
@@ -33,8 +33,7 @@ def upload_img(uploaded_file, wl=100, wh=2000, hl=100, hh=2000):
     if ((wl <= img_tmp.size[0] <= wh) and 
                 (hl <= img_tmp.size[1] <= hh)) is False:
         return 4, 'Invalid Width or Height'
+    print img_tmp.format #Test Earthson
+    if not img_tmp.format:
+        img_tmp.format = img_format
     return 0, img_tmp 
-
-
-def img_crop(tmp_img, pos_x, pos_y, width, height):
-    tmp_img = Image
