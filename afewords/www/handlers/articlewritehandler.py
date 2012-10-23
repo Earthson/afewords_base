@@ -121,7 +121,7 @@ class ArticleUpdatePara(BaseHandlerPara):
         'title': '',    # unicode
         'body': '',     # unicode
         'summary': '',  # unicode
-        'keywords': [], # list  self.get_arguments("keywords")
+        'keywords': '', # list  self.get_arguments("keywords")
         'tags': [],     # list
         'env_id': '-1', # unicode
         'env_type': 'user', # unicode

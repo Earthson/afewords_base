@@ -1571,7 +1571,7 @@ $Write.post_write_all = function(obj){
                 }else{
                     $Write.close_window_close_alert();
                     correct('操作成功！');
-                    setTimeout('location.href=preview_url', 1000);               
+                    setTimeout( function (){ location.href=preview_url }, 1000);               
                 }
             }
         }, function(response){
