@@ -91,6 +91,6 @@ class Tableform(DataBox):
             ans = dict()
             ans['alias'] = self.alias
             ans['name'] = self.name
-            ans['body'] = self.body
+            ans['body'] = self.tableform
             return ans
         return getter
