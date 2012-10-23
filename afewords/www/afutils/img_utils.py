@@ -19,7 +19,7 @@ def upload_img(uploaded_file, wl=100, wh=2000, hl=100, hh=2000):
     if uploaded_file['content_type'] not in image_type_list:
         return 1, 'Unsupported file type'
     img_format = image_type_doc[uploaded_file['content_type']]
-    if len(uploaded_file['body']) > 4 * 1024 * 1024:
+    if len(uploaded_file['body']) > 2 * 1024 * 1024:
         return 2, 'Uploaded file too large'
     tmp_file = tempfile.NamedTemporaryFile(delete=True)   
     tmp_file.write(uploaded_file['body'])

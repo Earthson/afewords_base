@@ -177,12 +177,6 @@ class User(DataBox):
         return getter
 
     @db_property
-    def thumb_name():
-        def getter(self):
-            return self.avatar.thumb_name
-        return getter
-
-    @db_property
     def about():
         '''introduction page to user'''
         def getter(self):
@@ -402,7 +396,7 @@ class User(DataBox):
             ans['name'] = self.name
             ans['draft_count'] = self.draft_count
             ans['notice_count'] = self.notice_count
-            ans['thumb'] = self.thumb_name
+            ans['thumb'] = self.avatar.thumb_url
             return ans
         return getter
 
@@ -413,7 +407,7 @@ class User(DataBox):
             ans = dict()
             ans['uid'] = self.uid
             ans['name'] =self.name
-            ans['thumb'] = self.thumb_name
+            ans['thumb'] = self.avatar.thumb_url
             ans['isfollow'] = False
             ans['isme'] = False
             ans['tag_list'] = self.alltags
