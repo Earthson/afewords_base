@@ -11,4 +11,5 @@ class AvatarDoc(PictureDoc.__clsobj__):
 class Avatar(Picture):
     datatype = AvatarDoc
 
-    pic_path = 'static/avatar/'
+    pic_path = 'static/avatar/normal/'
+    thumb_path = 'static/avatar/small/'

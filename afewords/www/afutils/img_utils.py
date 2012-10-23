@@ -33,4 +33,8 @@ def upload_img(uploaded_file, wl=100, wh=2000, hl=100, hh=2000):
     if ((wl <= img_tmp.size[0] <= wh) and 
                 (hl <= img_tmp.size[1] <= hh)) is False:
         return 4, 'Invalid Width or Height'
-    return 0, img_tmp, img_format 
+    return 0, img_tmp 
+
+
+def img_crop(tmp_img, pos_x, pos_y, width, height):
+    tmp_img = Image
