@@ -528,15 +528,19 @@ jQuery.fn.extend({
             var $image_form = $body.find('form');
             var $process = $image_form.find('.i_process');
             var $button  = $image_form.find('button');
-            alert($button.html());
-            alert($process.html())
-            var image_title = $image_form.find(".i_title").val() || '';
-            var image_path = $image_form.find(".i_file").val() || '';
+            //alert($button.html());
+            //alert($process.html())
+            var image_title = '';
+            var image_path = '';
             $image_form.submit( function(){
                             
               $(this).ajaxSubmit({
                 dataType: 'json',
                 beforeSend: function(){ 
+                    image_title = $image_form.find("input.i_title").val() || '';
+                    image_path = $image_form.find(".i_file").val() || '';
+                    alert(image_title);
+                    alert(image_path);
                     var img_reg = /.*\.(jpg|png|jpeg|gif)$/ig;
     
                     if(image_path.match(img_reg)){
