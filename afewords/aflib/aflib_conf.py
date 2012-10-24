@@ -1,1 +1,2 @@
-pic_main_url = 'http://beta.afewords.com/'
+pic_main_url = '/'
+#pic_main_url = 'http://picture.afewords.com/'
