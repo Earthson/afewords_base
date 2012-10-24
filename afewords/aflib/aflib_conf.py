@@ -1,1 +1,1 @@
-pic_main_url = 'http://ipv6.earthson.net/'
+pic_main_url = 'http://beta.afewords.com/'

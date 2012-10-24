@@ -536,28 +536,31 @@ jQuery.fn.extend({
                             
               $(this).ajaxSubmit({
                 dataType: 'json',
-                beforeSend: function(){ 
+                beforeSubmit: function(){ 
                     image_title = $image_form.find("input.i_title").val() || '';
                     image_path = $image_form.find(".i_file").val() || '';
-                    alert(image_title);
-                    alert(image_path);
+                    //alert(image_title);
+                    //alert(image_path);
+                    //return false;
                     var img_reg = /.*\.(jpg|png|jpeg|gif)$/ig;
     
-                    if(image_path.match(img_reg)){
+                    if(!image_path.match(img_reg)){
                         $process.html('图片格式为jpg,png,jpeg,gif！').css("color","red");
                         return false;
                     }
-                    if($.trim(image_title)==''){
+                    
+                    if(!$.trim(image_title)){
                         $process.html('请设置标题！').css("color","red");
+                        alert("set title");
                         return false;   
                     }
                     $button.attr("disabled","disabled").css("color","#ccc");
                     $process.html('<img src="/static/img/ajax.gif" title="执行中" />');
                     //$process.html('图片上传中...');  
                 },
-                complete: function(xhr){
-                    var response = eval('(' + xhr.responseText + ')');
-                    if(response.status = 0){
+                success: function(response, status){
+                    //var response = eval('(' + xhr.responseText + ')');
+                    if(response.status == 0){
                         $process.html("图片上传成功！").css('color', 'blue');
                         if(response.article_isnew == 1){
                             $menu.attr("article_id", response.article_id);                        
@@ -582,10 +585,11 @@ jQuery.fn.extend({
                                 '<span class="iinsert">插入</span>'+
                                 '</div>' +
 
-                                '<div class="iright" title="'+ $.encode(image_title) +'"><table><tr><td><img src="'+ $.encode(response.info) +'" /></td></tr></table></div>';
+                                '<div class="iright" title="'+ $.encode(image_title) +'"><table><tr><td><img src="'+ $.encode(response.img_url) +'" /></td></tr></table></div>';
                                 //'<div class="ibottom"><input title="描述" type="text" value="'+ name +'" readonly="readonly" /><div class="iname">插入</div></div>'+
                                 //'</div>';
                         new_image.html(new_image_html);
+                        var image_bar = $menu.find("#write_image_bar").find(".i");
                         image_bar.append(new_image);
             
                         new_image.find(".imodify").bind('click',function(){
