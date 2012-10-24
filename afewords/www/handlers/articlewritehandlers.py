@@ -69,8 +69,6 @@ class ArticleWriteHandler(BaseHandler):
         return
 
 
-
-
 def article_env_init(handler, handler_paras, handler_json):
     handler_json['article_id'] = handler_paras['article_id']
     usr = handler.current_user

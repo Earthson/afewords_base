@@ -197,6 +197,10 @@ class GetCommentJson(BaseJson):
         'status': -1,   # int
         'info': '' or dict, # unicode or dict, unicode for error, dict for right
     }
+
+    error_info = {
+        0 : '',
+    }
     
 
     def by_status(self, status):
