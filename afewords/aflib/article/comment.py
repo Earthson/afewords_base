@@ -42,7 +42,8 @@ class Comment(Article):
             ans = dict()
             ans['aid'] = self.uid
             ans['content'] = self.view_body
-            #todo Earthson
+            ans['release_time'] = str(self.release_time)
+            ans['author'] = self.author.basic_info_for_json
             ans['ref_comment_list'] = self.ref_comments
             return ans
         return getter

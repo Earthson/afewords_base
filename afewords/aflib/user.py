@@ -415,6 +415,18 @@ class User(DataBox):
         return getter
 
     @db_property
+    def basic_info_for_json():
+        def getter(self):
+            ans = dict()
+            ans['uid'] = self.uid
+            ans['name'] = self.name
+            ans['thumb'] = self.avatar.thumb_url
+            ans['isfollow'] = False
+            ans['isme'] = False
+            return ans
+        return getter
+
+    @db_property
     def followers():
         '''users followed self'''
         def getter(self):
