@@ -37,3 +37,11 @@ class LoginHandler(BaseHandler):
         self.set_secure_cookie('IT', self.request.remote_ip)
         self.redirect('/blogger')
         return
+
+
+
+class LogoutHandler(BaseHandler):
+    def get(self):
+        self.clear_all_cookies()
+        self.redirect('/')
+        return

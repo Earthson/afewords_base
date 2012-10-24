@@ -1,7 +1,8 @@
 #coding=utf-8
 import os
 from handlers.indexhandler import IndexHandler
-from handlers.loginhandler import LoginHandler
+from handlers.logcontrolhandlers import LoginHandler
+from handlers.logcontrolhandlers import LogoutHandler
 from handlers.vertifycodehandler import VertifyCodeHandler
 from handlers.registerhandler import RegisterHandler
 from handlers.testhandler import TestHandler
@@ -21,6 +22,7 @@ app_handlers = {
     #(r'/home', HomeHandler),
     (r'/home', BloggerBlogHandler),
     (r'/login', LoginHandler),
+    (r'/quit', LogoutHandler),
     (r'/code', VertifyCodeHandler),
     (r'/reg', RegisterHandler),
     (r'/check', CheckHandler),
