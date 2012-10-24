@@ -20,8 +20,12 @@ class PictureDoc(AFDocument):
         'name' : '',
         'alias' : '',
         'release_time' : datetime.now,
+        'file_name' : '',
+        'thumb_name' : '',
     }
 
+
+import aflib_conf
 
 @with_mapper
 class Picture(DataBox):
@@ -35,7 +39,8 @@ class Picture(DataBox):
         'release_time' : True,
     }
 
-    pic_main_url = 'http://picture.afewords.com/'
+    #pic_main_url = 'http://picture.afewords.com/'
+    pic_main_url = aflib_conf.pic_main_url
     pic_path = 'static/picture/normal/'
     thumb_path = 'static/picture/small/'
 
@@ -45,12 +50,14 @@ class Picture(DataBox):
         if infodoc['picture'] is not None:
             ans['thumb_file'] = infodoc['picture']
             ans['pic_file'] = infodoc['picture']
+        self.set_propertys(**ans)
 
     def file_name_gen(self, pic_format, is_thumb=False):
         if is_thumb:
-            return self.thumb_path+'afw_thumb_'+ \
-                    str(self.data['_id'])+pic_format.lower()
-        return self.pic_path+'afw_pic'+str(self.data['_id'])+pic_format.lower()
+            return 'afw_thumb_'+ \
+                    str(self.data['_id'])+'.'+pic_format.lower()
+        return 'afw_pic_'+str(self.data['_id'])\
+                    +'.'+pic_format.lower()
 
     def remove(self):
         import os
@@ -79,8 +86,8 @@ class Picture(DataBox):
             if not self.data['thumb_name']:
                 self.data['thumb_name'] = self.file_name_gen(value.format, True)
             tmp = value.copy()
-            tmp.thumbnail(200, 200)
-            tmp.save(self.data['thumb_name'], value.format)
+            tmp.thumbnail((150, 150))
+            tmp.save(self.thumb_path + self.data['thumb_name'], value.format)
         return getter, setter
 
     @db_property
@@ -91,7 +98,7 @@ class Picture(DataBox):
         def setter(self, value):
             if not self.data['file_name']:
                 self.data['file_name'] = self.file_name_gen(value.format)
-            value.save(self.data['file_name'], value.format)
+            value.save(self.pic_path + self.data['file_name'], value.format)
         return getter, setter
 
     @db_property

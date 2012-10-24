@@ -211,12 +211,14 @@ class ArticleSrcPara(BaseHandlerPara):
     def read(self):
         self.paradoc = dict([(ek, self.handler.get_esc_arg(ek, ev)) 
                                     for ek, ev in self.paradoc.items()])
+        self.error_code = 0
+        if self.paradoc['src_type'] != 'img':
+            return
         try:
             self.paradoc['picture'] = self.handler.request.files['picture'][0]
         except KeyError, e:
             self.paradoc['picture'] = None
-        self.error_code = 0
-        if self.paradoc:
+        if self.paradoc['picture']:
             status, info = upload_img(self.paradoc['picture'])
             if status == 0:
                 self.paradoc['picture'] = info
@@ -248,9 +250,7 @@ class ArticleSrcHandler(BaseHandler):
             handler_json.write()
             return #Unsupported Ref Type
         if handler_paras['do'] == 'new':
-            print type_trans(handler_paras['src_type'])
             scls = cls_gen(type_trans(handler_paras['src_type']))
-            print '###', scls.__name__
             if scls is None:
                 handler_json.by_status(5)
                 handler_json.write()
@@ -259,6 +259,7 @@ class ArticleSrcHandler(BaseHandler):
             self.article_obj.add_ref(handler_paras['src_type'], src_obj)
             handler_json.as_new_src(src_obj)
             src_obj.set_by_info(handler_paras.load_doc())
+            print '####', src_obj.data
             if handler_paras['src_type'] == 'img':
                 handler_json['img_url'] = src_obj.thumb_url
             handler_json.by_status(0)
