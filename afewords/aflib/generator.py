@@ -49,7 +49,7 @@ def cls_gen(objtype):
     #    Feedback.__name__:Feedback,
     #    Bulletin.__name__:Bulletin,
     #    Topic.__name__:Topic,
-        Picture.__name__:User,
+        Picture.__name__:Picture,
         Langcode.__name__:Langcode,
         Equation.__name__:Equation,
         Tableform.__name__:Tableform,
