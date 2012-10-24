@@ -259,7 +259,6 @@ class ArticleSrcHandler(BaseHandler):
             self.article_obj.add_ref(handler_paras['src_type'], src_obj)
             handler_json.as_new_src(src_obj)
             src_obj.set_by_info(handler_paras.load_doc())
-            print '####', src_obj.data
             if handler_paras['src_type'] == 'img':
                 handler_json['img_url'] = src_obj.thumb_url
             handler_json.by_status(0)
