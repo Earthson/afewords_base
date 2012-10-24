@@ -197,6 +197,8 @@ class GetCommentJson(BaseJson):
     doc = {
         'status': -1,   # int
         'info': '' or dict, # unicode or dict, unicode for error, dict for right
+        'comment_list': [], # list, see [[ blog_list ]]
+        'ref_comment_dict': {}, # dict, {"1": { [[article]] }}
     }
 
     error_info = {

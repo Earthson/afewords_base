@@ -458,8 +458,8 @@ jQuery.fn.extend({
             '<p><input class="i_file" type="file" name="picture" onclick=clear_process(this,"i"); /></p>'+
             '<p>标题<input class="i_title" name="title" autocomplete="off" type="text" onfocus=clear_process(this,"i"); /></p>'+
             '<p><span class="i_button"><button type="submit">上传图片</button>'+
-            '<button type="submit" style="display:none">提交</button></span><span class="i_process">&nbsp;</span></p></form>'+
-            '<iframe name="up_picture_iframe" id="up_picture_iframe" style="display:none"></iframe>';
+            '<button type="submit" style="display:none">提交</button></span><span class="i_process">&nbsp;</span></p></form>';
+            //'<iframe name="up_picture_iframe" id="up_picture_iframe" style="display:none"></iframe>';
             wd = 360, hg = 240;
             break;
         case 'math':

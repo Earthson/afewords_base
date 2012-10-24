@@ -2,6 +2,16 @@
 from basehandler import *
 from pages.postjson import GetCommentJson
 
+class CommentGetPara(BaseHandlerPara):
+    paradoc = {
+        'env_id': '',
+        'env_type': 'User',
+        'article_id': '',
+        'article_blog': 'blog',
+    }
+    pass
+
+
 class CommentGetHandler(BaseHandler):
 
     def post(self):

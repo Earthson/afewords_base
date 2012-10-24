@@ -144,7 +144,7 @@ margin: 5px;position: relative;}
 #bar_body .i .one .ileft span.imodify{width: auto;float: left;color: #333;cursor: pointer;text-indent: 13px;padding: 0 2px;font-size: 12px;}
 #bar_body .i .one .ileft span.imodify:hover{color: blue;}
 #bar_body .i .one .iright{float: left;width: 140px;height: 120px;display:table-cell;vertical-align:middle;text-align:center;}
-#bar_body .i .one .iright image{max-width: 130px;max-height: 120px;}
+#bar_body .i .one .iright img{max-width: 130px;max-height: 120px;}
 #bar_body .i .one .iright table{text-align: center;vertical-align: middle;width: 100%;height: 100%;}
 
 #bar_body .i .one .icontrol{bottom: 10px;left: 15px;position: absolute;font-size: 12px;height: 75px;width: 40px;line-height: 25px;}
