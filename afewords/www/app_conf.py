@@ -3,11 +3,11 @@ import os
 from handlers.indexhandler import IndexHandler
 from handlers.logcontrolhandlers import LoginHandler
 from handlers.logcontrolhandlers import LogoutHandler
-from handlers.vertifycodehandler import VertifyCodeHandler
-from handlers.registerhandler import RegisterHandler
+from handlers.securityhandlers import VertifyCodeHandler
+from handlers.securityhandlers import RegisterHandler
 from handlers.testhandler import TestHandler
-from handlers.checkhandler import CheckHandler
-from handlers.resethandler import ResetHandler, RepeatResetMailHandler
+from handlers.securityhandlers import CheckHandler
+from handlers.securityhandlers import ResetHandler, RepeatResetMailHandler
 from handlers.bloghandler import BlogHandler
 from handlers.bloggerhandlers import BloggerBlogHandler
 from handlers.articlewritehandlers import ArticleWriteHandler
