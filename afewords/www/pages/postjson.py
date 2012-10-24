@@ -199,4 +199,6 @@ class GetCommentJson(BaseJson):
     }
     
 
+    def by_status(self, status):
+        self['status'] = status
 

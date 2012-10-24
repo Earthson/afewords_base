@@ -9,9 +9,10 @@ from handlers.checkhandler import CheckHandler
 from handlers.resethandler import ResetHandler, RepeatResetMailHandler
 from handlers.bloghandler import BlogHandler
 from handlers.bloggerhandlers import BloggerBlogHandler
-from handlers.articlewritehandler import ArticleWriteHandler
-from handlers.articlewritehandler import ArticleUpdateHandler
-from handlers.articlewritehandler import ArticleSrcHandler
+from handlers.articlewritehandlers import ArticleWriteHandler
+from handlers.articlewritehandlers import ArticleUpdateHandler
+from handlers.articlewritehandlers import ArticleSrcHandler
+from handlers.commenthandlers import CommentGetHandler
 
 
 app_handlers = {
@@ -32,6 +33,7 @@ app_handlers = {
     (r'/write', ArticleWriteHandler),
     (r'/update-article', ArticleUpdateHandler),
     (r'/article-src-control', ArticleSrcHandler),
+    (r'/getcomment', CommentGetHandler),
     #(r'/home(.*)', UserBlogLibHandler),
 }
 
