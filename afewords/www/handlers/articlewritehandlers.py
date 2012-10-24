@@ -221,6 +221,8 @@ class ArticleSrcPara(BaseHandlerPara):
             if status == 0:
                 self.paradoc['picture'] = info
             self.error_code = status
+        elif self.paradoc['do'] == 'new':
+            self.error_code = 55
 
 from pages.postjson import ArticleSrcJson
 

@@ -39,7 +39,10 @@ class Comment(Article):
     @db_property
     def comment_info():
         def getter(self):
-            ans = self.basic_info()
+            ans = dict()
+            ans['aid'] = self.uid
+            ans['content'] = self.view_body
+            #todo Earthson
             ans['ref_comment_list'] = self.ref_comments
             return ans
         return getter
