@@ -1893,29 +1893,38 @@ $Write.comment_get = function(obj){
     // page is the content of the tag
     // need give the page index of all comments, for example, current page is 4, we need staticis 5, 6, 7 and so on
     var $obj = $(obj);
-    var mes = {};
+    var mes = {
+        "env_id": $obj.attr("env_id") || "-1",
+        "env_type": $obj.attr("env_type")|| "User",
+        "article_id": $obj.attr("article_id"),
+        "article_type": $obj.attr("article_type") || 'blog'    
+    };
+    /*
     mes['pos'] = $obj.attr("pos") || 0;
     mes['load_one'] = $obj.attr("load_one") || 'no';
     mes['before_pos'] = $obj.attr("before_pos")||mes['pos'];
     mes['load_before'] = $obj.attr("load_before")||'no';
     mes['article_type'] = $obj.attr("article_type") || 'blog';
     mes['article_id'] = $obj.attr("article_id");
+    mes['env_type'] = $obj.attr("env_type")|| 'User';
+    mes['env_id'] = $obj.attr("env_id") || '-1';
+    */
     
     $.postJSON('/getcomment', mes,
         function(){
             // nothing will be done
         },
         function(response){
-            if(response.kind == 0){
+            if(response.status == 0){
                 // ok
                 var comment_con = '';//$('<div></div>').addClass('com_one');
                 var back_info = response.info;
-                var result = response.info.comment;
-                var ref_result = response.info.ref_comment;
-                for(i in result){
-                    var tmp_ref_comment_list = result[i].ref_comments;
+                var result = response.comment_list;
+                var ref_result = response.ref_comment_dict;
+                for(var i in result){
+                    var tmp_ref_comment_list = result[i].ref_comment_list;
                     var tmp_ref_comment_body = '';
-                    for(var j =0; j < tmp_ref_comment_list.length; j++){
+                    for(var j = 0; j < tmp_ref_comment_list.length; j++){
                         var tmp_one = result[tmp_ref_comment_list[j]] || 
                             ref_result[tmp_ref_comment_list[j]] || '';
                         if (tmp_one == '')  { 
@@ -1924,37 +1933,38 @@ $Write.comment_get = function(obj){
                         }
                         tmp_ref_comment_body += '<div class="ref_comment_div">';;
                         var tmp_tmp_body = $('<div></div>');
-                        tmp_tmp_body.html(tmp_one.comment_body);
+                        tmp_tmp_body.html(tmp_one.content);
                         var short_body = '<div class="ref_comment_short"><span class="com_body1">' + 
                                 tmp_tmp_body.text().slice(0, 100 > tmp_tmp_body.text().length ? tmp_tmp_body.text().length: 100)+
-                                '</span><span class="com_author1"><a href="/bloger/'+ tmp_one.author_id +'" target="_blank">'+ tmp_one.author_name +'</a></span>'+
+                                '</span><span class="com_author1"><a href="/bloger/'+ tmp_one.author.uid +'" target="_blank">'+ tmp_one.author.name +'</a></span>'+
                                 '<span class="com_open1">详细</span></div>';
-                        var all_body = '<div class="ref_comment_all bb_con" style="display:none;">'+ tmp_one.comment_body +
-                                '<div class="com_nav1"><span class="com_time1">'+ tmp_one.comment_time +'</span>'+
-                                '<span class="com_author1"><a href="/bloger/'+ tmp_one.author_id +'">'+ tmp_one.author_name +'</a></span>'+
+                        var all_body = '<div class="ref_comment_all bb_con" style="display:none;">'+ tmp_one.content +
+                                '<div class="com_nav1"><span class="com_time1">'+ tmp_one.release_time +'</span>'+
+                                '<span class="com_author1"><a href="/bloger/'+ tmp_one.author.id +'">'+ tmp_one.author.name +'</a></span>'+
                                 '<span class="com_close1">收起</span></div></div>';
                         tmp_ref_comment_body += short_body;
                         tmp_ref_comment_body += all_body;
                         tmp_ref_comment_body += '</div>';
                     }
                    // $.log(result[i].ref_comments);
-                    comment_con += '<div class="com_one" comment_id="' + result[i].comment_id + '">' +
-                        '<div class="com_pic"><a href="/bloger/'+ result[i].author_id +'" target="_blank">'+
-                          '<img src="'+ result[i].author_avatar +'" /></a></div>'+
+                    comment_con += '<div class="com_one" comment_id="' + result[i].aid + '">' +
+                        '<div class="com_pic"><a href="/bloger/'+ result[i].author.id +'" target="_blank">'+
+                          '<img src="'+ result[i].author.thumb +'" /></a></div>'+
                             '<div class="com_body"><div class="com_con">'+
                             '<div class="bb_con1">'+ tmp_ref_comment_body + '<div class="bb_con">' + 
-                            result[i].comment_body + '</div></div>'+
+                            result[i].content + '</div></div>'+
                             '<div class="com_nav">'+
                             '<span class="com_reply" ref_type="comment"'+ 'father_id="'+ mes['article_id'] +'" father_type="'+mes['article_type']+'"'+
-                            'ref_comment_id="'+ result[i].comment_id +'" pos="'+i+'" author_name="'+ result[i].author_name +'" author_id="'+result[i].author_id+'"></span>'+
-                            '<span class="com_author"><a href="/bloger/'+ result[i].author_id +'" target="_blank">'+result[i].author_name+'</a></span>'+
+                            'ref_comment_id="'+ result[i].aid +'" pos="'+i+'" author_name="'+ result[i].author.name +'" author_id="'+result[i].author.id+'"></span>'+
+                            '<span class="com_author"><a href="/bloger/'+ result[i].author.id +'" target="_blank">'+result[i].author.name+'</a></span>'+
                             //'<span class="com_time">2012-3-12 14:00</span>'+
                             '</div></div></div></div>';
                 }
                 //alert(comment_con);
                 $b_com = $(".b_com");
                 //$(".com_one").remove();
-                
+                $b_com.append(comment_con);
+                /*
                 var $write_zone_tag = $("#write_comment_zone");
                 var $page_tag = $b_com.find('div.com_page');
                 var $before_page_tag = $b_com.find('div.com_page_before');
@@ -2003,6 +2013,7 @@ $Write.comment_get = function(obj){
                     $Write.comment_get(this);
                     return false;
                 });
+                */
                 $b_com.find("span.com_open1").unbind().bind('click', function(){  $(this).parent().hide().next().slideDown(); });
                 $b_com.find("span.com_close1").unbind().bind('click', function(){ $(this).parent().parent().hide().prev().slideDown();  });
             }else{
