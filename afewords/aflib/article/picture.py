@@ -86,7 +86,7 @@ class Picture(DataBox):
             if not self.data['thumb_name']:
                 self.data['thumb_name'] = self.file_name_gen(value.format, True)
             tmp = value.copy()
-            tmp.thumbnail((150, 150))
+            tmp.thumbnail((200, 200))
             tmp.save(self.thumb_path + self.data['thumb_name'], value.format)
         return getter, setter
 
