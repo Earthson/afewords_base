@@ -304,6 +304,7 @@ jQuery.fn.extend({
     },
     /******* Create Editor ********/
     CreateEditor:function(paras){
+        /*** comment don't support some lib( table, ref, code, math) and title format ***/
         var default_paras = {
             "article_type": 'blog',
             "article_id": '-1',
@@ -311,7 +312,8 @@ jQuery.fn.extend({
             "env_id": '-1',
             "father_id": "-1",
             "father_type": 'blog',
-            "body": ''        
+            "body": '',
+            "iscomment": false        
         }
         if(typeof paras != "object") paras = {};
         for(var key in default_paras){
@@ -322,104 +324,123 @@ jQuery.fn.extend({
         var _Menu = $('<div></div>'); // the menu parent
         _Menu.attr({"id":"write_menu",
                     "menu_id": $Write.get_menu_id(),
-                            "article_id":default_paras["article_id"],
+                    "article_id":default_paras["article_id"],
                     "article_type":default_paras["article_type"], 
                     "father_id":default_paras["father_id"],
                     "father_type":default_paras["father_type"], 
                     "env_id": default_paras["env_id"], 
-                    "env_type": default_paras["env_type"]});
+                    "env_type": default_paras["env_type"], 
+                    "iscomment": default_paras["iscomment"]});
                         
         var _Menu_base = $('<div></div>'); // base menu tool
         _Menu_base.attr("id","write_menu_base");
-            var _Menu_base_bar_array = [];
-            _Menu_base_bar_array.push('<ul>');
-            _Menu_base_bar_array.push('<li kind="1" class="bold" title="加粗">&nbsp;</li>');
-            _Menu_base_bar_array.push('<li kind="2" class="italic" title="斜体">&nbsp;</li>');
-            _Menu_base_bar_array.push('<li kind="3" class="underline" title="下划线">&nbsp;</li>');
-            _Menu_base_bar_array.push('<li kind="4" class="del" title="删除线">&nbsp;</li>');
+        
+        var _Menu_base_bar_array = [];
+        _Menu_base_bar_array.push('<ul>');
+        _Menu_base_bar_array.push('<li kind="1" class="bold" title="加粗">&nbsp;</li>');
+        _Menu_base_bar_array.push('<li kind="2" class="italic" title="斜体">&nbsp;</li>');
+        _Menu_base_bar_array.push('<li kind="3" class="underline" title="下划线">&nbsp;</li>');
+        _Menu_base_bar_array.push('<li kind="4" class="del" title="删除线">&nbsp;</li>');
+        _Menu_base_bar_array.push('<li class="split">&nbsp;</li>');
+        _Menu_base_bar_array.push('<li kind="11" class="super" title="上标">&nbsp;</li>');
+        _Menu_base_bar_array.push('<li kind="12" class="suber"  title="下标">&nbsp;</li>');
+        _Menu_base_bar_array.push('<li class="split">&nbsp;</li>');
+        _Menu_base_bar_array.push('<li kind="21" class="ol" title="有序列表">&nbsp;</li>');
+        _Menu_base_bar_array.push('<li kind="22" class="ul" title="无序列表">&nbsp;</li>');
+        _Menu_base_bar_array.push('<li class="split">&nbsp;</li>');
+        _Menu_base_bar_array.push('<li kind="31" class="part" title="分隔线">~~</li>');
+         if(!default_paras["iscomment"]){
+            _Menu_base_bar_array.push('<li kind="32" class="title" title="二级标题">T<sub><small>2</small></sub></li>');
+            _Menu_base_bar_array.push('<li kind="33" class="title" title="三级标题">T<sub><small>3</small></sub></li>');
+            _Menu_base_bar_array.push('<li kind="34" class="title" title="四级标题">T<sub><small>4</small></sub></li>');
+        }
+        _Menu_base_bar_array.push('<li kind="35" class="indent" title="段落缩进">&nbsp;</li>');
+        if( !default_paras["iscomment"]){
             _Menu_base_bar_array.push('<li class="split">&nbsp;</li>');
-            _Menu_base_bar_array.push('<li kind="11" class="super" title="上标">&nbsp;</li>');
-            _Menu_base_bar_array.push('<li kind="12" class="suber"  title="下标">&nbsp;</li>');
+            _Menu_base_bar_array.push('<li class="table" title="表格库" kind="t">&nbsp;</li>');
             _Menu_base_bar_array.push('<li class="split">&nbsp;</li>');
-            _Menu_base_bar_array.push('<li kind="21" class="ol" title="有序列表">&nbsp;</li>');
-            _Menu_base_bar_array.push('<li kind="22" class="ul" title="无序列表">&nbsp;</li>');
+            _Menu_base_bar_array.push('<li class="image" title="图片库" kind="i">&nbsp;</li>');
             _Menu_base_bar_array.push('<li class="split">&nbsp;</li>');
-            _Menu_base_bar_array.push('<li kind="31" class="part" title="分隔线">~~</li>');
-             if(default_paras["article_type"] !='comment'){
-                _Menu_base_bar_array.push('<li kind="32" class="title" title="二级标题">T<sub><small>2</small></sub></li>');
-                _Menu_base_bar_array.push('<li kind="33" class="title" title="三级标题">T<sub><small>3</small></sub></li>');
-                _Menu_base_bar_array.push('<li kind="34" class="title" title="四级标题">T<sub><small>4</small></sub></li>');
-            }
-            _Menu_base_bar_array.push('<li kind="35" class="indent" title="段落缩进">&nbsp;</li>');
-            if( default_paras["article_type"]!='comment'){
-                _Menu_base_bar_array.push('<li class="split">&nbsp;</li>');
-                _Menu_base_bar_array.push('<li class="table" title="表格库" kind="t">&nbsp;</li>');
-                _Menu_base_bar_array.push('<li class="split">&nbsp;</li>');
-                _Menu_base_bar_array.push('<li class="image" title="图片库" kind="i">&nbsp;</li>');
-                _Menu_base_bar_array.push('<li class="split">&nbsp;</li>');
-                _Menu_base_bar_array.push('<li class="ref" title="引用库" kind="r">&nbsp;</li>');
-                _Menu_base_bar_array.push('<li class="split">&nbsp;</li>');
-                _Menu_base_bar_array.push('<li class="code" title="程序码库" kind="c">&nbsp;</li>');
-                _Menu_base_bar_array.push('<li class="split">&nbsp;</li>');
-                _Menu_base_bar_array.push('<li class="math" title="数学式库" kind="m">&nbsp;</li>');
-                _Menu_base_bar_array.push('<li class="split">&nbsp;</li>');
-                _Menu_base_bar_array.push('<li class="letter" title="特殊字符库" kind="l">&nbsp;</li>');
-                
-            }
-            _Menu_base_bar_array.push('</ul>');
-            _Menu_base.html(_Menu_base_bar_array.join(''));
-            _Menu_base.appendTo(_Menu);
-            _Menu.insertBefore(this);
+            _Menu_base_bar_array.push('<li class="ref" title="引用库" kind="r">&nbsp;</li>');
+            _Menu_base_bar_array.push('<li class="split">&nbsp;</li>');
+            _Menu_base_bar_array.push('<li class="code" title="程序码库" kind="c">&nbsp;</li>');
+            _Menu_base_bar_array.push('<li class="split">&nbsp;</li>');
+            _Menu_base_bar_array.push('<li class="math" title="数学式库" kind="m">&nbsp;</li>');
+        }
+        _Menu_base_bar_array.push('<li class="split">&nbsp;</li>');
+        _Menu_base_bar_array.push('<li class="letter" title="特殊字符库" kind="l">&nbsp;</li>');
+            
+        
+        _Menu_base_bar_array.push('</ul>');
+        _Menu_base.html(_Menu_base_bar_array.join(''));
+        _Menu_base.appendTo(_Menu);
+        _Menu.insertBefore(this);
 
-            var $lib_bar = $('<div></div>');
-            $lib_bar.attr("id","write_lib_bar").css("display","none");
+        var $lib_bar = $('<div></div>');
+        $lib_bar.attr("id","write_lib_bar").css("display","none");
+        
+        var $letter_bar = $('<div></div>');
+        $letter_bar.attr("id","write_letter_bar").css("display","none");
+        
+        var l_html= '<div id="bar_nav">'+
+                    '<span id="l1" class="lbutton" kind="word4">希腊字符</span>'+           
+                    '<span class="lbutton" kind="word1">拉丁字符</span> ' +
+                    '<span class="lbutton" kind="word2">国际音标</span>' +
+                    '<span class="lbutton" kind="word3">字符</span>' +
+                    '</div>'+
+                    '<div id="bar_body"><div class="l"></div></div>';   
+        $letter_bar.html(l_html).appendTo($lib_bar);
+        
+        if(!default_paras["iscomment"]){
             
-            var $letter_bar = $('<div></div>');
-            $letter_bar.attr("id","write_letter_bar").css("display","none");
-            
-            var l_html= '<div id="bar_nav">'+
-                        '<span id="l1" class="lbutton" kind="word4">希腊字符</span>'+           
-                        '<span class="lbutton" kind="word1">拉丁字符</span> ' +
-                        '<span class="lbutton" kind="word2">国际音标</span>' +
-                        '<span class="lbutton" kind="word3">字符</span>' +
-                        '</div>'+
-                        '<div id="bar_body"><div class="l"></div></div>';   
-            $letter_bar.html(l_html).appendTo($lib_bar);
-            
+            /*** image bar ***/
             var $image_bar = $('<div></div>');
             $image_bar.attr("id","write_image_bar").css("display","none");
-            var i_html = '<div id="bar_nav"><div class="new" title="添加新图片" type="img">添加</div>'+
-                        '<div class="div" title="图片库">图片库</div></div><div id="bar_body"><div class="i"></div></div>';
+            var i_html = '<div id="bar_nav"><div class="new" title="添加新图片" src_type="img">添加</div>'+
+                    '<div class="div" title="图片库">图片库</div></div><div id="bar_body"><div class="i"></div></div>';
             $image_bar.html(i_html).appendTo($lib_bar);
-            
+        
+            /*** code bar ***/
             var $code_bar = $('<div></div>');
             $code_bar.attr("id","write_code_bar").css("display","none");
-            var c_html = '<div id="bar_nav"><div class="new" title="添加新代码" type="code">添加</div>'+
-                         '<div class="div" title="代码库">代码库</div></div><div id="bar_body"><div id="crtm"></div></div>';
+            var c_html = '<div id="bar_nav"><div class="new" title="添加新代码" src_type="code">添加</div>'+
+                     '<div class="div" title="代码库">代码库</div></div><div id="bar_body"><div id="crtm"></div></div>';
             $code_bar.html(c_html).appendTo($lib_bar);
-            
+        
+            /*** math bar ***/
             var $math_bar= $('<div></div>');
             $math_bar.attr("id","write_math_bar").css("display","none");
-            var m_html = '<div id="bar_nav"><div class="new" title="添加新数学式" type="math">添加</div>'+
-                         '<div class="div" title="数学式库">数学式库</div></div><div id="bar_body"><div id="crtm"></div></div>';
+            var m_html = '<div id="bar_nav"><div class="new" title="添加新数学式" src_type="math">添加</div>'+
+                     '<div class="div" title="数学式库">数学式库</div></div><div id="bar_body"><div id="crtm"></div></div>';
             $math_bar.html(m_html).appendTo($lib_bar);
-            
+        
+            /*** ref bar ***/
             var $ref_bar =$('<div></div>');
             $ref_bar.attr("id","write_ref_bar").css("display","none");
-            var r_html = '<div id="bar_nav"><div class="new" title="添加新引用" type="ref">添加</div>'+
-                        '<div class="div" title="引用库">引用库</div></div><div id="bar_body"><div id="crtm"></div></div>';
+            var r_html = '<div id="bar_nav"><div class="new" title="添加新引用" src_type="ref">添加</div>'+
+                    '<div class="div" title="引用库">引用库</div></div><div id="bar_body"><div id="crtm"></div></div>';
             $ref_bar.html(r_html).appendTo($lib_bar);
-            
+        
+            /*** table bar ***/
             var $table_bar = $('<div></div>');
             $table_bar.attr("id","write_table_bar").css("display","none");
-            var t_html = '<div id="bar_nav"><div class="new" title="添加新表格" type="table">添加</div>'+
-                        '<div class="div" title="表格库">表格库</div></div><div id="bar_body"><div id="crtm"></div></div>';
-            $table_bar.html(t_html).appendTo($lib_bar);
+            var t_html = '<div id="bar_nav"><div class="new" title="添加新表格" src_type="table">添加</div>'+
+                    '<div class="div" title="表格库">表格库</div></div><div id="bar_body"><div id="crtm"></div></div>';
+            $table_bar.html(t_html).appendTo($lib_bar); 
 
-            $lib_bar.appendTo(_Menu);   
+        }
+        $lib_bar.appendTo(_Menu);   
         this.bind_function_init();
         this.self_init();
         //this.focus();
+    },
+    _support_code_type: function(){
+        return ['AS3','AppleScript','Bash','C#','ColdFusion','C++','CSS','Delphi','Diff',
+                'Erlang','Groovy','JavaScript','Java','JavaFX','Lisp' ,'Perl','Php','Plain',
+                'PowerShell','Python','Ruby','Sass','Scala','SQL','VB','XML'];
+    },
+    _support_unicode: function(unicode_type){
+        return [];
     },
     /********** insert src to textarea ************************/
     insert_src_to_textarea:function(obj){
@@ -430,22 +451,30 @@ jQuery.fn.extend({
     },
     /******** create new src ***********************/
     create_new_src: function(obj){
-        var self_textarea = this;
+        var _self_textarea = self_textarea = this;
         var $menu = this.siblings("#write_menu");
-        var mid = $menu.attr("menu_id"), article_id = $menu.attr("article_id"), article_type = $menu.attr("article_type"), 
+        var menu_id = $menu.attr("menu_id"), article_id = $menu.attr("article_id"), article_type = $menu.attr("article_type"), 
             father_id = $menu.attr("father_id"), father_type= $menu.attr("father_type"), kind = $(obj).attr("type"),
             env_type = $menu.attr("env_type"), env_id = $menu.attr("env_id");
-        var hidden_paras = {"article_id": article_id, "article_type": article_type, "env_id": env_id, "env_type": env_type,
-            "father_id": father_id, "father_type": father_type, "src_type": kind, "do": "new"};
+        var hidden_paras = {
+                        "article_id":  $menu.attr("article_id"), 
+                        "article_type": $menu.attr("article_type"), 
+                        "env_id": $menu.attr("env_id"), 
+                        "env_type": $menu.attr("env_type"),
+                        "father_id": $menu.attr("father_id"), 
+                        "father_type": $menu.attr("father_type"), 
+                        "src_type": $menu.attr("src_type"), 
+                        "do": "new"
+        };
         var id_dict = {"img": "pic", "math": "math", "code":"code", "table":"table", "ref": "ref"};
         var $body = $('<div></div>');
-        $body.attr({"id": "pop_insert_"+ id_dict[kind], "menu_id": mid});
+        $body.attr({"id": "pop_insert_"+ id_dict[ hidden_paras["src_type"] ], "menu_id": menu_id});
         var wd = 200, hg = 200;
         var html = '', paras_html = '';
         for(var ii in hidden_paras){
             paras_html += '<input type="hidden" name="'+ ii +'" value="'+ $.encode(hidden_paras[ii]) +'" />';        
         }
-        switch(kind){
+        switch( hidden_paras["src_type"] ){
            case 'img':
            case 'image':
             /** new image /upload-image**/
@@ -477,7 +506,8 @@ jQuery.fn.extend({
             /** new code **/
             
             var select_html = '';
-            var CodeType = $Write.code_type;
+            //var CodeType = $Write.code_type;
+            var CodeType = $(self_textarea)._support_code_type();
             for(ii=0;ii<CodeType.length;ii++){
                 if(CodeType[ii].toLowerCase()=='python'){
                     select_html += '<option selected value="' + CodeType[ii].toLowerCase()+'">' + CodeType[ii] +'</option>';    
@@ -519,9 +549,9 @@ jQuery.fn.extend({
                     '</div>';
             wd = 450, hg = 390;
             break;
-       }    
+       }
        var $html = jQuery(html);
-       $body.html($html); 
+       $body.html($html);
        pop_page(wd,hg,$body);
        if(kind!='image' && kind != 'img') $html.find('button').bind('click', function(){   $Write.new_lib_src_submit(this); });
        if(kind == 'image' || kind == 'img'){
@@ -611,6 +641,45 @@ jQuery.fn.extend({
        }
 
     },
+    /****** submit src, new, edit, remove ****/
+    _submit_src: function(_paras){
+        var _default_paras = '';
+        var src_dict = {'table':"表","math":'数学式',"code":"代码","reference":'引用',"ref":'引用'};
+        //var 
+        var mes = {};
+        var warn = {'table':"表","math":'数学式',"code":"代码","reference":'引用',"ref":'引用'};
+        mes = $("#pop-content").DivToDict();
+        var process = $(obj).parent().next("span");
+        var type = mes['src_type'];
+    
+        if(mes['title'] == ''){
+            process.html("请填写"+ warn[type]+"名称！").css("color","red");
+            //$(obj).removeAttr("disabled").css("color","#000");
+            return false;           
+        }
+        if(type == 'reference' || type == 'ref'){
+            if(mes['source'] == ''){
+                process.html("请填写" + warn[type] + "出处！").css("color","red");
+                //$(obj).removeAttr("disabled").css("color","#000");
+                return false;
+            }   
+        }
+        if(mes['body'] == ''){
+            if(type != 'reference'){
+                process.html("请填写" + warn[type] + "内容！").css("color","red");
+                //$(obj).removeAttr("disabled").css("color","#000");
+                return false;   
+            }else{
+                var url_reg = /^(http|https|ftp):\/\/.+$/ig;
+                if(!url_reg.test(mes['source'])){
+                    process.html("请填写链接地址或者引用真实内容！").css("color","red");
+                    //$(obj).removeAttr("disabled").css("color","#000");
+                    return false;           
+                }   
+            }
+        }
+        
+    },     
     /******************** update old src *****************************/
     update_old_src:function(obj){
         var obj_one = $(obj).parent().parent();
@@ -1739,8 +1808,18 @@ clear_content_process = function(){
 $Write.comment_create = function(obj){
     var $bollean = $('body').find('#write_comment_zone');
     var blog_id = $('.b_com').attr('blog_id')||0;
-    
     var $obj = $(obj);
+    var paras = {
+        "article_id": '-1',
+        "article_type": 'comment',
+        "env_id": $obj.attr("env_id"),
+        "env_type": $obj.attr("env_type"),
+        "father_id": $obj.attr("article_id"),
+        "father_type": $obj.attr("article_type"),
+        "iscomment": true
+    }
+    
+    
     var article_type = $obj.attr('article_type') || 'blog';
     var father_id = $obj.attr("father_id")||'-1';
     var father_type = $obj.attr("father_type") || 'blog';
@@ -1793,7 +1872,7 @@ $Write.comment_create = function(obj){
         var textarea = $box.find("#write_textarea");
         //alert(textarea.val());
         //art_id, art_type, art_con, father_id, father_type, group_id
-        textarea.CreateEditor('','comment','', father_id, father_type);
+        textarea.CreateEditor(paras);
         textarea.focus();
         $box.find('button').bind('click', function(){  $Write.comment_post("#write_comment_zone");  });
     }else{
@@ -1853,14 +1932,16 @@ $Write.comment_post = function(tag){
     var $button = $tag.find('button');
     var ref_comment = $("#ref_comment_input").val() || '';
     var mes = {};
-    mes['text'] = textarea.val();
+    mes['body'] = textarea.val();
     mes['article_id'] = menu.attr("aritcle_id")||0;;
     mes['article_type'] = 'comment';
     mes['father_id'] = menu.attr("father_id")||0;
     mes['father_type'] = menu.attr('father_type') || 'blog';
+    mes['env_id'] = menu.attr("env_id");
+    mes['env_type'] = menu.attr("env_type");
     mes['ref_comment'] = ref_comment;
 
-    if(!mes['text'] || $.trim(mes['text']) =='' || mes['text'] == "内容"){
+    if(!mes['body'] || $.trim(mes['body']) =='' || mes['body'] == "内容"){
         process.html('评论内容不能为空！').css('color','red');
         return false;
     }
@@ -1870,7 +1951,7 @@ $Write.comment_post = function(tag){
             $button.attr("disabled","disabled").css("color","#ccc");
         },
         function(response){
-            if(response.kind==0){
+            if(response.status == 0){
                 process.html('评论成功，评论框2s后关闭！').css('color','blue');
                 setTimeout('', 2000);
                 setTimeout("$('body').find('#write_comment_zone').slideUp('slow',function(){ $(this).remove(); });", 1000);
@@ -1897,7 +1978,9 @@ $Write.comment_get = function(obj){
         "env_id": $obj.attr("env_id") || "-1",
         "env_type": $obj.attr("env_type")|| "User",
         "article_id": $obj.attr("article_id"),
-        "article_type": $obj.attr("article_type") || 'blog'    
+        "article_type": $obj.attr("article_type") || 'blog',
+        "father_id": $obj.attr("father_id"),
+        "father_type": $obj.attr("father_type")    
     };
     /*
     mes['pos'] = $obj.attr("pos") || 0;

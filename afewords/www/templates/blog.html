@@ -140,7 +140,7 @@
 
     {% if doc['ispreview'] is False %}
         <div class="b_bottom_wrap" blog="{{ article['aid'] }}">
-            <span class="bot-comment" ref_type="blog" title="写评论" father_id="{{ article['aid'] }}" father_type="blog">写评论</span>
+            <span class="bot-comment" ref_type="blog" title="写评论" father_id="{{ article['aid'] }}" father_type="blog" article_id="{{ article['aid'] }}" article_type="blog" env_type="User" env_id="{{ article['author']['uid'] }}">写评论</span>
             
             <span class="bot-author-name"><a href="/bloger/{{ author['uid'] }}">{{ author['name'] }}</a></span>
             <span class="bot-time">{{ article['release_time'][:16] }}&nbsp;/&nbsp;</span>
@@ -195,10 +195,7 @@ $().ready(function(){
             'comment': ''+ ((location.hash.match('#com-([^#]*)') !=null) ? location.hash.match('#com-([^#]*)')[1] : ''),
         }
         $("#write_textarea").CreateEditor('','comment','','{{ article['aid'] }}');
-        var first_page = $('<span>&nbsp;</span>');
-        var load_one = current_load_blog['comment'] == '' ? "no" : "yes";
-        first_page.attr({"pos": current_load_blog['comment'], "load_one":load_one, 'article_id':'{{article['aid'] }}'});
-        $Write.comment_get(first_page);
+        $Write.comment_get($("div.b_bottom_wrap").find("span.bot-comment"));
     });
     </script>
 {% end %}

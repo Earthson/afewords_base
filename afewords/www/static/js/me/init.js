@@ -207,7 +207,7 @@ $Init.init_notice_page = function(){
 
 $Init.init_blog_page = function(){
     //document.body.style.backgroundColor='#f8f8f8';
-    $('.bot-comment').bind('click', function(){
+    $('span.bot-comment').bind('click', function(){
         $Write.comment_create(this);
     });
     $('span.blog_tip_comment').find('.blog_tip_do').bind('click', function(){
