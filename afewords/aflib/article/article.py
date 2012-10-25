@@ -303,7 +303,12 @@ class Article(DataBox):
     def comments():
         def getter(self):
             from comment import Comment
-            return Comment.by_ids(self.lib.comment_list.load_all())
+            tmp = self.lib.comment_list.load_all()
+            ans = Comment.by_ids(tmp)
+            tmp_a = [each._id for each in ans]
+            self.lib.comment_list.pull(*tuple(set(tmp) - set(tmp_a)))
+            #pull ids not exist
+            return ans
         return getter
     
     @db_property
