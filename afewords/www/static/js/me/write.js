@@ -1809,20 +1809,21 @@ $Write.comment_create = function(obj){
     var $bollean = $('body').find('#write_comment_zone');
     var blog_id = $('.b_com').attr('blog_id')||0;
     var $obj = $(obj);
+    var $article_data = $(".b_bottom_wrap").find("span.bot-comment");
     var paras = {
         "article_id": '-1',
         "article_type": 'comment',
-        "env_id": $obj.attr("env_id"),
-        "env_type": $obj.attr("env_type"),
-        "father_id": $obj.attr("article_id"),
-        "father_type": $obj.attr("article_type"),
+        "env_id": $article_data.attr("env_id"),
+        "env_type": $article_data.attr("env_type"),
+        "father_id": $article_data.attr("father_id"),
+        "father_type": $article_data.attr("father_type"),
         "iscomment": true
     }
     
     
-    var article_type = $obj.attr('article_type') || 'blog';
-    var father_id = $obj.attr("father_id")||'-1';
-    var father_type = $obj.attr("father_type") || 'blog';
+    //var article_type = $obj.attr('article_type') || 'blog';
+    //var father_id = $obj.attr("father_id")||'-1';
+    //var father_type = $obj.attr("father_type") || 'blog';
     var ref_comment_pos = $.trim($obj.attr("pos")) || '';
     var ref_comment_id = $.trim($obj.attr("ref_comment_id"));
     //if($(obj).attr("ref_type")!="comment")
@@ -2005,7 +2006,24 @@ $Write.comment_get = function(obj){
                 var comment_con = '';//$('<div></div>').addClass('com_one');
                 var back_info = response.info;
                 var result = response.comment_list;
-                var ref_result = response.ref_comment_dict;
+                var comment_list = response.comment_list, current_comment = '';
+                for(var i = 0; i < comment_list.length; i++){
+                    var tmp_ref_comment_body = '';
+                    comment_con += '<div class="com_one" comment_id="' + result[i].aid + '">' +
+                        '<div class="com_pic"><a href="/bloger/'+ result[i].author.id +'" target="_blank">'+
+                          '<img src="'+ result[i].author.thumb +'" /></a></div>'+
+                            '<div class="com_body"><div class="com_con">'+
+                            '<div class="bb_con1">'+ tmp_ref_comment_body + '<div class="bb_con">' + 
+                            result[i].content + '</div></div>'+
+                            '<div class="com_nav">'+
+                            '<span class="com_reply" ref_type="comment"'+ 'father_id="'+ mes['article_id'] +'" father_type="'+mes['article_type']+'"'+
+                            'ref_comment_id="'+ result[i].aid +'" pos="'+i+'" author_name="'+ result[i].author.name +'" author_id="'+result[i].author.uid+'"></span>'+
+                            '<span class="com_author"><a href="/bloger/'+ result[i].author.uid +'" target="_blank">'+result[i].author.name+'</a></span>'+
+                            //'<span class="com_time">2012-3-12 14:00</span>'+
+                            '</div></div></div></div>';      
+                }
+                //var ref_result = response.ref_comment_dict;
+                /*
                 for(var i in result){
                     var tmp_ref_comment_list = result[i].ref_comment_list;
                     var tmp_ref_comment_body = '';
@@ -2045,6 +2063,7 @@ $Write.comment_get = function(obj){
                             //'<span class="com_time">2012-3-12 14:00</span>'+
                             '</div></div></div></div>';
                 }
+                */
                 //alert(comment_con);
                 $b_com = $(".b_com");
                 //$(".com_one").remove();
@@ -2090,6 +2109,7 @@ $Write.comment_get = function(obj){
                     
                     if($write_zone_tag.length>0)  { $write_zone_tag.appendTo($b_com);}
                 }
+                */
                 $b_com.find(".com_reply").die().unbind().bind('click', function(){
                     $Write.comment_create(this);
                 }).end().find(".com_page>span").die().unbind().bind('click', function(){
@@ -2098,7 +2118,7 @@ $Write.comment_get = function(obj){
                     $Write.comment_get(this);
                     return false;
                 });
-                */
+                
                 $b_com.find("span.com_open1").unbind().bind('click', function(){  $(this).parent().hide().next().slideDown(); });
                 $b_com.find("span.com_close1").unbind().bind('click', function(){ $(this).parent().parent().hide().prev().slideDown();  });
             }else{
