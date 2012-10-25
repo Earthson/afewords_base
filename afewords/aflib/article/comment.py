@@ -34,10 +34,6 @@ class Comment(Article):
     def set_by_info(self, infodoc):
         ans = dict()
         ans['body'] = infodoc['body']
-        ans['env_id'] = infodoc['env_id']
-        ans['env_type'] = infodoc['env_type']
-        ans['father_id'] = infodoc['father_id']
-        ans['father_type'] = infodoc['father_type']
         ans['ref_comments'] = infodoc['ref_comments']
         self.set_propertys(**ans)
         

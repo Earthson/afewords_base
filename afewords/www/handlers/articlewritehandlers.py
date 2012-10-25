@@ -106,12 +106,14 @@ def article_env_init(handler, handler_paras, handler_json):
         if not test_auth(handler.article_obj.authority_verify(usr, env),
                         A_WRITE):
             return 16#WRITE Permission Denied
+    if father:
+        handler.article_obj.father = father
     return 0
 
 
 class ArticleUpdatePara(BaseHandlerPara):
     paradoc = {
-        'do': 'preview',    # unicode, preview or post
+        'do': 'update',    # unicode, update or post
         'article_id': '-1', # unicode
         'article_type': 'blog', # unicode
         'title': '',    # unicode
