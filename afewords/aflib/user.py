@@ -223,16 +223,22 @@ class User(DataBox):
         return a_mapper[article_type](article_obj)
 
     def post_blog(self, blogobj):
-        #from article.blog import Blog
-        blogid = blogobj._id
+        blogid = blogobj.uid
         self.lib.blog_list.push(blogid)
         blogobj.do_post()
         del self.lib.drafts_lib[blogid]
         for each in blogobj.tag:
             self.lib.tag_lib.sub_list(each).add_to_set(blogobj._id)
 
+    def post_comment(self, commentobj):
+        commentid = commentobj.uid
+        father = generator(commentobj.father_id, commentobj.father_type)
+        father.lib.comment_list.push(commentobj._id)
+        commentobj.do_post()
+        del self.lib.drafts_lib[commentid]
+
     def post_topic(self, topicobj, group):
-        topicid = topicobj._id
+        topicid = topicobj.uid
         group.accept_topic(self, topicobj)
         self.drafts_lib.remove_obj(topicid)
         self.posted_topic_list.push(topicid)
@@ -244,7 +250,7 @@ class User(DataBox):
         feedbackobj.do_post()
 
     def delete_blog(self, blogobj):
-        blogid = blogobj._id
+        blogid = blogobj.uid
         self.blog_list.pull(blogid)
         for each in blogobj.tag:
             self.remove_from_tag(blogobj, each)
@@ -314,12 +320,6 @@ class User(DataBox):
         self.drafts_lib.remove_obj(statusid)
         self.status_list.push(statusid)
         statusobj.do_post()
-
-    def post_comment(self, commentobj):
-        father = generator(commentobj.father_id, commentobj.father_type)
-        self.lib.drafts_lib.remove_obj(commentobj._id)
-        father.lib.comment_list.push(commentobj._id)
-        commentobj.do_post()
 
     def follow_user(self, usr):
         self.follow_user_lib.add_obj(usr)

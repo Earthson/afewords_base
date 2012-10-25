@@ -75,7 +75,7 @@ def article_env_init(handler, handler_paras, handler_json):
     if usr is None:
         return 9#Not Login
     env = generator(handler_paras['env_id'], handler_paras['env_type'])
-    handler.env = env
+    handler.env = env #Store env obj
     if not env:
         return 14#Invalid Env Arguments
     father = generator(handler_paras['father_id'], 
@@ -106,8 +106,6 @@ def article_env_init(handler, handler_paras, handler_json):
         if not test_auth(handler.article_obj.authority_verify(usr, env),
                         A_WRITE):
             return 16#WRITE Permission Denied
-    if father:
-        handler.article_obj.father = father
     return 0
 
 
@@ -160,7 +158,8 @@ class ArticleUpdateHandler(BaseHandler):
         self.article_obj.set_by_info(handler_paras.load_doc())    
         author = self.article_obj.author
         if self.article_obj.is_posted is False:
-            self.article_obj.tag = list(set(author.alltags) & 
+            if handler_paras['article_type'] not in ['comment']:
+                self.article_obj.tag = list(set(author.alltags) & 
                         set(handler_paras['tags']))
             if handler_paras['do'] == 'post':
                 auth_ans = self.article_obj.authority_verify(usr, self.env)
@@ -170,13 +169,14 @@ class ArticleUpdateHandler(BaseHandler):
                     return #Post Permission Denied
                 author.post_article(self.article_obj.obj_info[1], 
                                 self.article_obj) #try Post
-        else:
+        elif handler_paras['article_type'] not in ['comment']:
             author.with_new_tags(self.article_obj, handler_paras['tags'])
 
         handler_json['article_id'] = self.article_obj.uid
         handler_json.by_status(0)
         handler_json.write()
         return #Return
+
 
 from afutils.img_utils import upload_img
 
