@@ -295,9 +295,9 @@ class Article(DataBox):
 
     def comments_info_view_by(self, usr=None):
         if usr:
-            return [usr.as_viewer_to_article_info(each.comment_info)
+            return [each.article_info_view_by('comment_info_for_json', usr)
                         for each in self.comments]
-        return [each.comment_info for each in self.comments]     
+        return [each.comment_info for each in self.comments] 
 
     @db_property
     def comments():
@@ -394,7 +394,7 @@ class Article(DataBox):
     @db_property
     def view_body_short():
         def getter(self):
-            from utils import strip_tags
+            from aflib_utils import strip_tags
             return strip_tags(self.view_body, 200)
         return getter
 
@@ -430,7 +430,7 @@ class Article(DataBox):
         tmp['update_time'] = datetime.now()
         self.set_propertys(**tmp)
 
-    #property for page&json
+    #property for page
     @db_property
     def basic_info():
         def getter(self):
@@ -450,8 +450,15 @@ class Article(DataBox):
             ans['privilege'] = self.privilege
             ans['owner'] = self.env_info
             ans['js_list'] = self.js_list
+            ans['permission'] = 'r'
             return ans
         return getter
+
+    def article_info_view_by(self, info_name, usr, env=None, **kwargs):
+        ans = self.get_propertys(info_name)
+        ans['permission'] = self.authority_verify(usr, env, kwargs)
+        ans['author'] = usr.as_viewer_to_uinfo(ans['author'])
+        return ans
 
     @db_property
     def pictures():
@@ -539,6 +546,13 @@ class Article(DataBox):
     def author_url():
         def getter(self):
             from aflib_conf import main_url
-            return main_url + u'user/' + self.author_id
+            tmp_url = main_url + u'user/' + self.author_id
+            return '<a href="%s">' + self.author.name + '</a>' % tmp_url
         return getter
-            return '
+
+    @db_property
+    def short_article_ref(self):
+        def getter(self):
+            from aflib_utils import strip_tags
+            return strip_tags(self.view_body, 30) + '...' + self.author_url
+        return getter

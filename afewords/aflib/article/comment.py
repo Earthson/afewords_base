@@ -19,9 +19,17 @@ class CommentDoc(ArticleDoc.__clsobj__):
     }
 
 
+from authority import *
+
 class Comment(Article):
     datatype = CommentDoc
 
+    @with_user_status
+    def authority_verify(self, usr, env=None, **kwargs):
+        ret = Article.authority_verify(self, usr, env, **kwargs)
+        if usr._id == self.father_id:
+            ret |= A_DEL
+        return ret
 
     def set_by_info(self, infodoc):
         Article.set_by_info(self, infodoc)
@@ -30,20 +38,24 @@ class Comment(Article):
     @db_property
     def ref_comments():
         def getter(self):
-            return self.data['ref_comments']
+            return Comment.by_ids(self.data['ref_comments'])
         def setter(self, value):
             self.data['ref_comments'] = value
         return getter, setter
 
-    #property for page&json
+    #property for json
     @db_property
-    def comment_info():
+    def comment_info_for_json():
         def getter(self):
             ans = dict()
             ans['aid'] = self.uid
             ans['content'] = self.view_body
             ans['release_time'] = str(self.release_time)
             ans['author'] = self.author.basic_info_for_json
-            ans['ref_comment_list'] = self.ref_comments
+            ans['permission'] = 'r'
+            try:
+                ans['ref_comment'] = self.ref_comments[0].short_article_ref
+            except:
+                ans['ref_comment'] = None
             return ans
         return getter

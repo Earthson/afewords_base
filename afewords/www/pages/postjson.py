@@ -196,8 +196,9 @@ class GetCommentJson(BaseJson):
             'aid' : '', #comment_id
             'content' : '', #body
             'release_time' : '',
-            'author' : {}, #basic_author_info_for_json
+            'author' : { }, #basic_author_info_for_json #no taglist
             'ref_comment' : '', #info for reply comment
+            'permission' : '',
         }
     '''
     doc = {

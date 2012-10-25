@@ -305,7 +305,7 @@ class User(DataBox):
         else:
             toview = self.blogs
         if usr: 
-            return [usr.as_viewer_to_article_info(each.basic_info) 
+            return [each.article_info_view_by('basic_info', usr) 
                         for each in toview]
         return [each.basic_info for each in toview]
 
@@ -376,11 +376,6 @@ class User(DataBox):
         uinfo['isfollow'] = self.is_follow(uinfo['uid'])
         uinfo['isme'] = (self.uid == uinfo['uid'])
         return uinfo
-
-    def as_viewer_to_article_info(self, ainfo):
-        ainfo['author']['isfollow'] = self.is_follow(ainfo['author']['uid'])
-        ainfo['author']['isme'] = (self.uid == ainfo['author']['uid'])
-        return ainfo
 
     def is_like(self, obj):
         return obj.uid in self.lib.favorite_lib

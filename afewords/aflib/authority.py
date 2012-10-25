@@ -12,6 +12,13 @@ A_POST = 1 << 3
 A_DEL = 1 << 4
 #A_MANAGE = 1 << 5
 
+auth_doc = {
+    A_READ : 'r',
+    A_WRITE : 'w',
+    A_POST : 'p',
+    A_DEL : 'd',
+}
+
 
 def set_auth(self, auth):
     return self | auth
@@ -24,6 +31,10 @@ def test_auth(self, auth):
     True: if self contains all permission in auth
     '''
     return (self & auth) == auth
+
+def auth_str(self, auth):
+    '''return str like 'rwpd' '''
+    return ''.join(auth_doc[each] for each in auth_doc.keys() if (auth & each))
 
 def with_user_status(operate):
     def wrapper(self, usr, env=None, **kwargs):

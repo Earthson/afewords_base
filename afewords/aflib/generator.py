@@ -3,7 +3,7 @@ from bson.errors import InvalidId
 
 def id_generator(doctype):
     def id_gen(oid):
-        if doctype is None:
+        if doctype is None or not oid:
             return None
         try:
             data = doctype.datatype.one({'_id':ObjectId(oid)})
