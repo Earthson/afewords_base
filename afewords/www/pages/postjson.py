@@ -191,14 +191,19 @@ class GetCommentJson(BaseJson):
         info:
             {
                 'comment_list': [], # see [[blog_list]]
-                'ref_comment_list':[],  # see [[blog_list]]
             }
+        comment_for_json {
+            'aid' : '', #comment_id
+            'content' : '', #body
+            'release_time' : '',
+            'author' : {}, #basic_author_info_for_json
+            'ref_comment' : '', #info for reply comment
+        }
     '''
     doc = {
         'status': -1,   # int
         'info': '' or dict, # unicode or dict, unicode for error, dict for right
         'comment_list': [], # list, see [[ blog_list ]]
-        'ref_comment_dict': {}, # dict, {"1": { [[article]] }}
     }
 
     error_info = {
