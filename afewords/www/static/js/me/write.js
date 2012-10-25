@@ -1824,6 +1824,7 @@ $Write.comment_create = function(obj){
     var father_id = $obj.attr("father_id")||'-1';
     var father_type = $obj.attr("father_type") || 'blog';
     var ref_comment_pos = $.trim($obj.attr("pos")) || '';
+    var ref_comment_id = $.trim($obj.attr("ref_comment_id"));
     //if($(obj).attr("ref_type")!="comment")
     var ref_comment_body = $(obj).parent('.com_nav').siblings(".bb_con1").children('.bb_con').text() || '';
     var ref_author_id = $obj.attr("author_id")||'0';
@@ -1845,10 +1846,10 @@ $Write.comment_create = function(obj){
         $box.attr({'class':'com_reply', 'id':'write_comment_zone'});
         if(reply_comment){
             // reply to comment 
-            $box.html('<input type="hidden" id="ref_comment_input" name="ref_comment" value="'+ ref_comment_pos +
+            $box.html('<input type="hidden" id="ref_comment_input" name="ref_comment" value="'+ ref_comment_id +
             '" /><div id="ref_comment_lib">'+
             '<div class="ref_comment_one">'+
-            '<a href="javascript:void(0);" class="link_close" comment_pos="' + ref_comment_pos + '">X</a>' +
+            '<a href="javascript:void(0);" class="link_close" comment_pos="' + ref_comment_id + '">X</a>' +
             '<p>'+ tmp_ref_comment_body +'<a href="/bloger/' + ref_author_id + '" class="ref_author">'+
             $.encode(ref_author_name)+'</a></p></div></div>' + 
             '<textarea class="bcr_text" id="write_textarea"></textarea>'+
@@ -1881,7 +1882,7 @@ $Write.comment_create = function(obj){
         if(reply_comment){
             var all_id = ref_comment_input.val();
             var all_id_list = all_id.split(',');
-            for(var i =0; i<all_id_list.length;i++){
+            for(var i = 0; i<all_id_list.length;i++){
                 if(ref_comment_pos == all_id_list[i])  break;            
             }
             if(i>=all_id_list.length){
@@ -1891,10 +1892,10 @@ $Write.comment_create = function(obj){
                 //$.log('all id length ' + all_id_list.length);
                 //$.log('id ' + ref_comment_id );
                 //$.log('id in all:' + (ref_comment_id in all_id_list));
-                all_id_list.push(ref_comment_pos);
+                all_id_list.push(ref_comment_id);
                 ref_comment_input.val(all_id_list.join(','));
                 var $restr = $('<div class="ref_comment_one">'+
-                    '<a href="javascript:void(0);" class="link_close" comment_pos="' + ref_comment_pos +'">X</a>'+
+                    '<a href="javascript:void(0);" class="link_close" comment_pos="' + ref_comment_id +'">X</a>'+
                     '<p>'+ tmp_ref_comment_body +
                     '<a href="/bloger/' + ref_author_id + '" target="_blank" class="ref_author">'+$.encode(ref_author_name)+'</a></p></div>');
                 $("#ref_comment_lib").append($restr);
@@ -1940,6 +1941,7 @@ $Write.comment_post = function(tag){
     mes['env_id'] = menu.attr("env_id");
     mes['env_type'] = menu.attr("env_type");
     mes['ref_comment'] = ref_comment;
+    mes['do'] = "post";
 
     if(!mes['body'] || $.trim(mes['body']) =='' || mes['body'] == "内容"){
         process.html('评论内容不能为空！').css('color','red');
