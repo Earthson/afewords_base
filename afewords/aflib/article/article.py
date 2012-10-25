@@ -455,8 +455,8 @@ class Article(DataBox):
         return getter
 
     def article_info_view_by(self, info_name, usr, env=None, **kwargs):
-        ans = self.get_propertys(info_name)
-        ans['permission'] = self.authority_verify(usr, env, kwargs)
+        ans = self.get_propertys(info_name)[0]
+        ans['permission'] = self.authority_verify(usr, env, **kwargs)
         ans['author'] = usr.as_viewer_to_uinfo(ans['author'])
         return ans
 
@@ -551,7 +551,7 @@ class Article(DataBox):
         return getter
 
     @db_property
-    def short_article_ref(self):
+    def short_article_ref():
         def getter(self):
             from aflib_utils import strip_tags
             return strip_tags(self.view_body, 30) + '...' + self.author_url
