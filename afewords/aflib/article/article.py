@@ -236,8 +236,8 @@ class Article(DataBox):
         'keywords' : True,
         'tag' : True,
         'privilege' : True,
-        'father_id' : True,
-        'father_type' : True,
+        'father_id' : False,
+        'father_type' : False,
         'statistics_id' : True,
         'lib_id' : True,
         'is_posted' : True,
@@ -545,13 +545,13 @@ class Article(DataBox):
     def author_url():
         def getter(self):
             from aflib_conf import main_url
-            tmp_url = main_url + u'user/' + self.author_id
-            return '<a href="%s">' + self.author.name + '</a>' % tmp_url
+            tmp_url = main_url + u'user/' + str(self.author_id)
+            return ('<a href="%s">' % tmp_url) + self.author.name + '</a>'
         return getter
 
     @db_property
-    def short_article_ref():
+    def short_article_ref_info():
         def getter(self):
             from aflib_utils import strip_tags
-            return strip_tags(self.view_body, 30) + '...' + self.author_url
+            return strip_tags(self.view_body, 60) + '...' + self.author_url
         return getter

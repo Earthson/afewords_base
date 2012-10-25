@@ -80,9 +80,12 @@ def article_env_init(handler, handler_paras, handler_json):
         return 14#Invalid Env Arguments
     father = generator(handler_paras['father_id'], 
                 type_trans(handler_paras['father_type']))
+    ref_comment = None
     if handler_paras['article_type'] == 'comment':
         if father is None:
             return 18#Invalid father
+        ref_comment = generator(handler_paras['ref_comment'], 
+                            type_trans(handler_paras['article_type']))
     if not Article.is_valid_id(handler_paras['article_id']):
         acls = cls_gen(type_trans(handler_paras['article_type']))
         if not acls:
@@ -108,6 +111,8 @@ def article_env_init(handler, handler_paras, handler_json):
             return 16#WRITE Permission Denied
     if father:
         handler.article_obj.father = father
+    if ref_comment:
+        handler.article_obj.ref_comment = ref_comment
     return 0
 
 
@@ -128,7 +133,7 @@ class ArticleUpdatePara(BaseHandlerPara):
         #@comment
         'father_id': '-1',  # unicode
         'father_type': 'blog',  # unicode
-        'ref_comments': [], # list
+        'ref_comment': None, # list
     }
 
     def read(self):
