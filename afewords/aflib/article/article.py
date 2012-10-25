@@ -332,8 +332,7 @@ class Article(DataBox):
     @db_property
     def father():
         def getter(self):
-            return generator(self.data['father_type'],
-                        self.data['father_id'])
+            return generator(self.data['father_id'], self.data['father_type'])
         def setter(self, val):
             self.data['father_id'] = val._id
             self.data['father_type'] = val.__class__.__name__
