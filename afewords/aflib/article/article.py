@@ -332,8 +332,7 @@ class Article(DataBox):
     @db_property
     def father():
         def getter(self):
-            return generator(self.data['father_type'],
-                        self.data['father_id'])
+            return generator(self.data['father_id'], self.data['father_type'])
         def setter(self, val):
             self.data['father_id'] = val._id
             self.data['father_type'] = val.__class__.__name__
@@ -456,7 +455,7 @@ class Article(DataBox):
 
     def article_info_view_by(self, info_name, usr, env=None, **kwargs):
         ans = self.get_propertys(info_name)[0]
-        ans['permission'] = self.authority_verify(usr, env, **kwargs)
+        ans['permission'] = auth_str(self.authority_verify(usr, env, **kwargs))
         ans['author'] = usr.as_viewer_to_uinfo(ans['author'])
         return ans
 

@@ -32,7 +32,7 @@ def test_auth(self, auth):
     '''
     return (self & auth) == auth
 
-def auth_str(self, auth):
+def auth_str(auth):
     '''return str like 'rwpd' '''
     return ''.join(auth_doc[each] for each in auth_doc.keys() if (auth & each))
 
