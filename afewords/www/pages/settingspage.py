@@ -22,7 +22,7 @@ class UserSettingInvitePage(UserSettingsPage):
     
 
 @with_attr
-class UserSetingPasswordPage(UserSettingsPage):
+class UserSettingPasswordPage(UserSettingsPage):
     __template_file__ = 'settings/setting-password.html'
     doc = {
         'settings_type' : 'password',
@@ -38,7 +38,7 @@ class UserSettingDomainPage(UserSettingsPage):
     }
 
 
-@wtih_attr
+@with_attr
 class UserSettingAvatarPage(UserSettingsPage):
     __template_file__ = 'settings/setting-avatar.html'
     doc = {
