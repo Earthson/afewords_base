@@ -151,7 +151,7 @@ jQuery.fn.extend({
             e=this[0].selectionEnd;
         }
         var te=this[0].value.substring(s,e);
-        return {start:s,end:e,text:te}
+        return { start:s, end:e, text:te}
     },
     /*************** get the  between pos_s and pos_e string ********************/
     getPositionString:function(pos_s,pos_e){
@@ -302,8 +302,18 @@ jQuery.fn.extend({
            this.setPosition(pos_s, pos_e + pre_str.length+end_str.length);  
        }
     },
+    _get_menu_id: function(){
+        var menu_id = 0;
+        return function(){
+            return menu_id++;
+        }
+    },
+    _get_textarea: function(){
+        return this;    
+    }
     /******* Create Editor ********/
     CreateEditor:function(paras){
+        var _this = this;
         /*** comment don't support some lib( table, ref, code, math) and title format ***/
         var default_paras = {
             "article_type": 'blog',
@@ -323,7 +333,7 @@ jQuery.fn.extend({
 
         var _Menu = $('<div></div>'); // the menu parent
         _Menu.attr({"id":"write_menu",
-                    "menu_id": $Write.get_menu_id(),
+                    "menu_id": _this._get_menu_id(),
                     "article_id":default_paras["article_id"],
                     "article_type":default_paras["article_type"], 
                     "father_id":default_paras["father_id"],
@@ -451,11 +461,10 @@ jQuery.fn.extend({
     },
     /******** create new src ***********************/
     create_new_src: function(obj){
-        var _self_textarea = self_textarea = this;
+        var _this = this;
+        var _self_textarea = self_textarea = this, $obj = $(obj);
         var $menu = this.siblings("#write_menu");
-        var menu_id = $menu.attr("menu_id"), article_id = $menu.attr("article_id"), article_type = $menu.attr("article_type"), 
-            father_id = $menu.attr("father_id"), father_type= $menu.attr("father_type"), kind = $(obj).attr("type"),
-            env_type = $menu.attr("env_type"), env_id = $menu.attr("env_id");
+        var menu_id = $menu.attr("menu_id"), kind = $obj.attr("type");
         var hidden_paras = {
                         "article_id":  $menu.attr("article_id"), 
                         "article_type": $menu.attr("article_type"), 
@@ -463,12 +472,12 @@ jQuery.fn.extend({
                         "env_type": $menu.attr("env_type"),
                         "father_id": $menu.attr("father_id"), 
                         "father_type": $menu.attr("father_type"), 
-                        "src_type": $menu.attr("src_type"), 
+                        "src_type": $obj.attr("src_type"), 
                         "do": "new"
         };
-        var id_dict = {"img": "pic", "math": "math", "code":"code", "table":"table", "ref": "ref"};
+        var id_dict = {"img": "img", "math": "math", "code":"code", "table":"table", "ref": "ref"};
         var $body = $('<div></div>');
-        $body.attr({"id": "pop_insert_"+ id_dict[ hidden_paras["src_type"] ], "menu_id": menu_id});
+        $body.attr({"id": "pop_insert_"+ hidden_paras["src_type"], "menu_id": menu_id, "src_type": hidden_paras["src_type"]});
         var wd = 200, hg = 200;
         var html = '', paras_html = '';
         for(var ii in hidden_paras){
@@ -553,8 +562,8 @@ jQuery.fn.extend({
        var $html = jQuery(html);
        $body.html($html);
        pop_page(wd,hg,$body);
-       if(kind!='image' && kind != 'img') $html.find('button').bind('click', function(){   $Write.new_lib_src_submit(this); });
-       if(kind == 'image' || kind == 'img'){
+       if(hidden_paras["src_type"] != 'img') $html.find('button').bind('click', function(){   $Write.new_lib_src_submit(this); });
+       if(hidden_paras["src_type"] == 'img'){
             var $image_form = $body.find('form');
             var $process = $image_form.find('.i_process');
             var $button  = $image_form.find('button');
@@ -642,44 +651,87 @@ jQuery.fn.extend({
 
     },
     /****** submit src, new, edit, remove ****/
-    _submit_src: function(_paras){
-        var _default_paras = '';
-        var src_dict = {'table':"表","math":'数学式',"code":"代码","reference":'引用',"ref":'引用'};
-        //var 
-        var mes = {};
-        var warn = {'table':"表","math":'数学式',"code":"代码","reference":'引用',"ref":'引用'};
-        mes = $("#pop-content").DivToDict();
-        var process = $(obj).parent().next("span");
-        var type = mes['src_type'];
-    
+    _submit_src: function(event, paras_obj){
+        /****** paras_obj must be html dom object ******/
+        /****** this represent the current textarea *****/
+        var _this = this;
+        var click_button = event.currentTarget;
+        if(click_button.nodeName != 'BUTTON' || click_button.nodeName != 'INPUT' ) return false;
+        if(click_button.nodeName == 'INPUT' && click_button.type != "submit") return false;
+        var $button = $(click_button),
+            $obj = $(paras_obj),
+            $process = $button.parent().next("span");
+        var _default_paras = {
+            "src_type": "img",
+            "article_id": '-1',
+            "article_type": 'blog',
+            "env_id": '-1',
+            "env_type": 'User',
+            "father_id": '-1',
+            "father_type": 'blog',
+            'title': '',
+            'body':'',
+            'source': '',
+            "iscomment": false
+        },
+            src_dict = {'table':"表","math":'数学式',"code":"代码","ref":'引用'},
+            article_src_url = '/article-src-control';
+        var mes = $obj.DivToDict(); // mes must be send to the server
+        for(var i in _default_paras){
+            if(!i in mes){
+                mes[i] = _default_paras[i];           
+            }        
+        }
+        
+        /***** check input value *****/
         if(mes['title'] == ''){
-            process.html("请填写"+ warn[type]+"名称！").css("color","red");
+            $process.html("请填写"+ src_dict[mes['src_type']]+"名称！").css("color","red");
             //$(obj).removeAttr("disabled").css("color","#000");
             return false;           
         }
-        if(type == 'reference' || type == 'ref'){
+        if(mes['src_type'] == 'ref'){
             if(mes['source'] == ''){
-                process.html("请填写" + warn[type] + "出处！").css("color","red");
+                $process.html("请填写" + src_dict[mes['src_type']] + "出处！").css("color","red");
                 //$(obj).removeAttr("disabled").css("color","#000");
                 return false;
             }   
         }
-        if(mes['body'] == ''){
-            if(type != 'reference'){
-                process.html("请填写" + warn[type] + "内容！").css("color","red");
-                //$(obj).removeAttr("disabled").css("color","#000");
+        if(mes['body'] == '' && mes['src_type'] != 'img'){
+            if(mes['src_type'] != 'ref'){
+                $process.html("请填写" + src_dict[mes['src_type']] + "内容！").css("color","red");
                 return false;   
             }else{
                 var url_reg = /^(http|https|ftp):\/\/.+$/ig;
                 if(!url_reg.test(mes['source'])){
-                    process.html("请填写链接地址或者引用真实内容！").css("color","red");
+                    $process.html("请填写链接地址或者引用真实内容！").css("color","red");
                     //$(obj).removeAttr("disabled").css("color","#000");
                     return false;           
                 }   
             }
         }
+        /***** send mes ******/     
+        jQuery.postJSON(function(){
+            $button.attr("disabled", "disabled").css("color", "#333");
+            $process.html('<img src="/static/img/ajax.gif" />操作中...');
+        }, function(response){
+           if(response.status != 0){
+                $button.removeAttr("disabled").css("color", "black");
+                $process.html(response.info).css("color", "red");          
+           }else{
+                _this._handler_src_submit_result({ "response": response,  "pop_page_obj": paras_obj, "mes": mes});       
+           }
+        }, function(response){
+            $button.removeAttr("disabled").css("color", "black");
+            $process.html("操作出现异常！").css("color", "red"); 
+        });
+    },
+    _handler_src_submit_result: function( _paras ){
+        var response = _paras["response"], 
+            pop_page_obj = _paras["pop_page_obj"],
+            mes = _paras["mes"];
+        /** handler the result  **/
         
-    },     
+    },
     /******************** update old src *****************************/
     update_old_src:function(obj){
         var obj_one = $(obj).parent().parent();
@@ -1167,7 +1219,7 @@ $Write.picture_check = picture_check =  function(obj){
 /****************** upload picture response handler ****************************/
 picture_upload_handler = function(type, info, alias, name ,isnew , article_id ){
     //alert('in img up handler');
-    var obj = $("#pop_insert_pic");
+    var obj = $("#pop_insert_img");
     var menuid = obj.attr("menu_id");
     var process = obj.find("span.i_process");
     var buttons = obj.find("span.i_button").find('button');

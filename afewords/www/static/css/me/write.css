@@ -8,13 +8,13 @@
 #pop-content p .all_example a{color: blue;text-decoration: none;}
 #pop-content p span img{margin-top: 5px;}
 
-#pop_insert_pic{width: 100%;height: 100%;display: block;background-color: #fff;text-align: center;}
-#pop_insert_pic p{display: block;width: 300px;padding:10px 20px;line-height: 25px;text-align: left;max-height: 32px;overflow: hidden;}
-#pop_insert_pic p input[type='text']{width:70%;height:30px;margin-left:10px;line-height: 30px;font-size: 16px;}
-#pop_insert_pic p span button{padding: 0 15px;height: 38px;line-height: 39px;border: 1px solid #CCC;display: inline-block;}
-#pop_insert_pic p label{line-height: 30px;margin: auto 10px auto 5px;}
-#pop_insert_pic p .i_button{float: left;}
-#pop_insert_pic p .i_process{line-height: 40px;margin-left: 5px;width: 190px;float: left;font-size: 12px;text-align: center;}
+#pop_insert_img{width: 100%;height: 100%;display: block;background-color: #fff;text-align: center;}
+#pop_insert_img p{display: block;width: 300px;padding:10px 20px;line-height: 25px;text-align: left;max-height: 32px;overflow: hidden;}
+#pop_insert_img p input[type='text']{width:70%;height:30px;margin-left:10px;line-height: 30px;font-size: 16px;}
+#pop_insert_img p span button{padding: 0 15px;height: 38px;line-height: 39px;border: 1px solid #CCC;display: inline-block;}
+#pop_insert_img p label{line-height: 30px;margin: auto 10px auto 5px;}
+#pop_insert_img p .i_button{float: left;}
+#pop_insert_img p .i_process{line-height: 40px;margin-left: 5px;width: 190px;float: left;font-size: 12px;text-align: center;}
 
 
 #pop_insert_table{width: 100%;height: 100%;display: block;background-color: #fff;text-align: center;}
