@@ -54,10 +54,8 @@ class BaseToolPage(AFDocBase):
 
 
 @with_attr
-class BaseMail(AFDocBase):
-    subject = u'Mail from afewords'
+class BaseStringRender(AFDocBase):
     __template_file__ = ''
-    __loader__ = Loader('templates/mails')
 
     doc = {
         'main_url' : af_conf['main_url'],
@@ -68,6 +66,18 @@ class BaseMail(AFDocBase):
     
     __str__ = render_string
     #__unicode__ = render_string
+
+
+@with_attr
+class BaseMail(BaseStringRender):
+    subject = u'Mail from afewords'
+    __loader__ = Loader('templates/mails')
+
+
+@with_attr
+class BaseMSG(BaseStringRender):
+    subject = u'Mail from afewords'
+    __loader__ = Loader('templates/messages')
 
 
 @with_attr
