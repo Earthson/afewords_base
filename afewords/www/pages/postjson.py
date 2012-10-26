@@ -203,7 +203,7 @@ class GetCommentJson(BaseJson):
     '''
     doc = {
         'status': -1,   # int
-        'info': '' or dict, # unicode or dict, unicode for error, dict for right
+        'info': '', # or dict, # unicode or dict, unicode for error, dict for right
         'comment_list': [], # list, see [[ blog_list ]]
     }
 
@@ -217,3 +217,22 @@ class GetCommentJson(BaseJson):
         self['status'] = status
         self['info'] = self.error_info[status]
 
+
+@with_attr
+class ArticleRemoveJson(BaseJson):
+    
+    doc = {
+        'status' : -1, #int
+        'info' : ''
+    }
+
+    error_info = {
+        0 : u'删除成功',
+        1 : u'请登入后再尝试',
+        2 : u'文章不存在',
+        2 : u'您没有删除权限',
+    }
+
+    def by_status(self, status):
+        self['status'] = status
+        self['info'] = self.error_info[status]
