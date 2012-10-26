@@ -230,7 +230,8 @@ class ArticleRemoveJson(BaseJson):
         0 : u'删除成功',
         1 : u'请登入后再尝试',
         2 : u'文章不存在',
-        2 : u'您没有删除权限',
+        3 : u'错误的环境参数',
+        4 : u'您没有删除权限',
     }
 
     def by_status(self, status):
