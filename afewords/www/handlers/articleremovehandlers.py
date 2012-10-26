@@ -12,15 +12,11 @@ class ArticleRemovePara(BaseHandlerPara):
     paradoc = {
         'id': None,
         'type': 'blog',
-        'env_type' : None,
-        'env_id' : None,
     }
 
     def read(self):
         self['id'] = self.handler.get_esc_arg('id')
         self['type'] = self.handler.get_esc_arg('type', 'blog')
-        self['env_type'] = self.handler.get_esc_arg('env_type', None)
-        self['env_id'] = self.handler.get_esc_arg('env_id', None)
 
 
 class ArticleRemoveHandler(BaseHandler):
@@ -39,7 +35,7 @@ class ArticleRemoveHandler(BaseHandler):
             handler_json.by_status(2)
             handler_json.write()
             return #Article Not Exist
-        env = generator(handler_paras['env_id'], handler_paras['env_type'])
+        env = article_obj.env
         auth_ans = article_obj.authority_verify(usr, env)
         if test_auth(auth_ans, A_DEL) is False:
             handler_json.by_status(4)
