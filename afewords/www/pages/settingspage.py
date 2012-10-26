@@ -6,6 +6,7 @@ from basepage import BasePage, with_attr
 class UserSettingsPage(BasePage):
     __template_file__ = 'settings/setting-base.html'
     doc = {
+        'page_type': 'settings',
         'settings_type' : '',
         'current_page' : 1, # int , current page
         'paging_html' : '', # unicode , for paging 

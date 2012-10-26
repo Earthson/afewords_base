@@ -3,6 +3,8 @@
 
 {% block middle_body %}
 
+{% set user_base_type = doc['page_type'] %}
+
 <div id="left2">
 {# remove this
 <div id="left2-name">{{ user.name }}</div>
@@ -15,10 +17,12 @@
 <li><a href="/blog-lib" class="current{{ int(user_base_type=='blog') }}">文章</a></li>
 <li><a href="/user-book" class="current{{ int(user_base_type=='user-book') }}">知识谱</a></li>
 
+{#
 
 {% if user.domain == 'afewords.com' %}
 <li><a href="/user-lib" class="current{{ int(user_base_type=='user-lib') }}">人群</a></li>
 {% end %}
+#}
 </ul>
 
 </div>
