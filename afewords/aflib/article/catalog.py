@@ -297,6 +297,38 @@ class Catalog(DataBox):
     def remove_from_catalog(self, catalog_obj, node_id, relation_obj):
         del self.lib.parent_catalogs[str(catalog_obj._id)+'#'+node_id]
         catalog_obj.remove_subcatalog(node_id, relation_obj)
+    
+    def get_node_info(self, node_id):
+        snode = self.lib.node_lib.sub_dict(node_id).load_all()
+        if not snode:
+            return None
+        snode_info = self.lib.node_info_lib.sub_dict(node_id).load_all()
+        ans = dict()
+        ans['cid'] = node_id
+        ans['title'] = snode['title']
+        ans['chapter_num'] = snode['section']
+        ans['article_count'] = snode['article_count']
+        ans['spec_article_count'] = snode['spec_count']
+        ans['subcatalog_count'] = snode['subcatalog_count']
+        ans['article_list'] = [] #todo Earthson
+        ans['subcatalog_list'] = []
+        return ans
+
+    def get_node_list_info(self):
+        nodes = self.lib.node_lib.load_all()
+        nodeinfos = self.lib.node_info_lib.load_all()
+        def trans_each(nid):
+            ans = dict()
+            ans['cid'] = nid
+            ans['title'] = nodes[nid]['title']
+            ans['chapter_num'] = nodes[nid]['section']
+            ans['article_count'] = nodes[nid]['article_count']
+            ans['spec_article_count'] = nodes[nid]['spec_count']
+            ans['subcatalog_count'] = nodes[nid]['subcatalog_count']
+            ans['article_list'] = [] #todo Earthson
+            ans['subcatalog_list'] = []
+            return ans
+        return [trans_each(each) for each in nodes.keys()]
 
     #property for page&json
     @db_property
@@ -305,8 +337,14 @@ class Catalog(DataBox):
             ans = dict()
             ans['bid'] = self.uid
             ans['name'] = self.name
-            ans['all_count'] = self.node_sum
+            ans['release_time'] = self.release_time
+            ans['all_catalog_count'] = self.node_sum
             ans['complete_count'] = self.complete_count
             ans['author'] = self.owner.basic_info
+            ans['complete_rate'] = int((
+                    ans['all_catalog_count'] / ans['complete_count']) * 100)
+            ans['summary'] = self.about.basic_info
+            ans['chapter_list'] = []
+            ans['relation_id'] = ''
             return getter
         return getter
