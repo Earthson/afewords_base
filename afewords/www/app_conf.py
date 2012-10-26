@@ -16,6 +16,9 @@ from handlers.articlewritehandlers import ArticleSrcHandler
 from handlers.commenthandlers import CommentGetHandler
 
 
+from handlers.settingshandlers import UserSettingInviteHandler
+
+
 app_handlers = {
     (r'/', IndexHandler), #MainHandler),
     (r'/test', TestHandler),
@@ -38,6 +41,7 @@ app_handlers = {
     (r'/article-src-control', ArticleSrcHandler),
     (r'/getcomment', CommentGetHandler),
     #(r'/home(.*)', UserBlogLibHandler),
+    (r'/settings-invite', UserSettingInviteHandler),
 }
 
 app_settings = {

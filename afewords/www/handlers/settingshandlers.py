@@ -10,3 +10,13 @@ from pages.settingspage import UserSettingTagPage
 from pages.settingspage import UserSettingFollowerPage
 from pages.settingspage import UserSettingNoticePage
 from pages.settingspage import UserSettingDraftPage
+
+
+class UserSettingInviteHandler(BaseHandler):
+    @with_login
+    def get(self):
+        handler_page = UserSettingInvitePage(self)
+        usr = self.current_user
+        handler_page['invite_count'] = usr.invitations
+        handler_page.render()
+        return
