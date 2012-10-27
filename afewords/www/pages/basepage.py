@@ -111,7 +111,6 @@ class BasePage(AFDocBase):
     def __init__(self, handler=None, doc=None):
         super(BasePage, self).__init__(doc)
         self.handler = handler
-        #self.doc['user'] = user_to_dict(self.handler.current_user)
         usr = self.handler.current_user
         if usr:
             self.doc['user'] = usr.notify_user_info

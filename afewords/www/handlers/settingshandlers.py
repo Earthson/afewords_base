@@ -12,6 +12,12 @@ from pages.settingspage import UserSettingNoticePage
 from pages.settingspage import UserSettingDraftPage
 
 
+class UserSettingInvitePara(BaseHandlerPara):
+
+    paradoc = {
+        'email' : '',
+    }
+
 class UserSettingInviteHandler(BaseHandler):
     @with_login
     def get(self):

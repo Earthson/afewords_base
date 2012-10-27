@@ -73,3 +73,9 @@ class Comment(Article):
             ans['ref_comment_info'] = self.ref_comment_info
             return ans
         return getter
+
+    @db_property
+    def obj_url():
+        def getter(self):
+            return self.father.obj_url + '#com-' + self.uid
+        return getter

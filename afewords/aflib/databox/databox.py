@@ -170,6 +170,19 @@ class DataBox(object):
         return getter
 
     @db_property
+    def obj_url():
+        def getter(self):
+            return ''
+        return getter
+
+    @db_property
+    def main_url():
+        def getter(self):
+            from aflib_conf import main_url
+            return main_url
+        return getter
+
+    @db_property
     def data_status():
         def getter(self):
             return self.data['data_status']
