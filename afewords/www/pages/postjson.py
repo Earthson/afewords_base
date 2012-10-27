@@ -1,8 +1,23 @@
 #coding=utf-8
 from basepage import with_attr, BaseJson
 
+class StatusJson(BaseJson):
+    doc = {
+        'status' : 0,
+        'info' : '',
+    }
+
+    error_info = {
+        0 : '',
+    }
+
+    def by_status(self, status):
+        self['status'] = status
+        self['info'] = self.error_info[status]
+
+
 @with_attr
-class RegisterJson(BaseJson):
+class RegisterJson(StatusJson):
     '''
     @nologin
     @ajax_post
@@ -12,39 +27,24 @@ class RegisterJson(BaseJson):
         'info' : '', #error info to display, when registration error occured
     }
 
-    def set_info(self, info_type):
-        temp = {
-            0 : u'注册成功',
-            1 : u'请您填写正确的姓名！',
-            2 : u'邮箱格式不正确！',
-            3 : u'请您填写密码，至少4位！',
-            4 : u'验证码错误！',
-            6 : u'邮箱已经被注册！',
-            7 : u'很抱歉您并未被邀请！',
-            8 : u'验证邮件发送失败！',
-        }
-        self.doc['info'] = temp[info_type]
-        self.doc['status'] = 0 if info_type == 0 else 1
-
-@with_attr
-class LoginJson(BaseJson):
-    '''
-    @nologin
-    @norrmal_post
-    '''
-    pass
+    error_info = {
+        0 : u'注册成功',
+        1 : u'请您填写正确的姓名！',
+        2 : u'邮箱格式不正确！',
+        3 : u'请您填写密码，至少4位！',
+        4 : u'验证码错误！',
+        6 : u'邮箱已经被注册！',
+        7 : u'很抱歉您并未被邀请！',
+        8 : u'验证邮件发送失败！',
+    }
 
 
 @with_attr
-class ResetJson(BaseJson):
+class ResetJson(StatusJson):
     '''
     @nologin
     @ajax_post
     '''
-    doc = {
-        'status': -1,   # int
-        'info': '',     # unicode
-    }
     error_info = {
         0 : u'请登入邮箱完成密码重置', # normal
         1 : u'请填写正确的邮箱！',
@@ -53,21 +53,13 @@ class ResetJson(BaseJson):
         4 : u'重置密码邮件发送错误！',
     }
 
-    def by_status(self, status):
-        self['status'] = 1 if status != 0 else 0
-        self['info'] = self.error_info[status]
-
 
 @with_attr
-class RepeatMailJson(BaseJson):
+class RepeatMailJson(StatusJson):
     '''
     @nologin
     @ajax_post
     '''
-    doc = {
-        'status': -1,   # int
-        'info': '',     # unicode
-    }
     error_info = {
         0 : u'发送成功, 请登入邮箱完成验证',
         1 : u'非法调用',
@@ -77,23 +69,16 @@ class RepeatMailJson(BaseJson):
         5 : u'您无需验证，请尝试登入或者重置密码',
     }
 
-    def by_status(status):
-        self['status'] = status
-        self['info'] = self.error_info[status]        
-
 
 @with_attr
-class UpdateArticleJson(BaseJson):
+class UpdateArticleJson(StatusJson):
     '''
     @login
     @ajax_post
     '''
     doc = {
-        'status': -1,   # int
-        'info': '',     # int or dict 
-
-        'isnew': 0, # 1 for True, <=0 for False
         #for new write
+        'isnew': 0, # 1 for True, <=0 for False
         'article_id': '',   # unicode
     }
     error_info = {  # int info 
@@ -118,42 +103,23 @@ class UpdateArticleJson(BaseJson):
         18: u'无法评论该对象，可能不存在',
     }
 
-    def by_status(self, status):
-        self['status'] = status
-        self['info'] = self.error_info[status]
-
     def as_new(self, article_id):
         self['isnew'] = 1
         self['article_id'] = article_id
 
 
 @with_attr
-class ArticleSrcJson(BaseJson):
+class ArticleSrcJson(StatusJson):
     '''
     @login
     '''
     doc = {
-        'status': -1, # -1 for error, 0 for right
-        'info': '', # error code
         'article_isnew': 0, # int, 0 for False, 1 for True
         'article_id': '',   # unicode
         'src_isnew': 0, # int, 0 for False, 1 for True
         'src_alias': '',    # unicode
         'img_url' : '', #for image upload
     }    
-
-    def by_status(self, status):
-        self['status'] = status
-        self['info'] = self.error_info[status]
-
-    def as_new(self, article_obj):
-        '''for article'''
-        self['article_isnew'] = 1
-        self['article_id'] = article_obj.uid
-
-    def as_new_src(self, src_obj):
-        self['src_isnew'] = 1
-        self['src_alias'] = src_obj.alias
 
     error_info = {
         0: '',
@@ -182,9 +148,19 @@ class ArticleSrcJson(BaseJson):
         55: u'请上传图片',
     }
 
+    def as_new(self, article_obj):
+        '''for article'''
+        self['article_isnew'] = 1
+        self['article_id'] = article_obj.uid
+
+    def as_new_src(self, src_obj):
+        self['src_isnew'] = 1
+        self['src_alias'] = src_obj.alias
+
+
 
 @with_attr
-class GetCommentJson(BaseJson):
+class GetCommentJson(StatusJson):
     '''
     @ajax_post
     @parameter
@@ -202,8 +178,6 @@ class GetCommentJson(BaseJson):
         }
     '''
     doc = {
-        'status': -1,   # int
-        'info': '', # or dict, # unicode or dict, unicode for error, dict for right
         'comment_list': [], # list, see [[ blog_list ]]
     }
 
@@ -211,21 +185,10 @@ class GetCommentJson(BaseJson):
         0 : '',
         1 : u'被评论的文章不存在',
     }
-    
-
-    def by_status(self, status):
-        self['status'] = status
-        self['info'] = self.error_info[status]
 
 
 @with_attr
-class ArticleRemoveJson(BaseJson):
-    
-    doc = {
-        'status' : -1, #int
-        'info' : ''
-    }
-
+class ArticleRemoveJson(StatusJson):
     error_info = {
         0 : u'删除成功',
         1 : u'请登入后再尝试',
@@ -234,6 +197,11 @@ class ArticleRemoveJson(BaseJson):
         4 : u'您没有删除权限',
     }
 
-    def by_status(self, status):
-        self['status'] = status
-        self['info'] = self.error_info[status]
+
+@with_attr
+class InviteJson(StatusJson):
+    error_info = {
+        0 : u'成功发送邀请',
+        1 : u'您没有可用的邀请名额',
+        2 : u'邀请发送失败',
+    }

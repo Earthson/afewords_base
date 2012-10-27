@@ -67,22 +67,22 @@ class RegisterHandler(BaseHandler):
         token = self.get_esc_arg('token')
 
         if name is None or len(name) < 2:
-            info.set_info(1)
+            info.by_status(1)
         elif email is None or not is_email(email):
-            info.set_info(2)
+            info.by_status(2)
         elif pwd is None or len(pwd) < 4:
-            info.set_info(3)
+            info.by_status(3)
         else:
             cookie_token = self.get_secure_cookie('ver_code', None)
             if token is None or token.lower() != cookie_token:
-                info.set_info(4)
+                info.by_status(4)
             else:
                 status = user_reg(email, pwd, sex, name)
                 if status == 0:
                     self.set_cookie('repeat', str(time.time()))
                     self.redirect('/login')
                     return
-                info.set_info(status)
+                info.by_status(status)
         info.write()
         return
 
