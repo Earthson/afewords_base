@@ -43,7 +43,12 @@ class UserLibDoc(AFDocument):
         },
         'managed_catalog_lib' : dict, #todo Earthson
         'recommended_list' : [(ObjectId, basestring)],
-        'notification_list' : list, #todo Earthson
+        'notification_lib' : {
+            basestring : {
+                'info' : basestring,
+                'isread' : bool,
+            }
+        }, 
         'tag_lib' : {
             #tagname : blog_id_set
             basestring : [ObjectId],
@@ -87,8 +92,8 @@ class UserLib(EmMongoDict):
         return self.sub_dict('follow_group_lib')
 
     @property
-    def notification_list(self):
-        return self.sub_list('notification_list')
+    def notification_lib(self):
+        return self.sub_dict('notification_lib')
 
     @property
     def tag_lib(self):
