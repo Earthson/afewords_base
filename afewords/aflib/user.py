@@ -217,8 +217,7 @@ class User(DataBox):
 
     def accept_notification(self, info):
         import time
-        noti_id = repr(time.time())
-        noti_id = noti_id.replace('.', '#') #generate noti_id
+        noti_id = repr(time.time()).replace('.', '#') #generate noti_id
         doc = {
             'info' : info,
             'isread' : False,
