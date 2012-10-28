@@ -100,7 +100,7 @@ $Write.window_close_alert = function(){
             return '确认关闭？';
         });
         $(window).unload(function(){
-            alert('再见');
+            alert('即将关闭');
         });
     }
 $Write.close_window_close_alert = function(){
@@ -310,7 +310,7 @@ jQuery.fn.extend({
     },
     _get_textarea: function(){
         return this;    
-    }
+    },
     /******* Create Editor ********/
     CreateEditor:function(paras){
         var _this = this;
@@ -725,13 +725,113 @@ jQuery.fn.extend({
             $process.html("操作出现异常！").css("color", "red"); 
         });
     },
+    
+    _window_close_alert: function(){
+        
+    },
+    _window_close_alert_close: function(){
+        
+    },
+    
     _handler_src_submit_result: function( _paras ){
         var response = _paras["response"], 
             pop_page_obj = _paras["pop_page_obj"],
             mes = _paras["mes"];
         /** handler the result  **/
+        var $menu = $("body").find('#write_menu[menu_id=' + $(pop_page_obj).attr("menu_id") + ']');
+        var _this = this, $textarea = $(_this);
+        var src_dict = {'math':'#write_math_bar','reference':'#write_ref_bar', 'ref':'#write_ref_bar',
+               'table':'#write_table_bar','code':'#write_code_bar', 'img': '#write_image_bar'};
+        if(mes["do"] == "new" ){
+                /*
+                $Write.window_close_alert();
+                var info = response.info;
+                if(response.article_isnew == 1){
+                    $menu.attr("article_id",response.article_id);
+                }
+                var obj_bar = $menu.find(src_dict[mes['src_type']]);
+                var obj_body = obj_bar.find("#crtm");
+                var obj_one = $('<div></div>');
+                obj_one.attr({"class":'one','oid':response.src_alias,"type":type});
+                var obj_html= '';
+                var alias = response.src_alias;
+                //alert(type);
+                switch(type){
+                    case 'reference':
+                    case 'ref':
+                        obj_html =  '<div><span class="cname">引用'+ alias+'</span></div>'+
+                            '<div class="control"><span class="cdel" title="删除">删除</span>'+
+                            '<span class="cedit" title="修改">修改</span>'+
+                            '<span class="cinsert">插入</span></div>'+
+                            //'<div><span class="cdes">名称：</span></div>'+
+                            '<div><span><input type="text" id="otitle" readonly="readonly" value="'+mes['title']+'" /></span>' + 
+                            '<input type="hidden" id="osource" value="'+mes['source']+'" /><textarea id="obody">'+mes['body']+'</textarea></div>';
+                        break;
+                    case 'code':
+                        obj_html = '<div><span class="cname">代码'+ alias +'</span></div>'+
+                                '<div  class="control"><span class="cdel" title="删除">删除</span>'+
+                                '<span class="cedit" title="修改">修改</span>'+
+                                '<span class="cinsert">插入</span></div>'+
+                                //'<div><span class="cdes">名称：</span></div>'+
+                                '<div><span><input type="text" id="otitle" readonly="readonly" value="'+mes['title']+'" /></span>'+
+                                '<input type="hidden" id="otype" value="'+ mes['code_type'] +'" />' +
+                                '<textarea id="obody">'+mes['body'] +'</textarea>' +
+                                '</div>';
+                        break;
+                    case 'table':
+                        obj_html = '<div><span class="cname">表'+alias+'</span></div>'+
+                                '<div  class="control"><span class="cdel" title="删除">删除</span>'+
+                                '<span class="cedit" title="修改">修改</span>'+
+                                '<span class="cinsert">插入</span></div>'+
+                                //'<div><span class="cdes">名称：</span></div>'+
+                                '<div><span><input type="text" id="otitle" readonly="readonly" value="'+mes['title']+'" /></span>'+
+                                '<textarea id="obody">'+mes['body']+'</textarea>'+                              
+                                '</div>';
+                        break;
+                    case 'math':
+                        obj_html = '<div><span class="cname">数式'+alias+'</span></div>'+
+                                '<div class="control"><span class="cdel" title="删除">删除</span>'+
+                                '<span class="cedit" title="修改" >修改</span>'+
+                                '<span class="cinsert">插入</span></div>'+
+                                //'<div><span class="cdes">名称：</span></div>'+
+                                '<div><span><input type="text" id="otitle" readonly="readonly" value="'+mes['title']+'" />'+
+                                    '<input type="hidden" id="math_mode" value="'+ mes['math_mode'] +'" /></span>'+
+                                '<textarea id="obody">'+mes['body']+'</textarea>'+                              
+                                '</div>';
+                        //alert(obj_html);
+                        break;
+                }   
+                        
+                obj_one.html(obj_html);
+                obj_one.appendTo(obj_body);
+                process.html('添加成功！').css("color",'blue');
+                
+                
+                obj_one.find(".cedit").bind('click',function(){
+                    current_textarea.update_old_src(this);
+                });
+                obj_one.find(".cinsert").bind('click', function(){
+                    current_textarea.insert_src_to_textarea(this);
+                }).click();
+                obj_one.find(".cdel").bind('click', function(){
+                    current_textarea.delete_lib_src(this);
+                });
+                pop_page_close();
+            }else{
+                process.html(response.info).css("color","red"); 
+                $(obj).removeAttr("disabled").css("color","#000");
+                return false;
+            }            
+            */
+            
+            
+        }else{
+                    
+        }
         
     },
+    
+    
     /******************** update old src *****************************/
     update_old_src:function(obj){
         var obj_one = $(obj).parent().parent();
