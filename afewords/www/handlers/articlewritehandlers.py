@@ -109,9 +109,13 @@ def article_env_init(handler, handler_paras, handler_json):
         if not test_auth(handler.article_obj.authority_verify(usr, env),
                         A_WRITE):
             return 16#WRITE Permission Denied
-    if father:
+    handler.father = None
+    handler.ref_comment = None
+    if father is not None:
+        handler.father = father
         handler.article_obj.father = father
-    if ref_comment:
+    if ref_comment is not None:
+        handler.ref_comment = ref_comment
         handler.article_obj.ref_comment = ref_comment
     return 0
 
@@ -141,7 +145,6 @@ class ArticleUpdatePara(BaseHandlerPara):
                                     for ek, ev in self.paradoc.items()])
         self['tags'] = self.handler.get_esc_args('tags[]')
         self['ref_comments'] = self.handler.get_esc_args('ref_comments[]')
-        #self['keywords'] = self.handler.get_esc_args('keywords[]')
         self['tags'].append('default')
         self['keywords'] = self['keywords'].replace(u'，', u',').split(u',')
         if self['privilege'] not in ['public', 'private']:
@@ -149,6 +152,7 @@ class ArticleUpdatePara(BaseHandlerPara):
     
 
 from pages.postjson import UpdateArticleJson
+from pages.messages import BeCommentedMSG
 
 class ArticleUpdateHandler(BaseHandler):
 
@@ -176,6 +180,16 @@ class ArticleUpdateHandler(BaseHandler):
                     return #Post Permission Denied
                 author.post_article(self.article_obj.obj_info[1], 
                                 self.article_obj) #try Post
+                if handler_paras['article_type'] in ['comment']:
+                    msg = BeCommentedMSG()
+                    msg.comment_by(self.father, self.article_obj)
+                    msg_str = msg.render_string()
+                    father_author = self.father.author
+                    father_author.accept_notification(msg_str)
+                    if self.ref_comment:
+                        ref_comment_author = self.ref_comment.author
+                        if father_author != ref_comment_author:
+                            ref_comment_author.accept_notification(msg_str)
         elif handler_paras['article_type'] not in ['comment']:
             author.with_new_tags(self.article_obj, handler_paras['tags'])
 

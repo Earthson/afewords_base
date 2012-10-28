@@ -76,6 +76,18 @@ class DataBox(object):
         if attrs:
             self.set_propertys(**attrs)
 
+    def __eq__(self, other):
+        try:
+            return self.uid == other.uid
+        except:
+            return False
+
+    def __ne__(self, other):
+        try:
+            return self.uid != other.uid
+        except:
+            return True
+
     @classmethod
     def new_doc(cls):
         return cls()._id

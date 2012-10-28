@@ -16,3 +16,4 @@ class Blog(Article):
     def obj_url():
         def getter(self):
             return self.main_url + 'blog/' + self.uid
+        return getter
