@@ -6,6 +6,7 @@ from pages.pages import IndexPage
 class IndexHandler(BaseHandler):
 
     def get(self):
+        #todo Earthson
         self.redirect('/login')
         return
         page = IndexPage(self)

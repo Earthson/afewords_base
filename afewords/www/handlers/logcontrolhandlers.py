@@ -6,12 +6,12 @@ from generator import id_generator, index_generator
 
 class LoginHandler(BaseHandler):
 
-    @with_nologin
+    @without_login
     def get(self):
         page = LoginPage(self)
         return page.render()
 
-    @with_nologin
+    @without_login_post
     def post(self):
         cookie_code = self.get_secure_cookie('ver_code', None)
         email = self.get_esc_arg('email')
@@ -41,6 +41,7 @@ class LoginHandler(BaseHandler):
 
 
 class LogoutHandler(BaseHandler):
+    @with_login
     def get(self):
         self.clear_all_cookies()
         self.redirect('/')

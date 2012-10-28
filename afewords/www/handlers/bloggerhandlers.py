@@ -18,8 +18,6 @@ class BloggerBlogPara(BaseHandlerPara):
             self['page'] = 1
         self['tag'] = self.handler.get_esc_arg('tag', self['tag'])
 
-    def verify(self):
-        return 0
 
 class BloggerBlogHandler(BaseHandler):
 
