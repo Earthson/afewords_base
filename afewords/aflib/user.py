@@ -44,9 +44,10 @@ class UserLibDoc(AFDocument):
         'managed_catalog_lib' : dict, #todo Earthson
         'recommended_list' : [(ObjectId, basestring)],
         'notification_lib' : {
+            #noti_id
             basestring : {
-                'info' : basestring,
-                'isread' : bool,
+                'info' : basestring, #info to show
+                'isread' : bool, #have read?
             }
         }, 
         'tag_lib' : {
@@ -171,8 +172,7 @@ class User(DataBox):
     @db_property
     def notice_count():
         def getter(self):
-            return len([each for each in self.lib.notification_list.load_all() 
-                            if each is not None and each[1] is False])   
+            return len(self.lib.notification_lib)
         return getter
 
     @db_property
@@ -214,6 +214,44 @@ class User(DataBox):
         elif self._id == usr._id:
             ret = set_auth(ret, A_READ | A_WRITE | A_DEL | A_POST)
         return ret
+
+    def accept_notification(self, info):
+        import time
+        noti_id = repr(time.time())
+        noti_id = noti_id.replace('.', '#') #generate noti_id
+        doc = {
+            'info' : info,
+            'isread' : False,
+        }
+        self.lib.notification_lib[noti_id] = doc
+
+    @db_property
+    def notifications():
+        def getter(self):
+            ans = dict([(ek, {
+                'noti_id' : ek,
+                'content' : ev['info'],
+                'isread' : ev['isread'],
+            }) for ek, ev in self.lib.notification_lib.load_all()])
+            noti_ids = [each['noti_id'] for each in ans]
+            noti_ids = sorted(noti_ids, reverse=True)
+            return [ans[each] for each in noti_ids]
+        return getter
+
+    def mark_notifications_as_read(self, *noti_ids):
+        noti_lib = self.lib.notification_lib
+        for each in noti_ids:
+            if each in noti_lib:
+                noti_lib.sub_dict['isread'] = True
+
+    def remove_notifications(self, *noti_ids):
+        noti_lib = self.lib.notification_lib
+        for each in noti_ids:
+            del noti_lib[each]
+
+    def empty_notifications(self):
+        noti_lib = self.lib.notification_lib
+        noti_lib.set_all(dict())
 
     def add_to_drafts(self, obj):
         self.lib.drafts_lib[obj.uid] = obj.__class__.__name__
