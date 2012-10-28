@@ -8,7 +8,7 @@ from pages.pages import CheckPage
 class CheckHandler(BaseHandler):
     '''check for email verify and password reset verify'''
 
-    @with_nologin
+    @without_login
     def get(self):
         from user import User
 
@@ -51,12 +51,12 @@ from generator import id_generator, index_generator
 
 class RegisterHandler(BaseHandler):
 
-    @with_nologin
+    @without_login
     def get(self):
         page = RegisterPage(self)
         return page.render()
 
-    @with_nologin
+    @without_login_post
     def post(self):
         info = RegisterJson(self)
 
@@ -80,8 +80,6 @@ class RegisterHandler(BaseHandler):
                 status = user_reg(email, pwd, sex, name)
                 if status == 0:
                     self.set_cookie('repeat', str(time.time()))
-                    self.redirect('/login')
-                    return
                 info.by_status(status)
         info.write()
         return
@@ -105,13 +103,13 @@ from mails import send_mail_pwd_reset
 class ResetHandler(BaseHandler):
     '''for password reset'''
 
-    @with_nologin
+    @without_login
     def get(self):
         page = ResetPage(self)
         page.render()
         return
 
-    @with_nologin
+    @without_login_post
     def post(self):
         from user import User
 
@@ -145,7 +143,7 @@ class ResetHandler(BaseHandler):
 
 class RepeatResetMailHandler(BaseHandler):
 
-    @with_nologin
+    @without_login_post
     def post(self):
         post_json = RepeatMailJson(self)
         result = {'status':1, 'info':''}

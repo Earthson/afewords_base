@@ -8,7 +8,7 @@ from generator import id_generator, index_generator
 from afutils.security import *
 from afutils.url_utils import url_with_para
 
-def with_nologin(operate):
+def without_login(operate):
     def wrapper(self, *args, **kwargs):
         if self.current_user:
             self.redirect('/home')
@@ -21,6 +21,30 @@ def with_login(operate):
     def wrapper(self, *args, **kwargs):
         if not self.current_user:
             self.redirect('/login')
+            return
+        operate(self, *args, **kwargs)
+        return
+    return wrapper
+
+def without_login_post(operate):
+    from pages.postjson import LoginStatusJson
+    handler_json = LoginStatusJson()
+    def wrapper(self, *args, **kwargs):
+        if self.current_user is not None:
+            handler_json.by_status(200)
+            handler_json.write()
+            return
+        operate(self, *args, **kwargs)
+        return
+    return wrapper
+
+def with_login_post(operate):
+    from pages.postjson import LoginStatusJson
+    handler_json = LoginStatusJson()
+    def wrapper(self, *args, **kwargs):
+        if not self.current_user:
+            handler_json.by_satus(200)
+            handler_json.write()
             return
         operate(self, *args, **kwargs)
         return

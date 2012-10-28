@@ -72,8 +72,6 @@ class ArticleWriteHandler(BaseHandler):
 def article_env_init(handler, handler_paras, handler_json):
     handler_json['article_id'] = handler_paras['article_id']
     usr = handler.current_user
-    if usr is None:
-        return 9#Not Login
     env = generator(handler_paras['env_id'], handler_paras['env_type'])
     handler.env = env #Store env obj
     if not env:
@@ -156,6 +154,7 @@ from pages.messages import BeCommentedMSG
 
 class ArticleUpdateHandler(BaseHandler):
 
+    @with_login_post
     def post(self):
         handler_paras = ArticleUpdatePara(self)
         handler_json = UpdateArticleJson(self)
@@ -249,6 +248,7 @@ from pages.postjson import ArticleSrcJson
 
 class ArticleSrcHandler(BaseHandler):
     '''for article lib: picture langcode math and etc.'''
+    @with_login_post
     def post(self):
         handler_paras = ArticleSrcPara(self)
         handler_json = ArticleSrcJson(self)

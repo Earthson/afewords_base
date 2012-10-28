@@ -17,6 +17,15 @@ class StatusJson(BaseJson):
 
 
 @with_attr
+class LoginStatusJson(BaseJson):
+    error_info = {
+        0 : '',
+        100 : '请先登入',
+        200 : '您已经登入, 请先退出',
+    }
+
+
+@with_attr
 class RegisterJson(StatusJson):
     '''
     @nologin

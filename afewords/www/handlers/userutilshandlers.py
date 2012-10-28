@@ -9,6 +9,7 @@ class UserInvitePara(BaseHandlerPara):
     }
 
 class UserInviteHandler(BaseHandler):
+    @with_login_post
     def post(self):
         handler_paras = UserInvitePara(self)
         usr = self.current_user
