@@ -10,3 +10,8 @@ class BlogDoc(ArticleDoc.__clsobj__):
 
 class Blog(Article):
     datatype = BlogDoc
+
+    @db_property
+    def obj_url():
+        def getter(self):
+            return self.main_url + 'blog/' + self.uid
