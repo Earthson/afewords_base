@@ -8,6 +8,7 @@ class BookHandlerPara(BaseHandlerPara):
 
     paradoc = {
         #todo deju
+        'load': 'cover',    # unicode, cover or summary or catalog
     }
 
 
