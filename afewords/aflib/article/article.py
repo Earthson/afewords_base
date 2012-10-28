@@ -136,16 +136,24 @@ class ArticleLib(EmMongoDict):
         return self.sub_dict('relation_catalogs',
                         generator=None)
 
+    def do_update(self):
+        ans = dict()
+        ans['update_time'] = datetime.now()
+        ans['body_version'] += 1
+        self.set_propertys(**ans)
+
     def add_ref(self, reftype, refobj):
         inlib = self.sub_dict(self.get_libname(reftype))
-        alias_all = inlib.keys()
+        alias_all = set(inlib.keys())
         if refobj.alias and refobj.alias not in alias_all:
             inlib[refobj.alias] = refobj._id
+            self.do_update()
             return True
         for i in range(1, 1000):
             if str(i) not in alias_all:
                 refobj.alias = str(i)
                 inlib[refobj.alias] = refobj._id
+                self.do_update
                 return True
         return False
 
@@ -210,6 +218,7 @@ class ArticleDoc(AFDocument):
         'view_body_version' : 0,
         'lang_type' : 'afewords',
         'update_time' : datetime.now,
+        'release_time' : datetime.now,
         'keywords' : [],
         'tag' : ['default'],
         'privilege' : 'public',

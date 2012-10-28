@@ -1,7 +1,8 @@
 from datetime import datetime
 from databox.databox import *
 from databox.mongokit_utils import with_conn
-from emmongodict import EmMongoDict
+from databox.afdocument import AFDocument
+from emmongodict.emmongodict import EmMongoDict
 
 class AFGlobal(EmMongoDict):
     
@@ -17,9 +18,11 @@ class AFGlobalDoc(AFDocument):
 
     structure = {
         'invitations_count' : int,
+        'recent_blogs' : list,
     }
     default_values = {
         'invitations_count' : 0,
+        'recent_blogs' : [None for i in range(100)],
     }
 
 if AFGlobalDoc.find_one() is None:
@@ -27,3 +30,4 @@ if AFGlobalDoc.find_one() is None:
     glo.save()
 
 global_info = AFGlobal(spec={'_id':AFGlobalDoc.find_one()['_id']})
+recent_blogs = global_info.sub_list('recent_blogs')

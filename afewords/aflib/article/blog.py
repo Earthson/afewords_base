@@ -17,3 +17,9 @@ class Blog(Article):
         def getter(self):
             return self.main_url + 'blog/' + self.uid
         return getter
+    
+    def do_post(self):
+        from global_info import recent_blogs
+        Article.do_post(self)
+        recent_blogs.push(self._id)
+        recent_blogs.pop_head()
