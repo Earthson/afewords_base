@@ -169,6 +169,13 @@ class User(DataBox):
     }
     own_data =  ['avatar', 'about', 'lib']
 
+    def __init__(self, data=None, *args, **kwargs):
+        DataBox.__init__(self, data, *args, **kwargs)
+        if data is None:
+            self.about.author = self
+            self.domain = self.uid
+        
+
     @db_property
     def notice_count():
         def getter(self):
@@ -228,11 +235,11 @@ class User(DataBox):
     def notifications():
         def getter(self):
             ans = dict([(ek, {
-                'noti_id' : ek,
+                'index' : ek,
                 'content' : ev['info'],
                 'isread' : ev['isread'],
-            }) for ek, ev in self.lib.notification_lib.load_all()])
-            noti_ids = [each['noti_id'] for each in ans]
+            }) for ek, ev in self.lib.notification_lib.load_all().items()])
+            noti_ids = [ek for ek, ev in ans.items()]
             noti_ids = sorted(noti_ids, reverse=True)
             return [ans[each] for each in noti_ids]
         return getter
@@ -344,6 +351,15 @@ class User(DataBox):
                                                     for each in ans])
             #self.lib.tag_lib[tagname] = [each._id for each in ans]
         return ans
+
+    @db_property
+    def drafts_info():
+        '''basic article info for drafts'''
+        def getter(self):
+            drafts = [generator(eid, etype) 
+                    for eid, etype in self.lib.drafts_lib.load_all().items()]
+            return [each.basic_info for each in drafts if each]
+        return getter
 
     def blogs_info_view_by(self, usr=None, tagname=None):
         from article.blog import Blog

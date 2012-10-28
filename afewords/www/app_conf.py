@@ -17,6 +17,14 @@ from handlers.commenthandlers import CommentGetHandler
 
 
 from handlers.settingshandlers import UserSettingInviteHandler
+from handlers.settingshandlers import UserSettingPasswordHandler
+from handlers.settingshandlers import UserSettingDomainHandler
+from handlers.settingshandlers import UserSettingAvatarHandler
+from handlers.settingshandlers import UserSettingTagHandler
+from handlers.settingshandlers import UserSettingNoticeHandler
+from handlers.settingshandlers import UserSettingDraftHandler
+from handlers.settingshandlers import UserSettingFollowHandler
+from handlers.settingshandlers import UserSettingFollowerHandler
 
 
 app_handlers = {
@@ -42,6 +50,14 @@ app_handlers = {
     (r'/getcomment', CommentGetHandler),
     #(r'/home(.*)', UserBlogLibHandler),
     (r'/settings-invite', UserSettingInviteHandler),
+    (r'/settings-password', UserSettingPasswordHandler),
+    (r'/settings-domain', UserSettingDomainHandler),
+    (r'/settings-avatar', UserSettingAvatarHandler),
+    (r'/settings-tag', UserSettingTagHandler),
+    (r'/notice', UserSettingNoticeHandler),
+    (r'/draft', UserSettingDraftHandler),
+    (r'/settings-follow', UserSettingFollowHandler),
+    (r'/settings-follower', UserSettingFollowerHandler),
 }
 
 app_settings = {
