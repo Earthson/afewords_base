@@ -1,4 +1,5 @@
 from databox.mongokit_utils import with_conn
+from databox.databox import *
 
 from article import ArticleDoc, Article
 
