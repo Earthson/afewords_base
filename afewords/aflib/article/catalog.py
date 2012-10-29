@@ -335,6 +335,7 @@ class Catalog(DataBox):
         return ans
 
     def get_node_list_info(self):
+        from aflib_utils import section_cmp
         nodes = self.lib.node_lib.load_all()
         nodeinfos = self.lib.node_info_lib.load_all()
         def trans_each(nid):
@@ -349,8 +350,8 @@ class Catalog(DataBox):
             ans['subcatalog_list'] = list()
             return ans
         ans = [trans_each(each) for each in nodes.keys()]
-        return sorted(ans, cmp = lambda x, y: \
-                cmp(x['chapter_num'], y['chapter_num']))
+        return sorted(ans, cmp=lambda x, y : \
+                    section_cmp(x['chapter_num'], y['chapter_num'])) 
 
     #property for page&json
     @db_property

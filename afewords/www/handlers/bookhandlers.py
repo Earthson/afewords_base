@@ -40,3 +40,13 @@ class BookHandler(BaseHandler):
         handler_page.render()
         return
 
+
+class BookChapterHandlerPara(BaseHandlerPara):
+    paradoc = {
+        #todo deju
+    }
+
+
+class BookChapterHandler(BaseHandler):
+    def get(self, bid, cnum):
+        pass
