@@ -348,7 +348,9 @@ class Catalog(DataBox):
             ans['article_list'] = list() #todo Earthson
             ans['subcatalog_list'] = list()
             return ans
-        return [trans_each(each) for each in nodes.keys()]
+        ans = [trans_each(each) for each in nodes.keys()]
+        return sorted(ans, cmp = lambda x, y: \
+                cmp(x['chapter_num'], y['chapter_num']))
 
     #property for page&json
     @db_property
