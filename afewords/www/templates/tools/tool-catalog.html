@@ -17,6 +17,12 @@
     
     {% for item in node_list %}
         {% set tmp_nest = len(item['chapter_num'].split('.')) %}
+        {% set s_a_c = item["spec_article_count"] %}
+        {% set c_n = item['chapter_num'] %}
+        {% set title = item['title']  %}
+        {% set a_c = item['article_count'] %}
+        {% set s_c = item['subcatalog_count'] %}
+        {% set cid = item['cid'] %}
 
         {% set complete_str = complete_point % (int(item['spec_article_count'] > 0), item['spec_article_count'],item['article_count'], item['subcatalog_count'], ('&radic;' if item['spec_article_count'] > 0 else '&times;')) %}
 
@@ -32,9 +38,19 @@
             {% end %}
             
             {% if not edit %}
-                {{ tmp_normal_li }}
+                {#{{ tmp_normal_li }}#}
+                <li node_id="{{ cid }}">
+                    <span class="num">{{ c_n }}</span>
+                    <span><a href="/book/{{ book_id }}/catalog/{{ cid }}">{{ title }}</a></span>
+                    <span class="complete{{ int(s_a_c>0) }}">{{ s_a_c }}/{{ a_c }}/{{ s_c }}&nbsp;&times;</span>
+                </li>
             {% else %}
-                {{ tmp_edit_li }}
+                {#{{ tmp_edit_li }} #}
+                <li node_id="{{ cid }}">
+                    <span class="num">{{ c_n }}</span>
+                    <span><a href="/book/{{ book_id }}/catalog/{{ cid }}">{{ title }}</a></span>
+                    <span class="complete{{ int(s_a_>0) }}">{{ s_a_c }}/{{ a_c }}/{{ s_c }}&nbsp;&radic;</span>
+                </li>
             {% end %}
 
         {% else %}
@@ -45,9 +61,19 @@
                 {% set nest = tmp_nest %}
                 
                 {% if not edit %}
-                    {{ tmp_normal_li }}
+                    {#{{ tmp_normal_li }}#}
+                    <li node_id="{{ cid }}">
+                    <span class="num">{{ c_n }}</span>
+                    <span><a href="/book/{{ book_id }}/catalog/{{ cid }}">{{ title }}</a></span>
+                    <span class="complete{{ int(s_a_c>0) }}">{{ s_a_c }}/{{ a_c }}/{{ s_c }}&nbsp;&times;</span>
+                    </li>
                 {% else %}
-                    {{ tmp_edit_li }}
+                    {#{{ tmp_edit_li }}#}
+                    <li node_id="{{ cid }}">
+                    <span class="num">{{ c_n }}</span>
+                    <span><a href="/book/{{ book_id }}/catalog/{{ cid }}">{{ title }}</a></span>
+                    <span class="complete{{ int(s_a_c>0) }}">{{ s_a_c }}/{{ a_c }}/{{ s_c }}&nbsp;&radic;</span>
+                    </li>
                 {% end %}
                 
             {% end %}
