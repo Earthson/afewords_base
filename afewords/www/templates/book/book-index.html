@@ -207,7 +207,7 @@
     {% end %}
     {% block script_book_node_bottom %}{%end %}
     <script type="text/javascript" src="{{ static_url("js/code/shCore.js") }}"></script>
-    {%  for jjj in book.about_script  %}
+    {%  for jjj in doc['book']['summary']['js_list']  %}
     <script type="text/javascript" src="{{ static_url("js/code/" + jjj) }}"></script>
     {% end %}
 
