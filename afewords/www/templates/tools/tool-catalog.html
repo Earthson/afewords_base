@@ -1,10 +1,10 @@
 {% set node_list = doc['node_list'] %}
-{% set edit = doc['isedit'] %}
+{% set edit = True if doc['isedit'] == "yes" else False %}
 {% set book_id = doc['bid'] %}
 {% set nest = 1 %}
-{% set normal_li = '<li node_id="%s"><span class="num">%s</span><span><a href="/book/%s/catalog/%s">%s</a></span>%s%s</li>' %}
-{% set edit_li = '<span class="catalog_edit">修改</span><span class="catalog_del">删除</span></li>' %}
-{% set complete_point = '<span class="complete%s">%s/%s/%s&nbsp;%s</span>' %}
+{% set normal_li = u'<li node_id="%s"><span class="num">%s</span><span><a href="/book/%s/catalog/%s">%s</a></span>%s%s</li>' %}
+{% set edit_li = u'<span class="catalog_edit">修改</span><span class="catalog_del">删除</span></li>' %}
+{% set complete_point = u'<span class="complete%s">%s/%s/%s&nbsp;%s</span>' %}
 
 {% if len(node_list) < 1 %} 
     <ul class="catalog_ul" book_id="{{ book_id }}"></ul>
@@ -16,19 +16,21 @@
     {% end %}
     
     {% for item in node_list %}
-        {% set tmp_nest = len(item['node_section'].split('.')) %}
+        {% set tmp_nest = len(item['chapter_num'].split('.')) %}
 
-        {% set complete_str = complete_point % (int(item['node_spec_count'] > 0), item['node_spec_count'],item['node_article_count'], item['node_subcatalog_count'], ('&radic;' if item['node_spec_count'] > 0 else '&times;')) %}
+        {% set complete_str = complete_point % (int(item['spec_article_count'] > 0), item['spec_article_count'],item['article_count'], item['subcatalog_count'], ('&radic;' if item['spec_article_count'] > 0 else '&times;')) %}
 
-        {% set tmp_normal_li = normal_li % (item['node_id'], item['node_section'], book_id, item['node_id'], item['node_title'], complete_str, '') %}
+        {% set tmp_normal_li = normal_li % (item['cid'], item['chapter_num'], book_id, item['cid'], item['title'], complete_str, '') %}
 
-        {% set tmp_edit_li  = normal_li % (item['node_id'], item['node_section'], book_id, item['node_id'], item['node_title'], '', edit_li) %}
+        {% set tmp_edit_li  = normal_li % (item['cid'], item['chapter_num'], book_id, item['cid'], item['title'], '', edit_li) %}
 
-        {% if tmp_nest >= nest }
+        {% if tmp_nest >= nest %}
+        
             {% if tmp_nest == nest %}
                 {% set nest = nest + 1 %}
                 <ul class="margin">
             {% end %}
+            
             {% if not edit %}
                 {{ tmp_normal_li }}
             {% else %}
@@ -36,13 +38,18 @@
             {% end %}
 
         {% else %}
+        
             {% for ii in range(nest - tmp_nest) %}
+            
                 </ul>
-            {% set nest = tmp_nest %}
-            {% if not edit %}
-                {{ tmp_normal_li }}
-            {% else %}
-                {{ tmp_edit_li }}
+                {% set nest = tmp_nest %}
+                
+                {% if not edit %}
+                    {{ tmp_normal_li }}
+                {% else %}
+                    {{ tmp_edit_li }}
+                {% end %}
+                
             {% end %}
         {% end %}
     {% end %}
