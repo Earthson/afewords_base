@@ -27,3 +27,4 @@ class BookChapter(BookBasePage):
         'load_page': 'chapter',
         'current_chapter': None,    # dict, see [[ chapter ]] in data_format 
     }
+

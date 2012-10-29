@@ -82,7 +82,7 @@
 <div class="book_summary">
 {% if not doc['isedit']  %}
     {% if doc['user'] != {} and doc['user']['uid'] == author['uid'] %}
-        <div class="book_do_a" book_id="{{ book['bid'] }}"><a href="/book-edit/{{ book['bid'] }}?want=summary">修改摘要</a></div>
+        <div class="book_do_a" book_id="{{ book['bid'] }}"><a href="/book/{{ book['bid'] }}?want=summary&edit=yes">修改摘要</a></div>
     {% end %}
 {% end %}
 <div class="book_summary_tip">内容摘要</div>
@@ -111,7 +111,7 @@
 <div class="book_catalog_add" book_id="{{ book['bid'] }}">添加新目录</div>
 {% else %}
     {% if doc['user'] != {} and doc['user']['uid'] == author['uid'] %}
-        <div class="book_do_a" book_id="{{ book['bid'] }}"><a href="/book-edit/{{ book['bid'] }}?want=catalog">修改目录</a></div>
+        <div class="book_do_a" book_id="{{ book['bid'] }}"><a href="/book/{{ book['bid'] }}?want=catalog&edit=yes">修改目录</a></div>
     {% end %}
 {% end %}
 <div class="book_catalog_tip">目录</div>
@@ -182,6 +182,10 @@
 
 
 {% block script_book_bottom %}
+
+{% set book = doc['book'] %}
+{% set author = book['author'] %}
+{% set want = doc['load_page'] %}
     {% if doc['isedit'] %}
         <script type="text/javascript" >
             $(document).ready(function(){
@@ -209,7 +213,7 @@
 
     <script type="text/javascript">
     $().ready(function(){
-	   SyntaxHighlighter.all();
+	       SyntaxHighlighter.all();
     });
     </script>
 <script type="text/javascript" src="/static/js/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
