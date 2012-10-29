@@ -16,7 +16,9 @@
     {% end %}
     
     {% for item in node_list %}
+    
         {% set tmp_nest = len(item['chapter_num'].split('.')) %}
+        
         {% set s_a_c = item["spec_article_count"] %}
         {% set c_n = item['chapter_num'] %}
         {% set title = item['title']  %}
@@ -32,7 +34,7 @@
 
         {% if tmp_nest >= nest %}
         
-            {% if tmp_nest == nest %}
+            {% if tmp_nest > nest %}
                 {% set nest = nest + 1 %}
                 <ul class="margin">
             {% end %}
