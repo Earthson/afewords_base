@@ -8,7 +8,7 @@ class BookHandlerPara(BaseHandlerPara):
 
     paradoc = {
         #todo deju
-        'edit': 'yes',  # unicode, yes or not, edit book or not
+        'edit': 'no',  # unicode, yes or not, edit book or not
         'load': 'cover',    # unicode, cover or summary or catalog
     }
 
