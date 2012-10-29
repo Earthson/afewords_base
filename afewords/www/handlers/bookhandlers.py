@@ -16,7 +16,7 @@ class BookHandlerPara(BaseHandlerPara):
         BaseHandlerPara.read(self)
         if self['load'] not in ('cover', 'summary', 'catalog', 'chapter'):
             self['load'] = 'cover'
-        self['edit'] = False if self['edit'] == 'not' else True
+        self['edit'] = False if self['edit'] != 'yes' else True
 
 
 class BookHandler(BaseHandler):
