@@ -135,7 +135,7 @@ class UserDoc(AFDocument):
         'domain' : '',
         'account_status' : 'unverified',
         'avatar_id' : Avatar.new_doc,
-        'about_id' : About.new_doc,
+        'about_id' : None,
         'lib_id' : UserLib.new_doc,
     }
     indexes = [

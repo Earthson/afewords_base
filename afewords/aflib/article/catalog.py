@@ -118,7 +118,7 @@ class CatalogDoc(AFDocument):
         'remove_count' : 0,
         'complete_count' : 0,
         'release_time' : datetime.now,
-        'about_id' : About.new_doc,
+        'about_id' : None,
         'statistics_id' : Statistics.new_doc,
         'lib_id' : CatalogLib.new_doc,
     }
@@ -139,6 +139,9 @@ class Catalog(DataBox):
         'release_time' : True,
     }
     own_data = ['statistics', 'about', 'lib']
+
+    def __init__(self, data, *args, **kwargs):
+        DataBox.__init__(self, data, *args, **kwargs)
 
     @db_property
     def statistics():
