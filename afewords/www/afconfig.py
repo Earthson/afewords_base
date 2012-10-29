@@ -7,4 +7,5 @@ af_conf = {
     #'main_mail' : r'afewords@afewords.com',
     'main_mail' : r'afewords@ipv6.earthson.net',
     'invitation_limit' : 50,
+    'autoescape': None,
 }
