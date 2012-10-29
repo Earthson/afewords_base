@@ -110,7 +110,7 @@
 {% if doc['isedit'] == "yes" %}
 <div class="book_catalog_add" book_id="{{ book['bid'] }}">添加新目录</div>
 {% else %}
-    {% if doc['user'] != {} and doc['user']['uid'] == author['uid'] %}
+    {% if doc['user']  and doc['user']['uid'] == author['uid'] %}
         <div class="book_do_a" book_id="{{ book['bid'] }}"><a href="/book/{{ book['bid'] }}?want=catalog&edit=yes">修改目录</a></div>
     {% end %}
 {% end %}

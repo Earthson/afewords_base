@@ -49,7 +49,7 @@
         {% else %}
             <a href="#" >wenzhang</a>
         {% end %}
-        {% if user != {} and user['uid'] == book['author']['uid'] %}
+        {% if user and user['uid'] == book['author']['uid'] %}
         <span class="mark_article"><a href="javascript:void(0)" do="mark_recommend" relation_id="{{ item['relation_id'] }}">指定</a></span>
         <span class="del_article"><a href="javascript:void(0)" do="del_recommend" relation_id="{{ item['relation_id'] }}">删除</a></span>
         {% end %}
@@ -74,7 +74,7 @@
         <li>
             <a href="/book/{{ item['bid'] }}" target="_blank">{{ item['name'] }}</a>
 
-        {% if user !={}  and user['uid'] == book['auhtor']['uid'] %}
+        {% if user and user['uid'] == book['auhtor']['uid'] %}
         <span class="del_article"><a href="javascript:void(0)" do="del_recommend" relation_id="{{ item['relation_id'] }}">删除</a></span>
         {% end %}
         </li>
