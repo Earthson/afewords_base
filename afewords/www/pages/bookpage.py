@@ -10,15 +10,23 @@ class BookBasePage(BasePage):
         'book':{},  # dict, see [[ book ]] in data_format
         'catalog_html': '', # unicode
         'load_page': 'cover',   # unicode, cover, summary, catalog, chapter
+        'isedit' : False,
+        'bid' : '', #id of book
     }
+
+    def page_init(self):
+        from toolpages import CatalogPage
+        page = CatalogPage()
+        page['isedit'] = self['isedit']
+        page['node_list'] = self['book']['chapter_list']
+        page['bid'] = self['bid']
+        self['catalog_html'] = page.render_string()
 
 
 @with_attr
 class BookPage(BookBasePage): 
     __template_file__ = 'book/book-index.html'
-    doc = {
-        'isedit': False,    # bollean
-    }
+
 
 @with_attr
 class BookChapter(BookBasePage):

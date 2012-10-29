@@ -28,12 +28,15 @@ class BookHandler(BaseHandler):
         handler_paras = BookHandlerPara(self)
         handler_page = BookPage(self)
         usr = self.current_user
-        handler_page['edit'] = handler_paras['edit']
+        handler_page['bid'] = bid
+        handler_page['isedit'] = handler_paras['edit']
         handler_page['load_page'] = handler_paras['load']
         catalog_obj = Catalog.by_id(bid)
         if catalog_obj is None:
             self.send_error(404)
             return
         handler_page['book'] = catalog_obj.basic_info
+        handler_page.page_init()
         handler_page.render()
         return
+
