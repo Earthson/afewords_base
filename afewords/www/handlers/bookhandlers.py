@@ -8,6 +8,7 @@ class BookHandlerPara(BaseHandlerPara):
 
     paradoc = {
         #todo deju
+        'edit': 'yes',  # unicode, yes or not, edit book or not
         'load': 'cover',    # unicode, cover or summary or catalog
     }
 
@@ -18,6 +19,9 @@ class BookHandlerPara(BaseHandlerPara):
 
 
 class BookHandler(BaseHandler):
+    '''
+        bid get from url
+    '''
     def get(self, bid):
         from article.catalog import Catalog
         handelr_paras = BookHandlerPara(self)

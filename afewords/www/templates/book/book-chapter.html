@@ -1,11 +1,11 @@
-{% extends "book.html" %}
-{% set want = doc['want_page'] %}
-{% set current_chapter = doc['current_chapter'] %}
-{% set book = doc['book'] %}
+{% extends "book-base.html" %}
 
 
 {% block book_middle_other %}
 
+{% set want = doc['load_page'] %}
+{% set current_chapter = doc['current_chapter'] %}
+{% set book = doc['book'] %}
 
 
 <div id="middle_book" class="middle_book_node current_middle{{ int(want=="node") }}" >

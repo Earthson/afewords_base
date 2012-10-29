@@ -1,11 +1,10 @@
 {% extends "book-base.html" %}
 
+{% block book_base_left_body %}
 
 {% set book = doc['book'] %}
 {% set author = book['author'] %}
-{% set want = doc['want_page'] %}
-
-{% block book_base_left_body %}
+{% set want = doc['load_page'] %}
 
 <div class="book_nav_mark">
 {% if doc['isedit']  %}

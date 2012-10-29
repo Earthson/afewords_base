@@ -9,7 +9,7 @@ class BookBasePage(BasePage):
     doc = {
         'book':{},  # dict, see [[ book ]] in data_format
         'catalog_html': '', # unicode
-        'want_page': 'cover',   # unicode, cover, summary, catalog, chapter
+        'load_page': 'cover',   # unicode, cover, summary, catalog, chapter
     }
 
 
@@ -24,5 +24,6 @@ class BookPage(BookBasePage):
 class BookChapter(BookBasePage):
     __template_file__ = 'book/book-chapter.html'
     doc = {
-        'current_chapter': dict,    # see [[ chapter ]] in data_format 
+        'load_page': 'chapter',
+        'current_chapter': None,    # dict, see [[ chapter ]] in data_format 
     }
