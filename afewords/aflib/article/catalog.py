@@ -363,7 +363,7 @@ class Catalog(DataBox):
             ans['author'] = self.owner.basic_info
             ans['complete_rate'] = int((
                     ans['all_catalog_count'] / ans['complete_count']) * 100)
-            ans['about'] = self.about.basic_info
+            ans['summary'] = self.about.basic_info
             ans['chapter_list'] = []
             ans['relation_id'] = ''
             return ans
