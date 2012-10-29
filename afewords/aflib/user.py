@@ -172,7 +172,6 @@ class User(DataBox):
     def __init__(self, data=None, *args, **kwargs):
         DataBox.__init__(self, data, *args, **kwargs)
         if data is None:
-            self.about.author = self
             self.domain = self.uid
         
 
@@ -192,7 +191,11 @@ class User(DataBox):
     def about():
         '''introduction page to user'''
         def getter(self):
-            return id_generator(About)(self.data['about_id'])
+            ans = About.by_id(self.data['about_id'])
+            if ans is None:
+                ans = About(attrs={'author':self, 'env':self})
+                return ans, True
+            return ans
         return getter
 
     @db_property

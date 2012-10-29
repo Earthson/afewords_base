@@ -165,8 +165,7 @@ class Catalog(DataBox):
                 ans = About()
                 self.data['about_id'] = ans._id
                 ans.set_propertys(author_id=self.data['owner_id'], 
-                                    env_id=self.data['env_id'],
-                                    env_type=self.data['evn_type'])
+                                    env=self)
                 return ans, True
             return ans
         def setter(self, value):
