@@ -145,7 +145,7 @@ chapter: {}
     'title': '',    # unicode, section title
     'article_count': 0, # int
     'article_list': [], # see [[ blog_list ]]
-    'sepc_article_count': 0,    # int
+    'spec_article_count': 0,    # int
     'subcatalog_count': 0,  # int 
     'subcatalog_list': [],  # [ book1, book2 ]], book1 see [[ book ]]
 }
