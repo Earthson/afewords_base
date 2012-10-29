@@ -9,7 +9,9 @@ from datetime import datetime
 from statistics import Statistics
 from about import About
 from generator import *
-from utils.relation import Relation
+from relation import Relation
+
+from authority import *
 
 
 @with_conn
@@ -97,7 +99,7 @@ class CatalogDoc(AFDocument):
 
     structure = {
         'name' : basestring,
-        'owner_id' : basestring,
+        'owner_id' : ObjectId,
         'owner_type' : basestring,
         'managers' : [ObjectId], #User id
         'node_count' : int,
@@ -141,15 +143,32 @@ class Catalog(DataBox):
     @db_property
     def statistics():
         def getter(self):
-            return id_generator(Statistics)(self.data['statistics_id'])
-        return getter
+            ans = Statistics.by_id(self.data['statistics_id'])
+            if ans is None:
+                ans = Statistics()
+                self.data['statistics_id'] = ans._id
+                return ans, True
+            return ans
+        def setter(self, value):
+            self.data['statistics_id'] = value._id
+        return getter, setter
 
     @db_property
     def about():
         '''introduction page to user'''
         def getter(self):
-            return id_generator(About)(self.data['about_id'])
-        return getter
+            ans = About.by_id(self.data['about_id'])
+            if ans is None:
+                ans = About()
+                self.data['about_id'] = ans._id
+                ans.set_propertys(author_id=self.data['owner_id'], 
+                                    env_id=self.data['env_id'],
+                                    env_type=self.data['evn_type'])
+                return ans, True
+            return ans
+        def setter(self, value):
+            self.data['about_id'] = value._id
+        return getter, setter
 
     @db_property
     def lib():
@@ -160,7 +179,7 @@ class Catalog(DataBox):
     @db_property
     def owner():
         def getter(self):
-            return generator(self.data['owner_type'], self.data['owner_id'])
+            return generator(self.data['owner_id'], self.data['owner_type'])
         def setter(self, value):
             self.data['owner_type'] = value.__class__.__name__
             self.data['owner_id'] = value._id
@@ -173,16 +192,15 @@ class Catalog(DataBox):
         return getter
 
     @with_user_status
-    def authority_verify(self, usr, **env):
+    def authority_verify(self, usr, env=None, **kwargs):
         ret = 0
         if usr == None:
             ret = set_auth(ret, A_READ)
         elif self.owner_type == usr.__class__.__name__ and \
                 str(self.owner_id) == str(usr._id):
-            ret = set_auth(ret, A_READ | A_WRITE | A_MANAGE | A_DEL)
+            ret = set_auth(ret, A_READ | A_WRITE | A_DEL)
         elif usr._id in set(self.managers):
-            ret = set_auth(ret, A_READ | A_WRITE | A_MANAGE)
-        ret |= BaseClass.authority_verify(self, usr, **env)
+            ret = set_auth(ret, A_READ | A_WRITE)
         return ret
 
     def spec_blog_to(self, node_id, rel_obj):
@@ -343,8 +361,8 @@ class Catalog(DataBox):
             ans['author'] = self.owner.basic_info
             ans['complete_rate'] = int((
                     ans['all_catalog_count'] / ans['complete_count']) * 100)
-            ans['summary'] = self.about.basic_info
+            ans['about'] = self.about.basic_info
             ans['chapter_list'] = []
             ans['relation_id'] = ''
-            return getter
+            return ans
         return getter

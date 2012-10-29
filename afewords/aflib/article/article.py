@@ -355,12 +355,7 @@ class Article(DataBox):
     @db_property
     def env():
         def getter(self):
-            ans = generator(self.data['env_type'], self.data['env_id'])
-            if ans is None:
-                ans = self.author
-                self.data['env_id'], self.data['env_type'] = ungenerator(ans)
-                return ans, True
-            return ans
+            return generator(self.data['env_id'], self.data['env_type'])
         def setter(self, val):
             self.data['env_id'] = val._id
             self.data['env_type'] = val.__class__.__name__
@@ -455,9 +450,11 @@ class Article(DataBox):
             ans['content'] = self.view_body
             ans['content_short'] = self.view_body_short
             ans['release_time'] = str(self.release_time)
-            ans['author'] = self.author.basic_info
+            tmp = self.author
+            ans['author'] = dict() if tmp is None  else tmp.basic_info
             ans['comment_count'] = self.comment_count
-            ans['statistics'] = self.statistics.basic_info
+            tmp = self.statistics
+            ans['statistics'] = dict() if tmp is None else tmp.basic_info
             ans['keywords'] = self.keywords
             ans['tag_list'] = self.tag
             ans['privilege'] = self.privilege
@@ -537,7 +534,8 @@ class Article(DataBox):
         def getter(self):
             ans = dict()
             ans['type'] = self.data['env_type']
-            ans['entity'] = self.env.basic_info
+            tmp = self.env
+            ans['entity'] = {} if tmp is None else tmp.basic_info
             return ans
         return getter
 
