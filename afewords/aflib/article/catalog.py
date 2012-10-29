@@ -330,8 +330,8 @@ class Catalog(DataBox):
         ans['article_count'] = snode['article_count']
         ans['spec_article_count'] = snode['spec_count']
         ans['subcatalog_count'] = snode['subcatalog_count']
-        ans['article_list'] = [] #todo Earthson
-        ans['subcatalog_list'] = []
+        ans['article_list'] = list() #todo Earthson
+        ans['subcatalog_list'] = list()
         return ans
 
     def get_node_list_info(self):
@@ -345,8 +345,8 @@ class Catalog(DataBox):
             ans['article_count'] = nodes[nid]['article_count']
             ans['spec_article_count'] = nodes[nid]['spec_count']
             ans['subcatalog_count'] = nodes[nid]['subcatalog_count']
-            ans['article_list'] = [] #todo Earthson
-            ans['subcatalog_list'] = []
+            ans['article_list'] = list() #todo Earthson
+            ans['subcatalog_list'] = list()
             return ans
         return [trans_each(each) for each in nodes.keys()]
 
@@ -364,7 +364,7 @@ class Catalog(DataBox):
             ans['complete_rate'] = int((
                     ans['all_catalog_count'] / ans['complete_count']) * 100)
             ans['summary'] = self.about.basic_info
-            ans['chapter_list'] = []
+            ans['chapter_list'] = self.get_node_list_info()
             ans['relation_id'] = ''
             return ans
         return getter
