@@ -81,7 +81,14 @@
             "code":     { "title": '',  "code_type": 'python', "body": ''},
             "table":    { "title": '', "body": ''},
             "math":     { "title": '', "body": '', "math_mode": 'display'},
-            "reference":{ "title": '', "body": '', "source": ''}     
+            "reference":{ "title": '', "body": '', "source": ''},
+            "size":     { 
+                            "math": { "width": 450, "height": 380 },
+                            "image": { "width": 360, "height": 200 },
+                            "reference": { "width": 450, "height": 390 },
+                            "code": { "width": 760, "height": 400 },
+                            "table": { "width": 450, "height": 390 }
+                        }    
         }
         
         this.default_block_html = {
@@ -148,6 +155,127 @@
         
         this.default_pop_page_html: function( paras ){
             if(typeof paras != "object" ) paras = {};
+            for(var _para_ in this.default_menu_attrs){
+                paras[_para_] = paras[_para_] || this.default_menu_attrs[_para_];            
+            }
+            for(var _para_ in this.default_src_attrs["hidden"]){
+                paras[_para_] = paras[_para_] || this.default_src_attrs["hidden"][_para_];            
+            }
+            var result_html = '';
+            
+            var hidden_paras_html = '';  // hidden input key(name)/value
+            for(var _para_ in this.default_menu_attrs){
+                hidden_paras_html += '<input type="hidden" name="'+ _para_ +'" value="'+ paras[_para_] +'" />';            
+            }
+            for(var _para_ in this.default_src_attrs["hidden"]){
+                hidden_paras_html += '<input type="hidden" name="'+ _para_ +'" value="'+ paras[_para_] +'" />';            
+            }
+            
+            for(var _para_ in this.default_src_attrs[ paras["src_type"] ]){ // correct the paras
+                paras[_para_]  = paras[_para_]  || this.default_src_attrs[paras["src_type"]][_para_];             
+            }
+            switch(paras["src_type"]){
+                case "img":
+                case "image":
+                    result_html = create_image_pop_html();
+                    break;
+                case "table":
+                    result_html = create_table_pop_html();
+                    break;
+                case "code":
+                    result_html = create_code_pop_html();
+                    break;
+                case "math":
+                    result_html = create_math_pop_html();
+                    break;
+                case "ref":
+                case "reference":
+                    result_html = create_reference_pop_html();
+                    break;
+            }
+            return result_html;
+            
+            var control_tag = (paras["do"] == "new" ? "添加新" : "修改");
+            
+            function creare_reference_pop_html(){
+                return hidden_paras_html + 
+                    '<p class="first">'+ control_tag +'引用 <span class="all_example" title="查看说明"><a href="/help-editor-reference" target="_blank">说明</a></span></p>'+
+                    '<div style="display:block">'+
+                    '<p title="设置引用的名称">名称<input type="text" name="title" autocomplete="off" value="'+ paras["title"] +'" /></p>'+
+                    '<p title="出处">出处<input type="text" name="source" autocomplete="off" value="'+ paras["source"] +'" /></p>'+
+                    '<p title="引用内容"><textarea name="body" autocomplete="off">'+ paras["body"] +'</textarea></p>'+
+                    '<p><span><button type="submit">提交</button></span><span class="r_process">&nbsp;</span></p>'+
+                    '</div>';
+            }; 
+            
+            function create_table_pop_html(){
+                return hidden_paras_html + 
+                    '<p class="first">'+ control_tag +'表格 <span class="all_example" title="说明"><a target="_blank" href="/help-editor-table">实例</a></span></p>'+
+                    '<div style="display:block">'+
+                    '<p title="表格名称">表名<input type="text" name="title" autocomplete="off" value="'+ paras["title"] +'" /></p>' +
+                    '<p title="表格内容"><textarea name="body" autocomplete="off">'+ paras["body"] +'</textarea></p>'+
+                    '<p><span><button type="submit">提交</button></span><span class="t_process">&nbsp;</span></p>'+
+                    '</div>';     
+            }        
+            
+            function create_math_pop_html(){
+                var math_mode_html = '';
+                if(paras["math_mode"] == "display"){
+                    math_mode_html = '<label><input type="radio" name="math_mode" checked="checked" value="display" />行间</label>'+
+                                    '<label><input type="radio" name="math_mode" value="inline" />行内</label>';
+                }else{
+                    math_mode_html = '<label><input type="radio" name="math_mode" value="display" />行间</label>'+
+                                    '<label><input type="radio" name="math_mode" checked="checked" value="inline" />行内</label>';
+                }
+                
+                return hidden_paras_html +
+                    '<p class="first">'+ control_tag +'数学式--<font size="12px">数学式采用latex规则</font><span class="all_example" title="说明"><a href="/help-editor-math" target="_blank">说明</a></span></p>'+
+                    '<p title="设置名称">名称<input type="text" name="title" autocomplete="off" value="'+ paras["title"] +'"/></p>'+
+                    '<p title="设置名称">样式'+ math_mode_html +'</p>'+
+                    '<p title="数学式latex内容"><textarea resize="none" autocomplete="off" name="body">'+ paras["body"] +'</textarea></p>'+
+                    '<p><span><button type="submit">提交</button></span><span class="m_process">&nbsp;</span></p>';            
+            }
+            
+            function create_code_pop_html(){
+                var code_select_html = '';
+                var code_type_list = this.default_support_code();
+                for(var ii = 0; ii < code_type_list.length; ii++){
+                    if(code_type_list[ii].toLowerCase()== paras["code_type"]){
+                        code_select_html += '<option selected value="' + code_type_list[ii].toLowerCase()+'">' + code_type_list[ii] +'</option>';    
+                        continue;
+                    }
+                    select_html += '<option value="' + code_type_list[ii].toLowerCase()+'">' + code_type_list[ii] +'</option>'; 
+                }
+                
+                return hidden_paras_html + 
+                    '<p class="first">'+ control_tag +'代码 <span class="all_example" title="说明"><a target="_blank" href="/help-editor-code">说明</a></span></p>'+
+                    '<p title="代码名称">名称<input type="text" autocomplete="off" name="title" value="'+ paras["title"] +'" /></p>'+
+                    '<p title="代码种类">种类<select name="code_type">'+ code_select_html+ '</select></p>'+
+                    '<p title="代码"><textarea name="body" autocomplete="off">'+ paras["body"] +'</textarea></p>'+
+                    '<p><span><button type="submit">提交</button></span>'+
+                    '<span class="c_process">&nbsp;</span></p>';            
+            }
+            
+            function create_image_pop_html(){
+                if(paras["do"] == "new"){
+                    return '<p class="first">添加图片<span class="all_example" title="说明"><a target="_blank" href="/help-editor-picture">说明</a></span></p>'+
+                            '<form action="/article-src-control" id="up_picture" enctype="multipart/form-data" method="post">'+
+                            '<input type="hidden" name="picture_type" value="article" />' +
+                            '<input type="hidden" name="_xsrf" value="' + jQ.getCookie("_xsrf") + '" />'+
+                            hidden_paras_html + 
+                            '<p><input class="i_file" type="file" name="picture" onclick=clear_process(this,"i"); /></p>'+
+                            '<p>标题<input class="i_title" name="title" autocomplete="off" type="text" onfocus=clear_process(this,"i"); /></p>'+
+                            '<p><span class="i_button"><button type="submit">上传图片</button>'+
+                            '<button type="submit" style="display:none">提交</button></span><span class="i_process">&nbsp;</span></p></form>';                
+                }else{
+                    return hidden_paras_html + 
+                        '<p class="first">修改图片属性</p>'+
+                        '<p>标题<input class="i_title" name="title" type="text"  value="'+paras["title"]+'" /></p>'+
+                        '<p><span class="i_button"><button type="button">确认修改</button>'+
+                        '</span><span class="i_process">&nbsp;</span></p>';              
+                };          
+            }
+            
                         
         }
         
