@@ -90,12 +90,12 @@
 
 {% if doc['isedit'] %}
 <div id="book_write_wrap">
-<textarea id="write_textarea" class="book_textarea">{{ book['about']['body'] }}</textarea>
+<textarea id="write_textarea" class="book_textarea">{{ book['summary']['body'] }}</textarea>
 <button class="self-intro-button">提交</button><span class="self-info-process">&nbsp;</span>
 </div>
 {% else %}
 <div class="bb_con">
-{{ book['about']['content']  }}
+{{ book['summary']['content']  }}
 </div>
 {% end %}
 </div>
@@ -189,7 +189,7 @@
     {% if doc['isedit'] %}
         <script type="text/javascript" >
             $(document).ready(function(){
-                {% set article = book['about'] %}
+                {% set article = book['summary'] %}
                 {#{{ article = book.about_object }}#}
                 $("#write_textarea").CreateEditor("{{ article['aid'] }}","book-about",'', "0",'', "{{ book['bid'] }}");
                 pic_lib = {{ json_encode(article['picture_list']) }};
