@@ -97,7 +97,7 @@
 
 {% block script_book_node_bottom %}
 <script type="text/javascript" src="{{ static_url("js/code/shCore.js") }}"></script>
-{%  for jjj in current_chapter['js_list']  %}
+{%  for jjj in doc['current_chapter']['js_list']  %}
     <script type="text/javascript" src="{{ static_url("js/code/" + jjj) }}"></script>
 {% end %}
 <script type="text/javascript">
