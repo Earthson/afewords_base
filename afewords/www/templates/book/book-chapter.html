@@ -24,7 +24,7 @@
 {% if len(current_chapter['spec_article_count']) == 0 %}
 章节{{ current_chapter['chapter_num'] }}尚未指定文章！
 {% else %}
-{% set current_article = current_chapter['article_list'][0] %}
+{% set current_article = current_chapter['spec_article_list'][0] %}
 {% set current_author = current_article['author'] %}
 <div class="book_node_author">作者：<a href="/bloger/{{ current_author['uid'] }}">{{ current_author['name'] }}</a></div>
 <div class="book_node_author">原文：<a href="/blog/{{ current_article['aid'] }}">{{ current_article['title'] }}</a></div>

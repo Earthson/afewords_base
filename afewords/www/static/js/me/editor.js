@@ -9,7 +9,7 @@
         }
     };
     
-    function AFWEditor(){
+    function AFWEditor_attrs(){
         
         this.default_support_characterset = {
             "itain": []        
@@ -22,26 +22,47 @@
         
         /****** editor panel *****/
         this.default_panel = {
-            "bold":         {"class": "bold", "title": "加粗", "value": '&nbsp;'},
-            "italic":       {"class": "italic", "title": "斜体", "value": '&nbsp;'},
-            "underline":    {"class": "underline", "title": "下划线", "value": '&nbsp;'},
-            "del":          {"class": "del", "title": "删除线", "value": '&nbsp;'},
-            "super":        {"class": "super", "title": "上标", "value": '&nbsp;'},
-            "suber":        {"class": "suber", "title": "下标", "value": '&nbsp;'},
-            "ol":           {"class": "ol", "title": "有序列表", "value": '&nbsp;'},
-            "ul":           {"class": "ul", "title": "无序列表", "value": '&nbsp;'},
-            "separator":    {"class": "part", "title": "分割线", "value": '~~'},
-            "heading2":     {"class": "title", "title": "二级标题", "value": "T<sub><small>2</small></sub>"},
-            "heading3":     {"class": "title", "title": "三级标题", "value": "T<sub><small>3</small></sub>"},
-            "heading4":     {"class": "title", "title": "四级标题", "value": "T<sub><small>4</small></sub>"},
-            "indent":       {"class": "indent", "title": "段落缩进", "value": '&nbsp;'},
-            "table":        {"class": "table", "title": "表格库", "value": '&nbsp;'},
-            "image":        {"class": "image", "title": "图片库", "value": '&nbsp;'},
-            "reference":    {"class": "ref", "title": "引用库", "value": '&nbsp;'},
-            "math":         {"class": "math", "title": "数学式库", "value": '&nbsp;'},
-            "code":         {"class": "code", "title": "代码库", "value": '&nbsp;'},
-            "letter":       {"class": "letter", "title": "特殊字符集", "value": '&nbsp;'},
-            "split":        {"class": "split", "title": '', "value": '&nbsp;'} 
+            "bold":         {   
+                                "class": "bold", 
+                                "title": "加粗", 
+                                "value": '&nbsp;', 
+                                "exec":  function(){
+                                            this.set_character("++", false, "++", false);
+                                        }
+                            },
+            "italic":       {
+                                "class": "italic", 
+                                "title": "斜体", 
+                                "value": '&nbsp;', 
+                                "exec": function(){
+                                        this.set_character("--", false, "--", false);                                
+                                }
+                            },
+            "underline":    {
+                                "class": "underline", 
+                                "title": "下划线", 
+                                "value": '&nbsp;', 
+                                "exec": function(){
+                                    this.set_character("__", false, "__", false);                                
+                                }
+                            },
+            "del":          {"class": "del", "title": "删除线", "value": '&nbsp;', "exec": this.toDel},
+            "super":        {"class": "super", "title": "上标", "value": '&nbsp;', "exec": this.toSuper},
+            "suber":        {"class": "suber", "title": "下标", "value": '&nbsp;', "exec": this.toSuber},
+            "ol":           {"class": "ol", "title": "有序列表", "value": '&nbsp;', "exec": this.toOl},
+            "ul":           {"class": "ul", "title": "无序列表", "value": '&nbsp;', "exec": this.toUl},
+            "separator":    {"class": "part", "title": "分割线", "value": '~~', "exec": this.toSeparator},
+            "heading2":     {"class": "title", "title": "二级标题", "value": "T<sub><small>2</small></sub>", "exec": this.toH2},
+            "heading3":     {"class": "title", "title": "三级标题", "value": "T<sub><small>3</small></sub>", "exec": this.toH3},
+            "heading4":     {"class": "title", "title": "四级标题", "value": "T<sub><small>4</small></sub>", "exec": this.toH4},
+            "indent":       {"class": "indent", "title": "段落缩进", "value": '&nbsp;', "exec": this.toIndent},
+            "table":        {"class": "table", "title": "表格库", "value": '&nbsp;', "exec": this.toTable},
+            "image":        {"class": "image", "title": "图片库", "value": '&nbsp;', "exec": this.toImage},
+            "reference":    {"class": "ref", "title": "引用库", "value": '&nbsp;', "exec": this.toReference},
+            "math":         {"class": "math", "title": "数学式库", "value": '&nbsp;', "exec": this.toMath},
+            "code":         {"class": "code", "title": "代码库", "value": '&nbsp;', "exec": this.toCode},
+            "letter":       {"class": "letter", "title": "特殊字符集", "value": '&nbsp;', "exec": this.toLetter},
+            "split":        {"class": "split", "title": '', "value": '&nbsp;', "exec": this.toSplit} 
         }
         
         /***** editor lib bar ****/
@@ -153,7 +174,7 @@
         }
         
         
-        this.default_pop_page_html: function( paras ){
+        this.default_pop_page_html= function( paras ){
             if(typeof paras != "object" ) paras = {};
             for(var _para_ in this.default_menu_attrs){
                 paras[_para_] = paras[_para_] || this.default_menu_attrs[_para_];            
@@ -279,7 +300,36 @@
                         
         }
         
+    }
+
+    
+    var editor_attrs = new AFWEditor_attrs();
+    
+    var Textarea = function (){
+        this.textarea = null;  // must be a DOM
         
+        this.controls = {
+            get_position: function(){
+            
+            },
+            set_position: function(){
+         
+            },
+            toBold: function(){
+            
+            },
+            toItalic: function(){
+            
+            },        
+        }; 
+        
+        this.init = function(textarea){
+            if(!textarea){
+                console.error("please init textarea");
+                return false;            
+            }
+            this.textarea = textarea;
+        }
         
         
 
