@@ -55,3 +55,31 @@ class BloggerBlogHandler(BaseHandler):
         page.page_init()
         page.render()
         return
+
+
+from pages.bloggerpage import BloggerBookPage
+
+class BloggerBookHandler(BaseHandler):
+    def get(self, uid=None):   
+        from user import User
+        usr = self.current_user
+        if uid is None:
+            if usr is None:
+                self.redirect('/login')
+                return
+            author = usr
+        else:
+            author = User.by_id(uid)
+            if author is None:
+                self.send_error(404)
+                return
+        handler_page = BloggerBookPage(self)
+        if usr:
+            handler_page['author'] = usr.as_viewer(author)
+        else:
+            handler_page['author'] = author.basic_info
+        handler_page['book_list'] = [each.basic_info 
+                for each in author.managed_catalogs]
+        handler_page.page_init()
+        handler_page.render()
+        return
