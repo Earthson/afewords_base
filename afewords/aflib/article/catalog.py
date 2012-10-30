@@ -348,8 +348,8 @@ class Catalog(DataBox):
         ans['subcatalog_count'] = snode['subcatalog_count']
         article_rels = self.get_relations_from_node('articles', node_id)
         article_list = self.get_blogs_from_relations(article_rels)
-        ans['article_list'] = [dict(each.article_info_view_by('basic_info', 
-            usr, env), relation_id=each_r.uid)
+        ans['article_list'] = [dict(each.article_info_view_by(
+            'basic_info', usr, env), relation_id=each_r.uid)
             for each, each_r in zip(article_list, article_rels)]
         spec_rels = self.get_relations_from_node('main', node_id)
         spec_list = self.get_blogs_from_relations(spec_rels)
