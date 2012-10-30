@@ -35,16 +35,14 @@ class BookHandler(BaseHandler):
         if catalog_obj is None:
             self.send_error(404)
             return
-        handler_page['book'] = catalog_obj.basic_info
+        if handler_page['isedit'] is True:
+            handler_page['book'] = catalog_obj.edit_info
+        else:
+            handler_page['book'] = catalog_obj.basic_info
         handler_page.page_init()
         handler_page.render()
         return
 
-
-class BookChapterHandlerPara(BaseHandlerPara):
-    paradoc = {
-        #todo deju
-    }
 
 
 class BookChapterHandler(BaseHandler):
