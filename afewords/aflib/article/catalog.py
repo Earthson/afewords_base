@@ -354,7 +354,7 @@ class Catalog(DataBox):
         spec_rels = self.get_relations_from_node('main', node_id)
         spec_list = self.get_blogs_from_relations(spec_rels)
         ans['spec_article_list'] = [dict(each.article_info_view_by(
-                    'basic_info', usr, env), relations_id=each_r.uid)
+                    'basic_info', usr, env), relation_id=each_r.uid)
                     for each, each_r in zip(spec_list, spec_rels)]
         ans['subcatalog_list'] = list()
         return ans
