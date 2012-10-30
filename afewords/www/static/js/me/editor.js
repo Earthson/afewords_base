@@ -27,7 +27,7 @@
                                 "title": "加粗", 
                                 "value": '&nbsp;', 
                                 "exec":  function(){
-                                            this.set_character("++", false, "++", false);
+                                            this.set_character("++", "++");
                                         }
                             },
             "italic":       {
@@ -35,7 +35,7 @@
                                 "title": "斜体", 
                                 "value": '&nbsp;', 
                                 "exec": function(){
-                                        this.set_character("--", false, "--", false);                                
+                                        this.set_character("--", "--");                                
                                 }
                             },
             "underline":    {
@@ -43,7 +43,7 @@
                                 "title": "下划线", 
                                 "value": '&nbsp;', 
                                 "exec": function(){
-                                    this.set_character("__", false, "__", false);                                
+                                    this.set_character("__", "__");                                
                                 }
                             },
             "del":          {
@@ -51,7 +51,7 @@
                                 "title": "删除线", 
                                 "value": '&nbsp;', 
                                 "exec": function(){
-                                    this.set_character("--", false, "--", false);                                
+                                    this.set_character("--", "--");                                
                                 }
                             },
             "super":        {
@@ -59,7 +59,7 @@
                                 "title": "上标", 
                                 "value": '&nbsp;', 
                                 "exec": function(){
-                                    this.set_character("^{", false, "}", false);                                
+                                    this.set_character("^{", "}");                                
                                 }
                             },
             "suber":        {
@@ -67,7 +67,7 @@
                                 "title": "下标", 
                                 "value": '&nbsp;', 
                                 "exec": function(){
-                                    this.set_character("_{", false, "}", false);                                
+                                    this.set_character("_{", "}");                                
                                 }
                             },
             "ol":           {
@@ -75,7 +75,7 @@
                                 "title": "有序列表", 
                                 "value": '&nbsp;', 
                                 "exec": function(){
-                                    this.set_character("\n#", true, "\n", true);                                
+                                    this.set_character("\n#", "\n", true, false, false, true);                                
                                 }
                             },
             "ul":           {
@@ -83,7 +83,7 @@
                                 "title": "无序列表", 
                                 "value": '&nbsp;', 
                                 "exec": function(){
-                                    this.set_character("\n*", true, "\n", true);                                
+                                    this.set_character("\n*", "\n", true, false, false, true);                                
                                 }
                             },
             "separator":    {
@@ -91,7 +91,7 @@
                                 "title": "分割线", 
                                 "value": '~~', 
                                 "exec": function(){
-                                    this.set_character("", false, "\n~~~~~~~~~~\n", true);                                
+                                    this.set_character("", "\n~~~~~~~~~~\n", false, false, true, true);                                
                                 }
                             },
             "heading2":     {
@@ -99,7 +99,7 @@
                                 "title": "二级标题", 
                                 "value": "T<sub><small>2</small></sub>", 
                                 "exec": function(){
-                                    this.set_character("\n==", true, "==\n", false);                                
+                                    this.set_character("\n==", "==\n", true, false, false, true);                                
                                 }
                             },
             "heading3":     {
@@ -107,7 +107,7 @@
                                 "title": "三级标题", 
                                 "value": "T<sub><small>3</small></sub>", 
                                 "exec": function(){
-                                    this.set_character("\n===", true, "===\n", false);                                
+                                    this.set_character("\n===", "===\n", true, false, false, true);                                 
                                 }
                             },
             "heading4":     {
@@ -115,7 +115,7 @@
                                 "title": "四级标题", 
                                 "value": "T<sub><small>4</small></sub>", 
                                 "exec": function(){
-                                    this.set_character("\n====", true, "===\n", false);                                
+                                    this.set_character("\n====", "====\n", true, false, false, true);                                  
                                 }
                             },
             "indent":       {
@@ -123,7 +123,7 @@
                                 "title": "段落缩进", 
                                 "value": '&nbsp;', 
                                 "exec": function(){
-                                    this.set_character("\n>=", true, "", false);                              
+                                    this.set_character("\n>=", "", true, false, false, false);                              
                                 }
                             },
             "table":        {
@@ -131,7 +131,7 @@
                                 "title": "表格库", 
                                 "value": '&nbsp;', 
                                 "exec": function(_index_){
-                                    this.set_character("", false, "\n[table:" + _index_ +"]\n", true);                                
+                                    this.set_character("", "\n[table:" + _index_ +"]\n", false, false, true, true);                                
                                 }
                             },
             "image":        {
@@ -139,7 +139,7 @@
                                 "title": "图片库", 
                                 "value": '&nbsp;', 
                                 "exec": function(__index__){
-                                    this.set_character("", false, "\n[img:"+ _index_ +"]", true);                                
+                                    this.set_character("", "\n[img:"+ _index_ +"]", false, false, true, true);                                
                                 }
                             },
             "reference":    {
@@ -147,7 +147,7 @@
                                 "title": "引用库", 
                                 "value": '&nbsp;', 
                                 "exec": function(_index_){
-                                    this.set_character("", false, "\n[ref:"+ _index_ +"]", true);                                
+                                    this.set_character("", "\n[ref:"+ _index_ +"]", false, false, true, true);                                
                                 }
                             },
             "math":         {
@@ -155,7 +155,7 @@
                                 "title": "数学式库", 
                                 "value": '&nbsp;', 
                                 "exec": function(_index_){
-                                    this.set_character("", false, "\n[math:"+ _index_ +"]", true);                                
+                                    this.set_character("", "\n[math:"+ _index_ +"]", false, false, true, true);                                
                                 }
                             },
             "code":         {
@@ -163,7 +163,7 @@
                                 "title": "代码库", 
                                 "value": '&nbsp;', 
                                 "exec": function(_index_){
-                                    this.set_character("", false, "\n[code:"+ _index_ +"]", true);
+                                    this.set_character("", "\n[code:"+ _index_ +"]", false, false, true, true);
                                 }
                             },
             "letter":       {
@@ -171,7 +171,7 @@
                                 "title": "特殊字符集", 
                                 "value": '&nbsp;', 
                                 "exec": function(_unicode_){
-                                    this.set_character("", false, _unicode, false);                                
+                                    this.set_character("", _unicode);                                
                                 }
                             },
             "split":        {
@@ -422,22 +422,55 @@
     
     var editor_attrs = new AFWEditor_attrs();
     
-    var Textarea = function (){
+    function Textarea(){
     
         this.textarea = null;  // must be a DOM
         
-        this.controls = {
-            get_position: function(){
-                
-            },
-            set_position: function(){
-         
-            },
-                   
+        this.get_position = function(){
+        
         };
         
-        this.set_character = function ( prefix, prefix_newline, suffix, suffix_newline){
+        this.get_position_string = function(){
+        
+        };
+        
+        this.set_position = function(){
+        
+        };
+
+        
+        this.set_character = function ( prefix, suffix, prefix_l, prefix_r, suffix_l, suffix_r){
+            if ( arguments.length < 2 || typeof prefix != "string" || typeof suffix != "string" )  return false;
+            prefix_l = arguments[2] || false;
+            prefix_r = arguments[3] || false;
+            suffix_l = arguments[4] || false;
+            suffix_r = arguments[5] || false;
             
+            var pos = this.get_position(),
+                pos_s = pos.start,
+                pos_e = pos.end;
+            
+            if(prefix_l) {
+                if(this.get_position_string(pos_s - 1, pos) == "\n"){
+                    prefix = prefix.replace(/^\\n/,'');                
+                }       
+            }
+            if(prefix_r) {
+                if(this.get_position_string(pos_s - 1, pos) == "\n"){
+                    prefix = prefix.replace(/\\n$/,'');                
+                }            
+            }
+            
+            if(suffix_l){
+                if(this.get_position_string(pos_e - 1, pos_e) == "\n"){
+                    suffix = suffix.replace(/^\\n/,'');                
+                }            
+            }
+            if(suffix_r){
+                if(this.get_position_string(pos_e - 1, pos_e) == "\n"){
+                    suffix = suffix.replace(/\\n$/,'');                
+                }            
+            }
         } 
         
         this.init = function(textarea){
