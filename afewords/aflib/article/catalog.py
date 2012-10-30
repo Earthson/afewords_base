@@ -321,8 +321,13 @@ class Catalog(DataBox):
     def get_blogs_from_node(self, lib_type, node_id):
         '''lib_type: articles, main'''
         from blog import Blog
-        bids = self.lib.node_info_lib.\
+        from relation import Relation
+        rids = self.lib.node_info_lib.\
             sub_dict(node_id).sub_dict(lib_type).load_all()
+        rels = Relation.by_ids(rids)
+        bids = [each[0] for each_rel in rels 
+                    for each in each_rel.relation_set 
+                    if each[1] == Blog.__name__]
         blogs = Blog.by_ids(bids)
         blogs.sort()
         return blogs
@@ -359,6 +364,7 @@ class Catalog(DataBox):
             ans['spec_article_count'] = nodes[nid]['spec_count']
             ans['subcatalog_count'] = nodes[nid]['subcatalog_count']
             ans['article_list'] = list() #todo Earthson
+            ans['spec_article_list'] = list()
             ans['subcatalog_list'] = list()
             return ans
         ans = [trans_each(each) for each in nodes.keys()]

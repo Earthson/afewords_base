@@ -37,8 +37,8 @@ class Relation(DataBox):
         'activity' : True,
     }
 
-    def __init__(self, data=None, attrs={}, **indexdic):
-        BaseClass.__init__(self, data, attrs, **indexdic)
+    def __init__(self, data=None, *args, **kwargs):
+        DataBox.__init__(self, data, *args, **kwargs)
 
     def authority_verify(self, usr, **env):
         ret = 0
