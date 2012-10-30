@@ -60,7 +60,6 @@ class BookChapterHandler(BaseHandler):
         if chapter_info is None:
             self.send_error(404)
             return
-        print chapter_info
         handler_page['current_chapter'] = chapter_info
         handler_page['book'] = catalog_obj.basic_info
         handler_page['bid'] = bid
