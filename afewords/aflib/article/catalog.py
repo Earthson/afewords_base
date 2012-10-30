@@ -397,3 +397,22 @@ class Catalog(DataBox):
             ans['relation_id'] = ''
             return ans
         return getter
+
+    @db_property
+    def edit_info():
+        def getter(self):
+            ans = dict()
+            ans['bid'] = self.uid
+            ans['name'] = self.name
+            ans['release_time'] = self.release_time
+            ans['all_catalog_count'] = self.node_sum
+            ans['complete_count'] = self.complete_count
+            ans['author'] = self.owner.basic_info
+            ans['complete_rate'] = 0 if ans['complete_count'] == 0 else int((
+                    ans['all_catalog_count'] / ans['complete_count']) * 100)
+            ans['summary'] = self.about.edit_info
+            ans['chapter_list'] = self.get_node_list_info()
+            ans['relation_id'] = ''
+            return ans
+        return getter
+
