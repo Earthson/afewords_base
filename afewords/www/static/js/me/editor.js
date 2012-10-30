@@ -46,23 +46,140 @@
                                     this.set_character("__", false, "__", false);                                
                                 }
                             },
-            "del":          {"class": "del", "title": "删除线", "value": '&nbsp;', "exec": this.toDel},
-            "super":        {"class": "super", "title": "上标", "value": '&nbsp;', "exec": this.toSuper},
-            "suber":        {"class": "suber", "title": "下标", "value": '&nbsp;', "exec": this.toSuber},
-            "ol":           {"class": "ol", "title": "有序列表", "value": '&nbsp;', "exec": this.toOl},
-            "ul":           {"class": "ul", "title": "无序列表", "value": '&nbsp;', "exec": this.toUl},
-            "separator":    {"class": "part", "title": "分割线", "value": '~~', "exec": this.toSeparator},
-            "heading2":     {"class": "title", "title": "二级标题", "value": "T<sub><small>2</small></sub>", "exec": this.toH2},
-            "heading3":     {"class": "title", "title": "三级标题", "value": "T<sub><small>3</small></sub>", "exec": this.toH3},
-            "heading4":     {"class": "title", "title": "四级标题", "value": "T<sub><small>4</small></sub>", "exec": this.toH4},
-            "indent":       {"class": "indent", "title": "段落缩进", "value": '&nbsp;', "exec": this.toIndent},
-            "table":        {"class": "table", "title": "表格库", "value": '&nbsp;', "exec": this.toTable},
-            "image":        {"class": "image", "title": "图片库", "value": '&nbsp;', "exec": this.toImage},
-            "reference":    {"class": "ref", "title": "引用库", "value": '&nbsp;', "exec": this.toReference},
-            "math":         {"class": "math", "title": "数学式库", "value": '&nbsp;', "exec": this.toMath},
-            "code":         {"class": "code", "title": "代码库", "value": '&nbsp;', "exec": this.toCode},
-            "letter":       {"class": "letter", "title": "特殊字符集", "value": '&nbsp;', "exec": this.toLetter},
-            "split":        {"class": "split", "title": '', "value": '&nbsp;', "exec": this.toSplit} 
+            "del":          {
+                                "class": "del", 
+                                "title": "删除线", 
+                                "value": '&nbsp;', 
+                                "exec": function(){
+                                    this.set_character("--", false, "--", false);                                
+                                }
+                            },
+            "super":        {
+                                "class": "super", 
+                                "title": "上标", 
+                                "value": '&nbsp;', 
+                                "exec": function(){
+                                    this.set_character("^{", false, "}", false);                                
+                                }
+                            },
+            "suber":        {
+                                "class": "suber", 
+                                "title": "下标", 
+                                "value": '&nbsp;', 
+                                "exec": function(){
+                                    this.set_character("_{", false, "}", false);                                
+                                }
+                            },
+            "ol":           {
+                                "class": "ol", 
+                                "title": "有序列表", 
+                                "value": '&nbsp;', 
+                                "exec": function(){
+                                    this.set_character("\n#", true, "\n", true);                                
+                                }
+                            },
+            "ul":           {
+                                "class": "ul", 
+                                "title": "无序列表", 
+                                "value": '&nbsp;', 
+                                "exec": function(){
+                                    this.set_character("\n*", true, "\n", true);                                
+                                }
+                            },
+            "separator":    {
+                                "class": "part", 
+                                "title": "分割线", 
+                                "value": '~~', 
+                                "exec": function(){
+                                    this.set_character("", false, "\n~~~~~~~~~~\n", true);                                
+                                }
+                            },
+            "heading2":     {
+                                "class": "title", 
+                                "title": "二级标题", 
+                                "value": "T<sub><small>2</small></sub>", 
+                                "exec": function(){
+                                    this.set_character("\n==", true, "==\n", false);                                
+                                }
+                            },
+            "heading3":     {
+                                "class": "title", 
+                                "title": "三级标题", 
+                                "value": "T<sub><small>3</small></sub>", 
+                                "exec": function(){
+                                    this.set_character("\n===", true, "===\n", false);                                
+                                }
+                            },
+            "heading4":     {
+                                "class": "title", 
+                                "title": "四级标题", 
+                                "value": "T<sub><small>4</small></sub>", 
+                                "exec": function(){
+                                    this.set_character("\n====", true, "===\n", false);                                
+                                }
+                            },
+            "indent":       {
+                                "class": "indent", 
+                                "title": "段落缩进", 
+                                "value": '&nbsp;', 
+                                "exec": function(){
+                                    this.set_character("\n>=", true, "", false);                              
+                                }
+                            },
+            "table":        {
+                                "class": "table", 
+                                "title": "表格库", 
+                                "value": '&nbsp;', 
+                                "exec": function(_index_){
+                                    this.set_character("", false, "\n[table:" + _index_ +"]\n", true);                                
+                                }
+                            },
+            "image":        {
+                                "class": "image", 
+                                "title": "图片库", 
+                                "value": '&nbsp;', 
+                                "exec": function(__index__){
+                                    this.set_character("", false, "\n[img:"+ _index_ +"]", true);                                
+                                }
+                            },
+            "reference":    {
+                                "class": "ref", 
+                                "title": "引用库", 
+                                "value": '&nbsp;', 
+                                "exec": function(_index_){
+                                    this.set_character("", false, "\n[ref:"+ _index_ +"]", true);                                
+                                }
+                            },
+            "math":         {
+                                "class": "math", 
+                                "title": "数学式库", 
+                                "value": '&nbsp;', 
+                                "exec": function(_index_){
+                                    this.set_character("", false, "\n[math:"+ _index_ +"]", true);                                
+                                }
+                            },
+            "code":         {
+                                "class": "code", 
+                                "title": "代码库", 
+                                "value": '&nbsp;', 
+                                "exec": function(_index_){
+                                    this.set_character("", false, "\n[code:"+ _index_ +"]", true);
+                                }
+                            },
+            "letter":       {
+                                "class": "letter", 
+                                "title": "特殊字符集", 
+                                "value": '&nbsp;', 
+                                "exec": function(_unicode_){
+                                    this.set_character("", false, _unicode, false);                                
+                                }
+                            },
+            "split":        {
+                                "class": "split", 
+                                "title": '', 
+                                "value": '&nbsp;', 
+                                "exec": function(){}
+                            } 
         }
         
         /***** editor lib bar ****/
@@ -306,21 +423,17 @@
     var editor_attrs = new AFWEditor_attrs();
     
     var Textarea = function (){
+    
         this.textarea = null;  // must be a DOM
         
         this.controls = {
             get_position: function(){
-            
+                
             },
             set_position: function(){
          
             },
-            toBold: function(){
-            
-            },
-            toItalic: function(){
-            
-            },        
+                   
         }; 
         
         this.init = function(textarea){
