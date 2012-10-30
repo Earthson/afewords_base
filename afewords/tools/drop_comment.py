@@ -3,4 +3,4 @@ from article.comment import Comment
 
 com_all = [Comment(each) for each in Comment.datatype.find()]
 for each in com_all:
-    com_all.remove()
+    each.remove()

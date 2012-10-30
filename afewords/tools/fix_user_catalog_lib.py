@@ -3,7 +3,6 @@ from user import User
 
 usrs = [User(data=each) for each in User.datatype.find()]
 for each in usrs:
-    each.account_status = 'normal'
     tmp = each.lib.managed_catalog_lib.load_all()
     if tmp:
         for ek in tmp.keys():
