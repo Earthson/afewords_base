@@ -12,8 +12,6 @@ def strip_tags(html, length):
     return ''.join(result)[:length]
 
 def section_cmp(sec0, sec1):
-    sec0 = sec0.split('.')
-    sec1 = sec1.split('.')
-    sec0 = [int(each) if each.isdigit() else each for each in sec0]
-    sec1 = [int(each) if each.isdigit() else each for each in sec1]
+    sec0 = [int(each) if each.isdigit() else each for each in sec0.split('.')]
+    sec1 = [int(each) if each.isdigit() else each for each in sec1.split('.')]
     return cmp(sec0, sec1)
