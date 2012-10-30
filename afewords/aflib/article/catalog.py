@@ -318,10 +318,11 @@ class Catalog(DataBox):
         del self.lib.parent_catalogs[str(catalog_obj._id)+'#'+node_id]
         catalog_obj.remove_subcatalog(node_id, relation_obj)
 
-    def get_blogs_from_node(self, node_id):
+    def get_blogs_from_node(self, lib_type, node_id):
+        '''lib_type: articles, main'''
         from blog import Blog
         bids = self.lib.node_info_lib.\
-            sub_dict(node_id).sub_dict('articles').load_all()
+            sub_dict(node_id).sub_dict(lib_type).load_all()
         blogs = Blog.by_ids(bids)
         blogs.sort()
         return blogs
@@ -337,8 +338,11 @@ class Catalog(DataBox):
         ans['article_count'] = snode['article_count']
         ans['spec_article_count'] = snode['spec_count']
         ans['subcatalog_count'] = snode['subcatalog_count']
-        ans['article_list'] = [each.article_info_view_by('basic_info', usr,
-                    env) for each in self.get_blogs_from_node(node_id)]
+        ans['article_list'] = [each.article_info_view_by('basic_info', usr, env)
+            for each in self.get_blogs_from_node('articles', node_id)]
+        ans['spec_article_list'] = [each.article_info_view_by('basic_info',
+                    usr, env) for each in \
+                    self.get_blogs_from_node('main', node_id)]
         ans['subcatalog_list'] = list()
         return ans
 
