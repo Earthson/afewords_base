@@ -1,5 +1,5 @@
 {% set node_list = doc['node_list'] %}
-{% set edit = True if doc['isedit'] == "yes" else False %}
+{% set edit = doc['isedit'] %}
 {% set book_id = doc['bid'] %}
 {% set nest = 1 %}
 {% set normal_li = u'<li node_id="%s"><span class="num">%s</span><span><a href="/book/%s/catalog/%s">%s</a></span>%s%s</li>' %}

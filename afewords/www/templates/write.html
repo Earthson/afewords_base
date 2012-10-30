@@ -132,6 +132,7 @@
 
 {% block script_bottom %}
 
+
 {% set article = doc['article'] %}
 {% set isedit = doc['isedit'] %}
 {% set article_type = doc['article_type'] %}
@@ -142,10 +143,12 @@ $().ready(function(){
         'background-repeat': 'repeat'}); /*document.body.style.backgroundColor="#f8f8f8";*/ });
 </script>
 <script type="text/javascript" src="{{ static_url("js/me/write.js") }}" ></script>
+
+
+{# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 <script type="text/javascript">
 $().ready(function(){
 $("#right").css("border-left-width",'0');
-
 
 {% if not isedit %}
     {% set json_article = { "article_id": -1, "article_type": article_type, "env_type": owner['type'], "env_id": owner['entity']['gid'] if owner['type'] == 'group' else owner['entity']['uid'] } %}
@@ -187,5 +190,14 @@ $Write.window_close_alert();
 {% end %}
 })
 </script>
+===============================================================================#}
+<script src="{{ static_url("js/me/editor.js") }}"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#write_textarea").create_editor();
+});
+</script>
+
+
 {% end %}
 

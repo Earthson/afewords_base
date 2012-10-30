@@ -544,11 +544,76 @@
     }
 
 
-    jQ.fn.create_editor = function( paras ){
-        var editor_id = editor_attrs.default_editor_attrs["editor_menu_id"],
-            textarea_id = editor_attrs.default_editor_attrs["editor_textarea_id"];
+    jQ.fn.create_editor = function( paras , panel){
+    
+        paras = paras || {};
         
-        var $editor_menu = $('<div></div>');
+        var editor_id = editor_attrs.default_editor_attrs["editor_menu_id"],
+            textarea_id = editor_attrs.default_editor_attrs["editor_textarea_id"],
+            editor_panel = editor_attrs.default_panel,
+            menu_attrs = editor_attrs.default_menu_attrs;
+            
+        var tmp_default_panel  = ["bold", "italic", "underline", "del", "super", "suber", "split",
+                                    "ol", "ul", "split",
+                                    "separator", "heading2", "heading3", "heading4", "indent", "split",
+                                    "table", "image", "reference", "code", "math", "letter" ],
+            panel = panel || tmp_default_panel;
+            
+        var menu_paras = {};    
+        for(var _para_ in menu_attrs){
+            menu_paras[_para_] = paras[_para_] || menu_attrs[_para_];        
+        }        
+        
+        var $editor_menu = jQ('<div id='+ editor_id +'></div>'),
+            $editor_menu_base = jQ('<div id="write_menu_base"></div>'),
+            $textarea = $("#"+ textarea_id).eq(0);
+            
+        $textarea.attr("spellcheck", false);
+        $editor_menu.attr(menu_attrs);
+        
+        var editor_menu_base_html = ['<ul>'],
+            tmp_html = '',
+            tmp_panel = {};
+        for(var ii = 0 ; ii < panel.length; ii++){
+            if(! panel[ii] in editor_panel){
+                console.log("Not defined in panel!");
+                continue;            
+            }
+            tmp_panel = editor_panel[panel[ii]];
+            tmp_html = '<li kind="' + panel[ii] + '" class="'+ tmp_panel["class"] +'" title="'+ tmp_panel['title'] +'">'+ tmp_panel["value"] +'</li>';        
+            editor_menu_base_html.push(tmp_html);        
+        }
+        editor_menu_base_html.push('</ul>');
+        
+        $editor_menu_base.append(editor_menu_base_html.join(''));
+        $editor_menu.append($editor_menu_base);
+        $editor_menu.insertBefore(this);
+        
+        // lib bar 
+        var lib_bar_ids = editor_attrs.default_lib_bar,
+            $lib_bars = {};
+        
+        for(var ii in lib_bar_ids){
+            $lib_bars[ii] = jQ('<div id="' + lib_bar_ids[ii]["id"] + '" src_type="' + ii + '" style="display:none;"></div>');        
+        }
+        
+        var $lib_bar = $lib_bars["all"],
+            $lib_image_bar = $lib_bars["image"],
+            $lib_math_bar = $lib_bars["math"],
+            $lib_code_bar = $lib_bars["code"],
+            $lib_reference_bar = $lib_bars["reference"],
+            $lib_letter_bar = $lib_bars["letter"],
+            $lib_table_bar = $lib_bars["table"];
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
         
     }
 
