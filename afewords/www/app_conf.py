@@ -28,6 +28,7 @@ from handlers.settingshandlers import UserSettingFollowerHandler
 
 
 from handlers.bookhandlers import BookHandler
+from handlers.bookhandlers import BookChapterHandler
 
 
 app_handlers = {
@@ -61,7 +62,8 @@ app_handlers = {
     (r'/draft', UserSettingDraftHandler),
     (r'/settings-follow', UserSettingFollowHandler),
     (r'/settings-follower', UserSettingFollowerHandler),
-    (r'/book/(.+)', BookHandler),
+    (r'/book/([0-9a-zA-Z]+)', BookHandler),
+    (r'/book/([0-9a-zA-Z]+)/catalog/([0-9]+)', BookChapterHandler),
 }
 
 app_settings = {

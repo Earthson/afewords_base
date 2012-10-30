@@ -49,4 +49,20 @@ class BookChapterHandlerPara(BaseHandlerPara):
 
 class BookChapterHandler(BaseHandler):
     def get(self, bid, cnum):
-        pass
+        from article.catalog import Catalog
+        handler_page = BookChapter(self)
+        usr = self.current_user
+        catalog_obj = Catalog.by_id(bid)
+        if catalog_obj is None:
+            self.send_error(404)
+            return
+        chapter_info = catalog_obj.get_node_info_view_by(cnum, usr, catalog_obj)
+        if chapter_info is None:
+            self.send_error(404)
+            return
+        handler_page['current_chapter'] = chapter_info
+        handler_page['book'] = catalog_obj.basic_info
+        handler_page['bid'] = bid
+        handler_page.page_init()
+        handler_page.render()
+        return

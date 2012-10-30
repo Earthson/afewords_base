@@ -114,6 +114,8 @@ class DataBox(object):
     @classmethod
     def by_ids(cls, uids):
         from bson import ObjectId
+        if uids is None:
+            return []
         oids = [ObjectId(each) for each in uids if ObjectId.is_valid(each)]
         datas = cls.datatype.find({'_id':{'$in':oids}})
         return [cls(data=each) for each in datas]

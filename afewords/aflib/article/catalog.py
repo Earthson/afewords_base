@@ -317,12 +317,19 @@ class Catalog(DataBox):
     def remove_from_catalog(self, catalog_obj, node_id, relation_obj):
         del self.lib.parent_catalogs[str(catalog_obj._id)+'#'+node_id]
         catalog_obj.remove_subcatalog(node_id, relation_obj)
+
+    def get_blogs_from_node(self, node_id):
+        from blog import Blog
+        bids = self.lib.node_info_lib.\
+            sub_dict(node_id).sub_dict('articles').load_all()
+        blogs = Blog.by_ids(bids)
+        blogs.sort()
+        return blogs
     
-    def get_node_info(self, node_id):
+    def get_node_info_view_by(self, node_id, usr=None, env=None):
         snode = self.lib.node_lib.sub_dict(node_id).load_all()
         if not snode:
             return None
-        snode_info = self.lib.node_info_lib.sub_dict(node_id).load_all()
         ans = dict()
         ans['cid'] = node_id
         ans['title'] = snode['title']
@@ -330,7 +337,8 @@ class Catalog(DataBox):
         ans['article_count'] = snode['article_count']
         ans['spec_article_count'] = snode['spec_count']
         ans['subcatalog_count'] = snode['subcatalog_count']
-        ans['article_list'] = list() #todo Earthson
+        ans['article_list'] = [each.article_info_view_by('basic_info', usr,
+                    env) for each in self.get_blogs_from_node(node_id)]
         ans['subcatalog_list'] = list()
         return ans
 
