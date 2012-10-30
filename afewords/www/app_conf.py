@@ -10,6 +10,8 @@ from handlers.securityhandlers import CheckHandler
 from handlers.securityhandlers import ResetHandler, RepeatResetMailHandler
 from handlers.bloghandler import BlogHandler
 from handlers.bloggerhandlers import BloggerBlogHandler
+from handlers.bloggerhandlers import BloggerBookHandler
+from handlers.bloggerhandlers import BloggerAboutHandler
 from handlers.articlewritehandlers import ArticleWriteHandler
 from handlers.articlewritehandlers import ArticleUpdateHandler
 from handlers.articlewritehandlers import ArticleSrcHandler
@@ -44,10 +46,12 @@ app_handlers = {
     (r'/reset', ResetHandler),
     (r'/repeat-mail', RepeatResetMailHandler),
     (r'/blog/(.+)', BlogHandler),
-    (r'/blogger/(.+)/blog', BloggerBlogHandler),
-    (r'/blogger/(.+)', BloggerBlogHandler),
+    (r'/blogger/([0-9a-zA-Z]+)/about', BloggerAboutHandler),
+    (r'/blogger/([0-9a-zA-Z]+)/book', BloggerBookHandler),
+    (r'/blogger/([0-9a-zA-Z]+)/blog', BloggerBlogHandler),
+    (r'/blogger/([0-9a-zA-Z]+)', BloggerBlogHandler),
     (r'/blogger', BloggerBlogHandler),
-    (r'/user/(.+)', BloggerBlogHandler),
+    (r'/user/([0-9a-zA-Z]+)', BloggerBlogHandler),
     (r'/write', ArticleWriteHandler),
     (r'/update-article', ArticleUpdateHandler),
     (r'/article-src-control', ArticleSrcHandler),

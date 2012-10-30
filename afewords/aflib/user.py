@@ -41,7 +41,10 @@ class UserLibDoc(AFDocument):
             #objid : membership_type
             basestring : basestring,
         },
-        'managed_catalog_lib' : dict, #todo Earthson
+        'managed_catalog_lib' : {
+            #objid : membership_type(admin/owner)
+            basestring : basestring,
+        },
         'recommended_list' : [(ObjectId, basestring)],
         'notification_lib' : {
             #noti_id
@@ -515,4 +518,12 @@ class User(DataBox):
             ans['type'] = self.__class__.__name__
             ans['entity'] = self.basic_info
             return ans
+        return getter
+
+    @db_property
+    def managed_catalogs():
+        def getter(self):
+            from article.catalog import Catalog
+            cids = self.lib.managed_catalog_lib.keys()
+            return Catalog.by_ids(cids)
         return getter

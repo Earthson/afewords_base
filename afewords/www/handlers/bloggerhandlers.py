@@ -19,21 +19,29 @@ class BloggerBlogPara(BaseHandlerPara):
         self['tag'] = self.handler.get_esc_arg('tag', self['tag'])
 
 
-class BloggerBlogHandler(BaseHandler):
-
-    def get(self, uid=None):
+class BaseBloggerHandler(BaseHandler):
+    def get_init(self, uid=None):
         from user import User
         usr = self.current_user
+        self.usr= usr
         if uid is None:
             if usr is None:
-                self.redirect('/login')    
+                self.redirect('/login')
                 return
-            author = usr
+            self.author = usr
         else:
-            author = User.by_id(uid)
-            if author is None:
+            self.author = User.by_id(uid)
+            if self.author is None:
                 self.send_error(404)
                 return
+
+
+class BloggerBlogHandler(BaseBloggerHandler):
+
+    def get(self, uid=None):
+        self.get_init(uid)
+        usr = self.current_user
+        author = self.author
         paras = BloggerBlogPara(self)
         page = BloggerBlogPage(self)
         page['current_page'] = paras['page']
@@ -54,4 +62,38 @@ class BloggerBlogHandler(BaseHandler):
         page['baseurl'] = self.request_url
         page.page_init()
         page.render()
+        return
+
+
+from pages.bloggerpage import BloggerBookPage
+
+class BloggerBookHandler(BaseBloggerHandler):
+    def get(self, uid=None):   
+        self.get_init(uid)
+        usr = self.usr
+        author = self.author
+        handler_page = BloggerBookPage(self)
+        if usr:
+            handler_page['author'] = usr.as_viewer(author)
+        else:
+            handler_page['author'] = author.basic_info
+        handler_page['book_list'] = [each.basic_info 
+                for each in author.managed_catalogs]
+        handler_page.page_init()
+        handler_page.render()
+        return
+
+from pages.bloggerpage import BloggerAboutPage
+
+class BloggerAboutHandler(BaseBloggerHandler):
+    def get(self, uid=None):
+        self.get_init(uid)
+        usr = self.usr
+        author = self.author
+        handler_page = BloggerAboutPage(self)
+        handler_page['author'] = usr.as_viewer(author) \
+                    if usr else author.basic_info
+        handler_page['about'] = author.about.basic_info
+        handler_page.page_init()
+        handler_page.render()
         return
