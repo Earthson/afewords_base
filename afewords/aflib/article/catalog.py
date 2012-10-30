@@ -390,7 +390,7 @@ class Catalog(DataBox):
             ans['all_catalog_count'] = self.node_sum
             ans['complete_count'] = self.complete_count
             ans['author'] = self.owner.basic_info
-            ans['complete_rate'] = int((
+            ans['complete_rate'] = 0 if ans['complete_count'] == 0 else int((
                     ans['all_catalog_count'] / ans['complete_count']) * 100)
             ans['summary'] = self.about.basic_info
             ans['chapter_list'] = self.get_node_list_info()
