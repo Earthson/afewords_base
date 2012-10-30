@@ -117,6 +117,9 @@ def article_env_init(handler, handler_paras, handler_json):
         handler.article_obj.ref_comment = ref_comment
     return 0
 
+class BaseArticleUpdateHandler(BaseHandler):
+    env_init = article_env_init
+
 
 class ArticleUpdatePara(BaseHandlerPara):
     paradoc = {
@@ -152,14 +155,14 @@ class ArticleUpdatePara(BaseHandlerPara):
 from pages.postjson import UpdateArticleJson
 from pages.messages import BeCommentedMSG
 
-class ArticleUpdateHandler(BaseHandler):
+class ArticleUpdateHandler(BaseArticleUpdateHandler):
 
     @with_login_post
     def post(self):
         handler_paras = ArticleUpdatePara(self)
         handler_json = UpdateArticleJson(self)
         usr = self.current_user
-        status = article_env_init(self, handler_paras, handler_json)
+        status = self.env_init(handler_paras, handler_json)
         if status != 0:
             handler_json.by_status(status)
             handler_json.write()
@@ -246,14 +249,14 @@ class ArticleSrcPara(BaseHandlerPara):
 
 from pages.postjson import ArticleSrcJson
 
-class ArticleSrcHandler(BaseHandler):
+class ArticleSrcHandler(BaseArticleUpdateHandler):
     '''for article lib: picture langcode math and etc.'''
     @with_login_post
     def post(self):
         handler_paras = ArticleSrcPara(self)
         handler_json = ArticleSrcJson(self)
         usr = self.current_user
-        status = article_env_init(self, handler_paras, handler_json)
+        status = self.env_init(handler_paras, handler_json)
         handler_json['src_alias'] = handler_paras['src_alias']
         if status == 0 and handler_paras.error_code > 0:
             #data read error
