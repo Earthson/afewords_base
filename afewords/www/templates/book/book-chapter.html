@@ -96,8 +96,9 @@
 
 
 {% block script_book_node_bottom %}
+{% if doc['current_chapter']['spec_article_count'] != 0 %}
 <script type="text/javascript" src="{{ static_url("js/code/shCore.js") }}"></script>
-{%  for jjj in doc['current_chapter']['js_list']  %}
+{%  for jjj in doc['current_chapter']['spec_article_list'][0]['js_list']  %}
     <script type="text/javascript" src="{{ static_url("js/code/" + jjj) }}"></script>
 {% end %}
 <script type="text/javascript">
@@ -105,5 +106,6 @@ $().ready(function(){
 	SyntaxHighlighter.all();
 });
 </script>
+{% end %}
 
 {%end %}

@@ -129,7 +129,7 @@ jQuery.fn.extend({
     getPosition:function(){
         var s,e,range,stored_range;
         if(this[0].selectionStart == undefined){
-            var selection=document.selection;
+            var selection = document.selection;
             if (this[0].tagName.toLowerCase() != "textarea") {
                 var val = this.val();
                 range = selection.createRange().duplicate();

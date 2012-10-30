@@ -434,7 +434,11 @@
          
             },
                    
-        }; 
+        };
+        
+        this.set_character = function ( prefix, prefix_newline, suffix, suffix_newline){
+            
+        } 
         
         this.init = function(textarea){
             if(!textarea){
