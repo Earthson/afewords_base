@@ -318,14 +318,17 @@ class Catalog(DataBox):
         del self.lib.parent_catalogs[str(catalog_obj._id)+'#'+node_id]
         catalog_obj.remove_subcatalog(node_id, relation_obj)
 
-    def get_blogs_from_node(self, lib_type, node_id):
-        '''lib_type: articles, main'''
-        from blog import Blog
+    def get_relations_from_node(self, lib_type, node_id):
+        '''lib_type: articles, main, catalogs'''
         from relation import Relation
         rids = self.lib.node_info_lib.\
             sub_dict(node_id).sub_dict(lib_type).load_all()
-        rels = Relation.by_ids(rids)
-        bids = [each[0] for each_rel in rels 
+        return Relation.by_ids(rids)
+
+    def get_blogs_from_relations(self, relations):
+        '''lib_type: articles, main'''
+        from blog import Blog
+        bids = [each[0] for each_rel in relations
                     for each in each_rel.relation_set 
                     if each[1] == Blog.__name__]
         blogs = Blog.by_ids(bids)
@@ -343,11 +346,16 @@ class Catalog(DataBox):
         ans['article_count'] = snode['article_count']
         ans['spec_article_count'] = snode['spec_count']
         ans['subcatalog_count'] = snode['subcatalog_count']
-        ans['article_list'] = [each.article_info_view_by('basic_info', usr, env)
-            for each in self.get_blogs_from_node('articles', node_id)]
-        ans['spec_article_list'] = [each.article_info_view_by('basic_info',
-                    usr, env) for each in \
-                    self.get_blogs_from_node('main', node_id)]
+        article_rels = self.get_relations_from_node('articles', node_id)
+        article_list = self.get_blogs_from_relations(article_rels)
+        ans['article_list'] = [dict(each.article_info_view_by(
+            'basic_info', usr, env), relation_id=each_r.uid)
+            for each, each_r in zip(article_list, article_rels)]
+        spec_rels = self.get_relations_from_node('main', node_id)
+        spec_list = self.get_blogs_from_relations(spec_rels)
+        ans['spec_article_list'] = [dict(each.article_info_view_by(
+                    'basic_info', usr, env), relations_id=each_r.uid)
+                    for each, each_r in zip(spec_list, spec_rels)]
         ans['subcatalog_list'] = list()
         return ans
 
