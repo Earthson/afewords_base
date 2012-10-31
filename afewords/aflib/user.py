@@ -446,10 +446,7 @@ class User(DataBox):
 
     def obj_info_view_by(self, info_name='basic_info',
                         usr=None, env=None, **kwargs):
-        try:
-            uinfo = self.get_propertys(info_name)[0]
-        except IndexError:
-            return None
+        uinfo = self.get_propertys(info_name)[0]
         uinfo['permission'] = auth_str(self.authority_verify(
                         usr, env, **kwargs))
         if usr is None:

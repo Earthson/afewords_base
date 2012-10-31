@@ -478,10 +478,7 @@ class Article(DataBox):
 
     def article_info_view_by(self, info_name='basic_info', 
                     usr=None, env=None, **kwargs):
-        try:
-            ans = self.get_propertys(info_name)[1]
-        except IndexError:
-            return None
+        ans = self.get_propertys(info_name)[0]
         ans['permission'] = auth_str(self.authority_verify(usr, env, **kwargs))
         ans['author'] = usr.as_viewer_to_uinfo(ans['author'])
         return ans
