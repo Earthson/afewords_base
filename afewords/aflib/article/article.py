@@ -265,11 +265,11 @@ class Article(DataBox):
         return ArticleTranslator(self.refinder)
 
     @with_user_status
-    def authority_verify(self, usr, env=None, **kwargs):
+    def authority_verify(self, usr=None, env=None, **kwargs):
         ret = 0
-        if not usr:
+        if usr is None:
             ret = set_auth(ret, A_READ)
-        elif self.author._id == usr._id:
+        elif self.author is not None and self.author._id == usr._id:
             ret = set_auth(ret, A_READ | A_WRITE | A_DEL)
         if env:
             tmp = env.authority_verify(usr)
@@ -464,11 +464,18 @@ class Article(DataBox):
             return ans
         return getter
 
-    def article_info_view_by(self, info_name, usr, env=None, **kwargs):
-        ans = self.get_propertys(info_name)[0]
+    def article_info_view_by(self, info_name='basic_info', 
+                    usr=None, env=None, **kwargs):
+        ans = dict()
+        try:
+            ans = self.get_propertys(info_name)[0]
+        except:
+            return None
         ans['permission'] = auth_str(self.authority_verify(usr, env, **kwargs))
         ans['author'] = usr.as_viewer_to_uinfo(ans['author'])
         return ans
+
+    obj_info_view_by = article_info_view_by
 
     @db_property
     def pictures():

@@ -222,7 +222,7 @@ class User(DataBox):
     @with_user_status
     def authority_verify(self, usr, env=None, **kwargs):
         ret = 0
-        if usr == None:
+        if usr is None:
             ret = set_auth(ret, A_READ)
         elif self._id == usr._id:
             ret = set_auth(ret, A_READ | A_WRITE | A_DEL | A_POST)
@@ -376,7 +376,7 @@ class User(DataBox):
         else:
             toview = self.blogs
         if usr: 
-            return [each.article_info_view_by('basic_info', usr) 
+            return [each.obj_info_view_by('basic_info', usr) 
                         for each in toview]
         return [each.basic_info for each in toview]
 
@@ -438,9 +438,27 @@ class User(DataBox):
         return user_info
 
     def as_viewer_to_uinfo(self, uinfo):
+        if not uinfo:
+            return None
         uinfo['isfollow'] = self.is_follow(uinfo['uid'])
         uinfo['isme'] = (self.uid == uinfo['uid'])
         return uinfo
+
+    def obj_info_view_by(self, info_name='basic_info',
+                        usr=None, env=None, **kwargs):
+        try:
+            uinfo = self.get_propertys(info_name)[0]
+        except:
+            return None
+        uinfo['permission'] = auth_str(self.authority_verify(
+                        usr, env, **kwargs))
+        if usr is None:
+            return uinfo
+        uinfo['isfollow'] = usr.is_follow(self.uid)
+        uinfo['isme'] = (self.uid == usr.uid)
+        return uinfo
+        
+        
 
     def is_like(self, obj):
         return obj.uid in self.lib.favorite_lib

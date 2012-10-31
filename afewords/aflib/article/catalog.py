@@ -348,36 +348,47 @@ class Catalog(DataBox):
         ans['subcatalog_count'] = snode['subcatalog_count']
         article_rels = self.get_relations_from_node('articles', node_id)
         article_list = self.get_blogs_from_relations(article_rels)
-        ans['article_list'] = [dict(each.article_info_view_by(
+        ans['article_list'] = [dict(each.obj_info_view_by(
             'basic_info', usr, env), relation_id=each_r.uid)
             for each, each_r in zip(article_list, article_rels)]
         spec_rels = self.get_relations_from_node('main', node_id)
         spec_list = self.get_blogs_from_relations(spec_rels)
-        ans['spec_article_list'] = [dict(each.article_info_view_by(
+        ans['spec_article_list'] = [dict(each.obj_info_view_by(
                     'basic_info', usr, env), relation_id=each_r.uid)
                     for each, each_r in zip(spec_list, spec_rels)]
         ans['subcatalog_list'] = list()
         return ans
 
-    def get_node_list_info(self):
-        from aflib_utils import section_cmp
-        nodes = self.lib.node_lib.load_all()
-        nodeinfos = self.lib.node_info_lib.load_all()
-        def trans_each(nid):
-            ans = dict()
-            ans['cid'] = nid
-            ans['title'] = nodes[nid]['title']
-            ans['chapter_num'] = nodes[nid]['section']
-            ans['article_count'] = nodes[nid]['article_count']
-            ans['spec_article_count'] = nodes[nid]['spec_count']
-            ans['subcatalog_count'] = nodes[nid]['subcatalog_count']
-            ans['article_list'] = list() #todo Earthson
-            ans['spec_article_list'] = list()
-            ans['subcatalog_list'] = list()
-            return ans
-        ans = [trans_each(each) for each in nodes.keys()]
-        return sorted(ans, cmp=lambda x, y : \
-                    section_cmp(x['chapter_num'], y['chapter_num'])) 
+    @db_property
+    def node_list_info():
+        def getter(self):
+            from aflib_utils import section_cmp
+            nodes = self.lib.node_lib.load_all()
+            nodeinfos = self.lib.node_info_lib.load_all()
+            def trans_each(nid):
+                ans = dict()
+                ans['cid'] = nid
+                ans['title'] = nodes[nid]['title']
+                ans['chapter_num'] = nodes[nid]['section']
+                ans['article_count'] = nodes[nid]['article_count']
+                ans['spec_article_count'] = nodes[nid]['spec_count']
+                ans['subcatalog_count'] = nodes[nid]['subcatalog_count']
+                ans['article_list'] = list() #todo Earthson
+                ans['spec_article_list'] = list()
+                ans['subcatalog_list'] = list()
+                return ans
+            ans = [trans_each(each) for each in nodes.keys()]
+            return sorted(ans, cmp=lambda x, y : \
+                        section_cmp(x['chapter_num'], y['chapter_num'])) 
+        return getter
+
+    @db_property
+    def complete_rate():
+        def getter(self):
+            if self.data['complete_count'] == 0:
+                return 0
+            return int(self.data['complete_count'] * 100 / self.node_sum)
+        return getter
 
     #property for page&json
     @db_property
@@ -390,13 +401,32 @@ class Catalog(DataBox):
             ans['all_catalog_count'] = self.node_sum
             ans['complete_count'] = self.complete_count
             ans['author'] = self.owner.basic_info
-            ans['complete_rate'] = 0 if ans['complete_count'] == 0 else int((
-                    ans['all_catalog_count'] / ans['complete_count']) * 100)
+            ans['complete_rate'] = self.complete_rate
             ans['summary'] = self.about.basic_info
-            ans['chapter_list'] = self.get_node_list_info()
+            ans['chapter_list'] = self.node_list_info
             ans['relation_id'] = ''
             return ans
         return getter
+
+    def obj_info_view_by(self, info_name='basic_info', 
+                            usr=None, env=None, **kwargs):
+        ans = dict()
+        ans['bid'] = self.uid
+        ans['name'] = self.name
+        ans['release_time'] = self.release_time
+        ans['all_catalog_count'] = self.node_sum
+        ans['complete_count'] = self.complete_count
+        ans['author'] = self.owner.obj_info_view_by('basic_info', 
+                            usr=usr, env=env, **kwargs)
+        ans['complete_rate'] = self.complete_rate
+        ans['summary'] = self.about.obj_info_view_by('basic_info',
+                            usr=usr, env=env, **kwargs)
+        ans['chapter_list'] = self.node_list_info
+        ans['relation_id'] = ''
+
+        ans['permission'] = auth_str(self.authority_verify(
+                    usr, env, **kwargs))
+        return ans
 
     @db_property
     def edit_info():
@@ -405,13 +435,12 @@ class Catalog(DataBox):
             ans['bid'] = self.uid
             ans['name'] = self.name
             ans['release_time'] = self.release_time
-            ans['all_catalog_count'] = self.node_sum
+            ans['all_catalog_count'] = self.ode_sum
             ans['complete_count'] = self.complete_count
             ans['author'] = self.owner.basic_info
-            ans['complete_rate'] = 0 if ans['complete_count'] == 0 else int((
-                    ans['all_catalog_count'] / ans['complete_count']) * 100)
+            ans['complete_rate'] = self.complete_rate
             ans['summary'] = self.about.edit_info
-            ans['chapter_list'] = self.get_node_list_info()
+            ans['chapter_list'] = self.node_list_info
             ans['relation_id'] = ''
             return ans
         return getter
