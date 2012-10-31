@@ -12,8 +12,65 @@
     function AFWEditor_attrs(){
         
         this.default_support_characterset = {
-            "itain": []        
-        }    
+            "Greece": {
+                        "name": "希腊字符",  // see  http://zh.wikipedia.org/wiki/%E5%B8%8C%E8%85%8A%E5%AD%97%E6%AF%8D
+                        "exec": function(){
+                                    
+                                    var unicode_range = [ ["0370", "03FF"], ["1F00", "1FFF"], ["2100", "214F"], ["2C80", "2CFF"] ],
+                                        return_list = [],
+                                        ii = jj = 0,
+                                        tmp_unicode = 0;
+                                        
+                            
+                                    for(var ii = 0; ii < unicode_range.length; ii++){
+                                        for(var jj = parseInt(unicode_range[ii][0], 16); jj <= parseInt(unicode_range[ii][1], 16); jj++){
+                                            return_list.push( String.fromCharCode(jj));                                
+                                        }                            
+                                    }
+                                    return return_list;
+                                                   
+                                }    
+                     },
+            "Latin": {
+                        "name": "拉丁字符", // see http://zh.wikipedia.org/wiki/Unicode%E4%B8%AD%E7%9A%84%E6%8B%89%E4%B8%81%E5%AD%97%E6%AF%8D
+                        "exec": function(){
+                                    var unicode_range = [ ["00C0", "02AF"], ["1D00", "1DBF"], ["1E00", "1EFF"], ["2100", "210F"],
+                                                            ["2110", "214F"], ["2490", "24EF"], ["2C60", "2C7F"], ["A720", "A7FF"],
+                                                            ["FB00", "FB4F"], ["FF00", "FFEF"], ["1D400", "1D7FF"] ];   
+                                    var ii = jj = 0,
+                                        return_list = [];
+                                    for(var ii = 0; ii < unicode_range.length; ii++){
+                                        for(var jj = parseInt(unicode_range[ii][0], 16); jj <= parseInt(unicode_range[ii][1], 16); j++){
+                                            return_list.push(String.fromCharCode(jj));                                        
+                                        }                                    
+                                    }
+                                    return return_list;                             
+                            }                        
+                    },
+            "Alphabet":{
+                        "name": "国际音标", // see http://zh.wikipedia.org/wiki/%E5%9C%8B%E9%9A%9B%E9%9F%B3%E6%A8%99
+                        "exec": function(){
+                                   var unicode_range = [ ["0250", "02AF"] ];   
+                                   var ii = jj = 0,
+                                       return_list = [];
+                                   for(var ii = 0; ii < unicode_range.length; ii++){
+                                       for(var jj = parseInt(unicode_range[ii][0], 16); jj <= parseInt(unicode_range[ii][1], 16); j++){
+                                           return_list.push(String.fromCharCode(jj));                                        
+                                       }                                    
+                                   }     
+                            }            
+                        },
+            "Letter": {
+                    "name": "字符",
+                    "exec": function(){
+                        return ["~", "|", "¡", "¿", "†", "‡", "↔", "↑", "↓", "•", "¶", "#", "½", "⅓", "⅔", "¼", "¾", "⅛", "⅜", "⅝", "⅞", "∞", "‘", "’", "“",
+                                "”", "„", "“", "„", "”", "«", "»", "¤", "₳", "฿", "₵", "¢", "₡", "₢", "$", "₫", "₯", "€", "₠", "₣", "ƒ", "₴", "₭", "₤", "ℳ", "₥", "₦",
+                                                                "№", "₧", "₰", "£", "៛", "₨", "₪", "৳", "₮", "₩", "¥", "♠", "♣", "♥", "♦", "m", "²", "m", "³", "–", "—", "…", "‘", "’", "“", "”", "°", "′", "″", "≈", "≠", "≤", "≥", 
+                                "±", "−", "×", "÷", "←", "→", "·", "§"];                    
+                    }            
+            }       
+        }
+            
         this.default_support_code = function (){
             return ['AS3','AppleScript','Bash','C#','ColdFusion','C++','CSS','Delphi','Diff',
                     'Erlang','Groovy','JavaScript','Java','JavaFX','Lisp' ,'Perl','Php','Plain',
@@ -189,7 +246,8 @@
             "image":    {"id": "write_image_bar"},
             "reference": {"id": "write_ref_bar"},
             "math":     {"id": "write_math_bar"},
-            "code":     {"id": "write_code_bar"}        
+            "code":     {"id": "write_code_bar"},
+            "letter":   {"id": "write_letter_bar"}        
         }
         
         var menu_id = 0;
@@ -230,7 +288,31 @@
         }
         
         this.default_block_html = {
-             "src_image_one":   '<div class="one" oid="1" type="img">'+
+        
+            "src_image_lib":    '<div id="bar_nav"><div class="new" title="添加新图片" src_type="img">添加</div>'+
+                                '<div class="div" title="图片库">图片库</div></div><div id="bar_body"><div class="i"></div></div>',
+            
+            "src_math_lib":     '<div id="bar_nav"><div class="new" title="添加新数学式" src_type="math">添加</div>'+
+                                '<div class="div" title="数学式库">数学式库</div></div><div id="bar_body"><div id="crtm"></div></div>',
+                                
+            "src_code_lib":     '<div id="bar_nav"><div class="new" title="添加新代码" src_type="code">添加</div>'+
+                                '<div class="div" title="代码库">代码库</div></div><div id="bar_body"><div id="crtm"></div></div>',
+                                
+            "src_reference_lib":'<div id="bar_nav"><div class="new" title="添加新引用" src_type="ref">添加</div>'+
+                                '<div class="div" title="引用库">引用库</div></div><div id="bar_body"><div id="crtm"></div></div>',
+            
+            "src_table_lib":    '<div id="bar_nav"><div class="new" title="添加新表格" src_type="table">添加</div>'+
+                                '<div class="div" title="表格库">表格库</div></div><div id="bar_body"><div id="crtm"></div></div>',
+            
+            "src_letter_lib":   '<div id="bar_nav">'+
+                                '<span id="l1" class="lbutton" kind="word4">希腊字符</span>'+           
+                                '<span class="lbutton" kind="word1">拉丁字符</span> ' +
+                                '<span class="lbutton" kind="word2">国际音标</span>' +
+                                '<span class="lbutton" kind="word3">字符</span>' +
+                                '</div>'+
+                                '<div id="bar_body"><div class="l"></div></div>',
+                                                            
+            "src_image_one":   '<div class="one" oid="1" type="img">'+
                                 '<div class="ileft"><span class="ititle">图1</span></div>'+
                                 '<div class="icontrol">'+
                                 '<span class="idel" title="删除此图片">删除</span>'+
@@ -591,19 +673,23 @@
         
         // lib bar 
         var lib_bar_ids = editor_attrs.default_lib_bar,
-            $lib_bars = {};
+            $lib_bars = {},
+            lib_bar_htmls = editor_attrs.default_block_html,
+            tmp_key;
         
         for(var ii in lib_bar_ids){
-            $lib_bars[ii] = jQ('<div id="' + lib_bar_ids[ii]["id"] + '" src_type="' + ii + '" style="display:none;"></div>');        
+            $lib_bars[ii] = jQ('<div id="' + lib_bar_ids[ii]["id"] + '" src_type="' + ii + '" style="display:none;"></div>');          
+            tmp_key = "src_" + ii + "_lib";
+            if(tmp_key in lib_bar_htmls){
+                $lib_bars[ii].append(lib_bar_htmls[tmp_key]);  
+            }                  
         }
         
-        var $lib_bar = $lib_bars["all"],
-            $lib_image_bar = $lib_bars["image"],
-            $lib_math_bar = $lib_bars["math"],
-            $lib_code_bar = $lib_bars["code"],
-            $lib_reference_bar = $lib_bars["reference"],
-            $lib_letter_bar = $lib_bars["letter"],
-            $lib_table_bar = $lib_bars["table"];
+        $lib_bars["all"].append($lib_bars["image"], $lib_bars["math"], $lib_bars["code"], $lib_bars["reference"], $lib_bars["letter"], $lib_bars["table"]);
+        
+        $editor_menu.append($lib_bars["all"]);
+        
+            
         
         
 

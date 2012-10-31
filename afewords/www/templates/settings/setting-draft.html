@@ -12,7 +12,7 @@
             {% if kk['article_type'] == "Blog" %}
                 <li>
                 <a href="/write?id={{ kk['aid'] }}" class="draft-link" target="_blank">{{ "未完成文章" if kk['title'] == '' else kk['title'] }}</a>
-                <span class="draft_time">{{ kk['releasetime'][:16] }}</span>
+                <span class="draft_time">{{ kk['release_time'][:16] }}</span>
                 <a style="display:none" class="draft_del" href="javascript:void(0);" article_id="{{ kk['aid'] }}" type="blog" onclick="do_draft_del(this)" target="_blank">删除</a>
                 </li>
             {% elif kk['article_type'] == 'Feedback' %}
