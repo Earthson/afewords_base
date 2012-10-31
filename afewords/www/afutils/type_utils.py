@@ -3,6 +3,7 @@
 def type_trans(src):
     '''for frontend and backend type translations'''
     from article.blog import Blog
+    from article.about import About
     from article.comment import Comment
     from article.equation import Equation
     from article.langcode import Langcode
@@ -12,6 +13,7 @@ def type_trans(src):
     from user import User
     trans_doc = {
         'blog' : Blog.__name__,
+        'about' : About.__name__,
         'user' : User.__name__,
         'comment' : Comment.__name__,
         'math' : Equation.__name__,

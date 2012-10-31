@@ -16,8 +16,9 @@ class BlogHandler(BaseHandler):
         page = BlogPage(self)
         page['ispreview'] = True if preview == 'yes' else False
         page['article'] = blog_to.view_info
+        page['article'] = blog_to.obj_info_view_by('view_info', 
+                    usr=usr, env=usr)
         if usr:
-            page['article']['author'] = usr.as_viewer(blog_to.author)
             page['islike'] = usr.is_like(blog_to)
         page.render()
         return

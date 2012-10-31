@@ -220,22 +220,23 @@ class User(DataBox):
         return getter
 
     @with_user_status
-    def authority_verify(self, usr, env=None, **kwargs):
+    def authority_verify(self, usr=None, env=None, **kwargs):
         ret = 0
-        if usr == None:
+        if usr is None:
             ret = set_auth(ret, A_READ)
         elif self._id == usr._id:
             ret = set_auth(ret, A_READ | A_WRITE | A_DEL | A_POST)
         return ret
 
-    def accept_notification(self, info):
+    def accept_notification(self, info, from_who=None):
         import time
         noti_id = repr(time.time()).replace('.', '#') #generate noti_id
         doc = {
             'info' : info,
             'isread' : False,
         }
-        self.lib.notification_lib[noti_id] = doc
+        if from_who.uid != self.uid:
+            self.lib.notification_lib[noti_id] = doc
 
     @db_property
     def notifications():
@@ -375,7 +376,7 @@ class User(DataBox):
         else:
             toview = self.blogs
         if usr: 
-            return [each.article_info_view_by('basic_info', usr) 
+            return [each.obj_info_view_by('basic_info', usr) 
                         for each in toview]
         return [each.basic_info for each in toview]
 
@@ -437,9 +438,24 @@ class User(DataBox):
         return user_info
 
     def as_viewer_to_uinfo(self, uinfo):
+        if not uinfo:
+            return None
         uinfo['isfollow'] = self.is_follow(uinfo['uid'])
         uinfo['isme'] = (self.uid == uinfo['uid'])
         return uinfo
+
+    def obj_info_view_by(self, info_name='basic_info',
+                        usr=None, env=None, **kwargs):
+        uinfo = self.get_propertys(info_name)[0]
+        uinfo['permission'] = auth_str(self.authority_verify(
+                        usr, env, **kwargs))
+        if usr is None:
+            return uinfo
+        uinfo['isfollow'] = usr.is_follow(self.uid)
+        uinfo['isme'] = (self.uid == usr.uid)
+        return uinfo
+        
+        
 
     def is_like(self, obj):
         return obj.uid in self.lib.favorite_lib
@@ -463,18 +479,19 @@ class User(DataBox):
     def basic_info():
         '''for follow/follower display'''
         def getter(self):
-            ans = dict()
-            ans['uid'] = self.uid
-            ans['name'] =self.name
-            ans['thumb'] = self.avatar.thumb_url
-            ans['isfollow'] = False
-            ans['isme'] = False
+            ans = self.as_env_info
             ans['tag_list'] = self.alltags
             return ans
         return getter
 
     @db_property
     def basic_info_for_json():
+        def getter(self):
+            return self.as_env_info
+        return getter
+
+    @db_property
+    def as_env_info():
         def getter(self):
             ans = dict()
             ans['uid'] = self.uid

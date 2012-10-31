@@ -193,6 +193,7 @@ class ArticleDoc(AFDocument):
         'author_id' : ObjectId,
         'env_id' : ObjectId,
         'env_type' : basestring,
+        'env_write_access' : bool,
         'body' : basestring,
         'body_version' : int,
         'view_body' : basestring,
@@ -211,6 +212,7 @@ class ArticleDoc(AFDocument):
     }
     required_fields = [] #['name', 'env_id', 'env_type']
     default_values = {
+        'env_write_access' : True,
         'abstract' : '',
         'body' : '',
         'body_version' : 0,
@@ -239,6 +241,7 @@ class Article(DataBox):
         'author_id' : True,
         'env_id' : False,
         'env_type' : False,
+        'env_write_access' : True,
         'lang_type' : True,
         'release_time' : True,
         'update_time' : True,
@@ -265,12 +268,21 @@ class Article(DataBox):
         return ArticleTranslator(self.refinder)
 
     @with_user_status
-    def authority_verify(self, usr, env=None, **kwargs):
+    def authority_verify(self, usr=None, env=None, **kwargs):
         ret = 0
-        if not usr:
+        if self.privilege == 'public':
             ret = set_auth(ret, A_READ)
-        elif self.author._id == usr._id:
+        if usr is None:
+            return ret
+        elif self.author is not None and self.author._id == usr._id:
             ret = set_auth(ret, A_READ | A_WRITE | A_DEL)
+        tmp_env = self.env
+        if tmp_env is not None:
+            tmp = tmp_env.authority_verify(usr)
+            if test_auth(tmp, A_DEL):
+                ret = set_auth(ret, A_DEL)
+            if self.env_write_access and test_auth(tmp, A_WRITE):
+                ret = set_auth(ret, A_WRITE)
         if env:
             tmp = env.authority_verify(usr)
             if test_auth(tmp, A_POST):
@@ -304,7 +316,7 @@ class Article(DataBox):
 
     def comments_info_view_by(self, usr=None):
         if usr:
-            return [each.article_info_view_by('comment_info_for_json', usr)
+            return [each.obj_info_view_by('comment_info_for_json', usr)
                         for each in self.comments]
         return [each.comment_info for each in self.comments] 
 
@@ -451,10 +463,10 @@ class Article(DataBox):
             ans['content_short'] = self.view_body_short
             ans['release_time'] = str(self.release_time)
             tmp = self.author
-            ans['author'] = dict() if tmp is None  else tmp.basic_info
+            ans['author'] = None if tmp is None  else tmp.basic_info
             ans['comment_count'] = self.comment_count
             tmp = self.statistics
-            ans['statistics'] = dict() if tmp is None else tmp.basic_info
+            ans['statistics'] = None if tmp is None else tmp.basic_info
             ans['keywords'] = self.keywords
             ans['tag_list'] = self.tag
             ans['privilege'] = self.privilege
@@ -464,11 +476,14 @@ class Article(DataBox):
             return ans
         return getter
 
-    def article_info_view_by(self, info_name, usr, env=None, **kwargs):
+    def article_info_view_by(self, info_name='basic_info', 
+                    usr=None, env=None, **kwargs):
         ans = self.get_propertys(info_name)[0]
         ans['permission'] = auth_str(self.authority_verify(usr, env, **kwargs))
         ans['author'] = usr.as_viewer_to_uinfo(ans['author'])
         return ans
+
+    obj_info_view_by = article_info_view_by
 
     @db_property
     def pictures():
@@ -532,11 +547,8 @@ class Article(DataBox):
     @db_property
     def env_info():
         def getter(self):
-            ans = dict()
-            ans['type'] = self.data['env_type']
             tmp = self.env
-            ans['entity'] = {} if tmp is None else tmp.basic_info
-            return ans
+            return None if tmp is None else tmp.as_env
         return getter
 
     @db_property
