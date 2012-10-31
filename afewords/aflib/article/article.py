@@ -316,7 +316,7 @@ class Article(DataBox):
 
     def comments_info_view_by(self, usr=None):
         if usr:
-            return [each.article_info_view_by('comment_info_for_json', usr)
+            return [each.obj_info_view_by('comment_info_for_json', usr)
                         for each in self.comments]
         return [each.comment_info for each in self.comments] 
 
