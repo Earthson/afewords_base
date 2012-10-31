@@ -40,7 +40,7 @@
                                     var ii = jj = 0,
                                         return_list = [];
                                     for(var ii = 0; ii < unicode_range.length; ii++){
-                                        for(var jj = parseInt(unicode_range[ii][0], 16); jj <= parseInt(unicode_range[ii][1], 16); j++){
+                                        for(var jj = parseInt(unicode_range[ii][0], 16); jj <= parseInt(unicode_range[ii][1], 16); jj++){
                                             return_list.push(String.fromCharCode(jj));                                        
                                         }                                    
                                     }
@@ -54,10 +54,11 @@
                                    var ii = jj = 0,
                                        return_list = [];
                                    for(var ii = 0; ii < unicode_range.length; ii++){
-                                       for(var jj = parseInt(unicode_range[ii][0], 16); jj <= parseInt(unicode_range[ii][1], 16); j++){
+                                       for(var jj = parseInt(unicode_range[ii][0], 16); jj <= parseInt(unicode_range[ii][1], 16); jj++){
                                            return_list.push(String.fromCharCode(jj));                                        
                                        }                                    
-                                   }     
+                                   }
+                                   return return_list;     
                             }            
                         },
             "Letter": {
@@ -84,7 +85,8 @@
                                 "title": "加粗", 
                                 "value": '&nbsp;', 
                                 "exec":  function(){
-                                            this.set_character("++", "++");
+                                            var args = { "prefix":"++", "suffix":"++" };
+                                            this.set_character(args);
                                         }
                             },
             "italic":       {
@@ -92,110 +94,125 @@
                                 "title": "斜体", 
                                 "value": '&nbsp;', 
                                 "exec": function(){
-                                        this.set_character("--", "--");                                
-                                }
+                                            var args = { "prefix": "--", "suffix":"--"};
+                                            this.set_character(args);                                
+                                        }
                             },
             "underline":    {
                                 "class": "underline", 
                                 "title": "下划线", 
                                 "value": '&nbsp;', 
                                 "exec": function(){
-                                    this.set_character("__", "__");                                
-                                }
+                                            var args = { "prefix": "__", "allow_empty": false};
+                                            this.set_character(args);                                
+                                        }
                             },
             "del":          {
                                 "class": "del", 
                                 "title": "删除线", 
                                 "value": '&nbsp;', 
                                 "exec": function(){
-                                    this.set_character("--", "--");                                
-                                }
+                                            var args = { "prefix": "--", "allow_empty": false };
+                                            this.set_character(args);                                
+                                        }
                             },
             "super":        {
                                 "class": "super", 
                                 "title": "上标", 
                                 "value": '&nbsp;', 
                                 "exec": function(){
-                                    this.set_character("^{", "}");                                
-                                }
+                                            var args = {"prefix": "^{", "suffix": "}", "allow_empty": false };
+                                            this.set_character(args);                                
+                                        }
                             },
             "suber":        {
                                 "class": "suber", 
                                 "title": "下标", 
                                 "value": '&nbsp;', 
                                 "exec": function(){
-                                    this.set_character("_{", "}");                                
-                                }
+                                            var args = { "prefix": "_{", "suffix": "}", "allow_empty":false };
+                                            this.set_character(args);                                
+                                        }
                             },
             "ol":           {
                                 "class": "ol", 
                                 "title": "有序列表", 
                                 "value": '&nbsp;', 
                                 "exec": function(){
-                                    this.set_character("\n#", "\n", true, false, false, true);                                
-                                }
+                                            var args = { "prefix": "\n#", "prefix_l": true, "suffix": "\n", "suffix_r": true };
+                                            this.set_character(args);                                
+                                        }
                             },
             "ul":           {
                                 "class": "ul", 
                                 "title": "无序列表", 
                                 "value": '&nbsp;', 
                                 "exec": function(){
-                                    this.set_character("\n*", "\n", true, false, false, true);                                
-                                }
+                                            var args = { "prefix": "\n*", "prefix_l": true, "suffix": "\n", "suffix_r": true };
+                                            this.set_character(args);                                
+                                        }
                             },
             "separator":    {
                                 "class": "part", 
                                 "title": "分割线", 
                                 "value": '~~', 
                                 "exec": function(){
-                                    this.set_character("", "\n~~~~~~~~~~\n", false, false, true, true);                                
-                                }
+                                            var args = { "prefix": "", "suffix": "\n~~~~~~~~~~\n", 
+                                                         "suffix_l": true, "suffix_r": true, "allow_empty": true };
+                                            this.set_character(args);                                
+                                        }
                             },
             "heading2":     {
                                 "class": "title", 
                                 "title": "二级标题", 
                                 "value": "T<sub><small>2</small></sub>", 
                                 "exec": function(){
-                                    this.set_character("\n==", "==\n", true, false, false, true);                                
-                                }
+                                            var args = { "prefix": "\n==", "suffix": "==\n", "suffix_r": true, "prefix_l": true};
+                                            this.set_character(args);                                
+                                        }
                             },
             "heading3":     {
                                 "class": "title", 
                                 "title": "三级标题", 
                                 "value": "T<sub><small>3</small></sub>", 
                                 "exec": function(){
-                                    this.set_character("\n===", "===\n", true, false, false, true);                                 
-                                }
+                                            var args = { "prefix": "\n===", "suffix": "===\n", "suffix_r": true, "prefix_l": true};
+                                            this.set_character(args);                                 
+                                        }
                             },
             "heading4":     {
                                 "class": "title", 
                                 "title": "四级标题", 
                                 "value": "T<sub><small>4</small></sub>", 
                                 "exec": function(){
-                                    this.set_character("\n====", "====\n", true, false, false, true);                                  
-                                }
+                                            var args = { "prefix": "\n====", "suffix": "====\n", "suffix_r": true, "prefix_l": true};
+                                            this.set_character(args);                                 
+                                        }
                             },
             "indent":       {
                                 "class": "indent", 
                                 "title": "段落缩进", 
                                 "value": '&nbsp;', 
                                 "exec": function(){
-                                    this.set_character("\n>=", "", true, false, false, false);                              
-                                }
+                                            var args = { "prefix": "\n>=", "suffix": "", "prefix_l": true, "allow_empty": true };
+                                            this.set_character(args);                              
+                                        }
                             },
             "table":        {
                                 "class": "table", 
                                 "title": "表格库", 
-                                "value": '&nbsp;', 
-                                "exec": function(_index_){
+                                "value": '&nbsp;',
+                                "exec": function(obj){ this.change_lib_bar(obj); },
+                                "one_exec": function(_index_){
                                     this.set_character("", "\n[table:" + _index_ +"]\n", false, false, true, true);                                
                                 }
                             },
             "image":        {
                                 "class": "image", 
                                 "title": "图片库", 
-                                "value": '&nbsp;', 
-                                "exec": function(__index__){
+                                "value": '&nbsp;',
+                                "exec": function(obj){  this.change_lib_bar(obj);  }, 
+                                "one_exec": function(_index_){
                                     this.set_character("", "\n[img:"+ _index_ +"]", false, false, true, true);                                
                                 }
                             },
@@ -203,23 +220,26 @@
                                 "class": "ref", 
                                 "title": "引用库", 
                                 "value": '&nbsp;', 
-                                "exec": function(_index_){
+                                "exec": function( obj ){ this.change_lib_bar(obj);  },
+                                "one_exec": function(_index_){
                                     this.set_character("", "\n[ref:"+ _index_ +"]", false, false, true, true);                                
                                 }
                             },
             "math":         {
                                 "class": "math", 
                                 "title": "数学式库", 
-                                "value": '&nbsp;', 
-                                "exec": function(_index_){
+                                "value": '&nbsp;',
+                                "exec": function( obj ){  this.change_lib_bar(obj);  },
+                                "one_exec": function(_index_){
                                     this.set_character("", "\n[math:"+ _index_ +"]", false, false, true, true);                                
                                 }
                             },
             "code":         {
                                 "class": "code", 
                                 "title": "代码库", 
-                                "value": '&nbsp;', 
-                                "exec": function(_index_){
+                                "value": '&nbsp;',
+                                "exec": function( obj ){  this.change_lib_bar(obj);  }, 
+                                "one_exec": function(_index_){
                                     this.set_character("", "\n[code:"+ _index_ +"]", false, false, true, true);
                                 }
                             },
@@ -227,8 +247,10 @@
                                 "class": "letter", 
                                 "title": "特殊字符集", 
                                 "value": '&nbsp;', 
-                                "exec": function(_unicode_){
-                                    this.set_character("", _unicode);                                
+                                "exec": function( obj ){ this.change_lib_bar(obj);  },
+                                "one_exec": function(_unicode_){
+                                                var args = {"prefix":"", "suffix": _unicode_, "allow_empty": true};
+                                                this.set_character(args);                                
                                 }
                             },
             "split":        {
@@ -289,35 +311,35 @@
         
         this.default_block_html = {
         
-            "src_image_lib":    '<div id="bar_nav"><div class="new" title="添加新图片" src_type="img">添加</div>'+
+            "src_image_lib":    '<div id="bar_nav"><div class="new src_new" title="添加新图片" src_type="image">添加</div>'+
                                 '<div class="div" title="图片库">图片库</div></div><div id="bar_body"><div class="i"></div></div>',
             
-            "src_math_lib":     '<div id="bar_nav"><div class="new" title="添加新数学式" src_type="math">添加</div>'+
+            "src_math_lib":     '<div id="bar_nav"><div class="new src_new" title="添加新数学式" src_type="math">添加</div>'+
                                 '<div class="div" title="数学式库">数学式库</div></div><div id="bar_body"><div id="crtm"></div></div>',
                                 
-            "src_code_lib":     '<div id="bar_nav"><div class="new" title="添加新代码" src_type="code">添加</div>'+
+            "src_code_lib":     '<div id="bar_nav"><div class="new src_new" title="添加新代码" src_type="code">添加</div>'+
                                 '<div class="div" title="代码库">代码库</div></div><div id="bar_body"><div id="crtm"></div></div>',
                                 
-            "src_reference_lib":'<div id="bar_nav"><div class="new" title="添加新引用" src_type="ref">添加</div>'+
+            "src_reference_lib":'<div id="bar_nav"><div class="new src_new" title="添加新引用" src_type="reference">添加</div>'+
                                 '<div class="div" title="引用库">引用库</div></div><div id="bar_body"><div id="crtm"></div></div>',
             
-            "src_table_lib":    '<div id="bar_nav"><div class="new" title="添加新表格" src_type="table">添加</div>'+
+            "src_table_lib":    '<div id="bar_nav"><div class="new src_new" title="添加新表格" src_type="table">添加</div>'+
                                 '<div class="div" title="表格库">表格库</div></div><div id="bar_body"><div id="crtm"></div></div>',
             
             "src_letter_lib":   '<div id="bar_nav">'+
-                                '<span id="l1" class="lbutton" kind="word4">希腊字符</span>'+           
-                                '<span class="lbutton" kind="word1">拉丁字符</span> ' +
-                                '<span class="lbutton" kind="word2">国际音标</span>' +
-                                '<span class="lbutton" kind="word3">字符</span>' +
+                                //'<span id="l1" class="lbutton" kind="word4">希腊字符</span>'+           
+                                //'<span class="lbutton" kind="word1">拉丁字符</span> ' +
+                                //'<span class="lbutton" kind="word2">国际音标</span>' +
+                                //'<span class="lbutton" kind="word3">字符</span>' +
                                 '</div>'+
                                 '<div id="bar_body"><div class="l"></div></div>',
                                                             
             "src_image_one":   '<div class="one" oid="1" type="img">'+
                                 '<div class="ileft"><span class="ititle">图1</span></div>'+
                                 '<div class="icontrol">'+
-                                '<span class="idel" title="删除此图片">删除</span>'+
-                                '<span class="imodify">修改</span>'+
-                                '<span class="iinsert">插入</span>'+
+                                '<span class="idel src_del" title="删除此图片">删除</span>'+
+                                '<span class="imodify src_edit">修改</span>'+
+                                '<span class="iinsert src_insert">插入</span>'+
                                 '</div>'+
                                 '<div class="iright" title="title">'+
                                 '<table><tbody><tr><td><img src=""></td></tr></tbody></table>'+
@@ -326,9 +348,9 @@
             "src_math_one":     '<div class="one" oid="1" type="math">'+
                                 '<div><span class="cname">数式1</span></div>'+
                                 '<div class="control">'+
-                                '<span class="cdel" title="删除">删除</span>' +
-                                '<span class="cedit" title="修改">修改</span>' + 
-                                '<span class="cinsert">插入</span>'+
+                                '<span class="cdel src_del" title="删除">删除</span>' +
+                                '<span class="cedit src_edit" title="修改">修改</span>' + 
+                                '<span class="cinsert src_insert">插入</span>'+
                                 '</div>'+
                                 '<div>'+
                                 '<span>'+
@@ -341,9 +363,9 @@
             "src_reference_one":'<div class="one" oid="1" type="ref">'+
                                 '<div><span class="cname">引用1</span></div>'+
                                 '<div class="control">'+
-                                '<span class="cdel" title="删除">删除</span>'+
-                                '<span class="cedit" title="修改">修改</span>'+
-                                '<span class="cinsert">插入</span>'+
+                                '<span class="cdel src_del" title="删除">删除</span>'+
+                                '<span class="cedit src_edit" title="修改">修改</span>'+
+                                '<span class="cinsert src_insert">插入</span>'+
                                 '</div>'+
                                 '<div>'+
                                 '<span><input type="text" id="otitle" readonly="readonly"></span>'+
@@ -353,9 +375,9 @@
             "src_code_one":     '<div class="one" oid="1" type="code">'+
                                 '<div><span class="cname">代码1</span></div>'+
                                 '<div class="control">'+
-                                '<span class="cdel" title="删除">删除</span>'+
-                                '<span class="cedit" title="修改">修改</span>'+
-                                '<span class="cinsert">插入</span></div>'+
+                                '<span class="cdel src_del" title="删除">删除</span>'+
+                                '<span class="cedit src_edit" title="修改">修改</span>'+
+                                '<span class="cinsert src_insert">插入</span></div>'+
                                 '<div><span><input type="text" id="otitle" readonly="readonly" /></span>'+
                                 '<input type="hidden" id="otype" /><textarea id="obody"></textarea>'+
                                 '</div></div>',
@@ -363,9 +385,9 @@
             "src_table_one":    '<div class="one" oid="1" type="table">'+
                                 '<div><span class="cname">表1</span></div>'+
                                 '<div class="control">'+
-                                '<span class="cdel" title="删除">删除</span>'+
-                                '<span class="cedit" title="修改">修改</span>'+
-                                '<span class="cinsert">插入</span></div>'+
+                                '<span class="cdel src_del" title="删除">删除</span>'+
+                                '<span class="cedit src_edit" title="修改">修改</span>'+
+                                '<span class="cinsert src_insert">插入</span></div>'+
                                 '<div><span><input type="text" id="otitle" readonly="readonly" /></span>'+
                                 '<textarea id="obody"></textarea>'+
                                 '</div></div>'
@@ -382,6 +404,9 @@
                 paras[_para_] = paras[_para_] || this.default_src_attrs["hidden"][_para_];            
             }
             var result_html = '';
+            
+            
+            
             
             var hidden_paras_html = '';  // hidden input key(name)/value
             for(var _para_ in this.default_menu_attrs){
@@ -413,6 +438,8 @@
                     result_html = create_reference_pop_html();
                     break;
             }
+            
+            result_html = '<div id="pop_insert_'+ paras["src_type"] +'">' + result_html + '</div>';
             return result_html;
             
             var control_tag = (paras["do"] == "new" ? "添加新" : "修改");
@@ -507,12 +534,14 @@
     function Textarea(){
     
         this.textarea = null;  // must be a DOM
+        this.menu = null;
+        this.lib_bars = {};
         
         this.get_position = function(){
             var s,e,range,stored_range;
             if(this.textarea.selectionStart == undefined){
                 var selection = document.selection;
-                if (thistextarea.tagName.toLowerCase() != "textarea") {
+                if (this.textarea.nodeName.toLowerCase() != "textarea") {
                     var val = this.textarea.value;
                     range = selection.createRange().duplicate();
                     range.moveEnd("character", val.length);
@@ -537,12 +566,13 @@
         };
         
         this.get_position_string = function( pos_s, pos_e){
-            this.set_position(pos_s,pos_e);
-            return this.get_position().text;
+            return this.textarea.value.substring(pos_s, pos_e);
+            //this.set_position(pos_s,pos_e);
+            //return this.get_position().text;
         };
         
         this.set_position = function(pos_s, pos_e){
-            this.textarea.onfocus();
+            this.textarea.focus();
             if(this.textarea.setSelectionRange){
                 this.textarea.setSelectionRange(pos_s, pos_e);            
             }else if(this.textarea.createTextRange()){
@@ -555,36 +585,45 @@
         };
 
         
-        this.set_character = function ( prefix, suffix, prefix_l, prefix_r, suffix_l, suffix_r){
-            if ( arguments.length < 2 || typeof prefix != "string" || typeof suffix != "string" )  return false;
-            prefix_l = arguments[2] || false;
-            prefix_r = arguments[3] || false;
-            suffix_l = arguments[4] || false;
-            suffix_r = arguments[5] || false;
+        this.set_character = function (args){
+            if(typeof args != "object" || !("prefix" in args) ) return false;
+            var prefix = args["prefix"],
+                suffix = args["suffix"] || prefix,
+                prefix_l = args["prefix_l"] || false,
+                prefix_r = args["prefix_r"] || false,
+                suffix_l = args["suffix_l"] || false,
+                suffix_r = args["suffix_r"] || false,
+                allow_empty = args["allow_empty"] || false,
+                status_info = args["status"] || "请选中文字";
             
             var pos = this.get_position(),
                 pos_s = pos.start,
                 pos_e = pos.end;
+
+            if(!allow_empty && pos_s == pos_e){
+                console.log(status_info);
+                return false;
+            }            
             
             if(prefix_l) {
-                if( pos_s != 0 && this.get_position_string(pos_s - 1, pos) == "\n"){
-                    prefix = prefix.replace(/^\\n/,'');                
-                }       
+                if( pos_s == 0 || this.get_position_string(pos_s - 1, pos_s) == "\n"){
+                    prefix = prefix.replace(/^\n/, '');             
+                }     
             }
             if(prefix_r) {
-                if( pos_s != 0 && this.get_position_string(pos_s - 1, pos) == "\n"){
-                    prefix = prefix.replace(/\\n$/,'');                
+                if( pos_s == 0 || this.get_position_string(pos_s - 1, pos_s) == "\n"){
+                    prefix = prefix.replace(/\n$/, '');                
                 }            
             }
-            
+            //alert(prefix);
             if(suffix_l){
-                if(pos_e != 0 && this.get_position_string(pos_e - 1, pos_e) == "\n"){
-                    suffix = suffix.replace(/^\\n/,'');                
+                if(pos_e == 0 || this.get_position_string(pos_e - 1, pos_e) == "\n"){
+                    suffix = suffix.replace(/^\n/, '');                
                 }            
             }
             if(suffix_r){
-                if(pos_e != 0 && this.get_position_string(pos_e - 1, pos_e) == "\n"){
-                    suffix = suffix.replace(/\\n$/,'');                
+                if(pos_e == 0 || this.get_position_string(pos_e - 1, pos_e) == "\n"){
+                    suffix = suffix.replace(/\n$/, '');                
                 }            
             }
             
@@ -606,19 +645,142 @@
                     this.textarea.value += suffix;
                 }
             }
-            this.set_position(pos_e + suffix.length + prefix.length);
+            
+            var last_pos_e = pos_e + suffix.length + prefix.length;
+            this.set_position(last_pos_e, last_pos_e);
             
         } 
-        
-        this.init = function(textarea){
-            if(!textarea){
-                console.error("please init textarea");
-                return false;            
+
+        this.change_lib_bar = function( obj ){
+            var $obj = jQ(obj),
+                kind = $obj.attr("kind");
+            
+            if(this.lib_bars["all"].css("display") == "none"){ 
+                // open the lib
+                $obj.addClass("menu_focus").siblings().removeClass("menu_focus");
+                for(var lib in this.lib_bars){
+                    if(lib == "all" || lib == kind )  continue;
+                    this.lib_bars[lib].hide();                
+                }
+                this.lib_bars[kind].show();
+                this.lib_bars["all"].slideDown("slow");
+            }else{
+                // close the bar
+                if(this.lib_bars[kind].css("display") == "block"){  // close all the lib 
+                    this.lib_bars["all"].slideUp("slow");
+                    $obj.removeClass("menu_focus");                
+                }else{
+                    for(var lib in this.lib_bars){  // close one bar and open an new bar
+                        if(lib == "all" || lib == kind)  continue;
+                        this.lib_bars[lib].hide();               
+                    }
+                    this.lib_bars[kind].fadeIn("slow");     
+                
+                }    
             }
-            this.textarea = textarea;
+                  
+        }        
+        
+        this.init = function(args){
+            this.textarea = args["textarea"] || document.getElementById("write_textarea");  // JS Object
+            this.editor = args["editor"];   // Object
+            this.$menu = args["menu"];   // JQ Object
+            
+            var lib_bars = editor_attrs.default_lib_bar;
+            for(var _para_ in lib_bars){
+                this.lib_bars[_para_] = args[_para_] || jQ("#"+ lib_bars[_para_]["id"]).eq(0);        // JQ Object     
+            }
+            this.lib_letter_bar_init();
+            this.lib_bar_init();
+            
         }
         
+        this.lib_letter_bar_init = function(){
+            var letters = editor_attrs.default_support_characterset;
+            var $letter_bar_nav = this.lib_bars["letter"].find("#bar_nav");
+            var $letter_bar_body = this.lib_bars["letter"].find("#bar_body>.l");
+            var letters_html = '', letter_kind_html = '';
+            var current_letters;
+            var _self_ = this;
+            
+            for(var letter_kind in letters){
+                letter_kind_html += '<span class="lbutton" kind="'+ letter_kind +'">' + letters[letter_kind]["name"] + '</span>';
+            }
+            $letter_bar_nav.html(letter_kind_html);
+            
+            jQ.fn.bind.call($letter_bar_nav, "click", function(event){
+                event.stopPropagation();
+                var target = event.target,
+                    $target = jQ(target);
+                if(target.nodeName != "SPAN") return false;
+                
+                var kind = $target.attr("kind");
+                if($target.hasClass("wsc_chosed"))  return;
+                
+                $target.addClass("wsc_chosed").siblings().removeClass("wsc_chosed");
+                letters_html = '';
+                current_letters = letters[kind]["exec"]();
+                for(var ii = 0; ii < current_letters.length; ii++){
+                    letters_html += '<span>' + current_letters[ii] + '</span>';          
+                }
+                $letter_bar_body.html(letters_html);
+            });
+            
+            jQ.fn.bind.call($letter_bar_body, "click", function(event){
+                event.stopPropagation();
+                var target = event.target,
+                    $target = jQ(target);
+                
+                if(target.nodeName != "SPAN")   return false;
+                _self_.editor.default_panel["letter"]["one_exec"].call(_self_, $target.html());         
+            });
+            
+                                                   } 
+        this.get_src_attrs = function( paras){
+            paras = paras || {};
+            var attrs = {},
+                src_type = paras["src_type"] || "image",
+                default_menu_attrs = this.editor.default_menu_attrs,
+                default_src_attrs = this.editor.default_src_attrs;  
+            
+            for(var _para_ in default_menu_attrs){
+                attrs[_para_] = this.$menu.attr(_para_) || default_menu_attrs[_para_];            
+            }
+            for(var _para_ in default_src_attrs["hidden"]){
+                attrs[_para_] = paras[_para_] || default_src_attrs["hidden"][_para_];           
+            }
+            for(var _para_ in default_src_attrs[src_type]){
+                attrs[_para_] = paras[_para_] || default_src_attrs[src_type][_para_];            
+            }
+            return attrs;
+        }
         
+        this.pop_page = function(_content_, _width_, _height_){
+            pop_page(_width_, _height_, _content_);        
+        }        
+        
+        this.lib_bar_init = function(){
+            var _self_ = this;
+            var pop_size = editor_attrs.default_src_attrs["size"];
+            // init math bar, code, reference, table, image bar
+            jQ.fn.bind.call(this.lib_bars["all"], "click", function(event){
+                event.stopPropagation();
+                var target = event.target,
+                    $target = jQ(target),
+                    attrs = {},
+                    pop_html = '',
+                    src_type = "image";
+                if($target.hasClass("src_new")){
+                    // do new src
+                    src_type = $target.attr("src_type");
+                    attrs = _self_.get_src_attrs();
+                    pop_html = editor_attrs.default_pop_page_html(attrs);
+                    _self_.pop_page(pop_html, pop_size[src_type]["width"], pop_size[src_type]["height"]);
+                    
+                }
+            });
+             
+        }
 
         
         
@@ -648,7 +810,14 @@
         
         var $editor_menu = jQ('<div id='+ editor_id +'></div>'),
             $editor_menu_base = jQ('<div id="write_menu_base"></div>'),
-            $textarea = $("#"+ textarea_id).eq(0);
+            $textarea = jQ(this[0]);
+            
+        for(var iii in this[0]){
+            //console.log(iii);        
+        }
+        //alert(typeof this);
+        //alert($textarea);
+        
             
         $textarea.attr("spellcheck", false);
         $editor_menu.attr(menu_attrs);
@@ -689,7 +858,21 @@
         
         $editor_menu.append($lib_bars["all"]);
         
-            
+        var self_textarea = new Textarea();
+        //self_textarea.textarea = this[0];
+        var textarea_para = {"textarea": this[0], "editor": editor_attrs, "menu": $editor_menu};
+        for(var _para_ in $lib_bars){
+            textarea_para[_para_] = $lib_bars[_para_];        
+        }
+        self_textarea.init(textarea_para);
+        
+        jQ.fn.bind.call($editor_menu_base, "click", function(event){
+            var target = event.target, $target = jQ(target);
+            if(target.nodeName != 'LI') return false;
+            //alert("in")
+            editor_panel[$target.attr("kind")]["exec"].call(self_textarea, target);
+            //if($target)
+        })
         
         
 
