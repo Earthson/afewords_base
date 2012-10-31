@@ -187,11 +187,11 @@ class ArticleUpdateHandler(BaseArticleUpdateHandler):
                     msg.comment_by(self.father, self.article_obj)
                     msg_str = msg.render_string()
                     father_author = self.father.author
-                    father_author.accept_notification(msg_str)
+                    father_author.accept_notification(msg_str, usr)
                     if self.ref_comment:
                         ref_comment_author = self.ref_comment.author
                         if father_author != ref_comment_author:
-                            ref_comment_author.accept_notification(msg_str)
+                            ref_comment_author.accept_notification(msg_str, usr)
         elif handler_paras['article_type'] not in ['comment']:
             author.with_new_tags(self.article_obj, handler_paras['tags'])
 

@@ -228,14 +228,15 @@ class User(DataBox):
             ret = set_auth(ret, A_READ | A_WRITE | A_DEL | A_POST)
         return ret
 
-    def accept_notification(self, info):
+    def accept_notification(self, info, from_who=None):
         import time
         noti_id = repr(time.time()).replace('.', '#') #generate noti_id
         doc = {
             'info' : info,
             'isread' : False,
         }
-        self.lib.notification_lib[noti_id] = doc
+        if from_who.uid != self.uid:
+            self.lib.notification_lib[noti_id] = doc
 
     @db_property
     def notifications():
