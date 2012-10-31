@@ -270,18 +270,23 @@ class Article(DataBox):
     @with_user_status
     def authority_verify(self, usr=None, env=None, **kwargs):
         ret = 0
-        if usr is None:
+        if self.privilege == 'public':
             ret = set_auth(ret, A_READ)
+        if usr is None:
+            return ret
         elif self.author is not None and self.author._id == usr._id:
             ret = set_auth(ret, A_READ | A_WRITE | A_DEL)
-        if env:
-            tmp = env.authority_verify(usr)
-            if test_auth(tmp, A_POST):
-                ret = set_auth(ret, A_POST)
+        tmp_env = self.env
+        if tmp_env is not None:
+            tmp = tmp_env.authority_verify(usr)
             if test_auth(tmp, A_DEL):
                 ret = set_auth(ret, A_DEL)
             if self.env_write_access and test_auth(tmp, A_WRITE):
                 ret = set_auth(ret, A_WRITE)
+        if env:
+            tmp = env.authority_verify(usr)
+            if test_auth(tmp, A_POST):
+                ret = set_auth(ret, A_POST)
         return ret
 
     def refinder(self, reftype, refname):
@@ -474,6 +479,7 @@ class Article(DataBox):
     def article_info_view_by(self, info_name='basic_info', 
                     usr=None, env=None, **kwargs):
         ans = dict()
+        ans = self.get_propertys(info_name)
         try:
             ans = self.get_propertys(info_name)[0]
         except:
@@ -546,11 +552,8 @@ class Article(DataBox):
     @db_property
     def env_info():
         def getter(self):
-            ans = dict()
-            ans['type'] = self.data['env_type']
             tmp = self.env
-            ans['entity'] = {} if tmp is None else tmp.basic_info
-            return ans
+            return None if tmp is None else tmp.as_env
         return getter
 
     @db_property

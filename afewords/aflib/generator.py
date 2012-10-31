@@ -39,7 +39,7 @@ def cls_gen(objtype):
 
     from user import User
     #from group.basicgroup import BasicGroup
-    #from catalog import Catalog
+    from article.catalog import Catalog
 
     types_all = {
         Blog.__name__:Blog,
@@ -56,7 +56,7 @@ def cls_gen(objtype):
         Reference.__name__:Reference,
         User.__name__:User,
     #    BasicGroup.__name__:BasicGroup,
-    #    Catalog.__name__:Catalog,
+        Catalog.__name__:Catalog,
     }
 
     if objtype not in types_all.keys():

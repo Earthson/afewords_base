@@ -482,18 +482,19 @@ class User(DataBox):
     def basic_info():
         '''for follow/follower display'''
         def getter(self):
-            ans = dict()
-            ans['uid'] = self.uid
-            ans['name'] =self.name
-            ans['thumb'] = self.avatar.thumb_url
-            ans['isfollow'] = False
-            ans['isme'] = False
+            ans = self.as_env_info
             ans['tag_list'] = self.alltags
             return ans
         return getter
 
     @db_property
     def basic_info_for_json():
+        def getter(self):
+            return self.as_env_info
+        return getter
+
+    @db_property
+    def as_env_info():
         def getter(self):
             ans = dict()
             ans['uid'] = self.uid

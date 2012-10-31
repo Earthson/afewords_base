@@ -440,12 +440,27 @@ class Catalog(DataBox):
 
         ans['permission'] = auth_str(self.authority_verify(
                     usr, env, **kwargs))
-
-        #test print Earthson
-        print '#catalog', ans['permission']
-        print '#summary', ans['summary']['permission']
-        print '#owner', ans['author']
         return ans
+
+    @db_property
+    def as_env():
+        def getter(self):
+            ans = dict()
+            ans['type'] = self.__class__.__name__
+            ans['entity'] = self.as_env_info
+            return ans
+        return getter
+
+    @db_property
+    def as_env_info():
+        def getter(self):
+            ans = dict()
+            ans['bid'] = self.uid
+            ans['name'] = self.name
+            ans['complete_rate'] = self.complete_rate
+            ans['url'] = self.obj_url
+            return ans
+        return getter
 
     @db_property
     def edit_info():
@@ -464,3 +479,9 @@ class Catalog(DataBox):
             return ans
         return getter
 
+
+    @db_property
+    def obj_url():
+        def getter(self):
+            return self.main_url + 'book/' + self.uid
+        return getter
