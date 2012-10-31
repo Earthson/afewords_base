@@ -220,7 +220,7 @@ class User(DataBox):
         return getter
 
     @with_user_status
-    def authority_verify(self, usr, env=None, **kwargs):
+    def authority_verify(self, usr=None, env=None, **kwargs):
         ret = 0
         if usr is None:
             ret = set_auth(ret, A_READ)

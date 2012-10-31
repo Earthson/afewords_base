@@ -193,16 +193,30 @@ class Catalog(DataBox):
             return self.data['node_count'] - self.data['remove_count']
         return getter
 
+    def is_manager(self, usr):
+        if usr is None:
+            return False
+        if self.is_owner(usr) or usr._id in self.managers:
+            return True
+        return False
+
+    def is_owner(self, usr):
+        if usr is None:
+            return False
+        if self.owner_id == usr._id and \
+                    self.owner_type == usr.__class__.__name__:
+            return True
+        return False
+
     @with_user_status
     def authority_verify(self, usr, env=None, **kwargs):
         ret = 0
         if usr == None:
             ret = set_auth(ret, A_READ)
-        elif self.owner_type == usr.__class__.__name__ and \
-                str(self.owner_id) == str(usr._id):
-            ret = set_auth(ret, A_READ | A_WRITE | A_DEL)
-        elif usr._id in set(self.managers):
-            ret = set_auth(ret, A_READ | A_WRITE)
+        elif self.is_manager(usr):
+            ret = set_auth(ret, A_READ | A_WRITE | A_DEL | A_POST)
+        else:
+            ret = set_auth(ret, A_READ | A_POST)
         return ret
 
     def spec_blog_to(self, node_id, rel_obj):
@@ -426,6 +440,11 @@ class Catalog(DataBox):
 
         ans['permission'] = auth_str(self.authority_verify(
                     usr, env, **kwargs))
+
+        #test print Earthson
+        print '#catalog', ans['permission']
+        print '#summary', ans['summary']['permission']
+        print '#owner', ans['author']
         return ans
 
     @db_property

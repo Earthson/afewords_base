@@ -193,6 +193,7 @@ class ArticleDoc(AFDocument):
         'author_id' : ObjectId,
         'env_id' : ObjectId,
         'env_type' : basestring,
+        'env_write_access' : bool,
         'body' : basestring,
         'body_version' : int,
         'view_body' : basestring,
@@ -211,6 +212,7 @@ class ArticleDoc(AFDocument):
     }
     required_fields = [] #['name', 'env_id', 'env_type']
     default_values = {
+        'env_write_access' : True,
         'abstract' : '',
         'body' : '',
         'body_version' : 0,
@@ -239,6 +241,7 @@ class Article(DataBox):
         'author_id' : True,
         'env_id' : False,
         'env_type' : False,
+        'env_write_access' : True,
         'lang_type' : True,
         'release_time' : True,
         'update_time' : True,
@@ -275,6 +278,10 @@ class Article(DataBox):
             tmp = env.authority_verify(usr)
             if test_auth(tmp, A_POST):
                 ret = set_auth(ret, A_POST)
+            if test_auth(tmp, A_DEL):
+                ret = set_auth(ret, A_DEL)
+            if self.env_write_access and test_auth(tmp, A_WRITE):
+                ret = set_auth(ret, A_WRITE)
         return ret
 
     def refinder(self, reftype, refname):
@@ -451,10 +458,10 @@ class Article(DataBox):
             ans['content_short'] = self.view_body_short
             ans['release_time'] = str(self.release_time)
             tmp = self.author
-            ans['author'] = dict() if tmp is None  else tmp.basic_info
+            ans['author'] = None if tmp is None  else tmp.basic_info
             ans['comment_count'] = self.comment_count
             tmp = self.statistics
-            ans['statistics'] = dict() if tmp is None else tmp.basic_info
+            ans['statistics'] = None if tmp is None else tmp.basic_info
             ans['keywords'] = self.keywords
             ans['tag_list'] = self.tag
             ans['privilege'] = self.privilege
