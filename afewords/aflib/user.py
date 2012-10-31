@@ -448,7 +448,7 @@ class User(DataBox):
                         usr=None, env=None, **kwargs):
         try:
             uinfo = self.get_propertys(info_name)[0]
-        except:
+        except IndexError:
             return None
         uinfo['permission'] = auth_str(self.authority_verify(
                         usr, env, **kwargs))
