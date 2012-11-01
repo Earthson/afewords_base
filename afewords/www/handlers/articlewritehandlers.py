@@ -91,11 +91,11 @@ def article_env_init(handler, handler_paras, handler_json):
         if not test_auth(env.authority_verify(usr), A_POST):
             return 12#Permission Denied
         handler.article_obj = acls()
-        handler.article_obj.set_propertys(env=env, author=usr)
-        usr.add_to_drafts(handler.article_obj)
         if handler.article_obj is None:
             return 13#Article Create Failed
-        handler_json.as_new(handler.article_obj.uid) 
+        handler.article_obj.set_propertys(env=env, author=usr)
+        usr.add_to_drafts(handler.article_obj)
+        handler_json.as_new(handler.article_obj) 
         #new Article Created
     else:
         handler.article_obj = generator(handler_paras['article_id'],
