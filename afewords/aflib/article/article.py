@@ -60,8 +60,8 @@ class ArticleLib(EmMongoDict):
         'ref' : 'reference_lib',
     }
 
-    @staticmethod
-    def reftype_trans(reftype):
+    @classmethod
+    def reftype_trans(cls, reftype):
         cls_obj = cls_gen(reftype)
         if cls_obj is None:
             return None
@@ -73,10 +73,14 @@ class ArticleLib(EmMongoDict):
             return None
         return None
 
+    @classmethod
+    def is_valid_reftype(cls, reftype):
+        return cls.reftype_trans(reftype) is not None
+
     def get_libname(self, reftype):
         reftype = self.reftype_trans(reftype)
         if reftype is None: #illeagal reftype
-            return when_error
+            return None
         return self.ref_map[reftype]
 
     def refinder(self, reftype, refname):
@@ -151,30 +155,25 @@ class ArticleLib(EmMongoDict):
         return self.sub_dict('relation_catalogs',
                         generator=None)
 
-    def do_update(self):
-        ans = dict()
-        ans['update_time'] = datetime.now()
-        ans['body_version'] += 1
-        self.set_propertys(**ans)
-
     def add_ref(self, reftype, refobj):
-        inlib = self.sub_dict(self.get_libname(reftype))
+        libname = self.get_libname(reftype)
+        if libname is None:
+            return False
+        inlib = self.sub_dict(libname)
         alias_all = set(inlib.keys())
         if refobj.alias and refobj.alias not in alias_all:
             inlib[refobj.alias] = refobj._id
-            self.do_update()
             return True
         for i in range(1, 1000):
             if str(i) not in alias_all:
                 refobj.alias = str(i)
                 inlib[refobj.alias] = refobj._id
-                self.do_update
                 return True
         return False
 
     def get_ref(self, reftype, refalias):
         libname = self.get_libname(reftype)
-        if not libname:
+        if libname is None:
             return None
         inlib = getattr(self, libname)
         objid = inlib[refalias]
@@ -185,7 +184,7 @@ class ArticleLib(EmMongoDict):
 
     def remove_ref(self, reftype, refalias):
         libname = self.get_libname(reftype)
-        if not libname:
+        if libname is None:
             return None
         inlib = getattr(self, libname)
         objid = inlib[refalias]
@@ -196,6 +195,7 @@ class ArticleLib(EmMongoDict):
             except:
                 pass
         del inlib[refalias]
+
 
 @with_conn
 class ArticleDoc(AFDocument):
@@ -308,12 +308,14 @@ class Article(DataBox):
         return self.lib.refinder(reftype, refname)
 
     def add_ref(self, reftype, refobj):
+        self.do_update()
         return self.lib.add_ref(reftype, refobj)
 
     def get_ref(self, reftype, refalias):
         return self.lib.get_ref(reftype, refalias)
 
     def remove_ref(self, reftype, refalias):
+        self.do_update()
         return self.lib.remove_ref(reftype, refalias)
 
     def add_to_tag(self, tagname):
@@ -328,6 +330,11 @@ class Article(DataBox):
 
     def do_post(self):
         self.set_propertys(is_posted=True, release_time=datetime.now())
+
+    def do_update(self):
+        self.data['update_time'] = datetime.now()
+        self.data['body_version'] += 1
+        self.save()
 
     def comments_info_view_by(self, usr=None):
         if usr:

@@ -226,8 +226,6 @@ class ArticleSrcPara(BaseHandlerPara):
         'picture' : None, #handler.requeset.files['picture']
     }
 
-    src_types = ['img', 'math', 'code', 'table', 'ref']
-
     def read(self):
         self.paradoc = dict([(ek, self.handler.get_esc_arg(ek, ev)) 
                                     for ek, ev in self.paradoc.items()])
@@ -268,10 +266,6 @@ class ArticleSrcHandler(BaseArticleUpdateHandler):
             handler_json.by_status(8)
             handler_json.write()
             return #Unsupported Operation
-        if handler_paras['src_type'] not in handler_paras.src_types:
-            handler_json.by_status(5)
-            handler_json.write()
-            return #Unsupported Ref Type
         if handler_paras['do'] == 'new':
             scls = cls_gen(handler_paras['src_type'])
             if scls is None:
