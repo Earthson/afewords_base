@@ -302,11 +302,18 @@
             "reference":{ "title": '', "body": '', "source": ''},
             "size":     { 
                             "math": { "width": 450, "height": 380 },
-                            "image": { "width": 360, "height": 200 },
+                            "image": { "width": 360, "height": 240 },
                             "reference": { "width": 450, "height": 390 },
                             "code": { "width": 760, "height": 400 },
                             "table": { "width": 450, "height": 390 }
-                        }    
+                        },
+            "tip":      {
+                            "math": "数学式",
+                            "image": "图片",
+                            "reference": "引用",
+                            "code": "代码",
+                            "table": "表格"            
+                        }
         }
         
         this.default_block_html = {
@@ -396,6 +403,8 @@
         
         
         this.default_pop_page_html= function( paras ){
+        
+            var _self_ = this;
             if(typeof paras != "object" ) paras = {};
             for(var _para_ in this.default_menu_attrs){
                 paras[_para_] = paras[_para_] || this.default_menu_attrs[_para_];            
@@ -419,6 +428,8 @@
             for(var _para_ in this.default_src_attrs[ paras["src_type"] ]){ // correct the paras
                 paras[_para_]  = paras[_para_]  || this.default_src_attrs[paras["src_type"]][_para_];             
             }
+            var control_tag = paras["do"] == "new" ? "添加新" : "修改";
+            //alert(control_tag);
             switch(paras["src_type"]){
                 case "img":
                 case "image":
@@ -442,16 +453,16 @@
             result_html = '<div id="pop_insert_'+ paras["src_type"] +'">' + result_html + '</div>';
             return result_html;
             
-            var control_tag = (paras["do"] == "new" ? "添加新" : "修改");
             
-            function creare_reference_pop_html(){
+            
+            function create_reference_pop_html(){
                 return hidden_paras_html + 
                     '<p class="first">'+ control_tag +'引用 <span class="all_example" title="查看说明"><a href="/help-editor-reference" target="_blank">说明</a></span></p>'+
                     '<div style="display:block">'+
                     '<p title="设置引用的名称">名称<input type="text" name="title" autocomplete="off" value="'+ paras["title"] +'" /></p>'+
                     '<p title="出处">出处<input type="text" name="source" autocomplete="off" value="'+ paras["source"] +'" /></p>'+
                     '<p title="引用内容"><textarea name="body" autocomplete="off">'+ paras["body"] +'</textarea></p>'+
-                    '<p><span><button type="submit">提交</button></span><span class="r_process">&nbsp;</span></p>'+
+                    '<p><span><button type="submit">提交</button></span><span class="r_process" id="src_process">&nbsp;</span></p>'+
                     '</div>';
             }; 
             
@@ -461,7 +472,7 @@
                     '<div style="display:block">'+
                     '<p title="表格名称">表名<input type="text" name="title" autocomplete="off" value="'+ paras["title"] +'" /></p>' +
                     '<p title="表格内容"><textarea name="body" autocomplete="off">'+ paras["body"] +'</textarea></p>'+
-                    '<p><span><button type="submit">提交</button></span><span class="t_process">&nbsp;</span></p>'+
+                    '<p><span><button type="submit">提交</button></span><span class="t_process" id="src_process">&nbsp;</span></p>'+
                     '</div>';     
             }        
             
@@ -480,18 +491,18 @@
                     '<p title="设置名称">名称<input type="text" name="title" autocomplete="off" value="'+ paras["title"] +'"/></p>'+
                     '<p title="设置名称">样式'+ math_mode_html +'</p>'+
                     '<p title="数学式latex内容"><textarea resize="none" autocomplete="off" name="body">'+ paras["body"] +'</textarea></p>'+
-                    '<p><span><button type="submit">提交</button></span><span class="m_process">&nbsp;</span></p>';            
+                    '<p><span><button type="submit">提交</button></span><span class="m_process" id="src_process">&nbsp;</span></p>';            
             }
             
             function create_code_pop_html(){
                 var code_select_html = '';
-                var code_type_list = this.default_support_code();
+                var code_type_list = _self_.default_support_code();
                 for(var ii = 0; ii < code_type_list.length; ii++){
                     if(code_type_list[ii].toLowerCase()== paras["code_type"]){
                         code_select_html += '<option selected value="' + code_type_list[ii].toLowerCase()+'">' + code_type_list[ii] +'</option>';    
                         continue;
                     }
-                    select_html += '<option value="' + code_type_list[ii].toLowerCase()+'">' + code_type_list[ii] +'</option>'; 
+                    code_select_html += '<option value="' + code_type_list[ii].toLowerCase()+'">' + code_type_list[ii] +'</option>'; 
                 }
                 
                 return hidden_paras_html + 
@@ -500,7 +511,7 @@
                     '<p title="代码种类">种类<select name="code_type">'+ code_select_html+ '</select></p>'+
                     '<p title="代码"><textarea name="body" autocomplete="off">'+ paras["body"] +'</textarea></p>'+
                     '<p><span><button type="submit">提交</button></span>'+
-                    '<span class="c_process">&nbsp;</span></p>';            
+                    '<span class="c_process" id="src_process">&nbsp;</span></p>';            
             }
             
             function create_image_pop_html(){
@@ -513,13 +524,13 @@
                             '<p><input class="i_file" type="file" name="picture" onclick=clear_process(this,"i"); /></p>'+
                             '<p>标题<input class="i_title" name="title" autocomplete="off" type="text" onfocus=clear_process(this,"i"); /></p>'+
                             '<p><span class="i_button"><button type="submit">上传图片</button>'+
-                            '<button type="submit" style="display:none">提交</button></span><span class="i_process">&nbsp;</span></p></form>';                
+                            '<button type="submit" style="display:none">提交</button></span><span class="i_process" id="src_process">&nbsp;</span></p></form>';                
                 }else{
                     return hidden_paras_html + 
                         '<p class="first">修改图片属性</p>'+
                         '<p>标题<input class="i_title" name="title" type="text"  value="'+paras["title"]+'" /></p>'+
                         '<p><span class="i_button"><button type="button">确认修改</button>'+
-                        '</span><span class="i_process">&nbsp;</span></p>';              
+                        '</span><span class="i_process" id="src_process">&nbsp;</span></p>';              
                 };          
             }
             
@@ -674,7 +685,8 @@
                         if(lib == "all" || lib == kind)  continue;
                         this.lib_bars[lib].hide();               
                     }
-                    this.lib_bars[kind].fadeIn("slow");     
+                    this.lib_bars[kind].fadeIn("slow"); 
+                    $obj.addClass("menu_focus").siblings().removeClass("menu_focus");    
                 
                 }    
             }
@@ -756,12 +768,76 @@
         }
         
         this.pop_page = function(_content_, _width_, _height_){
-            pop_page(_width_, _height_, _content_);        
+            var $pop_content = pop_page(_width_, _height_, _content_) || jQ("#pop-content");
+            return $pop_content;        
         }        
+        
+        this.div_to_dict = function( $div ){
+            return $div.DivToDict();           
+        }
+        
+        this.ajax_src_submit = function(paras, $pop_content){
+        
+            if(typeof paras != "object")    return false;
+            
+            var $process = $pop_content.find("#src_process"),
+                src_type = paras["src_type"],
+                process_tip = editor_attrs.default_src_attrs["tip"][src_type];
+            
+            var src_type = paras["src_type"];
+            
+            if(!paras["title"] || paras["title"]==""){
+                $process.html("请填写" + process_tip + "名称！").css("color", "red");
+                return false;            
+            }
+            if(src_type == "reference"){
+                if(paras["source"] == ''){
+                    $process.html("请填写" + process_tip + "出处！").css("color", "red");
+                    return false;                
+                }            
+            }
+            
+            if(paras["body"] == '' && src_type != "image"){
+                if(src_type != "reference"){
+                    $process.html("请填写" + process_tip + "内容！").css("color", "red"); 
+                    return false;               
+                }else{
+                    var url_reg = /^(http|https|ftp):\/\/.+$/ig;
+                    if(!url_reg.test(paras["source"])){
+                        $process.html("请填写链接地址或者引用真实内容！").css("color","red");
+                        return false;               
+                    }         
+                }
+            }
+            
+            // send the submit with ajax      
+            
+        }
+
+        this.pop_content_bind = function( $pop_content ){
+            // bind the pop solve
+            var _self_ = this;
+            $pop_content.unbind().bind("click", function(event){
+                event.stopPropagation();
+                var target = event.target,
+                    $target = jQ(target),
+                    attrs = {},
+                    $this = jQ(this);
+                
+                if(target.nodeName != "BUTTON")  return false;
+                attrs = _self_.div_to_dict($this);
+                _self_.ajax_src_submit(attrs, $this);
+                
+                
+                
+            })
+            
+        };        
         
         this.lib_bar_init = function(){
             var _self_ = this;
             var pop_size = editor_attrs.default_src_attrs["size"];
+            
             // init math bar, code, reference, table, image bar
             jQ.fn.bind.call(this.lib_bars["all"], "click", function(event){
                 event.stopPropagation();
@@ -769,14 +845,20 @@
                     $target = jQ(target),
                     attrs = {},
                     pop_html = '',
-                    src_type = "image";
+                    src_type = "image",
+                    $pop_content;
                 if($target.hasClass("src_new")){
                     // do new src
                     src_type = $target.attr("src_type");
-                    attrs = _self_.get_src_attrs();
+                    attrs = _self_.get_src_attrs({ "src_type": src_type, "do": "new"});
                     pop_html = editor_attrs.default_pop_page_html(attrs);
-                    _self_.pop_page(pop_html, pop_size[src_type]["width"], pop_size[src_type]["height"]);
-                    
+                    $pop_content = _self_.pop_page(pop_html, pop_size[src_type]["width"], pop_size[src_type]["height"]);
+                    _self_.pop_content_bind($pop_content);
+                }
+                
+                if($target.hasClass("src_edit")){
+                    // edit src  
+                                  
                 }
             });
              

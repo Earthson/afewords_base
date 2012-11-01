@@ -17,6 +17,15 @@
 #pop_insert_img p .i_process{line-height: 40px;margin-left: 5px;width: 190px;float: left;font-size: 12px;text-align: center;}
 
 
+#pop_insert_image{width: 100%;height: 100%;display: block;background-color: #fff;text-align: center;}
+#pop_insert_image p{display: block;width: 300px;padding:10px 20px;line-height: 25px;text-align: left;max-height: 32px;overflow: hidden;}
+#pop_insert_image p input[type='text']{width:70%;height:30px;margin-left:10px;line-height: 30px;font-size: 16px;}
+#pop_insert_image p span button{padding: 0 15px;height: 38px;line-height: 39px;border: 1px solid #CCC;display: inline-block;}
+#pop_insert_image p label{line-height: 30px;margin: auto 10px auto 5px;}
+#pop_insert_image p .i_button{float: left;}
+#pop_insert_image p .i_process{line-height: 40px;margin-left: 5px;width: 190px;float: left;font-size: 12px;text-align: center;}
+
+
 #pop_insert_table{width: 100%;height: 100%;display: block;background-color: #fff;text-align: center;}
 #pop_insert_table p{display: block;padding: 5px 20px;line-height: 25px;text-align: left;}
 #pop_insert_table p textarea{width: 95%;height: 200px;resize:none;padding: 5px;}
@@ -33,6 +42,14 @@
 #pop_insert_ref p textarea{width: 95%;height: 150px;resize:none;padding: 5px;}
 #pop_insert_ref p button{padding: 0 15px;height: 38px;line-height: 39px;border: 1px solid #CCC;display: inline-block;float: left;}
 #pop_insert_ref p .r_process{line-height: 40px;margin-left: 5px;width: 300px;float: left;font-size: 12px;text-align: center;}
+
+
+#pop_insert_reference{width: 100%;height: 100%;display: block;background-color: #fff;text-align: center;}
+#pop_insert_reference p{display: block;padding: 5px 20px;line-height: 25px;text-align: left;}
+#pop_insert_reference p input[type="text"]{width:70%;height:30px;margin-left:10px;line-height: 30px;font-size: 16px;}
+#pop_insert_reference p textarea{width: 95%;height: 150px;resize:none;padding: 5px;}
+#pop_insert_reference p button{padding: 0 15px;height: 38px;line-height: 39px;border: 1px solid #CCC;display: inline-block;float: left;}
+#pop_insert_reference p .r_process{line-height: 40px;margin-left: 5px;width: 300px;float: left;font-size: 12px;text-align: center;}
 
 #pop_insert_code{width: 100%;height: 100%;display: block;background-color: #fff;text-align: center;}
 #pop_insert_code p{display: block;padding: 5px 20px;line-height: 25px;text-align: left;}

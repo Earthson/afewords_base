@@ -281,19 +281,28 @@ pop_page = function(_width , _height , _content){
 	if(top_length <=0) top_length = 0;
 	var left_length = ( screen_width - _width )/2 - 15;
 	if(left_length <=0) left_length = 0;
-	//alert(top_length);
-	$("#pop-overlay").css({"height": parseInt(page_height) + "px","width":parseInt(page_width) + "px"});
-	$("#pop-overlay").fadeIn(200,function(){
-			$("#pop-wrap").css({"width":parseInt(_width) + "px", "height": parseInt(_height) +"px","top":parseInt(top_length) + "px","left":parseInt(left_length)+"px"});
-			$("#pop-wrap").fadeIn(200);
-			$("#pop-content").css({"width":parseInt(_width)-20 +"px","height":parseInt(_height)-20 + "px"});
-			//_content = $('<div></div>').attr("onclick","alert(1)").css({"width":"100px","height":"100px"});
-			if(typeof _content == "object"){
-                $("#pop-content").html('').append(_content);			
-			}else{
-			     $("#pop-content").html(_content);
-			}
-		});
+	
+    var $pop_overlay = $("#pop-overlay"),
+        $pop_wrap = $("#pop-wrap"),
+        $pop_content = $("#pop-content");        
+        	//alert(top_length);
+	$pop_overlay.css({"height": parseInt(page_height) + "px","width":parseInt(page_width) + "px"})
+	           .fadeIn(200,function(){
+			                 $pop_wrap.css({"width":parseInt(_width) + "px", 
+			                         "height": parseInt(_height) +"px",
+			                         "top":parseInt(top_length) + "px",
+			                         "left":parseInt(left_length)+"px"
+			                         })
+			         .fadeIn(200);
+			         $pop_content.css({"width":parseInt(_width)-20 +"px","height":parseInt(_height)-20 + "px"});
+
+			         if(typeof _content == "object"){
+                $pop_content.html('').append(_content);			
+			         }else{
+			             $pop_content.html(_content);
+			         }
+		  });
+		  return $pop_content;
 }
 
 /******************pop page close **************************************/
