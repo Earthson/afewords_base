@@ -103,6 +103,7 @@ class DataBox(object):
 
     @class_property
     def cls_alias(cls):
+        '''cls_alias may be basestring or list/tuple of basestrings'''
         return cls.__name__.lower()
 
     @classmethod

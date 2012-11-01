@@ -11,9 +11,6 @@ def is_url(tojudge):
         return False
     return True
 
-def id_generator(doctype):
-    return lambda _id: doctype(doctype.datatype.one({'_id':ObjectId(_id)}))
-
 def ref_generator(reftype, ref_id):
     from picture import Picture
     from langcode import Langcode

@@ -8,7 +8,7 @@ from article import ArticleDoc, Article
 class BlogDoc(ArticleDoc.__clsobj__):
     __collection__ = 'BlogDB'
 
-
+@with_mapper
 class Blog(Article):
     datatype = BlogDoc
 

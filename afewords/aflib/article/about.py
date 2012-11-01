@@ -9,5 +9,6 @@ class AboutDoc(ArticleDoc.__clsobj__):
     __collection__ = 'AboutDB'
 
 
+@with_mapper
 class About(Article):
     datatype = AboutDoc

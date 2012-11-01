@@ -1,4 +1,5 @@
 from databox.mongokit_utils import with_conn
+from databox.databox import *
 
 from picture import PictureDoc, Picture
 
@@ -8,6 +9,7 @@ class AvatarDoc(PictureDoc.__clsobj__):
     __collection__ = 'AvatarDB'
 
 
+@with_mapper
 class Avatar(Picture):
     datatype = AvatarDoc
 
