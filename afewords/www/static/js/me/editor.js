@@ -352,7 +352,7 @@
                                 '<div id="bar_body"><div class="l"></div></div>',
                                                             
             "src_image_one":   '<div class="one" src_alias="1" type="img" src_type="image">'+
-                                '<div class="ileft"><span class="ititle">图1</span></div>'+
+                                '<div class="ileft"><span class="ititle" id="src_view_title">图1</span></div>'+
                                 '<div class="icontrol">'+
                                 '<span class="idel src_del" title="删除此图片">删除</span>'+
                                 '<span class="imodify src_edit">修改</span>'+
@@ -364,7 +364,7 @@
                                 '</div></div>',
                                     
             "src_math_one":     '<div class="one" src_alias="1" type="math" src_type="math">'+
-                                '<div><span class="cname">数式1</span></div>'+
+                                '<div><span class="cname" id="src_view_title">数式1</span></div>'+
                                 '<div class="control">'+
                                 '<span class="cdel src_del" title="删除">删除</span>' +
                                 '<span class="cedit src_edit" title="修改">修改</span>' + 
@@ -379,7 +379,7 @@
                                 '</div></div>',
                                 
             "src_reference_one":'<div class="one" src_alias="1" type="ref" src_type="reference">'+
-                                '<div><span class="cname">引用1</span></div>'+
+                                '<div><span class="cname" id="src_view_title">引用1</span></div>'+
                                 '<div class="control">'+
                                 '<span class="cdel src_del" title="删除">删除</span>'+
                                 '<span class="cedit src_edit" title="修改">修改</span>'+
@@ -391,7 +391,7 @@
                                 '</div></div>',
                                 
             "src_code_one":     '<div class="one" src_alias="1" type="code" src_type="code">'+
-                                '<div><span class="cname">代码1</span></div>'+
+                                '<div><span class="cname" id="src_view_title">代码1</span></div>'+
                                 '<div class="control">'+
                                 '<span class="cdel src_del" title="删除">删除</span>'+
                                 '<span class="cedit src_edit" title="修改">修改</span>'+
@@ -401,7 +401,7 @@
                                 '</div></div>',
                                 
             "src_table_one":    '<div class="one" src_alias="1" type="table" src_type="table">'+
-                                '<div><span class="cname">表1</span></div>'+
+                                '<div><span class="cname" id="src_view_title">表1</span></div>'+
                                 '<div class="control">'+
                                 '<span class="cdel src_del" title="删除">删除</span>'+
                                 '<span class="cedit src_edit" title="修改">修改</span>'+
@@ -703,6 +703,30 @@
             }
                   
         }        
+        this.lib_bar_content_init = function(para){
+            // init picture
+            var $image_body = this.lib_bars["image"].find(".i"),
+                $image_demo = $image_body.find(".one").eq(0),
+                image_list = para["image"] || [],
+                $clone_demo,
+                $clone_demo_list = [],
+                tmp_object;
+            
+            for(var i = 0; i < image_list.length; i++){
+                tmp_object = image_list[i];
+                $clone_demo = $image_demo.clone();
+                $clone_demo.find("#src_view_title").html();
+                $clone_demo.find("#src_title").val(tmp_object["title"]);
+                $clone_demo.find("#src_path").attr("src", tmp_object["url"]);
+                $clone_demo_list.push($clone_demo);
+            }
+            $image_body.append($clone_demo_list);
+            
+            $clone_demo_list = [];
+            //+++++++++++++++++++++++++++++++++++++++++++++++++
+            
+            this.lib_bars["image"].find(".one")        
+        }
         
         this.init = function(args){
             this.textarea = args["textarea"] || document.getElementById("write_textarea");  // JS Object
@@ -715,6 +739,9 @@
             }
             this.lib_letter_bar_init();
             this.lib_bar_init();
+            var src_dict = args["src"] || {};
+            this.lib_bar_content_init(src_dict);
+            
             
         }
         
@@ -795,6 +822,7 @@
         }        
         
         this.ajax_src_submit = function($button, paras, $pop_content){
+            var _self_ = this;
         
             if(typeof paras != "object")    return false;
             
@@ -837,7 +865,7 @@
                 function(){
                 
                     if(paras["do"] != "del"){
-                        $process.html('<img src="/static/img/ajax.gif" />操作中...');
+                        $process.html('<img src="/static/img/ajax.gif" />');
                         $button.attr("disabled", "disabled").css("color", "#333");
                     }
                     
@@ -855,7 +883,7 @@
                                       
                     }else{
                         // submit right
-                        this.handle_src_right(response, paras);
+                        _self_.handle_src_right(response, paras);
                     }
                 }, function(response){
                     if(paras["do"] != "del"){
@@ -894,10 +922,12 @@
                 // new src
                 $src_one = $src_bar_contain.find(".one").eq(0).clone();
                 $src_one.attr("src_alias", response.src_alias).find("#src_title").val(paras["title"]);
+                $src_one.find("#src_view_title").html(editor_attrs.default_src_attrs["tip"][src_type] + response.src_alias  );
                 if(src_type == "image"){
                     $src_one.find("#src_path").attr("src", paras["img_url"]);
                     $src_contain.find(".i").append($src_one);
                     $src_one.attr("display", "block").find(".src_insert").click();
+                    this.pop_page_close();
                     return;
                 }else{
                     $src_one.find("#src_body").val(paras["body"]);               
@@ -906,8 +936,9 @@
                 if(src_type == "code") {  $src_one.find("#src_code_type").val(paras["code_type"]); }
                 if(src_type == "math") {  $src_one.find("#src_math_mode").val(paras["math_mode"]); }
                                 
-                $src_contain.find("#crtm").append($src_one);
+                $src_bar_contain.find("#crtm").append($src_one);
                 $src_one.attr("display", "block").find(".src_insert").click();
+                this.pop_page_close();
                 return;
             }
             if(paras["do"] == "edit"){
@@ -916,6 +947,7 @@
                 $src_one.find("#src_title").val(paras["title"]);
                 if(src_type == "image"){
                     $src_one.find("#src_path").attr("src", paras["img_url"]);
+                    this.pop_page_close();
                     return;
                 }else{
                     $src_one.find("#src_body").val(paras["body"]);               
@@ -923,13 +955,10 @@
                 if(src_type == "reference"){    $src_one.find("#src_source").val(paras["source"]); }
                 if(src_type == "code") { $src_one.find("#src_code_type").val(paras["code_type"]); }
                 if(src_type == "math") { $src_one.find("#src_math_mode").val(paras["math_mode"]); }
+                this.pop_page_close();
                 return;
             }
             
-            if(paras["do"] == "new" || "edit")  {
-                this.pop_page_close();
-                return ;
-            }
                         
             if(paras["do"] == "del" || paras["do"] == "remove"){
                 $src_one = $src_bar_contain.find(".one[src_alias='" + paras["src_alias"] + "']");
@@ -1127,7 +1156,7 @@
         
         var self_textarea = new Textarea();
         //self_textarea.textarea = this[0];
-        var textarea_para = {"textarea": this[0], "editor": editor_attrs, "menu": $editor_menu};
+        var textarea_para = {"textarea": this[0], "editor": editor_attrs, "menu": $editor_menu, "src": paras["src"]};
         for(var _para_ in $lib_bars){
             textarea_para[_para_] = $lib_bars[_para_];        
         }
