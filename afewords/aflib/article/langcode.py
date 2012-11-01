@@ -34,6 +34,8 @@ class Langcode(DataBox):
         'code' : True,
     }
 
+    as_reftype = u'code' #as_reftype should also in cls_alias
+
     @class_property
     def cls_alias(cls):
         return u'code'

@@ -14,6 +14,7 @@ def id_generator(doctype):
             return None
     return id_gen
 
+
 def index_generator(doctype):
     def index_gen(*args, **kwargs):
         data = doctype.datatype.find_one(*args, **kwargs)
@@ -22,16 +23,17 @@ def index_generator(doctype):
         return None
     return index_gen
 
-cls_mapper = dict()
+
+__cls_mapper = dict()
 
 def cls_mapper_reg(cls_obj):
-    cls_mapper[cls_obj.cls_name] = cls_obj
+    __cls_mapper[cls_obj.cls_name] = cls_obj
     cls_alias = cls_obj.cls_alias
     if isinstance(cls_alias, basestring):
-        cls_mapper[cls_alias] = cls_obj
+        __cls_mapper[cls_alias] = cls_obj
     elif isinstance(cls_alias, tuple) or isinstance(cls_alias, list):
         for each in cls_alias:
-            cls_mapper[each] = cls_obj
+            __cls_mapper[each] = cls_obj
     return cls_obj
 
 def cls_gen(objtype):
@@ -39,9 +41,9 @@ def cls_gen(objtype):
         objtype = objtype.lower()
     except AttributeError:
         return None
-    if objtype not in cls_mapper:
+    if objtype not in __cls_mapper:
         return None
-    return cls_mapper[objtype]
+    return __cls_mapper[objtype]
 
 def generator(objid, objtype):
     return id_generator(cls_gen(objtype))(objid)

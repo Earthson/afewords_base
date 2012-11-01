@@ -44,6 +44,8 @@ class Picture(DataBox):
     pic_path = 'static/picture/normal/'
     thumb_path = 'static/picture/small/'
 
+    as_reftype = u'img' #as_reftype should also in cls_alias
+
     @class_property
     def cls_alias(cls):
         return u'img'

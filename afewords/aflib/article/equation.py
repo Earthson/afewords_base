@@ -32,6 +32,8 @@ class Equation(DataBox):
         'equation' : True,
     }
 
+    as_reftype = u'math' #as_reftype should also in cls_alias
+
     @class_property
     def cls_alias(cls):
         return u'math'

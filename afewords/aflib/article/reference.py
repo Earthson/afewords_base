@@ -3,7 +3,7 @@ from databox.mongokit_utils import with_conn
 from databox.databox import *
 
 from translator.trans import reference_translator
-from article_utils import is_url
+from aflib_utils import is_url
 
 
 @with_conn
@@ -42,6 +42,7 @@ class Reference(DataBox):
     }
 
     translator = reference_translator
+    as_reftype = u'ref' #as_reftype should also in cls_alias
 
     @class_property
     def cls_alias(cls):

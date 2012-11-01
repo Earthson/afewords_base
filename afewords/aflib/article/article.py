@@ -7,7 +7,6 @@ from bson import ObjectId
 from datetime import datetime
 
 from statistics import Statistics, StatisticsDoc
-from article_utils import *
 from generator import *
 from translator.trans import *
 
@@ -61,20 +60,36 @@ class ArticleLib(EmMongoDict):
         'ref' : 'reference_lib',
     }
 
-    def get_libname(self, reftype):
-        if reftype not in self.ref_map.keys():
+    @staticmethod
+    def reftype_trans(reftype):
+        cls_obj = cls_gen(reftype)
+        if cls_obj is None:
             return None
+        try:
+            reftype = cls_obj.as_reftype
+        except AttributeError:
+            return None
+        if reftype not in cls.ref_map:
+            return None
+        return None
+
+    def get_libname(self, reftype):
+        reftype = self.reftype_trans(reftype)
+        if reftype is None: #illeagal reftype
+            return when_error
         return self.ref_map[reftype]
 
     def refinder(self, reftype, refname):
         '''this method is required by translator, require self.ref_map'''
-        if reftype not in self.ref_map.keys(): #illeagal type
-            return '[%s:%s]' % (reftype, refname)
+        when_error = '[%s:%s]' % (reftype, refname)
+        reftype = self.reftype_trans(reftype)
+        if reftype is None: #illeagal reftype
+            return when_error
         libname = self.ref_map[reftype]
         inlib = self.sub_dict(libname)
-        obj = ref_generator(reftype, inlib[refname])
+        obj = generator(inlib[refname], reftyp)
         if obj is None:
-            return '[%s:%s]' % (reftype, refname)
+            return when_error
         return obj.view_body
 
     @property

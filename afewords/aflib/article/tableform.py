@@ -34,6 +34,7 @@ class Tableform(DataBox):
     }
 
     normal_translator = trans.normal_translator
+    as_reftype = u'table' #as_reftype should also in cls_alias
 
     @class_property
     def cls_alias(cls):
