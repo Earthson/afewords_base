@@ -112,9 +112,9 @@ class UpdateArticleJson(StatusJson):
         18: u'无法评论该对象，可能不存在',
     }
 
-    def as_new(self, article_id):
+    def as_new(self, article_obj):
         self['isnew'] = 1
-        self['article_id'] = article_id
+        self['article_id'] = article_obj.uid
 
 
 @with_attr
