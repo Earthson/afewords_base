@@ -302,6 +302,7 @@ pop_page = function(_width , _height , _content){
 			             $pop_content.html(_content);
 			         }
 		  });
+		  setTimeout(function(){}, 0);
 		  return $pop_content;
 }
 

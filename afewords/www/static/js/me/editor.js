@@ -204,8 +204,10 @@
                                 "value": '&nbsp;',
                                 "exec": function(obj){ this.change_lib_bar(obj); },
                                 "one_exec": function(_index_){
-                                    this.set_character("", "\n[table:" + _index_ +"]\n", false, false, true, true);                                
-                                }
+                                                var args = {"prefix": "", "suffix": "\n[table:" + _index_ +"]\n",
+                                                            "suffix_l": true, "suffix_r": true, "allow_empty": true}
+                                                this.set_character(args);                                
+                                            }
                             },
             "image":        {
                                 "class": "image", 
@@ -213,8 +215,10 @@
                                 "value": '&nbsp;',
                                 "exec": function(obj){  this.change_lib_bar(obj);  }, 
                                 "one_exec": function(_index_){
-                                    this.set_character("", "\n[img:"+ _index_ +"]", false, false, true, true);                                
-                                }
+                                                var args = {"prefix": "", "suffix": "\n[img:"+ _index_ +"]",
+                                                            "suffix_l": true, "suffix_r": true, "allow_empty": true}
+                                                this.set_character(args);                             
+                                            }
                             },
             "reference":    {
                                 "class": "ref", 
@@ -222,8 +226,10 @@
                                 "value": '&nbsp;', 
                                 "exec": function( obj ){ this.change_lib_bar(obj);  },
                                 "one_exec": function(_index_){
-                                    this.set_character("", "\n[ref:"+ _index_ +"]", false, false, true, true);                                
-                                }
+                                                var args = {"prefix": "", "suffix": "\n[ref:"+ _index_ +"]",
+                                                            "suffix_l": true, "suffix_r": true, "allow_empty": true}
+                                                this.set_character(args);                              
+                                            }
                             },
             "math":         {
                                 "class": "math", 
@@ -231,8 +237,10 @@
                                 "value": '&nbsp;',
                                 "exec": function( obj ){  this.change_lib_bar(obj);  },
                                 "one_exec": function(_index_){
-                                    this.set_character("", "\n[math:"+ _index_ +"]", false, false, true, true);                                
-                                }
+                                                var args = {"prefix": "", "suffix": "\n[math:"+ _index_ +"]",
+                                                            "suffix_l": true, "suffix_r": true, "allow_empty": true}
+                                                this.set_character(args);                              
+                                            }
                             },
             "code":         {
                                 "class": "code", 
@@ -240,8 +248,10 @@
                                 "value": '&nbsp;',
                                 "exec": function( obj ){  this.change_lib_bar(obj);  }, 
                                 "one_exec": function(_index_){
-                                    this.set_character("", "\n[code:"+ _index_ +"]", false, false, true, true);
-                                }
+                                                var args = {"prefix": "", "suffix": "\n[code:"+ _index_ +"]",
+                                                            "suffix_l": true, "suffix_r": true, "allow_empty": true}
+                                                this.set_character(args);   
+                                            }
                             },
             "letter":       {
                                 "class": "letter", 
@@ -772,6 +782,9 @@
             var $pop_content = pop_page(_width_, _height_, _content_) || jQ("#pop-content");
             return $pop_content;        
         }        
+        this.pop_page_close = function(){
+            pop_page_close();        
+        }        
         
         this.div_to_dict = function( $div ){
             return $div.DivToDict();           
@@ -785,62 +798,152 @@
         
             if(typeof paras != "object")    return false;
             
-            var $process = $pop_content.find("#src_process"),
-                src_type = paras["src_type"],
-                process_tip = editor_attrs.default_src_attrs["tip"][src_type];
+            if( paras["do"] != "del"){
             
-            var src_type = paras["src_type"];
-            
-            if(!paras["title"] || paras["title"]==""){
-                $process.html("请填写" + process_tip + "名称！").css("color", "red");
-                return false;            
-            }
-            if(src_type == "reference"){
-                if(paras["source"] == ''){
-                    $process.html("请填写" + process_tip + "出处！").css("color", "red");
-                    return false;                
-                }            
-            }
-            
-            if(paras["body"] == '' && src_type != "image"){
-                if(src_type != "reference"){
-                    $process.html("请填写" + process_tip + "内容！").css("color", "red"); 
-                    return false;               
-                }else{
-                    var url_reg = /^(http|https|ftp):\/\/.+$/ig;
-                    if(!url_reg.test(paras["source"])){
-                        $process.html("请填写链接地址或者引用真实内容！").css("color","red");
-                        return false;               
-                    }         
+                var $process = $pop_content.find("#src_process"),
+                    src_type = paras["src_type"],
+                    process_tip = editor_attrs.default_src_attrs["tip"][src_type];
+                
+                var src_type = paras["src_type"];
+                
+                if(!paras["title"] || paras["title"]==""){
+                    $process.html("请填写" + process_tip + "名称！").css("color", "red");
+                    return false;            
                 }
+                if(src_type == "reference"){
+                    if(paras["source"] == ''){
+                        $process.html("请填写" + process_tip + "出处！").css("color", "red");
+                        return false;                
+                    }            
+                }
+                
+                if(paras["body"] == '' && src_type != "image"){
+                    if(src_type != "reference"){
+                        $process.html("请填写" + process_tip + "内容！").css("color", "red"); 
+                        return false;               
+                    }else{
+                        var url_reg = /^(http|https|ftp):\/\/.+$/ig;
+                        if(!url_reg.test(paras["source"])){
+                            $process.html("请填写链接地址或者引用真实内容！").css("color","red");
+                            return false;               
+                        }         
+                    }
+                }   
+            
             }
             
             var article_src_url = "/article-src-control";
             this.ajax_post_json(article_src_url, paras, 
                 function(){
-                    $process.html('<img src="/static/img/ajax.gif" />操作中...');
-                    $button.attr("disabled", "disabled").css("color", "#333");
+                
+                    if(paras["do"] != "del"){
+                        $process.html('<img src="/static/img/ajax.gif" />操作中...');
+                        $button.attr("disabled", "disabled").css("color", "#333");
+                    }
+                    
                 }, function(response){
+                
                     if(response.status != 0){
+                    
                         // occur some error
-                        $process.html(response.info).css("color", "red");
-                        $button.removeAttr("disabled").css("color", "black");                    
+                        if(paras["do"] != "del"){
+                            $process.html(response.info).css("color", "red");
+                            $button.removeAttr("disabled").css("color", "black");   
+                        }else{
+                            alert(response.info);                        
+                        } 
+                                      
                     }else{
                         // submit right
-                        
+                        this.handle_src_right(response, paras);
                     }
                 }, function(response){
-                    $process.html("出现错误！").css("color", "red");
-                    $button.removeAttr("disabled").css("color", "black");   
+                    if(paras["do"] != "del"){
+                        $process.html("出现错误！").css("color", "red");
+                        $button.removeAttr("disabled").css("color", "black");  
+                    }
+                     
                 }
             );
             // send the submit with ajax      
             
         }
 
+        this.ajax_new_image_bind = function( $form ){
+
+            //alert($form.html());
+            $form.unbind().bind("click", function(event){
+                event.stopPropagation();
+                event.preventDefault();
+                alert("update image, this is different from other src");
+                return false;
+            });       
+        }        
+        
+        this.handle_src_right = function(response, paras){
+            
+            
+            if(response.article_isnew == 1){
+                this.$menu.attr("article_id", response.article_id);            
+            }
+            var $src_bar_contain = this.lib_bars[paras["src_type"]], 
+                $src_one,
+                src_type = paras["src_type"];
+            
+            if(paras["do"] == "new"){
+                // new src
+                $src_one = $src_bar_contain.find(".one").eq(0).clone();
+                $src_one.attr("src_alias", response.src_alias).find("#src_title").val(paras["title"]);
+                if(src_type == "image"){
+                    $src_one.find("#src_path").attr("src", paras["img_url"]);
+                    $src_contain.find(".i").append($src_one);
+                    $src_one.attr("display", "block").find(".src_insert").click();
+                    return;
+                }else{
+                    $src_one.find("#src_body").val(paras["body"]);               
+                }
+                if(src_type == "reference"){  $src_one.find("#src_source").val(paras["source"]); }
+                if(src_type == "code") {  $src_one.find("#src_code_type").val(paras["code_type"]); }
+                if(src_type == "math") {  $src_one.find("#src_math_mode").val(paras["math_mode"]); }
+                                
+                $src_contain.find("#crtm").append($src_one);
+                $src_one.attr("display", "block").find(".src_insert").click();
+                return;
+            }
+            if(paras["do"] == "edit"){
+                // edit src 
+                $src_one = $src_bar_contain.find(".one[src_alias='" + paras["src_alias"] + "']");
+                $src_one.find("#src_title").val(paras["title"]);
+                if(src_type == "image"){
+                    $src_one.find("#src_path").attr("src", paras["img_url"]);
+                    return;
+                }else{
+                    $src_one.find("#src_body").val(paras["body"]);               
+                }
+                if(src_type == "reference"){    $src_one.find("#src_source").val(paras["source"]); }
+                if(src_type == "code") { $src_one.find("#src_code_type").val(paras["code_type"]); }
+                if(src_type == "math") { $src_one.find("#src_math_mode").val(paras["math_mode"]); }
+                return;
+            }
+            
+            if(paras["do"] == "new" || "edit")  {
+                this.pop_page_close();
+                return ;
+            }
+                        
+            if(paras["do"] == "del" || paras["do"] == "remove"){
+                $src_one = $src_bar_contain.find(".one[src_alias='" + paras["src_alias"] + "']");
+                $src_one.remove();
+                return ;
+            }
+            
+        }
+
         this.pop_content_bind = function( $pop_content ){
             // bind the pop solve
             var _self_ = this;
+            //alert($pop_content.html());
+            //if()
             $pop_content.unbind().bind("click", function(event){
                 event.stopPropagation();
                 var target = event.target,
@@ -851,8 +954,6 @@
                 if(target.nodeName != "BUTTON")  return false;
                 attrs = _self_.div_to_dict($this);
                 _self_.ajax_src_submit( $target, attrs, $this);
-                
-                
                 
             })
             
@@ -880,8 +981,9 @@
                     new_flag = $target.hasClass("src_new"),
                     edit_flag = $target.hasClass("src_edit"),
                     del_flag = $target.hasClass("src_del"),
+                    insert_flag = $target.hasClass("src_insert"),
                     $pop_content;
-                if(new_flag || edit_flag){
+                if(new_flag || edit_flag || del_flag){
                     
                     if(new_flag){
                         // do new src
@@ -904,7 +1006,7 @@
                             "do": "edit"
                         };
                     }
-                    /*
+                    
                     if(del_flag){
                         var $src_one = $target.parent().parent();
                         src_type = $src_one.attr("src_type");
@@ -913,14 +1015,40 @@
                             "src_alias": $src_one.attr("src_alias"),
                             "do": "del"                        
                         }
-                    }*/
+                        //alert("will delete");
+                        attrs = _self_.get_src_attrs(attrs);
+                        _self_.ajax_src_submit(null, attrs, null );
+                        return ;
+                    }
 
+                    
+                    //alert($pop_content.html());
+                    if(attrs["src_type"] == "image" && attrs["do"] == "new"){
+                        // need get the form
+                        pop_html = editor_attrs.default_pop_page_html(attrs);
+                        var $pop_html = jQ(pop_html);
+                        $pop_content = _self_.pop_page($pop_html, pop_size[src_type]["width"], pop_size[src_type]["height"]);
+                        _self_.ajax_new_image_bind($pop_html);
+                        return;                    
+                    }
                     pop_html = editor_attrs.default_pop_page_html(attrs);
                     $pop_content = _self_.pop_page(pop_html, pop_size[src_type]["width"], pop_size[src_type]["height"]);
                     _self_.pop_content_bind($pop_content);
+                    return ;
                 };
                 
-                
+                //alert("insert" + insert_flag);
+                if(insert_flag){
+                    // insert to the textarea
+                    var $src_one = $target.parent().parent(),
+                        src_alias = $src_one.attr("src_alias"),
+                        src_type = $src_one.attr("src_type");
+                        
+                    editor_attrs.default_panel[src_type]["one_exec"].call(_self_, src_alias);
+                    return;
+                                        
+                }
+ 
             });
             
         }
