@@ -71,7 +71,7 @@ class ArticleLib(EmMongoDict):
             return None
         if reftype not in cls.ref_map:
             return None
-        return None
+        return reftype
 
     @classmethod
     def is_valid_reftype(cls, reftype):
@@ -91,7 +91,7 @@ class ArticleLib(EmMongoDict):
             return when_error
         libname = self.ref_map[reftype]
         inlib = self.sub_dict(libname)
-        obj = generator(inlib[refname], reftyp)
+        obj = generator(inlib[refname], reftype)
         if obj is None:
             return when_error
         return obj.view_body

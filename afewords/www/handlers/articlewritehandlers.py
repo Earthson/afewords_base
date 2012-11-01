@@ -273,7 +273,11 @@ class ArticleSrcHandler(BaseArticleUpdateHandler):
                 handler_json.write()
                 return #Unsupported Ref Type
             src_obj = scls()
-            self.article_obj.add_ref(handler_paras['src_type'], src_obj)
+            tmps = self.article_obj.add_ref(handler_paras['src_type'], src_obj)
+            if tmps is False:
+                handler_json.by_status(56)
+                handler_json.write()
+                return #Add Ref Failed
             handler_json.as_new_src(src_obj)
             src_obj.set_by_info(handler_paras.load_doc())
             if handler_paras['src_type'] == 'img':

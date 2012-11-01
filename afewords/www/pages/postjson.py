@@ -155,6 +155,7 @@ class ArticleSrcJson(StatusJson):
         53: u'非法图片',
         54: u'图片过宽或过高',
         55: u'请上传图片',
+        56: u'资源添加失败',
     }
 
     def as_new(self, article_obj):
