@@ -341,7 +341,7 @@
                                 '</div>'+
                                 '<div id="bar_body"><div class="l"></div></div>',
                                                             
-            "src_image_one":   '<div class="one" oid="1" type="img">'+
+            "src_image_one":   '<div class="one" src_alias="1" type="img" src_type="image">'+
                                 '<div class="ileft"><span class="ititle">图1</span></div>'+
                                 '<div class="icontrol">'+
                                 '<span class="idel src_del" title="删除此图片">删除</span>'+
@@ -349,10 +349,11 @@
                                 '<span class="iinsert src_insert">插入</span>'+
                                 '</div>'+
                                 '<div class="iright" title="title">'+
-                                '<table><tbody><tr><td><img src=""></td></tr></tbody></table>'+
+                                '<input type="hidden" id="src_title" />' +
+                                '<table><tbody><tr><td><img id="src_path" src="/static/img/afewords-user.jpg"></td></tr></tbody></table>'+
                                 '</div></div>',
                                     
-            "src_math_one":     '<div class="one" oid="1" type="math">'+
+            "src_math_one":     '<div class="one" src_alias="1" type="math" src_type="math">'+
                                 '<div><span class="cname">数式1</span></div>'+
                                 '<div class="control">'+
                                 '<span class="cdel src_del" title="删除">删除</span>' +
@@ -361,13 +362,13 @@
                                 '</div>'+
                                 '<div>'+
                                 '<span>'+
-                                '<input type="text" id="otitle" readonly="readonly" value="">'+
-                                '<input type="hidden" id="math_mode" value="display" />'+
+                                '<input type="text" id="src_title" readonly="readonly" value="">'+
+                                '<input type="hidden" id="src_math_mode" value="display" />'+
                                 '</span>'+
-                                '<textarea id="obody"></textarea>'+
+                                '<textarea id="src_body"></textarea>'+
                                 '</div></div>',
                                 
-            "src_reference_one":'<div class="one" oid="1" type="ref">'+
+            "src_reference_one":'<div class="one" src_alias="1" type="ref" src_type="reference">'+
                                 '<div><span class="cname">引用1</span></div>'+
                                 '<div class="control">'+
                                 '<span class="cdel src_del" title="删除">删除</span>'+
@@ -375,28 +376,28 @@
                                 '<span class="cinsert src_insert">插入</span>'+
                                 '</div>'+
                                 '<div>'+
-                                '<span><input type="text" id="otitle" readonly="readonly"></span>'+
-                                '<input type="hidden" id="osource" /><textarea id="obody"></textarea>'+
+                                '<span><input type="text" id="src_title" readonly="readonly"></span>'+
+                                '<input type="hidden" id="src_source" /><textarea id="src_body"></textarea>'+
                                 '</div></div>',
                                 
-            "src_code_one":     '<div class="one" oid="1" type="code">'+
+            "src_code_one":     '<div class="one" src_alias="1" type="code" src_type="code">'+
                                 '<div><span class="cname">代码1</span></div>'+
                                 '<div class="control">'+
                                 '<span class="cdel src_del" title="删除">删除</span>'+
                                 '<span class="cedit src_edit" title="修改">修改</span>'+
                                 '<span class="cinsert src_insert">插入</span></div>'+
-                                '<div><span><input type="text" id="otitle" readonly="readonly" /></span>'+
-                                '<input type="hidden" id="otype" /><textarea id="obody"></textarea>'+
+                                '<div><span><input type="text" id="src_title" readonly="readonly" /></span>'+
+                                '<input type="hidden" id="src_code_type" /><textarea id="src_body"></textarea>'+
                                 '</div></div>',
                                 
-            "src_table_one":    '<div class="one" oid="1" type="table">'+
+            "src_table_one":    '<div class="one" src_alias="1" type="table" src_type="table">'+
                                 '<div><span class="cname">表1</span></div>'+
                                 '<div class="control">'+
                                 '<span class="cdel src_del" title="删除">删除</span>'+
                                 '<span class="cedit src_edit" title="修改">修改</span>'+
                                 '<span class="cinsert src_insert">插入</span></div>'+
-                                '<div><span><input type="text" id="otitle" readonly="readonly" /></span>'+
-                                '<textarea id="obody"></textarea>'+
+                                '<div><span><input type="text" id="src_title" readonly="readonly" /></span>'+
+                                '<textarea id="src_body"></textarea>'+
                                 '</div></div>'
                                                  
         }
@@ -546,7 +547,7 @@
     
         this.textarea = null;  // must be a DOM
         this.menu = null;
-        this.lib_bars = {};
+        this.lib_bars = {}; // OBJECT, key/value(JQ object)
         
         this.get_position = function(){
             var s,e,range,stored_range;
@@ -776,7 +777,11 @@
             return $div.DivToDict();           
         }
         
-        this.ajax_src_submit = function(paras, $pop_content){
+        this.ajax_post_json = function( url, paras, before_fun, success_fun, error_fun){
+            jQ.postJSON(url, paras, before_fun, success_fun, error_fun);
+        }        
+        
+        this.ajax_src_submit = function($button, paras, $pop_content){
         
             if(typeof paras != "object")    return false;
             
@@ -810,6 +815,25 @@
                 }
             }
             
+            var article_src_url = "/article-src-control";
+            this.ajax_post_json(article_src_url, paras, 
+                function(){
+                    $process.html('<img src="/static/img/ajax.gif" />操作中...');
+                    $button.attr("disabled", "disabled").css("color", "#333");
+                }, function(response){
+                    if(response.status != 0){
+                        // occur some error
+                        $process.html(response.info).css("color", "red");
+                        $button.removeAttr("disabled").css("color", "black");                    
+                    }else{
+                        // submit right
+                        
+                    }
+                }, function(response){
+                    $process.html("出现错误！").css("color", "red");
+                    $button.removeAttr("disabled").css("color", "black");   
+                }
+            );
             // send the submit with ajax      
             
         }
@@ -826,7 +850,7 @@
                 
                 if(target.nodeName != "BUTTON")  return false;
                 attrs = _self_.div_to_dict($this);
-                _self_.ajax_src_submit(attrs, $this);
+                _self_.ajax_src_submit( $target, attrs, $this);
                 
                 
                 
@@ -836,7 +860,14 @@
         
         this.lib_bar_init = function(){
             var _self_ = this;
-            var pop_size = editor_attrs.default_src_attrs["size"];
+            var pop_size = editor_attrs.default_src_attrs["size"],
+                bar_body_htmls = this.editor.default_block_html;
+            
+            this.lib_bars["image"].find(".i").html(bar_body_htmls["src_image_one"]);
+            this.lib_bars["math"].find("#crtm").html(bar_body_htmls["src_math_one"]);
+            this.lib_bars["code"].find("#crtm").html(bar_body_htmls["src_code_one"]);
+            this.lib_bars["table"].find("#crtm").html(bar_body_htmls["src_table_one"]);
+            this.lib_bars["reference"].find("#crtm").html(bar_body_htmls["src_reference_one"]);
             
             // init math bar, code, reference, table, image bar
             jQ.fn.bind.call(this.lib_bars["all"], "click", function(event){
@@ -846,22 +877,52 @@
                     attrs = {},
                     pop_html = '',
                     src_type = "image",
+                    new_flag = $target.hasClass("src_new"),
+                    edit_flag = $target.hasClass("src_edit"),
+                    del_flag = $target.hasClass("src_del"),
                     $pop_content;
-                if($target.hasClass("src_new")){
-                    // do new src
-                    src_type = $target.attr("src_type");
-                    attrs = _self_.get_src_attrs({ "src_type": src_type, "do": "new"});
+                if(new_flag || edit_flag){
+                    
+                    if(new_flag){
+                        // do new src
+                        src_type = $target.attr("src_type");
+                        attrs = _self_.get_src_attrs({ "src_type": src_type, "do": "new"});
+                    }
+                    if(edit_flag)                    
+                    {
+                        // do src edit 
+                        var $src_one = $target.parent().parent();
+                        src_type = $src_one.attr("src_type");
+                        attrs = {
+                            "src_type" :  src_type || "image",
+                            "src_alias": $src_one.attr("src_alias"),
+                            "title": $src_one.find("#src_title").val() || '',
+                            "body": $src_one.find("#src_body").val() || '',
+                            "code_type" : $src_one.find("#src_code_type").val() || 'python',
+                            "math_mode": $src_one.find("#src_math_mode").val() || 'display',
+                            "source": $src_one.find("#src_source").val() || '',
+                            "do": "edit"
+                        };
+                    }
+                    /*
+                    if(del_flag){
+                        var $src_one = $target.parent().parent();
+                        src_type = $src_one.attr("src_type");
+                        attrs = {
+                            "src_type": src_type || "image",
+                            "src_alias": $src_one.attr("src_alias"),
+                            "do": "del"                        
+                        }
+                    }*/
+
                     pop_html = editor_attrs.default_pop_page_html(attrs);
                     $pop_content = _self_.pop_page(pop_html, pop_size[src_type]["width"], pop_size[src_type]["height"]);
                     _self_.pop_content_bind($pop_content);
-                }
+                };
                 
-                if($target.hasClass("src_edit")){
-                    // edit src  
-                                  
-                }
+                
             });
-             
+            
         }
 
         
@@ -887,22 +948,18 @@
             
         var menu_paras = {};    
         for(var _para_ in menu_attrs){
-            menu_paras[_para_] = paras[_para_] || menu_attrs[_para_];        
+            menu_paras[_para_] = paras[_para_] || menu_attrs[_para_];
+            //console.log(_para_ + '   ' + menu_paras[_para_])        
         }        
         
         var $editor_menu = jQ('<div id='+ editor_id +'></div>'),
             $editor_menu_base = jQ('<div id="write_menu_base"></div>'),
             $textarea = jQ(this[0]);
             
-        for(var iii in this[0]){
-            //console.log(iii);        
-        }
-        //alert(typeof this);
-        //alert($textarea);
         
             
         $textarea.attr("spellcheck", false);
-        $editor_menu.attr(menu_attrs);
+        $editor_menu.attr(menu_paras);
         
         var editor_menu_base_html = ['<ul>'],
             tmp_html = '',

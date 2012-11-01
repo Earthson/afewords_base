@@ -189,7 +189,7 @@ margin: 5px 5px;position: relative;}
 #bar_body #crtm .one div span.cdes{float: left;color: #333;font-size: 14px;}
 #bar_body #crtm .one div span.cinsert{float: left;color: #666; font-size: 12px;cursor: pointer;margin-left: 5px;text-indent: 0;padding: 0 2px;}
 #bar_body #crtm .one div span input[type="text"]{border:#ccc 1px solid;line-height: 25px;width: 160px;margin-left: 3px;}
-#bar_body #crtm .one div textarea#obody{display: none;}
+#bar_body #crtm .one div textarea#src_body{display: none;}
 
 
 #write_letter_bar .wsc_chose{width: 100%;height: auto;float: left;border-bottom: #ccc 1px solid;line-height: 25px;}

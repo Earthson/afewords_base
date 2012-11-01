@@ -194,7 +194,7 @@ $Write.window_close_alert();
 <script src="{{ static_url("js/me/editor.js") }}"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-    $("#write_textarea").create_editor();
+    $("#write_textarea").create_editor({"env_id": "{{ doc['user']['uid'] }}" });
 });
 </script>
 

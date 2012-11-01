@@ -121,8 +121,8 @@ jQuery.postJSON = function(url, args, callback_before,callback_success , callbac
             success:function(response) {
         		if(callback_success) callback_success(response);
     		}, 
-    		error: function(response) {
-    			callback_error(response);
+    		error: function(response, textStatus) {
+    			callback_error(textStatus);
 		    }
 	});
 };	

@@ -720,9 +720,9 @@ jQuery.fn.extend({
            }else{
                 _this._handler_src_submit_result({ "response": response,  "pop_page_obj": paras_obj, "mes": mes});       
            }
-        }, function(response){
+        }, function(textStatus){
             $button.removeAttr("disabled").css("color", "black");
-            $process.html("操作出现异常！").css("color", "red"); 
+            $process.html("操作错误:" + textStatus).css("color", "red"); 
         });
     },
     
