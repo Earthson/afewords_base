@@ -32,6 +32,9 @@ class Equation(DataBox):
         'equation' : True,
     }
 
+    @class_property
+    def cls_alias(cls):
+        return u'math'
 
     def set_by_info(self, infodoc):
         ans = dict()

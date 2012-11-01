@@ -34,6 +34,10 @@ class Langcode(DataBox):
         'code' : True,
     }
 
+    @class_property
+    def cls_alias(cls):
+        return u'code'
+
     def set_by_info(self, infodoc):
         ans = dict()
         ans['name'] = infodoc['title']

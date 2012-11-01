@@ -43,6 +43,10 @@ class Reference(DataBox):
 
     translator = reference_translator
 
+    @class_property
+    def cls_alias(cls):
+        return u'ref'
+
     def set_by_info(self, infodoc):
         ans = dict()
         ans['name'] = infodoc['title']

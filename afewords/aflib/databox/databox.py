@@ -50,6 +50,12 @@ class class_property(property):
 
 
 def with_mapper(cls_obj):
+    '''
+    1. with cls_obj.mapper to generate db_propertys,
+    2. add cls_obj to generator.cls_mapper for cls generate
+    '''
+    from generator import cls_mapper_reg
+    cls_mapper_reg(cls_obj) #for cls_mapper
     tmp = [(ek, db_property.get_mapper_attr(ek, ev)) 
                 for ek, ev in cls_obj.mapper.items()]
     for each in tmp:
@@ -87,6 +93,14 @@ class DataBox(object):
             return self.uid != other.uid
         except:
             return True
+
+    @class_property
+    def cls_name(cls):
+        return cls.__name__.lower()
+
+    @class_property
+    def cls_alias(cls):
+        return cls.__name__.lower()
 
     @classmethod
     def new_doc(cls):

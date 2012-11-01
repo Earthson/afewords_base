@@ -35,6 +35,10 @@ class Tableform(DataBox):
 
     normal_translator = trans.normal_translator
 
+    @class_property
+    def cls_alias(cls):
+        return u'table'
+
     def set_by_info(self, infodoc):
         ans = dict()
         ans['name'] = infodoc['title']

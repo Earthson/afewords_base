@@ -22,46 +22,20 @@ def index_generator(doctype):
         return None
     return index_gen
 
+cls_mapper = dict()
+
+def cls_mapper_reg(cls_obj):
+    cls_mapper[cls_obj.cls_name] = cls_obj
+    return cls_obj
+
 def cls_gen(objtype):
-    from article.blog import Blog
-    from article.comment import Comment
-    from article.about import About
-    #from article.status import Status
-    #from article.feedback import Feedback
-    #from article.bulletin import Bulletin
-    #from article.topic import Topic
-
-    from article.picture import Picture
-    from article.langcode import Langcode
-    from article.equation import Equation
-    from article.tableform import Tableform
-    from article.reference import Reference
-
-    from user import User
-    #from group.basicgroup import BasicGroup
-    from article.catalog import Catalog
-
-    types_all = {
-        Blog.__name__:Blog,
-        Comment.__name__:Comment,
-        About.__name__:About,
-    #    Status.__name__:Status,
-    #    Feedback.__name__:Feedback,
-    #    Bulletin.__name__:Bulletin,
-    #    Topic.__name__:Topic,
-        Picture.__name__:Picture,
-        Langcode.__name__:Langcode,
-        Equation.__name__:Equation,
-        Tableform.__name__:Tableform,
-        Reference.__name__:Reference,
-        User.__name__:User,
-    #    BasicGroup.__name__:BasicGroup,
-        Catalog.__name__:Catalog,
-    }
-
-    if objtype not in types_all.keys():
+    try:
+        objtype = objtype.lower()
+    except AttributeError:
         return None
-    return types_all[objtype]
+    if objtype not in cls_mapper.keys():
+        return None
+    return cls_mapper_all[objtype]
 
 def generator(objid, objtype):
     return id_generator(cls_gen(objtype))(objid)
