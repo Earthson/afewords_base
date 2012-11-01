@@ -1,7 +1,6 @@
 # coding=utf-8
 from basehandler import *
 from pages.postjson import GetCommentJson
-from afutils.type_utils import type_trans
 
 class CommentGetPara(BaseHandlerPara):
     paradoc = {
@@ -23,7 +22,7 @@ class CommentGetHandler(BaseHandler):
         handler_json = GetCommentJson(self)
         handler_paras = CommentGetPara(self)
         article_obj = generator(handler_paras['article_id'],
-                            type_trans(handler_paras['article_type']))
+                            handler_paras['article_type'])
         if article_obj is None:
             handler_json.by_status(1)
             handler_json.write()

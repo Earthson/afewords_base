@@ -3,7 +3,6 @@ from basehandler import *
 from pages.postjson import ArticleRemoveJson
 
 from authority import *
-from afutils.type_utils import type_trans
 
 from generator import generator, cls_gen
 from article.article import Article
@@ -27,7 +26,7 @@ class ArticleRemoveHandler(BaseHandler):
         handler_json = ArticleRemoveJson(self)
         usr = self.current_user
         article_obj = generator(handler_paras['id'],
-                        type_trans(handler_paras['type']))
+                        handler_paras['type'])
         if article_obj is None:
             handler_json.by_status(2)
             handler_json.write()

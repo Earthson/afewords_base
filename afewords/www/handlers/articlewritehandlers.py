@@ -3,7 +3,6 @@ from basehandler import *
 from pages.pages import WritePage
 
 from authority import *
-from afutils.type_utils import type_trans
 
 from generator import generator, cls_gen
 from article.article import Article
@@ -31,8 +30,8 @@ class ArticleWriteHandler(BaseHandler):
         page = WritePage(self)
         usr = self.current_user
         page['article_type'] = pageparas['type']
-        pageparas['env_type'] = type_trans(pageparas['env_type'])
-        pageparas['type'] = type_trans(pageparas['type'])
+        pageparas['env_type'] = pageparas['env_type']
+        pageparas['type'] = pageparas['type']
         if not pageparas['type']:
             self.send_error(404, error_info=u'Invalid Article Type') #todo Earthson
             return
@@ -77,15 +76,15 @@ def article_env_init(handler, handler_paras, handler_json):
     if not env:
         return 14#Invalid Env Arguments
     father = generator(handler_paras['father_id'], 
-                type_trans(handler_paras['father_type']))
+                handler_paras['father_type'])
     ref_comment = None
     if handler_paras['article_type'] == 'comment':
         if father is None:
             return 18#Invalid father
         ref_comment = generator(handler_paras['ref_comment'], 
-                            type_trans(handler_paras['article_type']))
+                            handler_paras['article_type'])
     if not Article.is_valid_id(handler_paras['article_id']):
-        acls = cls_gen(type_trans(handler_paras['article_type']))
+        acls = cls_gen(handler_paras['article_type'])
         if not acls:
             return 11#Invalid Article Type
         if not test_auth(env.authority_verify(usr), A_POST):
@@ -99,7 +98,7 @@ def article_env_init(handler, handler_paras, handler_json):
         #new Article Created
     else:
         handler.article_obj = generator(handler_paras['article_id'],
-                    type_trans(handler_paras['article_type']))
+                    handler_paras['article_type'])
         if handler.article_obj is None:
             return 4#Article Not Exist
         if handler.article_obj.env_obj_info != env.obj_info:
@@ -274,7 +273,7 @@ class ArticleSrcHandler(BaseArticleUpdateHandler):
             handler_json.write()
             return #Unsupported Ref Type
         if handler_paras['do'] == 'new':
-            scls = cls_gen(type_trans(handler_paras['src_type']))
+            scls = cls_gen(handler_paras['src_type'])
             if scls is None:
                 handler_json.by_status(5)
                 handler_json.write()
