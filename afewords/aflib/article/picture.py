@@ -44,9 +44,9 @@ class Picture(DataBox):
     pic_path = 'static/picture/normal/'
     thumb_path = 'static/picture/small/'
 
-    @class_prperty
+    @class_property
     def cls_alias(cls):
-        return u'code'
+        return u'img'
 
     def set_by_info(self, infodoc):
         ans = dict()

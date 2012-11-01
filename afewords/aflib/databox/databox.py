@@ -45,8 +45,11 @@ class db_property(object):
 
 
 class class_property(property):
+
     def __get__(self, cls, owner):
-        return self.fget.__get__(None, owner)()
+        def newfunc(owner, *args, **kwargs):
+            return self.fget(owner, *args, **kwargs)
+        return newfunc(owner)
 
 
 def with_mapper(cls_obj):
