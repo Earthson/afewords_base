@@ -477,7 +477,7 @@ class Article(DataBox):
     def basic_info():
         def getter(self):
             ans = dict()
-            ans['article_type'] = self.__class__.__name__
+            ans['article_type'] = self.cls_name
             ans['aid'] = self.uid
             ans['title'] = self.title
             ans['summary'] = self.abstract
