@@ -297,7 +297,7 @@
             "article_id": '-1',
             "article_type": 'blog',
             "env_id": '-1',
-            "env_type": 'User',
+            "env_type": 'user',
             "father_id": '-1',
             "father_type": 'blog',
             "iscomment": false        
@@ -352,8 +352,8 @@
                                 '</div>'+
                                 '<div id="bar_body"><div class="l"></div></div>',
                                                             
-            "src_image_one":   '<div class="one" src_alias="1" type="img" src_type="image">'+
-                                '<div class="ileft"><span class="ititle" id="src_view_title">图1</span></div>'+
+            "src_image_one":   '<div class="one" src_alias="xx" src_type="image" style="display:none">'+
+                                '<div class="ileft"><span class="ititle" id="src_view_title">图x</span></div>'+
                                 '<div class="icontrol">'+
                                 '<span class="idel src_del" title="删除此图片">删除</span>'+
                                 '<span class="imodify src_edit">修改</span>'+
@@ -364,8 +364,8 @@
                                 '<table><tbody><tr><td><img id="src_path" src="/static/img/afewords-user.jpg"></td></tr></tbody></table>'+
                                 '</div></div>',
                                     
-            "src_math_one":     '<div class="one" src_alias="1" type="math" src_type="math">'+
-                                '<div><span class="cname" id="src_view_title">数式1</span></div>'+
+            "src_math_one":     '<div class="one" src_alias="xx" src_type="math" style="display:none">'+
+                                '<div><span class="cname" id="src_view_title">数式x</span></div>'+
                                 '<div class="control">'+
                                 '<span class="cdel src_del" title="删除">删除</span>' +
                                 '<span class="cedit src_edit" title="修改">修改</span>' + 
@@ -379,8 +379,8 @@
                                 '<textarea id="src_body"></textarea>'+
                                 '</div></div>',
                                 
-            "src_reference_one":'<div class="one" src_alias="1" type="ref" src_type="reference">'+
-                                '<div><span class="cname" id="src_view_title">引用1</span></div>'+
+            "src_reference_one":'<div class="one" src_alias="xx" src_type="reference" style="display:none">'+
+                                '<div><span class="cname" id="src_view_title">引用x</span></div>'+
                                 '<div class="control">'+
                                 '<span class="cdel src_del" title="删除">删除</span>'+
                                 '<span class="cedit src_edit" title="修改">修改</span>'+
@@ -391,8 +391,8 @@
                                 '<input type="hidden" id="src_source" /><textarea id="src_body"></textarea>'+
                                 '</div></div>',
                                 
-            "src_code_one":     '<div class="one" src_alias="1" type="code" src_type="code">'+
-                                '<div><span class="cname" id="src_view_title">代码1</span></div>'+
+            "src_code_one":     '<div class="one" src_alias="xx" src_type="code" style="display:none">'+
+                                '<div><span class="cname" id="src_view_title">代码x</span></div>'+
                                 '<div class="control">'+
                                 '<span class="cdel src_del" title="删除">删除</span>'+
                                 '<span class="cedit src_edit" title="修改">修改</span>'+
@@ -401,8 +401,8 @@
                                 '<input type="hidden" id="src_code_type" /><textarea id="src_body"></textarea>'+
                                 '</div></div>',
                                 
-            "src_table_one":    '<div class="one" src_alias="1" type="table" src_type="table">'+
-                                '<div><span class="cname" id="src_view_title">表1</span></div>'+
+            "src_table_one":    '<div class="one" src_alias="xx" src_type="table" style="display:none">'+
+                                '<div><span class="cname" id="src_view_title">表x</span></div>'+
                                 '<div class="control">'+
                                 '<span class="cdel src_del" title="删除">删除</span>'+
                                 '<span class="cedit src_edit" title="修改">修改</span>'+
@@ -926,8 +926,12 @@
                     
                 }, function(response){
                 
-                    if(response.status != 0){
+                    if(response.article_isnew == 1){
+                            _self_.$menu.attr("article_id", response.article_id);      
+                    }
                     
+                    if(response.status != 0){
+                        
                         // occur some error
                         if(paras["do"] != "del"){
                             $process.html(response.info).css("color", "red");
@@ -968,9 +972,9 @@
         this.handle_src_right = function(response, paras){
             
             
-            if(response.article_isnew == 1){
-                this.$menu.attr("article_id", response.article_id);            
-            }
+            //if(response.article_isnew == 1){
+            //    this.$menu.attr("article_id", response.article_id);            
+            //}
             var $src_bar_contain = this.lib_bars[paras["src_type"]], 
                 $src_one,
                 src_type = paras["src_type"],

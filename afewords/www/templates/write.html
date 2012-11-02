@@ -12,7 +12,7 @@
 {% set article = doc['article'] %}
 {% set isedit = doc['isedit'] %}
 {% set article_type = doc['article_type'] %}
-{% set owner = doc['owner'] %}
+{% set owner = doc['env'] %}
 
 <!-- left body start -->
 <div id="left" style="border-right-width:0;">
@@ -136,7 +136,7 @@
 {% set article = doc['article'] %}
 {% set isedit = doc['isedit'] %}
 {% set article_type = doc['article_type'] %}
-{% set owner = doc['owner'] %}
+{% set env = doc['env'] %}
 <script type="text/javascript" >
 $().ready(function(){ 
     $('body').css({'background-image': 'url(/static/img/wrap.png)',
@@ -194,7 +194,35 @@ $Write.window_close_alert();
 <script src="{{ static_url("js/me/editor.js") }}"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-    $("#write_textarea").create_editor({"env_id": "{{ doc['user']['uid'] }}" });
+{% if not isedit %}
+    // not edit 
+    var article_json = {
+        "article_id": '-1',
+        "article_type": "{{ article_type }}" || 'blog',
+        "env_id": "{{ env['env_id'] }}",
+        "env_type": "{{ env['env_type'] }}"
+    };
+    
+{% else %}
+    // edit 
+    var article_json = {
+        "article_id": "{{ article['aid'] }}" || '-1',
+        "article_type": "{{ article['article_type'] }}" || 'blog',
+        "env_id": "{{ env['env_id'] }}",
+        "env_type": "{{ env['env_type'] }}",
+        "body": "{{ article['body'] }}",
+        "src": {
+                    "math": {{ json_encode(article['equation_list']) }},
+                    "image": {{ json_encode(article['picture_list']) }},
+                    "table": {{ json_encode(article['tableform_list']) }},
+                    "reference": {{ json_encode(article['reference_list']) }},
+                    "code": {{ json_encode(article['langcode_list']) }}    
+                }
+    };
+    
+{% end %}
+    $("#right").css("border-left-width",'0');
+    $("#write_textarea").create_editor(article_json);
 });
 </script>
 
