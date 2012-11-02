@@ -1847,12 +1847,12 @@ $Write.post_write_all = function(obj){
             }else{
                 if(response.isnew != 0) $menu.attr('article_id', response.article_id);
                 var preview_url = '';
-                switch(mes['article_type']){
+                switch(mes['article_type'].toLowerCase()){
                     case 'blog':
                         preview_url = '/blog/'+ response.article_id; 
                         break;
                     case 'about':
-                        preview_url = '/bloger';
+                        preview_url = '/blogger';
                         break;
                     case 'group-info':
                         preview_url = '/group/'+mes['env_id']+'/info'

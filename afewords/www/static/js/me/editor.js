@@ -435,7 +435,7 @@
                         "table": function(table_obj ){
                                         table_obj["src_alias"] = table_obj["src_alias"] || table_obj["alias"] || '-1';
                                         table_obj["title"] = table_obj["title"] || table_obj["name"] || '';
-                                        alert(table_obj["src_alias"]);
+                                        //alert(table_obj["src_alias"]);
                                         this.attr("src_alias", table_obj.src_alias);
                                         this.find("#src_view_title").html("表" + table_obj.src_alias);
                                         this.find("#src_title").val(table_obj.title);
@@ -765,21 +765,32 @@
                 $clone_demo,
                 $clone_demo_list = [],
                 tmp_obj,
-                $lib_body;
+                $lib_body,
+                current_fun,
+                $clone_demo_contain;
                 
-            for(var src_type in paras){
+            for(src_type in paras){
                 //src_type = srcs;
                 src_list = paras[src_type] || [];
-                $lib_body = this.lib_bars[src_type].find(".bar_body").children();
+                $lib_body = this.lib_bars[src_type].find("#bar_body").children();
+                //alert($lib_body.children().html())
                 $src_demo = $lib_body.children().eq(0);
-                $clone_demo_list = [];
+                //alert($src_demo.html());
+                //$clone_demo_list = [];
+                //$clone_demo_contain = jQ(document.createDocumentFragment());
+                current_fun = init_funs[src_type];
                 for(var i = 0; i < src_list.length; i++){
                     tmp_obj = src_list[i];
                     $clone_demo = $src_demo.clone();
-                    init_funs[src_type].call($clone_demo, tmp_obj)
-                    $clone_demo_list.push( $clone_demo.css("display", "block") );                
+                    current_fun.call($clone_demo, tmp_obj);
+                    //alert("in");
+                    //alert($clone_demo.html());
+                    $clone_demo.css("display", "block");
+                    //$clone_demo_contain.append($clone_demo);
+                    //$clone_demo_list.push( $clone_demo );     
+                    $lib_body.append($clone_demo);           
                 }
-                $lib_body.append( $clone_demo_list );
+                //$lib_body.append( $clone_demo_contain );
             }            
                  
         }
@@ -878,10 +889,11 @@
         
         this.ajax_src_submit = function($button, paras, $pop_content){
             var _self_ = this;
-        
+            var del_flag = paras["do"] == "del" || paras["do"] == "remove";
+            
             if(typeof paras != "object")    return false;
             
-            if( paras["do"] != "del"){
+            if( !del_flag ){
             
                 var $process = $pop_content.find("#src_process"),
                     src_type = paras["src_type"],
@@ -919,7 +931,7 @@
             this.ajax_post_json(article_src_url, paras, 
                 function(){
                 
-                    if(paras["do"] != "del"){
+                    if( !del_flag ){
                         $process.html('<img src="/static/img/ajax.gif" />');
                         $button.attr("disabled", "disabled").css("color", "#333");
                     }
@@ -933,7 +945,7 @@
                     if(response.status != 0){
                         
                         // occur some error
-                        if(paras["do"] != "del"){
+                        if( !del_flag ){
                             $process.html(response.info).css("color", "red");
                             $button.removeAttr("disabled").css("color", "black");   
                         }else{
@@ -945,7 +957,7 @@
                         _self_.handle_src_right(response, paras);
                     }
                 }, function(response){
-                    if(paras["do"] != "del"){
+                    if( !del_flag ){
                         $process.html("出现错误！").css("color", "red");
                         $button.removeAttr("disabled").css("color", "black");  
                     }
@@ -1003,7 +1015,7 @@
                 if(src_type == "math") {  $src_one.find("#src_math_mode").val(paras["math_mode"]); }
                 */
                      
-                $src_bar_contain.find("#crtm").append($src_one.attr("display", "block"));
+                $src_bar_contain.find("#crtm").append($src_one.css("display", "block"));
                 $src_one.attr("display", "block").find(".src_insert").click();
                 this.pop_page_close();
                 return;
@@ -1113,7 +1125,7 @@
                         attrs = {
                             "src_type": src_type || "image",
                             "src_alias": $src_one.attr("src_alias"),
-                            "do": "del"                        
+                            "do": "remove"                        
                         }
                         //alert("will delete");
                         attrs = _self_.get_src_attrs(attrs);
