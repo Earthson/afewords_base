@@ -324,6 +324,7 @@
                             "code": "代码",
                             "table": "表格"            
                         }
+        
         }
         
         this.default_block_html = {
@@ -408,7 +409,59 @@
                                 '<span class="cinsert src_insert">插入</span></div>'+
                                 '<div><span><input type="text" id="src_title" readonly="readonly" /></span>'+
                                 '<textarea id="src_body"></textarea>'+
-                                '</div></div>'
+                                '</div></div>',
+            
+            "init": {
+                        "math": function( math_obj ){  // this must be jq object
+                                        math_obj["src_alias"] = math_obj["src_alias"] || math_obj["alias"] || '1';
+                                        math_obj["math_mode"] = math_obj["math_mode"] || math_obj["mode"] || 'display';
+                                        math_obj["title"] = math_obj["title"] || math_obj["name"] || '';
+                                        this.find("#src_view_title").html("数式" + math_obj.src_alias);
+                                        this.attr("src_alias", math_obj.src_alias);
+                                        this.find("#src_math_mode").val(math_obj.math_mode);
+                                        this.find("#src_body").val(math_obj.body);
+                                        this.find("#src_title").val(math_obj.title);                        
+                                },
+                        "image": function( image_obj ){
+                                        image_obj["src_alias"] = image_obj["src_alias"] || image_obj["alias"] || '-1';
+                                        image_obj["title"] = image_obj["title"] || image_obj["name"] || '';
+                                        image_obj["img_url"] = image_obj["img_url"] || image_obj["tbumb_name"] || '';
+                                        this.attr("src_alias", image_obj.src_alias);
+                                        this.find("#src_view_title").html("图" + image_obj.src_alias);
+                                        this.attr("src_alias", image_obj.src_alias);
+                                        this.find("#src_path").attr("src", image_obj.img_url);
+                                        this.find("#src_title").val(image_obj.title);                        
+                                },
+                        "table": function(table_obj ){
+                                        table_obj["src_alias"] = table_obj["src_alias"] || table_obj["alias"] || '-1';
+                                        table_obj["title"] = table_obj["title"] || table_obj["name"] || '';
+                                        alert(table_obj["src_alias"]);
+                                        this.attr("src_alias", table_obj.src_alias);
+                                        this.find("#src_view_title").html("表" + table_obj.src_alias);
+                                        this.find("#src_title").val(table_obj.title);
+                                        this.find("#src_body").val(table_obj.body);                        
+                                },
+                        "code": function( code_obj ){
+                                        code_obj["src_alias"] = code_obj["src_alias"] || code_obj["alias"] || '-1';
+                                        code_obj["title"] = code_obj["title"] || code_obj["name"] || '';
+                                        code_obj["code_type"] = code_obj["code_type"] || code_obj["lang"] || 'python';
+                                        this.attr("src_alias", code_obj.src_alias);
+                                        this.find("#src_view_title").html("代码" + code_obj.src_alias);
+                                        this.find("#src_title").val(code_obj.title);
+                                        this.find("#src_body").val(code_obj.body);
+                                        this.find("#src_code_type").val(code_obj.code_type);
+                                },
+                        "reference": function( ref_obj ){
+                                        ref_obj["src_alias"] = ref_obj["src_alias"] || ref_obj["alias"] || '-1';
+                                        ref_obj["title"] = ref_obj["title"] || ref_obj["name"] || '';
+                                        ref_obj["source"] = ref_obj["source"] || ref_obj["url"] || '';
+                                        this.attr("src_alias", ref_obj.src_alias);
+                                        this.find("#src_view_title").html("引用" + ref_obj.src_alias);
+                                        this.find("#src_title").val(ref_obj.title);
+                                        this.find("#src_body").val(ref_obj.body);
+                                        this.find("#src_source").val(ref_obj.source);                        
+                                }
+                    }
                                                  
         }
         
@@ -703,29 +756,32 @@
             }
                   
         }        
-        this.lib_bar_content_init = function(para){
+        this.lib_bar_content_init = function(paras){
             // init picture
-            var $image_body = this.lib_bars["image"].find(".i"),
-                $image_demo = $image_body.find(".one").eq(0),
-                image_list = para["image"] || [],
+            var init_funs = editor_attrs.default_block_html["init"],
+                src_type = "image",
+                src_list = [],
+                $src_demo,
                 $clone_demo,
                 $clone_demo_list = [],
-                tmp_object;
-            
-            for(var i = 0; i < image_list.length; i++){
-                tmp_object = image_list[i];
-                $clone_demo = $image_demo.clone();
-                $clone_demo.find("#src_view_title").html();
-                $clone_demo.find("#src_title").val(tmp_object["title"]);
-                $clone_demo.find("#src_path").attr("src", tmp_object["url"]);
-                $clone_demo_list.push($clone_demo);
-            }
-            $image_body.append($clone_demo_list);
-            
-            $clone_demo_list = [];
-            //+++++++++++++++++++++++++++++++++++++++++++++++++
-            
-            this.lib_bars["image"].find(".one")        
+                tmp_obj,
+                $lib_body;
+                
+            for(var src_type in paras){
+                //src_type = srcs;
+                src_list = paras[src_type] || [];
+                $lib_body = this.lib_bars[src_type].find(".bar_body").children();
+                $src_demo = $lib_body.children().eq(0);
+                $clone_demo_list = [];
+                for(var i = 0; i < src_list.length; i++){
+                    tmp_obj = src_list[i];
+                    $clone_demo = $src_demo.clone();
+                    init_funs[src_type].call($clone_demo, tmp_obj)
+                    $clone_demo_list.push( $clone_demo.css("display", "block") );                
+                }
+                $lib_body.append( $clone_demo_list );
+            }            
+                 
         }
         
         this.init = function(args){
@@ -741,7 +797,6 @@
             this.lib_bar_init();
             var src_dict = args["src"] || {};
             this.lib_bar_content_init(src_dict);
-            
             
         }
         
@@ -903,6 +958,8 @@
             $form.unbind().bind("click", function(event){
                 event.stopPropagation();
                 event.preventDefault();
+                var target = event.target;
+                if(target.nodeName != "BUTTON") return false;
                 alert("update image, this is different from other src");
                 return false;
             });       
@@ -916,12 +973,17 @@
             }
             var $src_bar_contain = this.lib_bars[paras["src_type"]], 
                 $src_one,
-                src_type = paras["src_type"];
-            
+                src_type = paras["src_type"],
+                init_funs = editor_attrs.default_block_html["init"];
+            paras["src_alias"] = response.src_alias;
             if(paras["do"] == "new"){
                 // new src
                 $src_one = $src_bar_contain.find(".one").eq(0).clone();
-                $src_one.attr("src_alias", response.src_alias).find("#src_title").val(paras["title"]);
+                
+                init_funs[src_type].call($src_one, paras);       
+                         
+                /*
+                //$src_one.attr("src_alias", response.src_alias).find("#src_title").val(paras["title"]);
                 $src_one.find("#src_view_title").html(editor_attrs.default_src_attrs["tip"][src_type] + response.src_alias  );
                 if(src_type == "image"){
                     $src_one.find("#src_path").attr("src", paras["img_url"]);
@@ -935,8 +997,9 @@
                 if(src_type == "reference"){  $src_one.find("#src_source").val(paras["source"]); }
                 if(src_type == "code") {  $src_one.find("#src_code_type").val(paras["code_type"]); }
                 if(src_type == "math") {  $src_one.find("#src_math_mode").val(paras["math_mode"]); }
-                                
-                $src_bar_contain.find("#crtm").append($src_one);
+                */
+                     
+                $src_bar_contain.find("#crtm").append($src_one.attr("display", "block"));
                 $src_one.attr("display", "block").find(".src_insert").click();
                 this.pop_page_close();
                 return;
@@ -944,6 +1007,8 @@
             if(paras["do"] == "edit"){
                 // edit src 
                 $src_one = $src_bar_contain.find(".one[src_alias='" + paras["src_alias"] + "']");
+                init_funs[src_type].call($src_one, paras);
+                /*
                 $src_one.find("#src_title").val(paras["title"]);
                 if(src_type == "image"){
                     $src_one.find("#src_path").attr("src", paras["img_url"]);
@@ -955,6 +1020,7 @@
                 if(src_type == "reference"){    $src_one.find("#src_source").val(paras["source"]); }
                 if(src_type == "code") { $src_one.find("#src_code_type").val(paras["code_type"]); }
                 if(src_type == "math") { $src_one.find("#src_math_mode").val(paras["math_mode"]); }
+                */
                 this.pop_page_close();
                 return;
             }
@@ -1034,6 +1100,7 @@
                             "source": $src_one.find("#src_source").val() || '',
                             "do": "edit"
                         };
+                        attrs = _self_.get_src_attrs(attrs);
                     }
                     
                     if(del_flag){
