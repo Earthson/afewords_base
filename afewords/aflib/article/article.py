@@ -492,7 +492,7 @@ class Article(DataBox):
             ans['keywords'] = self.keywords
             ans['tag_list'] = self.tag
             ans['privilege'] = self.privilege
-            ans['owner'] = self.env_info
+            ans['env'] = self.env_info
             ans['js_list'] = self.js_list
             ans['permission'] = 'r'
             return ans

@@ -101,7 +101,7 @@ class WritePage(BasePage):
     doc = {
         'article': {},    # see the [[ article ]] in data_format
         'isedit': False,        # bollean
-        'owner': {},    # dict, [[ owner ]]
+        'env': {},    # dict, [[ env ]]
         'do_title': '',		# unicode
         'article_type': 'blog',	# unicode
     }
@@ -110,7 +110,7 @@ class WritePage(BasePage):
         from toolpages import WriteTitlePage
         tmp = WriteTitlePage()
         tmp['isedit'] = self['isedit']
-        tmp['owner'] = self['owner']
+        tmp['env'] = self['env']
         tmp['article_type'] = self['article_type']
         self['do_title'] = tmp.render_string()
 

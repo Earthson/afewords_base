@@ -52,7 +52,7 @@ class WriteTitlePage(BaseToolPage):
     }
     doc = {
         'isedit': False,
-        'owner': {},    # dict
+        'env': {},    # dict
         'article_type': 'blog', # unicode
         'article_type_dict': article_type_dict,
     }

@@ -21,7 +21,7 @@ author:{}
 }
 --------------------------------
 
-owner: {}
+env: {}
 --------------------------------
 {
     'type': 'User',    # unicode, User or Group
@@ -45,7 +45,7 @@ article:{}  /****** for blog, comment, topic, doc, .... ***********/
     'keywords': list,   # [key1, key2]    
     'privilege': 'public' # view privilege
 	'tag_list': list,	# see [[ tag_list ]]
-    'owner': {},    # see [[ owner ]]    
+    'env': {},    # see [[ env ]]    
 
     @for comment
     'ref_comment_list':[],  # list [index1, index2, ...]

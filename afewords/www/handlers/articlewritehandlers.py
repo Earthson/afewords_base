@@ -36,7 +36,7 @@ class ArticleWriteHandler(BaseHandler):
             self.send_error(404, error_info=u'Invalid Article Type') #todo Earthson
             return
         if not pageparas['env_id'] and not pageparas['env_type']:
-            page['owner'] = usr.as_env
+            page['env'] = usr.as_env
             env_info = (usr._id, usr.__class__.__name__)
         else:
             env = generator(pageparas['env_id'], pageparas['env_type'])
@@ -44,7 +44,7 @@ class ArticleWriteHandler(BaseHandler):
                 self.send_error(404, error_info=u'Invalid Envirenment')
                 return
             env_info = (env.__class__.__name__, env._id)
-            page['owner'] = env.as_env
+            page['env'] = env.as_env
 
         if not pageparas['id']:
             page.page_init()
