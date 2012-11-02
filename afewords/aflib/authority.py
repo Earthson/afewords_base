@@ -1,5 +1,5 @@
 '''
-A_WRITE | A_POST | A_DEL | A_MANAGE | A_READ
+A_WRITE | A_POST | A_DEL | A_READ
 
 obj.authority_verify(usr, env, **kwargs) is a method to get permission level to spec obj
 

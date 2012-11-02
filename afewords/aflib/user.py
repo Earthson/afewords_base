@@ -532,8 +532,9 @@ class User(DataBox):
     def as_env():
         def getter(self):
             ans = dict()
-            ans['type'] = self.__class__.__name__
-            ans['entity'] = self.basic_info
+            ans['env_type'] = self.cls_name
+            ans['env_id'] = self.uid
+            ans['entity'] = self.as_env_info
             return ans
         return getter
 
