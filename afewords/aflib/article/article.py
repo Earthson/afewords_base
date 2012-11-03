@@ -392,14 +392,14 @@ class Article(DataBox):
             return generator(self.data['env_id'], self.data['env_type'])
         def setter(self, val):
             self.data['env_id'] = val._id
-            self.data['env_type'] = val.__class__.__name__
+            self.data['env_type'] = val.cls_name
         return getter, setter
 
     @db_property
     def env_obj_info():
         '''return (env_id, env_type)'''
         def getter(self):
-            return (self.data['env_id'], self.data['env_type'])
+            return (self.data['env_id'], self.data['env_type'].lower())
         return getter
 
     @db_property

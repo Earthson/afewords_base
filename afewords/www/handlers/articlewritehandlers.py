@@ -101,6 +101,7 @@ def article_env_init(handler, handler_paras, handler_json):
                     handler_paras['article_type'])
         if handler.article_obj is None:
             return 4#Article Not Exist
+        print handler.article_obj.env_obj_info
         if handler.article_obj.env_obj_info != env.obj_info:
             return 15#Invalid Env
         if not test_auth(handler.article_obj.authority_verify(usr, env),
