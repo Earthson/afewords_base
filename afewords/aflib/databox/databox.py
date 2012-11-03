@@ -198,7 +198,7 @@ class DataBox(object):
     @db_property
     def obj_info():
         def getter(self):
-            return (self._id, self.__class__.__name__)
+            return (self._id, self.cls_name)
         return getter
 
     @db_property
