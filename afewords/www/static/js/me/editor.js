@@ -663,7 +663,7 @@
         this.set_character = function (args){
             if(typeof args != "object" || !("prefix" in args) ) return false;
             var prefix = args["prefix"],
-                suffix = args["suffix"] || prefix,
+                suffix = "suffix" in args ? args["suffix"] : prefix,
                 prefix_l = args["prefix_l"] || false,
                 prefix_r = args["prefix_r"] || false,
                 suffix_l = args["suffix_l"] || false,
@@ -1180,7 +1180,8 @@
             editor_panel = editor_attrs.default_panel,
             menu_attrs = editor_attrs.default_menu_attrs;
             
-        var tmp_default_panel  = ["bold", "italic", "underline", "del", "super", "suber", "split",
+        var tmp_default_panel  = ["bold", "italic", "underline", "del", "split",
+                                    "super", "suber", "split",
                                     "ol", "ul", "split",
                                     "separator", "heading2", "heading3", "heading4", "indent", "split",
                                     "table", "image", "reference", "code", "math", "letter" ],
@@ -1245,7 +1246,7 @@
         }
         self_textarea.init(textarea_para);
         
-        jQ.fn.bind.call($editor_menu_base, "click", function(event){
+        jQ.fn.unbind.call($editor_menu_base).bind.call($editor_menu_base, "click", function(event){
             var target = event.target, $target = jQ(target);
             if(target.nodeName != 'LI') return false;
             //alert("in")
