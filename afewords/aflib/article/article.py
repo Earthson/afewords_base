@@ -12,6 +12,12 @@ from translator.trans import *
 
 from authority import *
 
+from picture import Picture
+from reference import Reference
+from langcode import Langcode
+from tableform import Tableform
+from equation import Equation
+
 @with_conn
 class ArticleLibDoc(AFDocument):
     __collection__ = 'ArticleLib'
