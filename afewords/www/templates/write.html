@@ -210,7 +210,7 @@ $(document).ready(function(){
         "article_type": "{{ article['article_type'] }}" || 'blog',
         "env_id": "{{ env['env_id'] }}",
         "env_type": "{{ env['env_type'] }}",
-        "body": "{{ article['body'] }}",
+        {#//"body": "{{ article['body'] }}", #}
         "src": {
                     "math": {{ json_encode(article['equation_list']) }},
                     "image": {{ json_encode(article['picture_list']) }},
