@@ -282,10 +282,6 @@
             "letter":   {"id": "write_letter_bar"}        
         }
         
-        var menu_id = 0;
-        this.get_menu_id = function(){
-            return menu_id++;        
-        }
         this.default_editor_attrs = {
             "editor_menu_id": "write_menu",
             "editor_textarea_id": "write_textarea",
@@ -293,7 +289,7 @@
         }        
         
         this.default_menu_attrs = {
-            "menu_id": this.get_menu_id(),
+            "menu_id": '1',
             "article_id": '-1',
             "article_type": 'blog',
             "env_id": '-1',
@@ -610,7 +606,8 @@
     
         this.textarea = null;  // must be a DOM
         this.menu = null;
-        this.lib_bars = {}; // OBJECT, key/value(JQ object)
+        this.close_prompt = false;
+        this.$lib_bars = {}; // OBJECT, key/value(JQ object)
         this.editor_config = Editor_Config;
         
         /*********************** cursor process in textarea **************************/
@@ -732,6 +729,22 @@
         this.div_to_dict = function( $div ){
             return $div.DivToDict();           
         }  
+        this.window_close_prompt = function(){
+            
+            jQ(window).bind('beforeunload', function(){
+                return '确认关闭？';
+            });
+            jQ(window).unload(function(){
+                alert('即将关闭');
+            });        
+            this.close_prompt = true;
+        }  
+        
+        this.window_close_prompt_close = function(){
+            jQ(window).unbind('beforeunload');
+            jQ(window).unload(function(){});
+            this.close_prompt = false;
+        }      
         
         this.get_src_attrs = function( paras){
             paras = paras || {};
@@ -837,7 +850,8 @@
                 }, function(response){
                 
                     if(response.article_isnew == 1){
-                            _self_.$menu.attr("article_id", response.article_id);      
+                            _self_.$menu.attr("article_id", response.article_id);    
+                            if(!_self_.close_prompt)  _self_.window_close_prompt();  
                     }
                     
                     if(response.status != 0){
@@ -1147,11 +1161,9 @@
             this.lib_letter_bar_init();
             this.lib_bar_init();
             var src_dict = args["src"] || {};
+            if("src" in args){ this.window_close_prompt(); }
             this.lib_bar_content_init(src_dict);
-            
-        }
-        
-        
+        } 
     }
 
 
