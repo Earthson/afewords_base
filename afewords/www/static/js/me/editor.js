@@ -158,7 +158,7 @@
                                 "value": '~~', 
                                 "exec": function(){
                                             var args = { "prefix": "", "suffix": "\n~~~~~~~~~~\n", 
-                                                         "suffix_l": true, "suffix_r": true, "allow_empty": true };
+                                                         "suffix_l": true, "allow_empty": true };
                                             this.set_character(args);                                
                                         }
                             },
@@ -604,14 +604,16 @@
     }
 
     
-    var editor_attrs = new AFWEditor_attrs();
+    var Editor_Config = new AFWEditor_attrs();
     
     function Textarea(){
     
         this.textarea = null;  // must be a DOM
         this.menu = null;
         this.lib_bars = {}; // OBJECT, key/value(JQ object)
+        this.editor_config = Editor_Config;
         
+        /*********************** cursor process in textarea **************************/
         this.get_position = function(){
             var s,e,range,stored_range;
             if(this.textarea.selectionStart == undefined){
@@ -725,139 +727,19 @@
             this.set_position(last_pos_e, last_pos_e);
             
         } 
-
-        this.change_lib_bar = function( obj ){
-            var $obj = jQ(obj),
-                kind = $obj.attr("kind");
-            
-            if(this.lib_bars["all"].css("display") == "none"){ 
-                // open the lib
-                $obj.addClass("menu_focus").siblings().removeClass("menu_focus");
-                for(var lib in this.lib_bars){
-                    if(lib == "all" || lib == kind )  continue;
-                    this.lib_bars[lib].hide();                
-                }
-                this.lib_bars[kind].show();
-                this.lib_bars["all"].slideDown("slow");
-            }else{
-                // close the bar
-                if(this.lib_bars[kind].css("display") == "block"){  // close all the lib 
-                    this.lib_bars["all"].slideUp("slow");
-                    $obj.removeClass("menu_focus");                
-                }else{
-                    for(var lib in this.lib_bars){  // close one bar and open an new bar
-                        if(lib == "all" || lib == kind)  continue;
-                        this.lib_bars[lib].hide();               
-                    }
-                    this.lib_bars[kind].fadeIn("slow"); 
-                    $obj.addClass("menu_focus").siblings().removeClass("menu_focus");    
-                
-                }    
-            }
-                  
-        }        
-        this.lib_bar_content_init = function(paras){
-            // init picture
-            var init_funs = editor_attrs.default_block_html["init"],
-                src_type = "image",
-                src_list = [],
-                $src_demo,
-                $clone_demo,
-                $clone_demo_list = [],
-                tmp_obj,
-                $lib_body,
-                current_fun,
-                $clone_demo_contain;
-                
-            for(src_type in paras){
-                //src_type = srcs;
-                src_list = paras[src_type] || [];
-                $lib_body = this.lib_bars[src_type].find("#bar_body").children();
-                //alert($lib_body.children().html())
-                $src_demo = $lib_body.children().eq(0);
-                //alert($src_demo.html());
-                //$clone_demo_list = [];
-                //$clone_demo_contain = jQ(document.createDocumentFragment());
-                current_fun = init_funs[src_type];
-                for(var i = 0; i < src_list.length; i++){
-                    tmp_obj = src_list[i];
-                    $clone_demo = $src_demo.clone();
-                    current_fun.call($clone_demo, tmp_obj);
-                    //alert("in");
-                    //alert($clone_demo.html());
-                    $clone_demo.css("display", "block");
-                    //$clone_demo_contain.append($clone_demo);
-                    //$clone_demo_list.push( $clone_demo );     
-                    $lib_body.append($clone_demo);           
-                }
-                //$lib_body.append( $clone_demo_contain );
-            }            
-                 
-        }
         
-        this.init = function(args){
-            this.textarea = args["textarea"] || document.getElementById("write_textarea");  // JS Object
-            this.editor = args["editor"];   // Object
-            this.$menu = args["menu"];   // JQ Object
-            
-            var lib_bars = editor_attrs.default_lib_bar;
-            for(var _para_ in lib_bars){
-                this.lib_bars[_para_] = args[_para_] || jQ("#"+ lib_bars[_para_]["id"]).eq(0);        // JQ Object     
-            }
-            this.lib_letter_bar_init();
-            this.lib_bar_init();
-            var src_dict = args["src"] || {};
-            this.lib_bar_content_init(src_dict);
-            
-        }
+        /********************* textarea tool  *********************/
+        this.div_to_dict = function( $div ){
+            return $div.DivToDict();           
+        }  
         
-        this.lib_letter_bar_init = function(){
-            var letters = editor_attrs.default_support_characterset;
-            var $letter_bar_nav = this.lib_bars["letter"].find("#bar_nav");
-            var $letter_bar_body = this.lib_bars["letter"].find("#bar_body>.l");
-            var letters_html = '', letter_kind_html = '';
-            var current_letters;
-            var _self_ = this;
-            
-            for(var letter_kind in letters){
-                letter_kind_html += '<span class="lbutton" kind="'+ letter_kind +'">' + letters[letter_kind]["name"] + '</span>';
-            }
-            $letter_bar_nav.html(letter_kind_html);
-            
-            jQ.fn.bind.call($letter_bar_nav, "click", function(event){
-                event.stopPropagation();
-                var target = event.target,
-                    $target = jQ(target);
-                if(target.nodeName != "SPAN") return false;
-                
-                var kind = $target.attr("kind");
-                if($target.hasClass("wsc_chosed"))  return;
-                
-                $target.addClass("wsc_chosed").siblings().removeClass("wsc_chosed");
-                letters_html = '';
-                current_letters = letters[kind]["exec"]();
-                for(var ii = 0; ii < current_letters.length; ii++){
-                    letters_html += '<span>' + current_letters[ii] + '</span>';          
-                }
-                $letter_bar_body.html(letters_html);
-            });
-            
-            jQ.fn.bind.call($letter_bar_body, "click", function(event){
-                event.stopPropagation();
-                var target = event.target,
-                    $target = jQ(target);
-                
-                if(target.nodeName != "SPAN")   return false;
-                _self_.editor.default_panel["letter"]["one_exec"].call(_self_, $target.html());         
-            });
-            
-                                                   } 
         this.get_src_attrs = function( paras){
             paras = paras || {};
-            var attrs = {},
+            var _self_ = this,
+                attrs = {},
                 src_type = paras["src_type"] || "image",
-                default_menu_attrs = this.editor.default_menu_attrs,
-                default_src_attrs = this.editor.default_src_attrs;  
+                default_menu_attrs = _self_.editor_config.default_menu_attrs,
+                default_src_attrs = _self_.editor_config.default_src_attrs;  
             
             for(var _para_ in default_menu_attrs){
                 attrs[_para_] = this.$menu.attr(_para_) || default_menu_attrs[_para_];            
@@ -874,30 +756,46 @@
         this.pop_page = function(_content_, _width_, _height_){
             var $pop_content = pop_page(_width_, _height_, _content_) || jQ("#pop-content");
             return $pop_content;        
-        }        
+        }    
+        
         this.pop_page_close = function(){
             pop_page_close();        
-        }        
-        
-        this.div_to_dict = function( $div ){
-            return $div.DivToDict();           
-        }
+        } 
         
         this.ajax_post_json = function( url, paras, before_fun, success_fun, error_fun){
             jQ.postJSON(url, paras, before_fun, success_fun, error_fun);
-        }        
+        }      
+        
+        /********************** handle src and use ajax to send ****************************************/
+        this.pop_content_bind = function( $pop_content ){
+            // bind the pop solve
+            var _self_ = this;
+            $pop_content.unbind().bind("click", function(event){
+                event.stopPropagation();
+                var target = event.target,
+                    $target = jQ(target),
+                    attrs = {},
+                    $this = jQ(this);
+                
+                if(target.nodeName != "BUTTON")  return false;
+                attrs = _self_.div_to_dict($this);
+                _self_.ajax_src_submit( $target, attrs, $this);
+            });
+        };
         
         this.ajax_src_submit = function($button, paras, $pop_content){
             var _self_ = this;
+            var config = _self_.editor_config;
+            
             var del_flag = paras["do"] == "del" || paras["do"] == "remove";
             
-            if(typeof paras != "object")    return false;
+            if(Object.prototype.toString.call(paras) != "[object Object]")    return false;
             
             if( !del_flag ){
             
                 var $process = $pop_content.find("#src_process"),
                     src_type = paras["src_type"],
-                    process_tip = editor_attrs.default_src_attrs["tip"][src_type];
+                    process_tip = config.default_src_attrs["tip"][src_type];
                 
                 var src_type = paras["src_type"];
                 
@@ -967,7 +865,7 @@
             // send the submit with ajax      
             
         }
-
+           
         this.ajax_new_image_bind = function( $form ){
 
             //alert($form.html());
@@ -980,63 +878,29 @@
                 return false;
             });       
         }        
-        
         this.handle_src_right = function(response, paras){
             
-            
-            //if(response.article_isnew == 1){
-            //    this.$menu.attr("article_id", response.article_id);            
-            //}
-            var $src_bar_contain = this.lib_bars[paras["src_type"]], 
+            var _self_ = this,
+                $src_bar_contain = _self_.$lib_bars[paras["src_type"]], 
                 $src_one,
                 src_type = paras["src_type"],
-                init_funs = editor_attrs.default_block_html["init"];
+                init_funs = _self_.editor_config.default_block_html["init"];
+                
             paras["src_alias"] = response.src_alias;
+            
             if(paras["do"] == "new"){
                 // new src
                 $src_one = $src_bar_contain.find(".one").eq(0).clone();
-                
                 init_funs[src_type].call($src_one, paras);       
-                         
-                /*
-                //$src_one.attr("src_alias", response.src_alias).find("#src_title").val(paras["title"]);
-                $src_one.find("#src_view_title").html(editor_attrs.default_src_attrs["tip"][src_type] + response.src_alias  );
-                if(src_type == "image"){
-                    $src_one.find("#src_path").attr("src", paras["img_url"]);
-                    $src_contain.find(".i").append($src_one);
-                    $src_one.attr("display", "block").find(".src_insert").click();
-                    this.pop_page_close();
-                    return;
-                }else{
-                    $src_one.find("#src_body").val(paras["body"]);               
-                }
-                if(src_type == "reference"){  $src_one.find("#src_source").val(paras["source"]); }
-                if(src_type == "code") {  $src_one.find("#src_code_type").val(paras["code_type"]); }
-                if(src_type == "math") {  $src_one.find("#src_math_mode").val(paras["math_mode"]); }
-                */
-                     
                 $src_bar_contain.find("#crtm").append($src_one.css("display", "block"));
                 $src_one.attr("display", "block").find(".src_insert").click();
-                this.pop_page_close();
+                _self_.pop_page_close();
                 return;
             }
             if(paras["do"] == "edit"){
                 // edit src 
                 $src_one = $src_bar_contain.find(".one[src_alias='" + paras["src_alias"] + "']");
                 init_funs[src_type].call($src_one, paras);
-                /*
-                $src_one.find("#src_title").val(paras["title"]);
-                if(src_type == "image"){
-                    $src_one.find("#src_path").attr("src", paras["img_url"]);
-                    this.pop_page_close();
-                    return;
-                }else{
-                    $src_one.find("#src_body").val(paras["body"]);               
-                }
-                if(src_type == "reference"){    $src_one.find("#src_source").val(paras["source"]); }
-                if(src_type == "code") { $src_one.find("#src_code_type").val(paras["code_type"]); }
-                if(src_type == "math") { $src_one.find("#src_math_mode").val(paras["math_mode"]); }
-                */
                 this.pop_page_close();
                 return;
             }
@@ -1049,40 +913,91 @@
             }
             
         }
-
-        this.pop_content_bind = function( $pop_content ){
-            // bind the pop solve
-            var _self_ = this;
-            //alert($pop_content.html());
-            //if()
-            $pop_content.unbind().bind("click", function(event){
-                event.stopPropagation();
-                var target = event.target,
-                    $target = jQ(target),
-                    attrs = {},
-                    $this = jQ(this);
-                
-                if(target.nodeName != "BUTTON")  return false;
-                attrs = _self_.div_to_dict($this);
-                _self_.ajax_src_submit( $target, attrs, $this);
-                
-            })
+                                      
+         
+        /************************************************* init ******************************/                             
+        this.change_lib_bar = function( obj ){
+            var $obj = jQ(obj),
+                kind = $obj.attr("kind"),
+                _self_ = this,
+                lib_bars = _self_.$lib_bars;
             
-        };        
+            if(lib_bars["all"].css("display") == "none"){ 
+                // open the lib
+                $obj.addClass("menu_focus").siblings().removeClass("menu_focus");
+                for(var lib_type in lib_bars){
+                    if(lib_type == "all" || lib_type == kind )  continue;
+                    lib_bars[lib_type].hide();                
+                }
+                lib_bars[kind].show();
+                lib_bars["all"].slideDown("slow");
+            }else{
+                // close the bar
+                if(lib_bars[kind].css("display") == "block"){  // close all the lib 
+                    lib_bars["all"].slideUp("slow");
+                    $obj.removeClass("menu_focus");                
+                }else{
+                    for(var lib_type in lib_bars){  // close one bar and open an new bar
+                        if(lib_type == "all" || lib_type == kind)  continue;
+                        lib_bars[lib_type].hide();               
+                    }
+                    lib_bars[kind].fadeIn("slow"); 
+                    $obj.addClass("menu_focus").siblings().removeClass("menu_focus");    
+                
+                }    
+            }
+                  
+        }        
+        this.lib_bar_content_init = function(paras){
+            // init picture
+            var _self_ = this, 
+                init_funs = _self_.editor_config.default_block_html["init"],
+                src_type = "image",
+                src_list = [],
+                $src_demo,
+                $clone_demo,
+                $clone_demo_list = [],
+                tmp_obj,
+                $lib_body,
+                current_fun;
+
+                
+            for(src_type in paras){
+                src_list = paras[src_type] || [];
+                $lib_body = _self_.$lib_bars[src_type].find("#bar_body").children().eq(0);
+                $src_demo = $lib_body.children().eq(0);
+                current_fun = init_funs[src_type];
+                for(var i = 0; i < src_list.length; i++){
+                    tmp_obj = src_list[i];
+                    $clone_demo = $src_demo.clone();
+                    current_fun.call($clone_demo, tmp_obj);
+                    $clone_demo.css("display", "block");
+                    //$clone_demo_list.push( $clone_demo );     
+                    $lib_body.append($clone_demo);           
+                }
+            }            
+                 
+        }
+                
         
         this.lib_bar_init = function(){
+        
             var _self_ = this;
-            var pop_size = editor_attrs.default_src_attrs["size"],
-                bar_body_htmls = this.editor.default_block_html;
+            if(!_self_.lib_flag["all"]) return false;
             
-            this.lib_bars["image"].find(".i").html(bar_body_htmls["src_image_one"]);
-            this.lib_bars["math"].find("#crtm").html(bar_body_htmls["src_math_one"]);
-            this.lib_bars["code"].find("#crtm").html(bar_body_htmls["src_code_one"]);
-            this.lib_bars["table"].find("#crtm").html(bar_body_htmls["src_table_one"]);
-            this.lib_bars["reference"].find("#crtm").html(bar_body_htmls["src_reference_one"]);
+            // init lib bars
+            var pop_size = _self_.editor_config.default_src_attrs["size"],
+                bar_body_htmls = _self_.editor_config.default_block_html;
+            
+            for(var bar_type in _self_.lib_flag){
+                if(_self_.lib_flag[bar_type] && bar_type !="all"){
+                    _self_.$lib_bars[bar_type].find("#bar_body").children().eq(0).html( bar_body_htmls["src_" + bar_type + "_one"]);                
+                }
+            }
+
             
             // init math bar, code, reference, table, image bar
-            jQ.fn.bind.call(this.lib_bars["all"], "click", function(event){
+            jQ.fn.bind.call(_self_.$lib_bars["all"], "click", function(event){
                 event.stopPropagation();
                 var target = event.target,
                     $target = jQ(target),
@@ -1137,13 +1052,13 @@
                     //alert($pop_content.html());
                     if(attrs["src_type"] == "image" && attrs["do"] == "new"){
                         // need get the form
-                        pop_html = editor_attrs.default_pop_page_html(attrs);
+                        pop_html = _self_.editor_config.default_pop_page_html(attrs);
                         var $pop_html = jQ(pop_html);
                         $pop_content = _self_.pop_page($pop_html, pop_size[src_type]["width"], pop_size[src_type]["height"]);
                         _self_.ajax_new_image_bind($pop_html);
                         return;                    
                     }
-                    pop_html = editor_attrs.default_pop_page_html(attrs);
+                    pop_html = _self_.editor_config.default_pop_page_html(attrs);
                     $pop_content = _self_.pop_page(pop_html, pop_size[src_type]["width"], pop_size[src_type]["height"]);
                     _self_.pop_content_bind($pop_content);
                     return ;
@@ -1156,7 +1071,7 @@
                         src_alias = $src_one.attr("src_alias"),
                         src_type = $src_one.attr("src_type");
                         
-                    editor_attrs.default_panel[src_type]["one_exec"].call(_self_, src_alias);
+                    _self_.editor_config.default_panel[src_type]["one_exec"].call(_self_, src_alias);
                     return;
                                         
                 }
@@ -1165,7 +1080,76 @@
             
         }
 
+
+        this.lib_letter_bar_init = function(){
         
+            if(!this.lib_flag["letter"])    return false;
+            // init letter bar
+            var _self_ = this;
+            var letters = _self_.editor_config.default_support_characterset;
+            
+            var $letter_bar_nav = _self_.$lib_bars["letter"].find("#bar_nav"),
+                $letter_bar_body = _self_.$lib_bars["letter"].find("#bar_body").children().eq(0);
+                
+            var letters_html = '', 
+                letter_kind_html = '',
+                current_letters;
+                
+            
+            for(var letter_kind in letters){
+                letter_kind_html += '<span class="lbutton" kind="'+ letter_kind +'">' + letters[letter_kind]["name"] + '</span>';
+            }
+            $letter_bar_nav.html(letter_kind_html);
+            
+            jQ.fn.bind.call($letter_bar_nav, "click", function(event){
+                event.stopPropagation();
+                var target = event.target,
+                    $target = jQ(target);
+                if(target.nodeName != "SPAN") return false;
+                
+                var kind = $target.attr("kind");
+                if($target.hasClass("wsc_chosed"))  return;
+                
+                $target.addClass("wsc_chosed").siblings().removeClass("wsc_chosed");
+                letters_html = '';
+                current_letters = letters[kind]["exec"]();
+                for(var ii = 0; ii < current_letters.length; ii++){
+                    letters_html += '<span>' + current_letters[ii] + '</span>';          
+                }
+                $letter_bar_body.html(letters_html);
+            });
+            
+            jQ.fn.bind.call($letter_bar_body, "click", function(event){
+                event.stopPropagation();
+                var target = event.target,
+                    $target = jQ(target);
+                
+                if(target.nodeName != "SPAN")   return false;
+                _self_.editor_config.default_panel["letter"]["one_exec"].call(_self_, $target.html());         
+            });
+        }
+            
+                                                   
+        this.init = function(args){
+        
+            this.textarea = args["textarea"] || document.getElementById("write_textarea");  // JS Object
+            //this.editor = args["editor"];   // Object
+            this.$menu = args["menu"];   // JQ Object
+            this.lib_flag = args["lib_flag"];
+            this.$lib_bars = args["$lib_bars"];
+            this.editor_config = args["editor_config"];
+            
+            var lib_bars = this.editor_config.default_lib_bar;
+            /*
+            for(var _para_ in lib_bars){
+                this.lib_bars[_para_] = args[_para_] || jQ("#"+ lib_bars[_para_]["id"]).eq(0);        // JQ Object     
+            }*/
+            this.lib_letter_bar_init();
+            this.lib_bar_init();
+            var src_dict = args["src"] || {};
+            this.lib_bar_content_init(src_dict);
+            
+        }
         
         
     }
@@ -1175,19 +1159,36 @@
     
         paras = paras || {};
         
-        var editor_id = editor_attrs.default_editor_attrs["editor_menu_id"],
-            textarea_id = editor_attrs.default_editor_attrs["editor_textarea_id"],
-            editor_panel = editor_attrs.default_panel,
-            menu_attrs = editor_attrs.default_menu_attrs;
+        var editor_config = Editor_Config,
+            editor_id = editor_config.default_editor_attrs["editor_menu_id"],
+            textarea_id = editor_config.default_editor_attrs["editor_textarea_id"],
+            editor_panel = editor_config.default_panel,
+            menu_attrs = editor_config.default_menu_attrs;
             
         var tmp_default_panel  = ["bold", "italic", "underline", "del", "split",
                                     "super", "suber", "split",
                                     "ol", "ul", "split",
                                     "separator", "heading2", "heading3", "heading4", "indent", "split",
                                     "table", "image", "reference", "code", "math", "letter" ],
-            panel = panel || tmp_default_panel;
+            panel = Object.prototype.toString.call(panel) == "[object Array]" ? panel : tmp_default_panel;
             
-        var menu_paras = {};    
+        var menu_paras = {};
+        
+        // init lib 
+        var panel_string = panel.join(' ');
+        var lib_flag = {
+                    "table": panel_string.search(/\btable\b/) != -1 ? true: false,
+                    "image": panel_string.search(/\bimage\b/) != -1 ? true: false,
+                    "letter": panel_string.search(/\bletter\b/) != -1 ? true : false,
+                    "math": panel_string.search(/\bmath\b/) != -1 ? true : false,
+                    "code": panel_string.search(/\bcode\b/) != -1 ? true : false,
+                    "reference": panel_string.search(/\breference\b/) != -1 ? true : false
+            },
+            lib_flag_all = lib_flag["letter"] || lib_flag["image"] || lib_flag["reference"] || 
+                            lib_flag["math"] || lib_flag["table"] || lib_flag["code"];
+        lib_flag["all"] = lib_flag_all;
+
+        
         for(var _para_ in menu_attrs){
             menu_paras[_para_] = paras[_para_] || menu_attrs[_para_];
             //console.log(_para_ + '   ' + menu_paras[_para_])        
@@ -1221,29 +1222,48 @@
         $editor_menu.insertBefore(this);
         
         // lib bar 
-        var lib_bar_ids = editor_attrs.default_lib_bar,
+        var lib_bar_ids = editor_config.default_lib_bar,
             $lib_bars = {},
-            lib_bar_htmls = editor_attrs.default_block_html,
+            lib_bar_htmls = editor_config.default_block_html,
             tmp_key;
         
         for(var ii in lib_bar_ids){
-            $lib_bars[ii] = jQ('<div id="' + lib_bar_ids[ii]["id"] + '" src_type="' + ii + '" style="display:none;"></div>');          
-            tmp_key = "src_" + ii + "_lib";
-            if(tmp_key in lib_bar_htmls){
-                $lib_bars[ii].append(lib_bar_htmls[tmp_key]);  
-            }                  
+            if(lib_flag[ii]){            
+                $lib_bars[ii] = jQ('<div id="' + lib_bar_ids[ii]["id"] + '" src_type="' + ii + '" style="display:none;"></div>');          
+                tmp_key = "src_" + ii + "_lib";
+                if(tmp_key in lib_bar_htmls){
+                    $lib_bars[ii].append(lib_bar_htmls[tmp_key]);  
+                }
+            }             
         }
         
-        $lib_bars["all"].append($lib_bars["image"], $lib_bars["math"], $lib_bars["code"], $lib_bars["reference"], $lib_bars["letter"], $lib_bars["table"]);
+        if(lib_flag["all"]){ // have lib
+            for(var ii in lib_bar_ids){
+                if(lib_flag[ii] && ii != "all"){
+                    $lib_bars["all"].append($lib_bars[ii]);                
+                }            
+            }
+            $editor_menu.append($lib_bars["all"]);
+        }
+        //$lib_bars["all"].append($lib_bars["image"], $lib_bars["math"], $lib_bars["code"], $lib_bars["reference"], $lib_bars["letter"], $lib_bars["table"]);
         
-        $editor_menu.append($lib_bars["all"]);
+        //$editor_menu.append($lib_bars["all"]);
+        
         
         var self_textarea = new Textarea();
         //self_textarea.textarea = this[0];
-        var textarea_para = {"textarea": this[0], "editor": editor_attrs, "menu": $editor_menu, "src": paras["src"]};
+        var textarea_para = {   "textarea": this[0], 
+                                "editor_config": editor_config, 
+                                "menu": $editor_menu, 
+                                "src": paras["src"],
+                                "lib_flag": lib_flag,
+                                "$lib_bars": $lib_bars
+                            };
+        /*                    
         for(var _para_ in $lib_bars){
             textarea_para[_para_] = $lib_bars[_para_];        
-        }
+        }*/
+        
         self_textarea.init(textarea_para);
         
         jQ.fn.unbind.call($editor_menu_base).bind.call($editor_menu_base, "click", function(event){
