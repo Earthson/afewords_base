@@ -1,3 +1,4 @@
+
 ;(function(jQ){
     "use strict";    
     
@@ -64,10 +65,14 @@
             "Letter": {
                     "name": "字符",
                     "exec": function(){
-                        return ["~", "|", "¡", "¿", "†", "‡", "↔", "↑", "↓", "•", "¶", "#", "½", "⅓", "⅔", "¼", "¾", "⅛", "⅜", "⅝", "⅞", "∞", "‘", "’", "“",
-                                "”", "„", "“", "„", "”", "«", "»", "¤", "₳", "฿", "₵", "¢", "₡", "₢", "$", "₫", "₯", "€", "₠", "₣", "ƒ", "₴", "₭", "₤", "ℳ", "₥", "₦",
-                                                                "№", "₧", "₰", "£", "៛", "₨", "₪", "৳", "₮", "₩", "¥", "♠", "♣", "♥", "♦", "m", "²", "m", "³", "–", "—", "…", "‘", "’", "“", "”", "°", "′", "″", "≈", "≠", "≤", "≥", 
-                                "±", "−", "×", "÷", "←", "→", "·", "§"];                    
+                        return ["~", "|", "¡", "¿", "†", "‡", "↔", "↑", "↓", "•", "¶", "#", 
+                                "½", "⅓", "⅔", "¼", "¾", "⅛", "⅜", "⅝", "⅞", "∞", "‘", "’", 
+                                "“", "”", "„", "“", "„", "”", "«", "»", "¤", "₳", "฿", "₵", 
+                                "¢", "₡", "₢", "$", "₫", "₯", "€", "₠", "₣", "ƒ", "₴", "₭", 
+                                                                "₤" , "ℳ", "₥", "₦","№", "₧", "₰", "£", "៛", "₨", "₪", "৳", "₮", "₩", "¥", "♠", "♣",
+                                "♥", "♦", "m", "²", "m", "³", "–", "—", "…", "‘", "’", "“", 
+                                "”", "°", "′", "″", "≈", "≠", "≤", "≥", "±", "−", "×", "÷", 
+                                "←", "→", "·", "§"];                    
                     }            
             }       
         }
@@ -767,6 +772,7 @@
         }
         
         this.pop_page = function(_content_, _width_, _height_){
+            /************ pop page and return the $pop_content(jQ object) ************/
             var $pop_content = pop_page(_width_, _height_, _content_) || jQ("#pop-content");
             return $pop_content;        
         }    
@@ -781,7 +787,7 @@
         
         /********************** handle src and use ajax to send ****************************************/
         this.pop_content_bind = function( $pop_content ){
-            // bind the pop solve
+            /*************** bind the event handler to the pop page with control src *******************/
             var _self_ = this;
             $pop_content.unbind().bind("click", function(event){
                 event.stopPropagation();
@@ -797,6 +803,7 @@
         };
         
         this.ajax_src_submit = function($button, paras, $pop_content){
+            /***************** use ajax send the submit, contain new/edit/remove the src ******************/
             var _self_ = this;
             var config = _self_.editor_config;
             
@@ -855,8 +862,7 @@
                     }
                     
                     if(response.status != 0){
-                        
-                        // occur some error
+
                         if( !del_flag ){
                             $process.html(response.info).css("color", "red");
                             $button.removeAttr("disabled").css("color", "black");   
@@ -893,7 +899,7 @@
             });       
         }        
         this.handle_src_right = function(response, paras){
-            
+            /**********the handler function after the ajax submit ************/
             var _self_ = this,
                 $src_bar_contain = _self_.$lib_bars[paras["src_type"]], 
                 $src_one,
@@ -907,7 +913,7 @@
                 $src_one = $src_bar_contain.find(".one").eq(0).clone();
                 init_funs[src_type].call($src_one, paras);       
                 $src_bar_contain.find("#crtm").append($src_one.css("display", "block"));
-                $src_one.attr("display", "block").find(".src_insert").click();
+                $src_one.find(".src_insert").click();
                 _self_.pop_page_close();
                 return;
             }
@@ -975,7 +981,6 @@
                 $lib_body,
                 current_fun;
 
-                
             for(src_type in paras){
                 src_list = paras[src_type] || [];
                 $lib_body = _self_.$lib_bars[src_type].find("#bar_body").children().eq(0);
@@ -985,13 +990,12 @@
                     tmp_obj = src_list[i];
                     $clone_demo = $src_demo.clone();
                     current_fun.call($clone_demo, tmp_obj);
-                    $clone_demo.css("display", "block");
-                    //$clone_demo_list.push( $clone_demo );     
+                    $clone_demo.css("display", "block");    
                     $lib_body.append($clone_demo);           
                 }
             }            
                  
-        }
+        };
                 
         
         this.lib_bar_init = function(){
@@ -1023,16 +1027,18 @@
                     del_flag = $target.hasClass("src_del"),
                     insert_flag = $target.hasClass("src_insert"),
                     $pop_content;
+                    
                 if(new_flag || edit_flag || del_flag){
                     
                     if(new_flag){
-                        // do new src
+                        // new a src
                         src_type = $target.attr("src_type");
                         attrs = _self_.get_src_attrs({ "src_type": src_type, "do": "new"});
                     }
+                    
                     if(edit_flag)                    
                     {
-                        // do src edit 
+                        // edit/update the src 
                         var $src_one = $target.parent().parent();
                         src_type = $src_one.attr("src_type");
                         attrs = {
@@ -1049,6 +1055,7 @@
                     }
                     
                     if(del_flag){
+                        // delete/remove the src 
                         var $src_one = $target.parent().parent();
                         src_type = $src_one.attr("src_type");
                         attrs = {
@@ -1056,14 +1063,12 @@
                             "src_alias": $src_one.attr("src_alias"),
                             "do": "remove"                        
                         }
-                        //alert("will delete");
                         attrs = _self_.get_src_attrs(attrs);
                         _self_.ajax_src_submit(null, attrs, null );
                         return ;
                     }
 
                     
-                    //alert($pop_content.html());
                     if(attrs["src_type"] == "image" && attrs["do"] == "new"){
                         // need get the form
                         pop_html = _self_.editor_config.default_pop_page_html(attrs);
@@ -1078,7 +1083,6 @@
                     return ;
                 };
                 
-                //alert("insert" + insert_flag);
                 if(insert_flag){
                     // insert to the textarea
                     var $src_one = $target.parent().parent(),
@@ -1145,23 +1149,18 @@
             
                                                    
         this.init = function(args){
-        
+            // init the textarea 
             this.textarea = args["textarea"] || document.getElementById("write_textarea");  // JS Object
-            //this.editor = args["editor"];   // Object
             this.$menu = args["menu"];   // JQ Object
             this.lib_flag = args["lib_flag"];
             this.$lib_bars = args["$lib_bars"];
             this.editor_config = args["editor_config"];
             
             var lib_bars = this.editor_config.default_lib_bar;
-            /*
-            for(var _para_ in lib_bars){
-                this.lib_bars[_para_] = args[_para_] || jQ("#"+ lib_bars[_para_]["id"]).eq(0);        // JQ Object     
-            }*/
             this.lib_letter_bar_init();
             this.lib_bar_init();
             var src_dict = args["src"] || {};
-            if("src" in args){ this.window_close_prompt(); }
+            if(args["src"]){ this.window_close_prompt(); };
             this.lib_bar_content_init(src_dict);
         } 
     }
@@ -1257,48 +1256,28 @@
             }
             $editor_menu.append($lib_bars["all"]);
         }
-        //$lib_bars["all"].append($lib_bars["image"], $lib_bars["math"], $lib_bars["code"], $lib_bars["reference"], $lib_bars["letter"], $lib_bars["table"]);
-        
-        //$editor_menu.append($lib_bars["all"]);
-        
-        
+
         var self_textarea = new Textarea();
-        //self_textarea.textarea = this[0];
-        var textarea_para = {   "textarea": this[0], 
+        var textarea_para = {   
+                                "textarea": this[0], 
+                                "panel": panel,
                                 "editor_config": editor_config, 
                                 "menu": $editor_menu, 
-                                "src": paras["src"],
+                                "src": paras["src"] || false,
                                 "lib_flag": lib_flag,
                                 "$lib_bars": $lib_bars
                             };
-        /*                    
-        for(var _para_ in $lib_bars){
-            textarea_para[_para_] = $lib_bars[_para_];        
-        }*/
-        
+
+        // init the Textarea
         self_textarea.init(textarea_para);
         
+        // bind event to the panel 
         jQ.fn.unbind.call($editor_menu_base).bind.call($editor_menu_base, "click", function(event){
             var target = event.target, $target = jQ(target);
             if(target.nodeName != 'LI') return false;
-            //alert("in")
             editor_panel[$target.attr("kind")]["exec"].call(self_textarea, target);
-            //if($target)
-        })
-        
-        
+        });
 
-        
-        
-        
-        
-        
-        
-        
-        
     }
-
-
-
 
 })(jQuery);
