@@ -266,6 +266,8 @@ class Article(DataBox):
         'lang_type' : True,
         'release_time' : True,
         'update_time' : True,
+        'body_version' : True,
+        'view_body_version' : True,
         'keywords' : True,
         'tag' : True,
         'privilege' : True,
