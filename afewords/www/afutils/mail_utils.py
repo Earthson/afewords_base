@@ -35,5 +35,8 @@ def send_mail(mail_from, mail_to, subject, html_body):
         logging.error('+'*30)
         smtp.quit()
         return False
+    except Exception, e:
+        print(e)
+        return False
     else:
         return True

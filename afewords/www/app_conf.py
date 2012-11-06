@@ -15,6 +15,7 @@ from handlers.bloggerhandlers import BloggerAboutHandler
 from handlers.articlewritehandlers import ArticleWriteHandler
 from handlers.articlewritehandlers import ArticleUpdateHandler
 from handlers.articlewritehandlers import ArticleSrcHandler
+from handlers.articleremovehandlers import ArticleRemoveHandler
 from handlers.commenthandlers import CommentGetHandler
 
 
@@ -70,6 +71,7 @@ app_handlers = {
     (r'/settings-follower', UserSettingFollowerHandler),
     (r'/book/([0-9a-zA-Z]+)', BookHandler),
     (r'/book/([0-9a-zA-Z]+)/catalog/([0-9]+)', BookChapterHandler),
+    (r'/settingpost-article_remove', ArticleRemoveHandler),
 
     (r'/settingpost-invite', UserInviteHandler),
     (r'/settingpost-user_domain', UserDomainSettingHandler),
