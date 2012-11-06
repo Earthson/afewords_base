@@ -45,7 +45,18 @@ from pages.postjson import UserDomainSettingJson
 class UserDomainSettingHandler(BaseHandler):
     @with_login_post
     def post(self):
+        from user import User
         handler_para = UserDomainSettingPara(self)
         handler_json = UserDomainSettingJson(self)
         usr = self.current_user 
-        pass
+        if not handler_para['domain']:
+            handler_json.by_status(2)
+            handler_json.write()
+            return #invalid domain
+        if User.is_exist({'domain':handler_para['domain']}):
+            handler_json.by_status(1)
+            handler_json.write()
+            return #already exist
+        usr.domain = handler_para['para']
+        handler_json.by_status(0)
+        return
