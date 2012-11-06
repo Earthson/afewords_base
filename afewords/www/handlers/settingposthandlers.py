@@ -99,3 +99,39 @@ class UserPasswordSettingHandler(BaseHandler):
         handler_json.by_status(0)
         handler_json.write()
         return #0
+
+
+class UserTagRemovePara(BaseHandlerPara):
+    paradoc = {
+        'rm_tag' : '', #unicode
+    }
+
+
+class UserTagRemoveHandler(BaseHandler):
+    @with_login_post
+    def post(self):
+        handler_para = UserTagRemovePara(self)
+        handler_json = UserTagRemoveJson(self)
+        usr = self.current_user
+        usr.remove_tags([handler_para['rm_tag']])
+        handler_json.by_status(0)
+        handler_json.write()
+        return #0
+
+
+class UserTagAddHandlerPara(BaseHandlerPara):
+    paradoc = {
+        'new_tag' : '',
+    }
+
+
+class UserTagAddHandler(BaseHandler):
+    @with_login_post
+    def post(self):
+        handler_para = UserTagAddPara(self)
+        handler_json = UserTagAddJson(self)
+        usr = self.current_user
+        usr.add_tags([handler_para['new_tag']])
+        handler_json.by_status(0)
+        handler_json.write()
+        return #0

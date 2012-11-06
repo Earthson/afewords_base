@@ -233,3 +233,9 @@ class UserPasswordSettingJson(StatusJson):
         1 : u'密码错误',
         2 : u'输入密码太弱',
     }
+
+@with_attr
+class UserTagRemoveJson(StatusJson):
+    error_info = {
+        0 : u'删除成功',
+    }
