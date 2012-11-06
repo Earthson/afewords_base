@@ -433,7 +433,7 @@ $Set.do_save_password = function(obj){
 	            $(obj).attr("disabled","disabled").css("color","#ccc");    
              },
 			function(response){
-				if(response.kind == 0)
+				if(response.status == 0)
                 {
                     process.html('修改成功！').css('color','blue'); 
                     
@@ -496,7 +496,7 @@ $Set.do_invite_friend = function(obj){
     var $obj = $(obj);
     var $process = $obj.next();
     if(mes['email'] == ''){ $process.html('请您填写好友邮箱！').css('color','red'); return; }
-    $.postJSON('/settings', mes, 
+    $.postJSON('/settingpost-invite', mes, 
         function(){
             $process.html('<img src="/static/img/ajax.gif" />');
             $obj.attr('disabled','disabled').css('color', '#ccc');
@@ -509,8 +509,8 @@ $Set.do_invite_friend = function(obj){
                 $obj.removeAttr('disabled').css('color','black');    
             }
         },
-        function(){
-            $process.html('数据提交出错！').css('color','red');
+        function(textStatus){
+            $process.html('提交出错:' + textStatus).css('color','red');
             $obj.removeAttr('disabled').css('color','black');         
         })
 }
