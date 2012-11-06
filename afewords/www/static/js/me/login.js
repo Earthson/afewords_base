@@ -520,7 +520,7 @@ $Set.do_modify_domain = function(){
     var tag_html = [];
     tag_html.push('<div id="pop_insert_table">');
     tag_html.push("<p class='first'>个性化</p>");
-    tag_html.push("<p>新链接后缀<input type='text' name='new_domain' /><input type='hidden' name='type' value='domain' />");
+    tag_html.push("<p>新链接后缀<input type='text' name='domain' />");
     tag_html.push("<p><button>修改</button><span class='t_process' style='width:70%'></span></p>");
     tag_html.push('</div>');
     _html = tag_html.join('');
@@ -529,7 +529,7 @@ $Set.do_modify_domain = function(){
     $html.find('button').bind('click', function(){
         var mes = {}, $this=$(this), $process = $(this).next('.t_process'),regstr = /^[a-zA-Z0-9\.]+$/ig;
         mes = $('#pop_insert_table').DivToDict();
-        if(mes['new_domain'] =='' || regstr.test(mes['new_domain']) == false ){
+        if(mes['domain'] =='' || regstr.test(mes['domain']) == false ){
             $process.html('后缀为a-z，A-Z,0-9.').css('color','red');
             return false;        
         }
@@ -540,7 +540,7 @@ $Set.do_modify_domain = function(){
         function(response){
             if(response.status==0){
                 $process.html('修改成功！').css('color','blue');
-                $('#body_content').find('div.my_domain').html('您的个性化链接为：http://www.afewords.com/me:' + mes['new_domain']);
+                $('#body_content').find('div.my_domain').html('您的个性化链接为：http://www.afewords.com/me:' + mes['domain']);
                 setTimeout(pop_page_close, 1000);            
             }else{
                  $this.removeAttr('disabled').css('color','black');
