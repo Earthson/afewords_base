@@ -19,21 +19,21 @@ from handlers.articleremovehandlers import ArticleRemoveHandler
 from handlers.commenthandlers import CommentGetHandler
 
 
-from handlers.settingshandlers import UserSettingInviteHandler
-from handlers.settingshandlers import UserSettingPasswordHandler
-from handlers.settingshandlers import UserSettingDomainHandler
-from handlers.settingshandlers import UserSettingAvatarHandler
-from handlers.settingshandlers import UserSettingTagHandler
-from handlers.settingshandlers import UserSettingNoticeHandler
-from handlers.settingshandlers import UserSettingDraftHandler
-from handlers.settingshandlers import UserSettingFollowHandler
-from handlers.settingshandlers import UserSettingFollowerHandler
+from handlers.settingspagehandlers import UserSettingInviteHandler
+from handlers.settingspagehandlers import UserSettingPasswordHandler
+from handlers.settingspagehandlers import UserSettingDomainHandler
+from handlers.settingspagehandlers import UserSettingAvatarHandler
+from handlers.settingspagehandlers import UserSettingTagHandler
+from handlers.settingspagehandlers import UserSettingNoticeHandler
+from handlers.settingspagehandlers import UserSettingDraftHandler
+from handlers.settingspagehandlers import UserSettingFollowHandler
+from handlers.settingspagehandlers import UserSettingFollowerHandler
 
-from handlers.settingposthandlers import UserInviteHandler
-from handlers.settingposthandlers import UserDomainSettingHandler
-from handlers.settingposthandlers import UserPasswordSettingHandler
-from handlers.settingposthandlers import UserTagAddHandler
-from handlers.settingposthandlers import UserTagRemoveHandler
+from handlers.settinguserhandlers import UserInviteHandler
+from handlers.settinguserhandlers import UserDomainSettingHandler
+from handlers.settinguserhandlers import UserPasswordSettingHandler
+from handlers.settinguserhandlers import UserTagAddHandler
+from handlers.settinguserhandlers import UserTagRemoveHandler
 
 from handlers.bookhandlers import BookHandler
 from handlers.bookhandlers import BookChapterHandler
