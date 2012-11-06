@@ -22,11 +22,10 @@ class ArticleRemoveHandler(BaseHandler):
     
     @with_login_post
     def post(self):
-        handler_paras = ArticleRemoveParas(self)
+        handler_para = ArticleRemovePara(self)
         handler_json = ArticleRemoveJson(self)
         usr = self.current_user
-        article_obj = generator(handler_paras['id'],
-                        handler_paras['type'])
+        article_obj = generator(handler_para['id'], handler_para['type'])
         if article_obj is None:
             handler_json.by_status(2)
             handler_json.write()
