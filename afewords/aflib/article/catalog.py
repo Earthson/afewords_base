@@ -446,7 +446,7 @@ class Catalog(DataBox):
     def as_env():
         def getter(self):
             ans = dict()
-            ans['env_type'] = self.self.cls_name
+            ans['env_type'] = self.cls_name
             ans['env_id'] = self.uid
             ans['entity'] = self.as_env_info
             return ans
