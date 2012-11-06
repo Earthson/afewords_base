@@ -533,12 +533,12 @@ $Set.do_modify_domain = function(){
             $process.html('后缀为a-z，A-Z,0-9.').css('color','red');
             return false;        
         }
-        $.postJSON('/settings', mes, function(){
+        $.postJSON('/settingpost-user_domain', mes, function(){
             $process.html('<img src="/static/img/ajax.gif" />');
             $this.attr('disabled', 'disabled').css('color','#ccc');
         },
         function(response){
-            if(response.kind==0){
+            if(response.status==0){
                 $process.html('修改成功！').css('color','blue');
                 $('#body_content').find('div.my_domain').html('您的个性化链接为：http://www.afewords.com/me:' + mes['new_domain']);
                 setTimeout(pop_page_close, 1000);            
@@ -546,9 +546,9 @@ $Set.do_modify_domain = function(){
                  $this.removeAttr('disabled').css('color','black');
                  $process.html(response.info).css('color','red');             
             }
-        },function(response){
+        },function(statusText){
             $this.removeAttr('disabled').css('color','black');
-            $process.html(response.info).css('color','red');   
+            $process.html("出现错误：" + statusText).css('color','red');   
         })
     })
     .end().find('input').focus();

@@ -433,11 +433,11 @@ do_draft_del = function(obj){
 		// delete the draft
 		var mes = {};
 		mes['article_id'] = $(obj).attr("article_id");
-        mes['article_type'] = $(obj).attr("type");
-		$.postJSON('/del-draft',mes,
+        mes['article_type'] = $(obj).attr("article_type");
+		$.postJSON('/settingpost-article_remove',mes,
 			function(){},
 			function(response){
-				if(response.kind == 0){
+				if(response.status == 0){
 					//delete the source
                     alert('删除成功！');
 					$(obj).parent().slideUp();
