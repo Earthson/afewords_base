@@ -245,7 +245,7 @@ class User(DataBox):
                 'index' : ek,
                 'content' : ev['info'],
                 'isread' : ev['isread'],
-            }) for ek, ev in self.lib.notification_lib.load_all().items()])
+            }) for ek, ev in self.lib.notification_lib.items()])
             noti_ids = [ek for ek, ev in ans.items()]
             noti_ids = sorted(noti_ids, reverse=True)
             return [ans[each] for each in noti_ids]

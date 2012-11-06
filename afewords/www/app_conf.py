@@ -29,6 +29,7 @@ from handlers.settingshandlers import UserSettingFollowHandler
 from handlers.settingshandlers import UserSettingFollowerHandler
 
 from handlers.settingposthandlers import UserInviteHandler
+from handlers.settingposthandlers import UserDomainSettingHandler
 
 from handlers.bookhandlers import BookHandler
 from handlers.bookhandlers import BookChapterHandler
@@ -71,6 +72,7 @@ app_handlers = {
     (r'/book/([0-9a-zA-Z]+)/catalog/([0-9]+)', BookChapterHandler),
 
     (r'/settingpost-invite', UserInviteHandler),
+    (r'/settingpost-user_domain', UserDomainSettingHandler),
 }
 
 app_settings = {

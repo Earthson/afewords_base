@@ -32,3 +32,20 @@ class UserInviteHandler(BaseHandler):
             return #send mail failed
         handler_json.by_status(0)
         handler_json.write()
+
+
+class UserDomainSettingPara(BaseHandlerPara):
+    paradoc = {
+        'domain' : '',
+    }
+
+
+from pages.postjson import UserDomainSettingJson
+
+class UserDomainSettingHandler(BaseHandler):
+    @with_login_post
+    def post(self):
+        handler_para = UserDomainSettingPara(self)
+        handler_json = UserDomainSettingJson(self)
+        usr = self.current_user 
+        pass

@@ -218,3 +218,8 @@ class InviteJson(StatusJson):
     }
 
 
+@with_attr
+class UserDomainSettingJson(StatusJson):
+    error_info = {
+        0 : u'已被注册，请换一个',
+    }

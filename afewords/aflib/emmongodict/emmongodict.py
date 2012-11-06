@@ -209,15 +209,15 @@ class EmMongoDict(object):
 
     def items(self):
         doc = self.load_doc()
-        return doc.items()
+        return doc.items() if doc is not None else dict().items()
 
     def keys(self):
         doc = self.load_doc()
-        return doc.keys()
+        return doc.keys() if doc is not None else dict().keys()
 
     def values(self):
         doc = self.load_doc()
-        return doc.values()
+        return doc.values() if doc is not None else dict().values()
 
     def __len__(self):
         doc = self.load_doc()
