@@ -1,5 +1,6 @@
 #coding=utf-8
 
+import re
 from basehandler import *
 
 class UserInvitePara(BaseHandlerPara):
@@ -39,6 +40,13 @@ class UserDomainSettingPara(BaseHandlerPara):
         'domain' : '',
     }
 
+    def domain_verify(self):
+        if not self['domain']:
+            return False
+        if re.match(ur'^[_0-9a-zA-Z]+$', self['domain']) is None:
+            return False
+        return True
+        
 
 from pages.postjson import UserDomainSettingJson
 
@@ -49,7 +57,7 @@ class UserDomainSettingHandler(BaseHandler):
         handler_para = UserDomainSettingPara(self)
         handler_json = UserDomainSettingJson(self)
         usr = self.current_user 
-        if not handler_para['domain']:
+        if not handler_para.domain_verify():
             handler_json.by_status(2)
             handler_json.write()
             return #invalid domain
@@ -57,6 +65,7 @@ class UserDomainSettingHandler(BaseHandler):
             handler_json.by_status(1)
             handler_json.write()
             return #already exist
-        usr.domain = handler_para['para']
+        usr.domain = handler_para['domain']
         handler_json.by_status(0)
+        handler_json.write()
         return

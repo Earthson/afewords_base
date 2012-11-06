@@ -54,7 +54,7 @@ app_handlers = {
     (r'/blogger/([0-9a-zA-Z]+)/blog', BloggerBlogHandler),
     (r'/blogger/([0-9a-zA-Z]+)', BloggerBlogHandler),
     (r'/blogger', BloggerBlogHandler),
-    (r'/user/([0-9a-zA-Z]+)', BloggerBlogHandler),
+    (r'/user/([_0-9a-zA-Z]+)', BloggerBlogHandler),
     (r'/write', ArticleWriteHandler),
     (r'/update-article', ArticleUpdateHandler),
     (r'/article-src-control', ArticleSrcHandler),
