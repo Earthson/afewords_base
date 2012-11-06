@@ -31,6 +31,7 @@ from handlers.settingshandlers import UserSettingFollowerHandler
 
 from handlers.settingposthandlers import UserInviteHandler
 from handlers.settingposthandlers import UserDomainSettingHandler
+from handlers.settingposthandlers import UserPasswordSettingHandler
 
 from handlers.bookhandlers import BookHandler
 from handlers.bookhandlers import BookChapterHandler
@@ -75,6 +76,7 @@ app_handlers = {
 
     (r'/settingpost-invite', UserInviteHandler),
     (r'/settingpost-user_domain', UserDomainSettingHandler),
+    (r'/settingpost-user_passwd', UserPasswordSettingHandler),
 }
 
 app_settings = {
