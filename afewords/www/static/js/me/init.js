@@ -292,7 +292,7 @@ $Init.init_all =function(){
         
     }};
     
-    if(href_string.search('/bloger') != -1 || 
+    if(href_string.search('/blogger') != -1 || 
         href_string.search('/follow') !=-1 || 
         href_string.search('/about') != -1 || 
         href_string.search('/like') != -1)

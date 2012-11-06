@@ -874,9 +874,9 @@
                         // submit right
                         _self_.handle_src_right(response, paras);
                     }
-                }, function(response){
+                }, function(statusText){
                     if( !del_flag ){
-                        $process.html("出现错误！").css("color", "red");
+                        $process.html("出现错误：" + statusText).css("color", "red");
                         $button.removeAttr("disabled").css("color", "black");  
                     }
                      

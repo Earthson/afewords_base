@@ -502,7 +502,7 @@ $Set.do_invite_friend = function(obj){
             $obj.attr('disabled','disabled').css('color', '#ccc');
         },
         function(response){
-            if(response.kind==0){
+            if(response.status==0){
                 $process.html(response.info).css('color','blue');
             }else{
                 $process.html(response.info).css('color','red');
