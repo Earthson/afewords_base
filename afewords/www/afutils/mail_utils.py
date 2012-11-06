@@ -4,6 +4,12 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import smtplib
 import logging
+import re
+
+_mail_rex = re.compile('^[_.0-9a-z-]+@([0-9a-z][0-9a-z-]+.)+[a-z]{2,4}$')
+
+def validate_email(email_address):
+    return _mail_rex.match(email_address) is not None
 
 
 def send_mail(mail_from, mail_to, subject, html_body):
