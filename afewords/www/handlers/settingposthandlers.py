@@ -69,3 +69,33 @@ class UserDomainSettingHandler(BaseHandler):
         handler_json.by_status(0)
         handler_json.write()
         return
+
+
+class UserPasswordSettingPara(BaseHandlerPara):
+    paradoc = {
+        'passwd_old' : '',
+        'pwsswd_new' : '',
+    }
+
+
+from pages.postjson import UserPasswordSettingJson
+
+class UserPasswordSettingHandler(BaseHandler):
+    @with_login_post
+    def post(self):
+        from afutils.security import encrypt
+        handler_para = UserPasswordSettingPara(self)
+        handler_json = UserPasswordSettingJson(self)
+        usr = self.current_user
+        if encrypt(handler_para['passwd_old']) != usr.password:
+            handler_json.by_status(1)
+            handler_json.write()
+            return #wrong password
+        if len(handler_para['passwd_new']) < 6:
+            handler_json.by_status(2)
+            handler_json.write()
+            return #password length < 6
+        usr.password = encrypt(handler_para['passwd_new'])
+        handler_json.by_status(0)
+        handler_json.write()
+        return #0
