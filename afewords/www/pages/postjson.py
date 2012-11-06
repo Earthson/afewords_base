@@ -237,5 +237,35 @@ class UserPasswordSettingJson(StatusJson):
 @with_attr
 class UserTagRemoveJson(StatusJson):
     error_info = {
-        0 : u'删除成功',
+        0 : u'',
+    }
+
+@with_attr
+class UserTagAddJson(StatusJson):
+    error_info = {
+        0 : u'',
+    }
+
+@with_attr
+class UserNotiReadAllJson(StatusJson):
+    error_info = {
+        0 : u'',
+    }
+
+@with_attr
+class UserNotiEmptyJson(StatusJson):
+    error_info = {
+        0 : u'',
+    }
+
+@with_attr
+class UserNotiReadJson(StatusJson):
+    error_info = {
+        0 : u'',
+    }
+
+@with_attr
+class UserNotiRemoveJson(StatusJson):
+    error_info = {
+        0 : u'',
     }

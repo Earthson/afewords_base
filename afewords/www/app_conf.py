@@ -34,6 +34,10 @@ from handlers.settinguserhandlers import UserDomainSettingHandler
 from handlers.settinguserhandlers import UserPasswordSettingHandler
 from handlers.settinguserhandlers import UserTagAddHandler
 from handlers.settinguserhandlers import UserTagRemoveHandler
+from handlers.settinguserhandlers import UserNotiReadAllHandler
+from handlers.settinguserhandlers import UserNotiEmptyHandler
+from handlers.settinguserhandlers import UserNotiReadHandler
+from handlers.settinguserhandlers import UserNotiRemoveHandler
 
 from handlers.bookhandlers import BookHandler
 from handlers.bookhandlers import BookChapterHandler
@@ -81,6 +85,10 @@ app_handlers = {
     (r'/settingpost-user_passwd', UserPasswordSettingHandler),
     (r'/settingpost-user_addtag', UserTagAddHandler),
     (r'/settingpost-user_removetag', UserTagRemoveHandler),
+    (r'/settingpost-user_noti_markall', UserNotiReadAllHandler),
+    (r'/settingpost-user_noti_empty', UserNotiEmptyHandler),
+    (r'/settingpost-user_noti_read', UserNotiReadHandler),
+    (r'/settingpost-user_noti_remove', UserNotiRemoveHandler),
 }
 
 app_settings = {

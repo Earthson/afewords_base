@@ -106,6 +106,7 @@ class UserTagRemovePara(BaseHandlerPara):
         'rm_tag' : '', #unicode
     }
 
+from pages.postjson import UserTagRemoveJson
 
 class UserTagRemoveHandler(BaseHandler):
     @with_login_post
@@ -124,6 +125,7 @@ class UserTagAddHandlerPara(BaseHandlerPara):
         'new_tag' : '',
     }
 
+from pages.postjson import UserTagAddJson
 
 class UserTagAddHandler(BaseHandler):
     @with_login_post
@@ -132,6 +134,75 @@ class UserTagAddHandler(BaseHandler):
         handler_json = UserTagAddJson(self)
         usr = self.current_user
         usr.add_tags([handler_para['new_tag']])
+        handler_json.by_status(0)
+        handler_json.write()
+        return #0
+
+
+from pages.postjson import UserNotiReadAllJson
+
+class UserNotiReadAllHandler(BaseHandler):
+    @with_login_post
+    def post(self):
+        handler_json = UserNotiReadAllJson(self)
+        usr = self.current_user
+        usr.read_all_notifications()
+        handler_json.by_status(0)
+        handler_json.write()
+        return #0
+
+from pages.postjson import UserNotiEmptyJson
+
+class UserNotiEmptyHandler(BaseHandler):
+    @with_login_post
+    def post(self):
+        handler_json = UserNotiEmptyJson(self)
+        usr = self.current_user
+        usr.empty_notifications()
+        handler_json.by_status(0)
+        handler_json.write()
+        return #0
+
+
+class UserNotiReadPara(BaseHandlerPara):
+    paradoc = {
+        'noti_ids' : None, #list, with argument noti_ids
+    }
+
+    def read(self):
+        self['noti_ids'] = self.handler.get_esc_args('noti_ids[]')        
+
+from pages.postjson import UserNotiReadJson
+
+class UserNotiReadHandler(BaseHandler):
+    @with_login_post
+    def post(self):
+        handler_para = UserNotiReadPara(self)
+        handler_json = UserNotiReadJson(self)
+        usr = self.current_user
+        usr.read_notifications(*handler_para['noti_ids'])
+        handler_json.by_status(0)
+        handler_json.write()
+        return #0
+
+
+class UserNotiRemovePara(BaseHandlerPara):
+    paradoc = {
+        'noti_ids' : None, #list, withargument noti_ids[]
+    }
+
+    def read(self):
+        self['noti_ids'] = self.handler.get_esc_args('noti_ids[]')
+
+from pages.postjson import UserNotiRemoveJson
+
+class UserNotiRemoveHandler(BaseHandler):
+    @with_login_post
+    def post(self):
+        handler_para = UserNotiRemovePara(self)
+        handler_json = UserNotiRemoveJson(self)
+        usr = self.current_user
+        usr.remove_notifications(*handler_para['noti_ids'])
         handler_json.by_status(0)
         handler_json.write()
         return #0
