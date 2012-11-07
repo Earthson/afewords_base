@@ -225,3 +225,47 @@ class UserDomainSettingJson(StatusJson):
         1 : u'已被注册，请换一个',
         2 : u'非法名称',
     }
+
+@with_attr
+class UserPasswordSettingJson(StatusJson):
+    error_info = {
+        0 : u'设置成功',
+        1 : u'密码错误',
+        2 : u'输入密码太弱',
+    }
+
+@with_attr
+class UserTagRemoveJson(StatusJson):
+    error_info = {
+        0 : u'',
+    }
+
+@with_attr
+class UserTagAddJson(StatusJson):
+    error_info = {
+        0 : u'',
+    }
+
+@with_attr
+class UserNotiReadAllJson(StatusJson):
+    error_info = {
+        0 : u'',
+    }
+
+@with_attr
+class UserNotiEmptyJson(StatusJson):
+    error_info = {
+        0 : u'',
+    }
+
+@with_attr
+class UserNotiReadJson(StatusJson):
+    error_info = {
+        0 : u'',
+    }
+
+@with_attr
+class UserNotiRemoveJson(StatusJson):
+    error_info = {
+        0 : u'',
+    }

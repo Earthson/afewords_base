@@ -251,16 +251,23 @@ class User(DataBox):
             return [ans[each] for each in noti_ids]
         return getter
 
-    def mark_notifications_as_read(self, *noti_ids):
+    def read_notifications(self, *noti_ids):
         noti_lib = self.lib.notification_lib
         for each in noti_ids:
             if each in noti_lib:
-                noti_lib.sub_dict['isread'] = True
+                noti_lib['isread'] = True
 
     def remove_notifications(self, *noti_ids):
         noti_lib = self.lib.notification_lib
         for each in noti_ids:
             del noti_lib[each]
+
+    def read_all_notifications(self):
+        noti_lib = self.lib.notification_lib
+        noti_all = noti_lib.load_all()
+        for each in noti_all.keys():
+            noti_all[each]['isread'] = True
+        noti_lib.set_all(noti_all)
 
     def empty_notifications(self):
         noti_lib = self.lib.notification_lib
