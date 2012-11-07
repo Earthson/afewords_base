@@ -12,11 +12,11 @@
 {% block left_page_html %}
 {% set subpage = doc['subpage_type'] %}
 <div id="page">
-<div id="page_title">知识谱</div>
+<div id="page_title">动态</div>
 <ul>
-<li><a href="/afewords-book"  class="current{{ int(subpage == "book") }}">知识谱</a></li>
-<li><a href="/user-book" class="current{{ int(subpage == "myself") }}">我的</a></li>
-<li><a href="/book-create" class="current{{ int(subpage == "create") }}">新建</a></li>
+<li><a href="/afewords-feed"  class="current{{ int(subpage == "feed") }}">动态</a></li>
+<li><a href="/user-like" class="current{{ int(subpage == "like") }}">收藏</a></li>
+<li><a href="/write" class="current{{ int(subpage == "write") }}">执笔</a></li>
 </ul>
 </div>
 {% end %}
@@ -27,7 +27,7 @@
 
 <div id="body_content">
 
-{% block afewords_book_html %}{% end %}
+{% block afewords_feed_html %}{% end %}
 
 </div>
 
