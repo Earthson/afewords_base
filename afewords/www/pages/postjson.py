@@ -288,6 +288,6 @@ class UserAvatarUploadJson(StatusJson):
 class UserAvatarCropJson(StatusJson):
     error_info = {
         0 : u'头像裁剪成功',
-        1 : u'请先上传图片',
+        1 : u'头像打开失败，请尝试先上传图片',
     }
     error_info = dict(error_info, **_img_error_doc)
