@@ -81,7 +81,7 @@ class IMGHandlerPara(BaseHandlerPara):
         'picture' : None, #img uploaded
     }
 
-    def read(self):
+    def read_img(self):
         try:
             self['picture'] = self.handler.request.files['picture'][0]
         except (KeyError, IndexError) as e:

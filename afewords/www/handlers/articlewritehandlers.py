@@ -234,7 +234,7 @@ class ArticleSrcPara(IMGHandlerPara):
         self.error_code = 0
         if self['src_type'] != 'img':
             return
-        IMGHandlerPara.read(self)
+        IMGHandlerPara.read_img(self)
         if self['do'] != 'new' and self.error_code == 55:
             self.error_code = 0
         

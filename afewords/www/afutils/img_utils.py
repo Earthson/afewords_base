@@ -37,3 +37,17 @@ def upload_img(uploaded_file, wl=16, wh=2000, hl=16, hh=2000):
     if not img_tmp.format:
         img_tmp.format = img_format
     return 0, img_tmp 
+
+
+def img_crop(img, box):
+    try:
+        box = [int(each) for each in box]
+    except ValueError, e:
+        return 56, 'Invalid crop arguments'
+    if not (0 <= box[0] <= img.size[0]) or not (0 <= box[1] <= img.size[1]):
+        return 56, 'Invalid crop arguments'
+    if box[0] >= box[2] or box[1] >= box[2]:
+        return 56, 'Invalid crop arguments'
+    tmp = img.crop(box)
+    tmp.format = img.format
+    return 0, tmp
