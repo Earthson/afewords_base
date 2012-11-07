@@ -423,11 +423,11 @@ $Set.do_save_password = function(obj){
     }
 
     var mes = {};
-    mes['old_pwd'] = old_pwd;
-    mes['new_pwd'] = new_pwd;
-    mes['type'] = 'password';
+    mes['passwd_old'] = old_pwd;
+    mes['passwd_new'] = new_pwd;
+    //mes['type'] = 'passwod';
 
-    $.postJSON('/settings',mes,
+    $.postJSON('/settingpost-user_passwd',mes,
 			function(){ 
                 process.html('<img src="/static/img/ajax.gif" />');
 	            $(obj).attr("disabled","disabled").css("color","#ccc");    
