@@ -540,7 +540,7 @@ $Set.do_modify_domain = function(){
         function(response){
             if(response.status==0){
                 $process.html('修改成功！').css('color','blue');
-                $('#body_content').find('div.my_domain').html('您的个性化链接为：http://www.afewords.com/me:' + mes['domain']);
+                $('#body_content').find('div.my_domain').html('您的个性化链接为：http://www.afewords.com/user/' + mes['domain']);
                 setTimeout(pop_page_close, 1000);            
             }else{
                  $this.removeAttr('disabled').css('color','black');
