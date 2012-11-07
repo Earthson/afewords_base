@@ -102,6 +102,7 @@ class BasePage(AFDocBase):
     __loader__ = Loader('templates')
     doc = {
         'page_type' : 'index',  # web page type, for nav chosed
+        'subpage_type' : 'feed',
         'main_url' : af_conf['main_url'],
         'title' : '子曰', # the web page title
         'description' : '', # the web page description, maybe for SEO

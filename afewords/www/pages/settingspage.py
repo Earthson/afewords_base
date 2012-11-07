@@ -50,9 +50,10 @@ class UserSettingAvatarPage(UserSettingsPage):
 
 @with_attr
 class UserSettingFollowPage(UserSettingsPage):
-    __template_file__ = 'settings/setting-follow.html'
+    __template_file__ = 'afewords-user/user-follow.html'
     doc = {
         'settings_type' : 'follow',
+        'subpage_type': 'follow',
         'follow_list' : [], # see [[ follow_list ]] in data_format
     }
 
@@ -68,9 +69,10 @@ class UserSettingTagPage(UserSettingsPage):
 
 @with_attr
 class UserSettingFollowerPage(UserSettingsPage):
-    __template_file__ = 'settings/setting-follower.html'
+    __template_file__ = 'afewords-user/user-follower.html'
     doc = {
         'settings_type' : 'follower',
+        'subpage_type': 'follower',
         'follower_list' : [],   # see [[ follower_list ]] in data_format
     }
 

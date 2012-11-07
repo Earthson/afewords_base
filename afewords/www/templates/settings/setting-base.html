@@ -7,12 +7,28 @@
  <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/write.css") }}" />
 {% end %}
 
+
+{% block left_page_html %}
+<div id="page">
+<div id="page_title">资料</div>
+<ul>
+<li><a href="/settings-domain"  class="current1">链接</a></li>
+<li><a href="/settings-avatar">头像</a></li>
+<li><a href="/settings-password" >密码</a></li>
+<li><a href="/draft" >草稿</a></li>
+<li><a href="/notice" >消息</a></li>
+</ul>
+</div>
+{% end %}
+
+
 {# this page for setting #}
 
 {% block user_base_right_body %}
 <script type="text/javascript" >
 var settings_type = "{{ doc['settings_type'] }}";
 </script>
+
 
 <!--
 <div id="top_nav">
