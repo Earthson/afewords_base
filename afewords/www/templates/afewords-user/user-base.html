@@ -8,12 +8,13 @@
 
 
 {% block left_page_html %}
+{% set subpage = doc['subpage_type'] %}
 <div id="page">
 <div id="page_title">人群</div>
 <ul>
-<li><a href="/afewords-user"  class="current1">人群</a></li>
-<li><a href="/settings-follow">我关注</a></li>
-<li><a href="/settings-follower" >关注我</a></li>
+<li><a href="/afewords-user"  class="current{{ int(subpage == "user") }}">人群</a></li>
+<li><a href="/settings-follow" class="current{{ int(subpage == "follow") }}">我关注</a></li>
+<li><a href="/settings-follower" class="current{{ int(subpage == "follower") }}">关注我</a></li>
 </ul>
 </div>
 {% end %}
@@ -23,7 +24,7 @@
 
 {% block user_base_right_body %}
 <script type="text/javascript">
-var settings_type = "{{ doc['settings_type'] }}";
+var settings_type = "{{ doc['subpage_type'] }}";
 </script>
 
 
