@@ -16,6 +16,15 @@ class StatusJson(BaseJson):
         self['info'] = self.error_info[status]
 
 
+_img_error_doc = {
+    51 : u'不支持的图片类型',
+    52 : u'上传文件过大',
+    53 : u'非法图片',
+    54 : u'图片长度和宽度过大',
+    55 : u'请上传图片',
+    56 : u'非法裁剪参数',
+}
+
 @with_attr
 class LoginStatusJson(BaseJson):
     error_info = {
@@ -150,13 +159,9 @@ class ArticleSrcJson(StatusJson):
         16: u'您无权操作该文章',
         17: u'您无权在此发布',
         18: u'资源不存在',
-        51: u'不支持的图片类型',
-        52: u'上传图片太大',
-        53: u'非法图片',
-        54: u'图片过宽或过高',
-        55: u'请上传图片',
-        56: u'资源添加失败',
+        19: u'资源添加失败',
     }
+    error_info = dict(error_info, **_img_error_doc)
 
     def as_new(self, article_obj):
         '''for article'''
@@ -269,3 +274,11 @@ class UserNotiRemoveJson(StatusJson):
     error_info = {
         0 : u'',
     }
+
+
+@with_attr
+class UserAvatarSettingJson(StatusJson):
+    error_info = {
+        0 : u'头像设置成功',
+    }
+    error_info = dict(error_info, **_img_error_doc)

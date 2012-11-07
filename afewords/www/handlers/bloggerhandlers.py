@@ -32,6 +32,8 @@ class BaseBloggerHandler(BaseHandler):
         else:
             self.author = User.by_id(uid)
             if self.author is None:
+                self.author = User.find_one({'domain':uid})
+            if self.author is None:
                 self.send_error(404)
                 return
 

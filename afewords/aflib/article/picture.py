@@ -74,20 +74,27 @@ class Picture(DataBox):
     @db_property
     def thumb_os_path():
         def getter(self):
-            return self.thumb_path + self.data['thumb_name']
+            if self.data['thumb_name']:
+                return self.thumb_path + self.data['thumb_name']
+            return None
         return getter
 
     @db_property
     def file_os_path():
         def getter(self):
-            return self.pic_path + self.data['file_name']
+            if self.data['file_name']:
+                return self.pic_path + self.data['file_name']
+            return None
         return getter
 
     @db_property
     def thumb_file():
         def getter(self):
             import Image
-            return Image.open(self.data['thumb_name'])
+            f_ospath = self.thumb_os_path
+            if f_ospath:
+                return Image.open(self.data['thumb_name'])
+            return None
         def setter(self, value):
             if not self.data['thumb_name']:
                 self.data['thumb_name'] = self.file_name_gen(value.format, True)
@@ -100,7 +107,10 @@ class Picture(DataBox):
     def pic_file():
         def getter(self):
             import Image
-            return Image.open(self.data['file_name'])
+            f_ospath = self.file_os_path
+            if f_ospath:
+                return Image.open(self.data['file_name'])
+            return None
         def setter(self, value):
             if not self.data['file_name']:
                 self.data['file_name'] = self.file_name_gen(value.format)

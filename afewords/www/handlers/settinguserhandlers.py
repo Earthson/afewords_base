@@ -61,7 +61,9 @@ class UserDomainSettingHandler(BaseHandler):
             handler_json.by_status(2)
             handler_json.write()
             return #invalid domain
-        if User.is_exist({'domain':handler_para['domain']}):
+        if User.is_exist({'domain':handler_para['domain']}) or \
+                User.by_id(handler_para['domain']) is not None or \
+                User.is_exist({'email':handler_para['domain']}):
             handler_json.by_status(1)
             handler_json.write()
             return #already exist
@@ -203,6 +205,59 @@ class UserNotiRemoveHandler(BaseHandler):
         handler_json = UserNotiRemoveJson(self)
         usr = self.current_user
         usr.remove_notifications(*handler_para['noti_ids'])
+        handler_json.by_status(0)
+        handler_json.write()
+        return #0
+
+from afutils.img_utils import upload_img, img_crop
+
+class UserAvatarSettingPara(IMGHandlerPara):
+    paradoc = {
+        'do' : 'modify', #modify/new
+        'sx' : 0, #position start, x
+        'sy' : 0, #position start, y
+        'ex' : 0, #position end, x
+        'ey' : 0, #position end, y
+        'picture' : None, #file uploaded
+    }
+
+    def read(self):
+        self.paradoc = dict([(ek, self.handler.get_esc_arg(ek, ev))
+                                for ek, ev in self.paradoc.items()])
+        self.error_code = 0
+        IMGHandlerPara.read_img(self)
+        if self['do'] != 'new' and self.error_code == 55:
+            self.error_code = 0
+
+from pages.postjson import UserAvatarSettingJson
+
+class UserAvatarSettingHandler(BaseHandler):
+    @with_login_post
+    def post(self):
+        handler_para = UserAvatarSettingPara(self)
+        handler_json = UserAvatarSettingJson(self)
+        usr = self.current_user
+        usr_avatar = usr.avatar
+        if handler_para.error_code != 0:
+            handler_json.by_status(handler_para.error_code)
+            handler_json.write()
+            return #error while read para
+        tmp_img = handler_para['picture']
+        if handler_para['do'] == 'modify':
+            tmp_img = usr_avatar.pic_file
+        else:
+            usr_avatar.pic_file = tmp_img
+        if tmp_img is None:
+            handler_json.by_status(55)
+            handler_json.write()
+            return #img not exist
+        status, img_thumb = img_crop(tmp_img, [handler_para[each] for each in
+                                        ['sx', 'sy', 'ex', 'ey']])
+        if status != 0:
+            handler_json.by_status(status)
+            handler_json.write()
+            return #invalid crop arguments
+        usr_avatar.thumb_file = img_thumb
         handler_json.by_status(0)
         handler_json.write()
         return #0

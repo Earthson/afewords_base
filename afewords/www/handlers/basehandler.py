@@ -76,6 +76,24 @@ class BaseHandlerPara(object):
         self.paradoc[key] = value
 
 
+class IMGHandlerPara(BaseHandlerPara):
+    paradoc = {
+        'picture' : None, #img uploaded
+    }
+
+    def read_img(self):
+        try:
+            self['picture'] = self.handler.request.files['picture'][0]
+        except (KeyError, IndexError) as e:
+            self['picture'] = None
+        if self['picture'] is None:
+            self.error_code = 55
+        else:
+            status, info = upload_img(self['picture'])
+            if status == 0:
+                self['picture'] = info
+            self.error_code = status
+
 class BaseHandler(RequestHandler):
     def redirect_with_para(self, url, paradoc):
         self.redirect(url_with_para(url, paradoc))

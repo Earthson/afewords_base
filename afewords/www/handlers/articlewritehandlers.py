@@ -204,7 +204,7 @@ class ArticleUpdateHandler(BaseArticleUpdateHandler):
 
 from afutils.img_utils import upload_img
 
-class ArticleSrcPara(BaseHandlerPara):
+class ArticleSrcPara(IMGHandlerPara):
     paradoc = {
         'do': 'new',    # unicode, new/edit/remove
         'article_id': '',   # unicode
@@ -232,19 +232,12 @@ class ArticleSrcPara(BaseHandlerPara):
         self.paradoc = dict([(ek, self.handler.get_esc_arg(ek, ev)) 
                                     for ek, ev in self.paradoc.items()])
         self.error_code = 0
-        if self.paradoc['src_type'] != 'img':
+        if self['src_type'] != 'img':
             return
-        try:
-            self.paradoc['picture'] = self.handler.request.files['picture'][0]
-        except KeyError, e:
-            self.paradoc['picture'] = None
-        if self.paradoc['picture']:
-            status, info = upload_img(self.paradoc['picture'])
-            if status == 0:
-                self.paradoc['picture'] = info
-            self.error_code = status
-        elif self.paradoc['do'] == 'new':
-            self.error_code = 55
+        IMGHandlerPara.read_img(self)
+        if self['do'] != 'new' and self.error_code == 55:
+            self.error_code = 0
+        
 
 from pages.postjson import ArticleSrcJson
 
@@ -277,7 +270,7 @@ class ArticleSrcHandler(BaseArticleUpdateHandler):
             src_obj = scls()
             tmps = self.article_obj.add_ref(handler_paras['src_type'], src_obj)
             if tmps is False:
-                handler_json.by_status(56)
+                handler_json.by_status(19)
                 handler_json.write()
                 return #Add Ref Failed
             handler_json.as_new_src(src_obj)

@@ -53,7 +53,11 @@ class RegisterHandler(BaseHandler):
 
     @without_login
     def get(self):
+        from global_info import recent_blogs
+        from article.blog import Blog
         page = RegisterPage(self)
+        page['blog_list'] = [each.obj_info_view_by() 
+                    for each in Blog.by_ids(recent_blogs.get_slice(-20))]
         return page.render()
 
     @without_login_post

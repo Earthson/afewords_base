@@ -13,7 +13,6 @@ from afconfig import *
 from app_conf import *
 
 def app_gen(handlers, settings, debug=False):
-    
     if debug:
         settings.update({'debug':True})
     return Application(handlers, **settings)
