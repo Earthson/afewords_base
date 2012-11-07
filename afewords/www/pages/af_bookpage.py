@@ -15,6 +15,7 @@ class AFBookPage(BasePage):
 @with_attr
 class AFBookMyselfPage(BasePage):
     __template_file__ = "afewords-book/book-myself.html"
+    ''' for url /user-book '''
     doc = {
         'page_type': 'book',
         'subpage_type': 'myself',
