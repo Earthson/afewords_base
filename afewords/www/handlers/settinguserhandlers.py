@@ -206,3 +206,30 @@ class UserNotiRemoveHandler(BaseHandler):
         handler_json.by_status(0)
         handler_json.write()
         return #0
+
+from afutils.img_utils import upload_img
+
+class UserAvatarSettingPara(IMGHandlerPara):
+    paradoc = {
+        'do' : 'modify', #modify/new
+        'sx' : 0, #position start, x
+        'sy' : 0, #position start, y
+        'ex' : 0, #position end, x
+        'ey' : 0, #position end, y
+        'picture' : None, #file uploaded
+    }
+
+    def read(self):
+        self.paradoc = dict([(ek, self.handler.get_esc_arg(ek, ev))
+                                for ek, ev in self.paradoc.items()])
+        self.error_code = 0
+        IMGHandlerPara.read(self)
+        if self['do'] != 'new' and self.error_code == 55:
+            self.error_code = 0
+
+from pages.postjson import UserAvatarSettingJson
+
+class UserAvatarSettingHandler(BaseHandler):
+    @with_login_post
+    def post(self):
+        pass
