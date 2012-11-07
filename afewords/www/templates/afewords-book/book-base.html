@@ -15,8 +15,8 @@
 <div id="page_title">知识谱</div>
 <ul>
 <li><a href="/afewords-book"  class="current{{ int(subpage == "book") }}">知识谱</a></li>
-<li><a href="/user-book" class="current{{ int(subpage == "follow") }}">我的</a></li>
-<li><a href="/book-create" class="current{{ int(subpage == "follower") }}">新建</a></li>
+<li><a href="/user-book" class="current{{ int(subpage == "myself") }}">我的</a></li>
+<li><a href="/book-create" class="current{{ int(subpage == "create") }}">新建</a></li>
 </ul>
 </div>
 {% end %}
@@ -24,10 +24,6 @@
 {# this page for setting #}
 
 {% block user_base_right_body %}
-<script type="text/javascript">
-var settings_type = "{{ doc['subpage_type'] }}";
-</script>
-
 
 <div id="body_content">
 
