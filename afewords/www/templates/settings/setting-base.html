@@ -9,14 +9,15 @@
 
 
 {% block left_page_html %}
+{% set subpage = doc['settings_type'] %}
 <div id="page">
 <div id="page_title">资料</div>
 <ul>
-<li><a href="/settings-domain"  class="current1">链接</a></li>
-<li><a href="/settings-avatar">头像</a></li>
-<li><a href="/settings-password" >密码</a></li>
-<li><a href="/draft" >草稿</a></li>
-<li><a href="/notice" >消息</a></li>
+<li><a href="/settings-domain"  class="current{{ int(subpage == "domain") }}">链接</a></li>
+<li><a href="/settings-avatar" class="current{{ int(subpage == "avatar") }}">头像</a></li>
+<li><a href="/settings-password" class="current{{ int(subpage == "password") }}">密码</a></li>
+<li><a href="/draft" class="current{{ int(subpage == "draft") }}">草稿</a></li>
+<li><a href="/notice" class="current{{ int(subpage == "notice") }}">消息</a></li>
 </ul>
 </div>
 {% end %}

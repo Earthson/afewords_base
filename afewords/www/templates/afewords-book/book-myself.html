@@ -1,0 +1,40 @@
+{% extends "book-base.html" %}
+
+{% block afewords_book_html %}
+
+
+<div class="like settings margin-left-0 my_book_image">
+    <div class="page_nav"><span>我的知识谱</span></div>
+    <div class="book_card_wrap">
+    {% if len(book_list) == 0 %}
+    您没有知识谱
+    {% else %}
+        {% for item in book_list %}
+            <div class="book_card_one">
+            <table summary="" >
+            <tr><td>
+            <div class="book_card">
+            <div class="book_card_name"><a href="/book/{{ item['book_id'] }}" target="_blank">{{ item['book_name'] }}</a></div>
+            </div></td><td>
+            <div class="book_card_feed">
+            {#<span class="card_tip"><a href="/bloger/{{ item['book_owner_id'] }}" target="_blank">{{ item['book_owner_name'] }}</a>审</span>#}
+            {#<span class="card_tip"><a href="#">讨论</a></span>
+            <span class="card_tip"><a href="#">建议</a></span>
+            <span class="card_tip"><a href="#">文章</a></span>#}
+            <span class="card_tip"><a href="/book/{{ item['book_id'] }}?want=catalog">目录</a></span>
+            <span class="card_tip">完成度 {{ item['book_complete'] }}%({{item['book_complete_count']}}/{{item['book_node_sum']}})</span>
+            <span class="card_tip">
+                <a href="/book-edit/{{ item['book_id'] }}?want=catalog" target="_blank" class="book_modify">修改目录</a>
+                <a href="/book-edit/{{ item['book_id'] }}?want=summary" class="book_modify" target="_blank">修改摘要</a>
+            </span>
+            </div></td>
+            </tr>
+            </table>
+            </div>
+        {% end %}   
+    {% end %}
+    {{ create_page_block('/user-book?page=', current_page=page, sum_count=total_num, page_cap=8) }} 
+    </div>
+    </div>
+    
+{% end %}
