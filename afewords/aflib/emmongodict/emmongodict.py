@@ -122,6 +122,7 @@ class EmMongoDict(object):
     def __setitem__(self, key, value):
         if self.path is not None:
             key = self.path+'.'+str(key)
+        print {key:value}
         return self.coll.update(spec=self.spec, document={'$set':{key:value}})
 
     @auto_coll_do
@@ -190,6 +191,7 @@ class EmMongoDict(object):
         if not self.path:
             return self.coll.update(spec=self.spec,
                     document=newdoc)
+        print {self.path:newdoc}
         return self.coll.update(spec=self.spec,
                     document={'$set':{self.path:newdoc}})
 

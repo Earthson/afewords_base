@@ -11,9 +11,8 @@ for each in user_all:
     for tag in tmp.keys():
         if tag == u'alltags':
             continue
-        try:
+        if not tmp[tag]:
+            continue
+        if isinstance(tmp[tag][0], list):
             tmp[tag] = [(e._id, e.release_time) for e in Blog.by_ids(tmp[tag])]
-        except:
-            pass
-    each.lib['tag_lib'] = tmp
-    #tag_lib.set_all(tmp)
+    tag_lib.set_all(tmp)
