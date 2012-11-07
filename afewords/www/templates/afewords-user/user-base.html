@@ -1,0 +1,49 @@
+{% extends "../user-base.html"%}
+
+
+{% block css_link %}
+ <link rel="stylesheet" type="text/css" href="{{ static_url("css/jquery.Jcrop.css") }}" />
+ <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/write.css") }}" />
+{% end %}
+
+
+{% block left_page_html %}
+<div id="page">
+<div id="page_title">人群</div>
+<ul>
+<li><a href="/afewords-user"  class="current1">人群</a></li>
+<li><a href="/settings-follow">我关注</a></li>
+<li><a href="/settings-follower" >关注我</a></li>
+</ul>
+</div>
+{% end %}
+
+
+{# this page for setting #}
+
+{% block user_base_right_body %}
+<script type="text/javascript">
+var settings_type = "{{ doc['settings_type'] }}";
+</script>
+
+
+<div id="body_content">
+
+{% block afewords_user_html %}{% end %}
+
+{# #bodycontent end #}
+</div>
+
+
+
+
+{# user_base_right_body end  #}
+{% end %}
+
+{% block script_bottom %}
+
+<script type="text/javascript" src="{{ static_url("js/jq/jquery.Jcrop.min.js") }}" ></script>
+<script type="text/javascript" src="{{ static_url("js/me/login.js") }}" ></script>
+<script type="text/javascript" src="{{ static_url("js/me/write.js") }}" ></script>
+
+{% end %}
