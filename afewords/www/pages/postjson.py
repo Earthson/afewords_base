@@ -277,8 +277,17 @@ class UserNotiRemoveJson(StatusJson):
 
 
 @with_attr
-class UserAvatarSettingJson(StatusJson):
+class UserAvatarUploadJson(StatusJson):
     error_info = {
-        0 : u'头像设置成功',
+        0 : u'头像上传成功',
+    }
+    error_info = dict(error_info, **_img_error_doc)
+
+
+@with_attr
+class UserAvatarCropJson(StatusJson):
+    error_info = {
+        0 : u'头像裁剪成功',
+        1 : u'请先上传图片',
     }
     error_info = dict(error_info, **_img_error_doc)

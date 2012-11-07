@@ -211,44 +211,55 @@ class UserNotiRemoveHandler(BaseHandler):
 
 from afutils.img_utils import upload_img, img_crop
 
-class UserAvatarSettingPara(IMGHandlerPara):
+class UserAvatarUploadPara(IMGHandlerPara):
     paradoc = {
-        'do' : 'modify', #modify/new
-        'sx' : 0, #position start, x
-        'sy' : 0, #position start, y
-        'ex' : 0, #position end, x
-        'ey' : 0, #position end, y
         'picture' : None, #file uploaded
     }
 
     def read(self):
-        self.paradoc = dict([(ek, self.handler.get_esc_arg(ek, ev))
-                                for ek, ev in self.paradoc.items()])
-        self.error_code = 0
         IMGHandlerPara.read_img(self)
-        if self['do'] != 'new' and self.error_code == 55:
-            self.error_code = 0
 
-from pages.postjson import UserAvatarSettingJson
+from pages.postjson import UserAvatarUploadJson
 
-class UserAvatarSettingHandler(BaseHandler):
+class UserAvatarUploadHandler(BaseHandler):
     @with_login_post
     def post(self):
-        handler_para = UserAvatarSettingPara(self)
-        handler_json = UserAvatarSettingJson(self)
+        handler_para = UserAvatarUploadPara(self)
+        handler_json = UserAvatarUploadJson(self)
         usr = self.current_user
-        usr_avatar = usr.avatar
         if handler_para.error_code != 0:
             handler_json.by_status(handler_para.error_code)
             handler_json.write()
-            return #error while read para
-        tmp_img = handler_para['picture']
-        if handler_para['do'] == 'modify':
-            tmp_img = usr_avatar.pic_file
-        else:
-            usr_avatar.pic_file = tmp_img
+            return #error while upload
+        usr_avatar = usr.avatar
+        usr_avatar.pic_file = handler_para['picture']
+        usr_avatar.thumb_file = handelr_para['picture']
+        handler_json.by_status(0)
+        handler_json.write()
+        return #0
+
+
+class UserAvatarCropPara(IMGHandlerPara):
+    paradoc = {
+        'sx' : 0, #position start, x
+        'sy' : 0, #position start, y
+        'ex' : 0, #position end, x
+        'ey' : 0, #position end, y
+    }
+
+
+from pages.postjson import UserAvatarCropJson
+
+class UserAvatarCropHandler(BaseHandler):
+    @with_login_post
+    def post(self):
+        handler_para = UserAvatarCropPara(self)
+        handler_json = UserAvatarCropJson(self)
+        usr = self.current_user
+        usr_avatar = usr.avatar
+        tmp_img = usr_avatar.pic_file
         if tmp_img is None:
-            handler_json.by_status(55)
+            handler_json.by_status(1)
             handler_json.write()
             return #img not exist
         status, img_thumb = img_crop(tmp_img, [handler_para[each] for each in
