@@ -61,7 +61,9 @@ class UserDomainSettingHandler(BaseHandler):
             handler_json.by_status(2)
             handler_json.write()
             return #invalid domain
-        if User.is_exist({'domain':handler_para['domain']}):
+        if User.is_exist({'domain':handler_para['domain']}) or \
+                User.by_id(handler_para['domain']) is not None or \
+                User.is_exist({'email':handler_para['domain']}):
             handler_json.by_status(1)
             handler_json.write()
             return #already exist
