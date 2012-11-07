@@ -13,6 +13,8 @@ from generator import *
 
 from authority import *
 
+from operator import itemgetter, attrgetter
+
 
 @with_conn
 class UserLibDoc(AFDocument):
@@ -54,8 +56,8 @@ class UserLibDoc(AFDocument):
             }
         }, 
         'tag_lib' : {
-            #tagname : blog_id_set
-            basestring : [ObjectId],
+            #tagname : [[blog_id, releasetime]]
+            basestring : [[ObjectId, datetime]],
         },
     }
 
@@ -320,21 +322,13 @@ class User(DataBox):
 
     def add_to_tag(self, blogobj, tagname):
         blogobj.add_to_tag(tagname)
-        tagmem = self.lib.tag_lib[tagname]
-        if tagmem is None:
-            self.lib.tag_lib[tagname] = []
-            tagmem = []
-        tagmem = set(tagmem)
-        tagmem.add(str(blogobj._id))
-        self.lib.tag_lib[tagname] = list(tagmem)
+        tag_blogs = self.lib.tag_lib.sub_list(tagname)
+        tag_blogs.add_to_set([blogobj._id, blogobj.release_time])
 
     def remove_from_tag(self, blogobj, tagname):
         blogobj.remove_from_tag(tagname)
-        tagmem = self.lib.tag_lib[tagname]
-        if tagmem is not None:
-            tagmem = set(tagmem)
-            tagmem.discard(str(blogobj._id))
-            self.lib.tag_lib[tagname] = list(tagmem)
+        tag_blogs = self.lib.tag_lib.sub_list(tagname)
+        tag_blogs.pull([blogobj._id, blogobj.release_time])
 
     def add_tags(self, new_tags):
         new_tags = set(new_tags)
@@ -354,17 +348,25 @@ class User(DataBox):
         for each in new_tags - old_tags:
             self.add_to_tag(blogobj, each)
 
-    def blogs_from_tag(self, tagname):
+    def blogs_from_tag(self, tagname, vfrom=0, vlim=20):
         from article.blog import Blog
         if not tagname:
-            return
-        ans = Blog.by_ids(self.lib.tag_lib[tagname])
-        #ans = [Blog.by_id(each) for each in self.lib.tag_lib[tagname]]
-        if ans:
-            self.lib.tag_lib.sub_list(tagname).set_all([each._id 
-                                                    for each in ans])
-            #self.lib.tag_lib[tagname] = [each._id for each in ans]
-        return ans
+            return [], 0
+        tag_blogs = self.lib.tag_lib.sub_list(tagname)
+        toview = tag_blogs.load_all()
+        toview = sorted(toview, key=itemgetter(1), reverse=True)
+        len_toview = len(toview)
+        if vfrom >= len_toview:
+            return [], len_toview
+        if vfrom + vlim > len_toview:
+            vlim = len_toview - vfrom
+        toview = [tuple(each) for each in toview[vfrom:(vfrom+vlim)]]
+        tmp = set(toview)
+        toview = Blog.by_ids([each[0] for each in toview])
+        toview.sort()
+        tmp2 = set((each._id, each.release_time) for each in toview)
+        tag_blogs.pull(*tuple(tmp - tmp2)) #try remove blog not existed
+        return toview, len_toview
 
     @db_property
     def drafts_info():
@@ -375,17 +377,28 @@ class User(DataBox):
             return [each.basic_info for each in drafts if each]
         return getter
 
-    def blogs_info_view_by(self, usr=None, tagname=None):
+    def blogs_info_view_by(self, usr=None, tagname=None, vfrom=0, vlim=20):
         from article.blog import Blog
         if tagname and tagname != 'default':
-            toview = self.blogs_from_tag(tagname)
-            toview.sort()
+            toview, len_toview = self.blogs_from_tag(tagname, vfrom, vlim)
         else:
-            toview = self.blogs
+            toview = self.blogids
+            len_toview = len(toview)
+            if vfrom > len_toview:
+                return [], len_toview
+            if vfrom + vlim > len_toview:
+                vlim = len_toview - vfrom
+            toview = toview[vfrom:(vfrom+vlim)]
+            tmp = set(toview)
+            toview = Blog.by_ids(toview)
+            toview.sort()
+            tmp2 = set(each._id for each in toview)
+            self.lib.blog_list.pull(*tuple(tmp - tmp2)) 
+            #try remove item not exist
         if usr: 
             return [each.obj_info_view_by('basic_info', usr) 
-                        for each in toview]
-        return [each.basic_info for each in toview]
+                        for each in toview], len_toview
+        return [each.basic_info for each in toview], len_toview
 
     def post_status(self, statusobj):
         statusid = statusobj._id
@@ -462,7 +475,6 @@ class User(DataBox):
         uinfo['isme'] = (self.uid == usr.uid)
         return uinfo
         
-        
 
     def is_like(self, obj):
         return obj.uid in self.lib.favorite_lib
@@ -512,13 +524,10 @@ class User(DataBox):
         return getter
 
     @db_property
-    def blogs():
+    def blogids():
         from article.blog import Blog
         def getter(self):
-            ids = self.lib.blog_list.load_all()
-            ans = Blog.by_ids(ids)
-            self.lib.blog_list.set_all([each._id for each in ans])
-            return ans[::-1]
+            return self.lib.blog_list.load_all()[::-1]
         return getter
 
     @db_property

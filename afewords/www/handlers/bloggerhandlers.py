@@ -2,7 +2,6 @@
 
 from basehandler import *
 from pages.bloggerpage import BloggerBlogPage
-from afutils.page_utils import page_split
 
 
 class BloggerBlogPara(BaseHandlerPara):
@@ -53,9 +52,12 @@ class BloggerBlogHandler(BaseBloggerHandler):
             page['author'] = author.basic_info
         page['tag_list'] = author.lib.tag_lib['alltags']
         page['current_tag'] = paras['tag']
-        blogs_info = author.blogs_info_view_by(usr, page['current_tag'])
-        page['blog_list'], page['page_list'] = page_split(blogs_info,
-                        page['current_page'], 10)
+        enum = 7
+        page['blog_list'], blog_cnt = author.blogs_info_view_by(usr, 
+                page['current_tag'], vfrom=enum*(page['current_page']-1), 
+                vlim=enum)
+        page['page_list'] = [i/enum + 1 
+                for i in range(0, blog_cnt, enum)]
         #for paging support 
         paradoc = dict()
         if paras['tag'] != 'default':
