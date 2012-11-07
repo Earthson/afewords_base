@@ -510,7 +510,8 @@ class Article(DataBox):
                     usr=None, env=None, **kwargs):
         ans = self.get_propertys(info_name)[0]
         ans['permission'] = auth_str(self.authority_verify(usr, env, **kwargs))
-        ans['author'] = usr.as_viewer_to_uinfo(ans['author'])
+        if usr:
+            ans['author'] = usr.as_viewer_to_uinfo(ans['author'])
         return ans
 
     obj_info_view_by = article_info_view_by
