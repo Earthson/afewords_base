@@ -93,7 +93,10 @@ class Picture(DataBox):
             import Image
             f_ospath = self.thumb_os_path
             if f_ospath:
-                return Image.open(self.data['thumb_name'])
+                try:
+                    return Image.open(self.data['thumb_name'])
+                except IOError, e:
+                    return None
             return None
         def setter(self, value):
             if not self.data['thumb_name']:
@@ -109,7 +112,10 @@ class Picture(DataBox):
             import Image
             f_ospath = self.file_os_path
             if f_ospath:
-                return Image.open(self.data['file_name'])
+                try:
+                    return Image.open(self.data['file_name'])
+                except IOError, e:
+                    return None
             return None
         def setter(self, value):
             if not self.data['file_name']:
