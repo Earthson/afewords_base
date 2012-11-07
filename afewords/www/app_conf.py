@@ -38,6 +38,8 @@ from handlers.settinguserhandlers import UserNotiReadAllHandler
 from handlers.settinguserhandlers import UserNotiEmptyHandler
 from handlers.settinguserhandlers import UserNotiReadHandler
 from handlers.settinguserhandlers import UserNotiRemoveHandler
+from handlers.settinguserhandlers import UserAvatarUploadHandler
+from handlers.settinguserhandlers import UserAvatarCropHandler
 
 from handlers.bookhandlers import BookHandler
 from handlers.bookhandlers import BookChapterHandler
@@ -89,6 +91,8 @@ app_handlers = {
     (r'/settingpost-user_noti_empty', UserNotiEmptyHandler),
     (r'/settingpost-user_noti_read', UserNotiReadHandler),
     (r'/settingpost-user_noti_remove', UserNotiRemoveHandler),
+    (r'/settingpost-user_avatar_upload', UserAvatarUploadHandler),
+    (r'/settingpost-user_avatar_crop', UserAvatarCropHandler),
 }
 
 app_settings = {
