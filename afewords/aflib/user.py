@@ -575,5 +575,5 @@ class User(DataBox):
         def getter(self):
             from article.catalog import Catalog
             cids = self.lib.managed_catalog_lib.keys()
-            return Catalog.by_ids(cids)
+            return sorted(Catalog.by_ids(cids), reverse=True)
         return getter

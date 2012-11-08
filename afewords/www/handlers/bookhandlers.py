@@ -38,7 +38,7 @@ class BookHandler(BaseHandler):
         if handler_page['isedit'] is True:
             handler_page['book'] = catalog_obj.edit_info
         else:
-            handler_page['book'] = catalog_obj.obj_info_view_by('baisc_info', 
+            handler_page['book'] = catalog_obj.obj_info_view_by('basic_info', 
                                     usr=usr)
         handler_page.page_init()
         handler_page.render()

@@ -45,6 +45,8 @@ from handlers.bookhandlers import BookHandler
 from handlers.bookhandlers import BookChapterHandler
 
 from handlers.afbookhandlers import AFBookHandler
+from handlers.afbookhandlers import AFUserBookHandler
+from handlers.afbookhandlers import AFBookCreateHandler
 
 app_handlers = {
     (r'/', IndexHandler), #MainHandler),
@@ -83,6 +85,8 @@ app_handlers = {
     (r'/book/([0-9a-zA-Z]+)/catalog/([0-9]+)', BookChapterHandler),
 
     (r'/afewords-book', AFBookHandler),
+    (r'/user-book', AFUserBookHandler),
+    (r'/book-create', AFBookCreateHandler),
 
     (r'/settingpost-article_remove', ArticleRemoveHandler),
 

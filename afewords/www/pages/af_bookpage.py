@@ -20,7 +20,7 @@ class AFBookMyselfPage(BasePage):
         'page_type': 'book',
         'subpage_type': 'myself',
         'current_page': 1,
-        'pagind_html': '',  # for paging
+        'paging_html': '',  # for paging
         'book_list': None,  # list
     }
 
