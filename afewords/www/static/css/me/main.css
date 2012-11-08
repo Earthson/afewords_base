@@ -109,7 +109,7 @@ display: inline-block;line-height: 40px;text-align: center;}
 #left2-nav li a:hover{text-decoration: none;}
 #left2-nav li a.current1{color: black;background-color: #a66f00;color: white;}
 
-#right2{width: 820px;float: right;height: auto;}
+#right2{width: 820px;float: right;height: auto; min-height: 300px;}
 
 #top_nav{width: 100%;float: left;margin-top: 20px;}
 #top_nav ul{list-style-type: none;line-height: 40px;float: left;border-bottom: #ccc 1px dotted;background-color: #ffffff;
@@ -273,7 +273,7 @@ right: 10px;}
 
 /************** for invite **************/
 #body_content .invite{}
-#body_content .email_textarea{width: 400px;height: 100px;resize:none;padding: 5px;}
+#body_content .email_textarea{width: 400px;height: 20px;resize:none;padding: 5px;}
 
 
 #right3{width: 200px;float: right;height: auto;}

@@ -15,9 +15,11 @@ class UserSettingsPage(BasePage):
 
 @with_attr
 class UserSettingInvitePage(UserSettingsPage):
-    __template_file__ = 'settings/setting-invite.html'
+    __template_file__ = 'afewords-user/user-invite.html'
     doc = {
         'settings_type' : 'invite',
+        'page_type': 'user',
+        'subpage_type': 'invite',
         'invite_count' : 0,
     }
     
