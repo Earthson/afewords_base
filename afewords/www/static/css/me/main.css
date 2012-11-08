@@ -526,7 +526,7 @@ min-height: 1px;}
 #feed .f-com .f-c-w-submit button{border:#ccc 1px solid;float: right;height: 36px;line-height: 35px;width: 80px;margin-right: 2px;}
 
 
-#page{float: left; width: 80%;position: relative;border:#ccc 1px dotted;}
+#page{float: left; width: 80%;position: relative;border:#aaa 1px dotted;}
 #page_title{position: absolute;top: 20px;left: 0;background-color: #A0331F;padding: 3px 5px 3px 20px; color: white;}
 
 #page ul{float: left;margin-top: 60px;width: 100%;margin-bottom: 40px;}
