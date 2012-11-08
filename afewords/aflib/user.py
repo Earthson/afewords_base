@@ -504,7 +504,7 @@ class User(DataBox):
     def basic_info():
         '''for follow/follower display'''
         def getter(self):
-            return dict(self.as_env_info, tag_list=self.alltags)
+            return self.as_env_info
         return getter
 
     @db_property
@@ -545,6 +545,7 @@ class User(DataBox):
             ans['thumb'] = self.avatar.thumb_url
             ans['isfollow'] = False
             ans['isme'] = False
+            ans['tag_list'] = self.alltags
             return ans
         return getter
 
