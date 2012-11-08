@@ -59,10 +59,10 @@
     <!--
     <div class="quit" title="退出"><a href="/quit" title="退出">退出</a></div>
     -->
-    <div class="myself manage" title="个人">
-    <a href="javascript:void(0);">个人</a>
-    <ul id="head_user">
-        <li><a href="/blogger">主页</a></li>
+    <div class="myself manage" title="个人" id="head_user_block">
+    <a href="javascript:void(0);" id="head_user_link">个人</a>
+    <ul id="head_user" style="display:none;">
+        <li><a href="/blogger">博客</a></li>
         <li><a href="/write">执笔</a></li>
         <li><a href="/settings-domain">资料</a></li>
         <li><a href="/draft">草稿</a></li>
@@ -116,6 +116,7 @@
 
 </div>
 {% block script_bottom %}{% end %}
+<script type="text/javascript" src="{{ static_url("js/me/index.js") }}"></script>
 <script type="text/javascript" src="{{ static_url("js/me/init.js") }}"></script>
 </body>
 </html>

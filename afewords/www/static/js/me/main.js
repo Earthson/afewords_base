@@ -1,5 +1,9 @@
 (function($){
 
+
+
+
+
 jQuery.com = jQuery.com || {};
 jQuery.afewords = jQuery.afewords || {};
 jQuery.afewords.user_group = {};

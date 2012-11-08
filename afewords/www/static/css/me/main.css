@@ -375,6 +375,7 @@ text-indent: 14px;position: relative;}
 
 #head_user{display: block;position: absolute;z-index: 100;background-color: white; border:#ccc 1px solid;}
 #head_user li{list-style: none; text-align: center; padding: 4px 15px; text-indent: 0; line-height: 25px;}
+#head_user li:hover{background-color: #F5F3EF;}
 
 
 
