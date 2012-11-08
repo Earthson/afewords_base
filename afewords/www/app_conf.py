@@ -44,6 +44,8 @@ from handlers.settinguserhandlers import UserAvatarCropHandler
 from handlers.bookhandlers import BookHandler
 from handlers.bookhandlers import BookChapterHandler
 
+from handlers.afuserhandlers import AFUserRecentHandler
+
 from handlers.afbookhandlers import AFBookHandler
 from handlers.afbookhandlers import AFUserBookHandler
 from handlers.afbookhandlers import AFBookCreateHandler
@@ -87,6 +89,8 @@ app_handlers = {
     (r'/afewords-book', AFBookHandler),
     (r'/user-book', AFUserBookHandler),
     (r'/book-create', AFBookCreateHandler),
+
+    (r'/afewords-user', AFUserRecentHandler),
 
     (r'/settingpost-article_remove', ArticleRemoveHandler),
 

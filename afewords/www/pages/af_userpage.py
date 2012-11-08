@@ -1,5 +1,7 @@
-
+#coding=utf-8
 from basepage import *
+
+from toolpages import PagingPage
 
 @with_attr
 class AFUserLibPage(BasePage):
@@ -13,4 +15,3 @@ class AFUserLibPage(BasePage):
         'current_page': 1,
         'paging_html': '',
     }
-

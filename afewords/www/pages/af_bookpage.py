@@ -1,3 +1,4 @@
+#coding=utf-8
 from basepage import *
 
 @with_attr
