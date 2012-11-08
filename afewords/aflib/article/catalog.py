@@ -430,10 +430,11 @@ class Catalog(DataBox):
         ans['release_time'] = self.release_time
         ans['all_catalog_count'] = self.node_sum
         ans['complete_count'] = self.complete_count
-        ans['author'] = self.owner.obj_info_view_by('basic_info', 
+        ans['author'] = self.owner.obj_info_view_by(info_name, 
                             usr=usr, env=env, **kwargs)
         ans['complete_rate'] = self.complete_rate
-        ans['summary'] = self.about.obj_info_view_by('basic_info',
+        if info_name not in ('overview_info'):
+            ans['summary'] = self.about.obj_info_view_by('basic_info',
                             usr=usr, env=env, **kwargs)
         ans['chapter_list'] = self.node_list_info
         ans['relation_id'] = ''

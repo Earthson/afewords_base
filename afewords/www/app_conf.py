@@ -44,6 +44,7 @@ from handlers.settinguserhandlers import UserAvatarCropHandler
 from handlers.bookhandlers import BookHandler
 from handlers.bookhandlers import BookChapterHandler
 
+from handlers.afbookhandlers import AFBookHandler
 
 app_handlers = {
     (r'/', IndexHandler), #MainHandler),
@@ -80,6 +81,9 @@ app_handlers = {
     (r'/settings-follower', UserSettingFollowerHandler),
     (r'/book/([0-9a-zA-Z]+)', BookHandler),
     (r'/book/([0-9a-zA-Z]+)/catalog/([0-9]+)', BookChapterHandler),
+
+    (r'/afewords-book', AFBookHandler),
+
     (r'/settingpost-article_remove', ArticleRemoveHandler),
 
     (r'/settingpost-invite', UserInviteHandler),

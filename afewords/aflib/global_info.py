@@ -19,10 +19,14 @@ class AFGlobalDoc(AFDocument):
     structure = {
         'invitations_count' : int,
         'recent_blogs' : list,
+        'recent_books' : list,
+        'recent_users' : list,
     }
     default_values = {
         'invitations_count' : 0,
-        'recent_blogs' : [None for i in range(100)],
+        'recent_blogs' : [None for i in range(200)],
+        'recent_books' : [None for i in range(200)],
+        'recent_users' : [None for i in range(200)],
     }
 
 if AFGlobalDoc.find_one() is None:
@@ -30,4 +34,7 @@ if AFGlobalDoc.find_one() is None:
     glo.save()
 
 global_info = AFGlobal(spec={'_id':AFGlobalDoc.find_one()['_id']})
+
 recent_blogs = global_info.sub_list('recent_blogs')
+recent_books = global_info.sub_list('recent_books')
+recent_users = global_info.sub_list('recent_users')

@@ -124,6 +124,7 @@ class UserDoc(AFDocument):
         'invitations' : int,
         'domain' : basestring,
         'account_status' : basestring,
+        'release_time' : basestring,
 
         'avatar_id' : ObjectId,
         'about_id' : ObjectId,
@@ -142,6 +143,7 @@ class UserDoc(AFDocument):
         'avatar_id' : Avatar.new_doc,
         'about_id' : None,
         'lib_id' : UserLib.new_doc,
+        'release_time' : datetime.now,
     }
     indexes = [
         {
@@ -168,6 +170,7 @@ class User(DataBox):
         'invitations' : True,
         'domain' : True,
         'account_status' : True,
+        'release_time' : True,
         'avatar_id' : False,
         'about_id' : False,
         'lib_id' : False,
@@ -178,7 +181,6 @@ class User(DataBox):
         DataBox.__init__(self, data, *args, **kwargs)
         if data is None:
             self.domain = self.uid
-        
 
     @db_property
     def notice_count():
@@ -372,8 +374,12 @@ class User(DataBox):
     def drafts_info():
         '''basic article info for drafts'''
         def getter(self):
-            drafts = [generator(eid, etype) 
-                    for eid, etype in self.lib.drafts_lib.load_all().items()]
+            draft_lib = self.lib.drafts_lib
+            tmp = draft_lib.items()
+            drafts = [generator(eid, etype) for eid, etype in tmp]
+            for i in xrange(len(tmp)):
+                if drafts[i] is None:
+                    del draft_lib[tmp[i][0]]
             return [each.basic_info for each in drafts if each]
         return getter
 
@@ -498,7 +504,7 @@ class User(DataBox):
     def basic_info():
         '''for follow/follower display'''
         def getter(self):
-            return self.as_env_info
+            return dict(self.as_env_info, tag_list=self.alltags)
         return getter
 
     @db_property
@@ -539,7 +545,18 @@ class User(DataBox):
             ans['thumb'] = self.avatar.thumb_url
             ans['isfollow'] = False
             ans['isme'] = False
-            ans['tag_list'] = self.alltags
+            return ans
+        return getter
+
+    @db_property
+    def overview_info():
+        def getter(self):
+            ans = dict()
+            ans['uid'] = self.uid
+            ans['name'] = self.name
+            ans['url'] = self.obj_url
+            ans['isfollow'] = False
+            ans['isme'] = False
             return ans
         return getter
 

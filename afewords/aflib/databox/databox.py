@@ -1,3 +1,5 @@
+from datetime import datetime
+
 class db_property(object):
     '''an property wrapper to data(instance of DataBase)
     for auto save support
@@ -84,6 +86,10 @@ class DataBox(object):
         self.data = data
         if attrs:
             self.set_propertys(**attrs)
+        release_time = datetime.now() #just for play
+
+    def __lt__(self, other):
+        return self.release_time > other.release_time
 
     def __eq__(self, other):
         try:

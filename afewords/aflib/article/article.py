@@ -283,9 +283,6 @@ class Article(DataBox):
         DataBox.__init__(self, *args, **kwargs)
         self.normal_translator = normal_translator
 
-    def __lt__(self, other):
-        return self.release_time > other.release_time
-
     @property
     def translator(self):
         return ArticleTranslator(self.refinder)

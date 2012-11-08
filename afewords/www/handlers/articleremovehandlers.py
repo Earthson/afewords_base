@@ -9,13 +9,9 @@ from article.article import Article
 
 class ArticleRemovePara(BaseHandlerPara):
     paradoc = {
-        'id': None,
-        'type': 'blog',
+        'article_id': None,
+        'article_type': 'blog',
     }
-
-    def read(self):
-        self['id'] = self.handler.get_esc_arg('id')
-        self['type'] = self.handler.get_esc_arg('type', 'blog')
 
 
 class ArticleRemoveHandler(BaseHandler):
@@ -25,7 +21,8 @@ class ArticleRemoveHandler(BaseHandler):
         handler_para = ArticleRemovePara(self)
         handler_json = ArticleRemoveJson(self)
         usr = self.current_user
-        article_obj = generator(handler_para['id'], handler_para['type'])
+        article_obj = generator(handler_para['article_id'], 
+                                handler_para['article_type'])
         if article_obj is None:
             handler_json.by_status(2)
             handler_json.write()
