@@ -441,16 +441,23 @@ class User(DataBox):
         self.managed_group_lib.pop(str(group._id))
 
     def like_post(self, obj):
-        if self.favorite_lib[str(obj._id)] is not None:
-            return None
-        self.favorite_lib.add_obj(obj)
+        '''do not call this method. call reverse_like_post instead'''
+        fav_lib = self.favorite_lib
+        fav_lib[obj.uid] = obj.cls_name
         obj.statistics.like_count += 1
 
     def dislike_post(self, obj):
-        if self.favorite_lib[str(obj._id)] is None:
-            return None
-        self.favorite_lib.remove_obj(obj._id)
+        '''do not call this method. call reverse_like_post instead'''
+        fav_lib = self.favorite_lib
+        del fav_lib[obj.uid]
         obj.statistics.like_count -= 1
+
+    def reverse_like_post(self, obj):
+        '''reverse like state. like->dislike, dislike->like'''
+        if obj.uid in self.favorite_lib:
+            self.dislike_post(obj)
+        else:
+            self.like_post(obj)
 
     def is_follow(self, other_id):
         '''self follows other?'''
