@@ -24,7 +24,8 @@ author:{}
 env: {}
 --------------------------------
 {
-    'type': 'User',    # unicode, User or Group
+    'env_id': '',   # unicode
+    'env_type': 'user', # unicode
     'entity': {},   # dict, see [[ author ]] or [[ group ]]
 }
 
@@ -46,6 +47,8 @@ article:{}  /****** for blog, comment, topic, doc, .... ***********/
     'privilege': 'public' # view privilege
 	'tag_list': list,	# see [[ tag_list ]]
     'env': {},    # see [[ env ]]    
+
+    'permission': 'rm', # for judge permission
 
     @for comment
     'ref_comment_list':[],  # list [index1, index2, ...]
@@ -132,6 +135,7 @@ book: {}
     'summary':{},   # see [[ article ]] 
     'chapter_list':[],  # see [[ chapter_list ]]
 
+    'permission': 'r',  # unicode, for judge permission
     @for recommend book 
     'relation_id': '',  # unicode
 }
@@ -149,6 +153,7 @@ chapter: {}
     'spec_article_list': [],    # list
     'subcatalog_count': 0,  # int 
     'subcatalog_list': [],  # [ book1, book2 ]], book1 see [[ book ]]
+    'permission': 'r',  # unicode, for judge permission 
 }
 ----------------------------------
 
@@ -162,6 +167,7 @@ group: {}
     'about': {},    # dict, see [[ article ]]
     'tag_list': {}, # dict, see [[ tag_list ]]
     'member_type': 'Member',   # unicode, Member or Manager or None
+    'permission': 'r',
 }
 ---------------------------------
 
