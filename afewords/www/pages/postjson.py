@@ -291,3 +291,38 @@ class UserAvatarCropJson(StatusJson):
         1 : u'头像打开失败，请尝试先上传图片',
     }
     error_info = dict(error_info, **_img_error_doc)
+
+
+
+@with_attr
+class CatalogSectionModifyJson(StatusJson):
+    error_info = {
+        0 : u'设置成功',
+        1 : u'章节不能为空',
+        2 : u'标题不能为空',
+        3 : u'知识谱不存在',
+        4 : u'章节不存在',
+        5 : u'你无权作此操作',
+    }
+
+@with_attr
+class CatalogSectionNewJson(StatusJson):
+    error_info = {
+        0 : u'添加成功',
+        1 : u'章节不能为空',
+        2 : u'标题不能为空',
+        3 : u'知识谱不存在',
+        5 : u'你无权作此操作',
+    }
+
+@with_attr
+class CatalogSectionDelJson(StatusJson):
+    doc = {
+        'node_id' : '', #node_id of new node
+    }
+    error_info = {
+        0 : u'删除成功',
+        1 : u'知识谱不存在',
+        2 : u'不存在的章节',
+        5 : u'你无权作此操作',
+    }

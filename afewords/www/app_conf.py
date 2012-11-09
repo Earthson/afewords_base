@@ -41,6 +41,10 @@ from handlers.settinguserhandlers import UserNotiRemoveHandler
 from handlers.settinguserhandlers import UserAvatarUploadHandler
 from handlers.settinguserhandlers import UserAvatarCropHandler
 
+from handlers.settingcataloghandlers import CatalogSectionModifyHandler
+from handlers.settingcataloghandlers import CatalogSectionNewHandler
+from handlers.settingcataloghandlers import CatalogSectionDelHandler
+
 from handlers.bookhandlers import BookHandler
 from handlers.bookhandlers import BookChapterHandler
 
@@ -105,6 +109,9 @@ app_handlers = {
     (r'/settingpost-user_noti_remove', UserNotiRemoveHandler),
     (r'/settingpost-user_avatar_upload', UserAvatarUploadHandler),
     (r'/settingpost-user_avatar_crop', UserAvatarCropHandler),
+    (r'/settingpost-book_section_new', CatalogSectionNewHandler),
+    (r'/settingpost-book_section_modify', CatalogSectionModifyHandler),
+    (r'/settingpost-book_section_del', CatalogSectionDelHandler),
 }
 
 app_settings = {
