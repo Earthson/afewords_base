@@ -1,0 +1,32 @@
+{% extends "user-base.html" %}
+
+{% block afewords_user_html %}
+
+<div class="follow margin-left-0">
+<div class="page_nav"><span>我关注</span></div>
+<div class="div-20"></div>
+{% if doc['user_list'] == []%}
+    No one
+{% else %}
+    <ul>
+    {% for follow_one in doc['user_list'] %}
+    <li>
+    <div class="follow_one">
+    <img src="{{ follow_one['thumb'] }}"/>
+    <div class="info">
+    <span class="name"><a href="/bloger/{{ follow_one['uid'] }}" target="_blank">{{ follow_one['name'] }}</a></span>
+    <span class="control">
+    <a href="javascript:void(0);" class="follow_cancel" do="unfollow" follow_id="{{ follow_one['uid'] }}" page="settings-follow">取消关注</a>
+    </span>
+    <!--<span class="control"><a href="#" target="_blank">留言</a></span> -->
+    </div>
+    </div>
+    </li>
+    {% end %}
+    </ul>
+    {{ doc['paging_html'] }}
+{% end %}
+</div>
+
+
+{% end %}
