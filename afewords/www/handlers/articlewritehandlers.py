@@ -15,12 +15,6 @@ class ArticleWritePara(BaseHandlerPara):
         'env_id' : None,
     }
 
-    def read(self):
-        self['id'] = self.handler.get_esc_arg('id')
-        self['type'] = self.handler.get_esc_arg('type', 'blog')
-        self['env_type'] = self.handler.get_esc_arg('env_type', None)
-        self['env_id'] = self.handler.get_esc_arg('env_id', None)
-
 
 class ArticleWriteHandler(BaseHandler):
     
@@ -67,6 +61,7 @@ class ArticleWriteHandler(BaseHandler):
         page.render()
         return
 
+from article.article import Article
 
 def article_env_init(handler, handler_paras, handler_json):
     handler_json['article_id'] = handler_paras['article_id']
@@ -85,7 +80,7 @@ def article_env_init(handler, handler_paras, handler_json):
                             handler_paras['article_type'])
     if not Article.is_valid_id(handler_paras['article_id']):
         acls = cls_gen(handler_paras['article_type'])
-        if not acls:
+        if not acls or not issubclass(acls, Article):
             return 11#Invalid Article Type
         if not test_auth(env.authority_verify(usr), A_POST):
             return 12#Permission Denied
@@ -99,7 +94,8 @@ def article_env_init(handler, handler_paras, handler_json):
     else:
         handler.article_obj = generator(handler_paras['article_id'],
                     handler_paras['article_type'])
-        if handler.article_obj is None:
+        if not isinstance(handler.article_obj, Article) or \
+                handler.article_obj is None:
             return 4#Article Not Exist
         if handler.article_obj.env_obj_info != env.obj_info:
             return 15#Invalid Env
