@@ -471,7 +471,7 @@ class Catalog(DataBox):
             ans['bid'] = self.uid
             ans['name'] = self.name
             ans['release_time'] = self.release_time
-            ans['all_catalog_count'] = self.ode_sum
+            ans['all_catalog_count'] = self.node_sum
             ans['complete_count'] = self.complete_count
             ans['author'] = self.owner.basic_info
             ans['complete_rate'] = self.complete_rate

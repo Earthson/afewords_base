@@ -153,6 +153,10 @@ class UserDoc(AFDocument):
         {
             'fields' : 'domain',
             'unique' : True, 
+        },
+        {
+            'fields' : 'name',
+            'unique' : False,
         }
     ]
 
