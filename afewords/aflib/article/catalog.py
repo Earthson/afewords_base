@@ -303,8 +303,7 @@ class Catalog(DataBox):
             return False #node not exist
         tmp_rel_ids = self.get_node_list(node_id, 'articles').load_all()
         self.lib.relations_list.pull(*tuple(tmp_rel_ids))
-        rels = Relation.get_instances('_id',
-                self.get_node_list(node_id, 'articles').load_all())
+        rels = Relation.by_ids(tmp_rel_ids)
         for each in rels:
             each.remove()
         tmp_rel_ids = self.get_node_list(node_id, 'catalogs').load_all()
@@ -312,8 +311,7 @@ class Catalog(DataBox):
         self.remove_count += 1
         if self.get_node_list(node_id, 'main').load_all() != []:
             self.complete_count -= 1
-        rels = Relation.get_instances('_id',
-                self.get_node_list(node_id, 'catalogs').load_all())
+        rels = Relation.by_ids(tmp_rel_ids)
         for each in rels:
             each.remove()
         del self.lib.node_lib[node_id]
