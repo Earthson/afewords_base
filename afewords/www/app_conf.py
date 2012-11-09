@@ -48,11 +48,19 @@ from handlers.settingcataloghandlers import CatalogSectionDelHandler
 from handlers.bookhandlers import BookHandler
 from handlers.bookhandlers import BookChapterHandler
 
+
 from handlers.afuserhandlers import AFUserRecentHandler
+
+from handlers.affeedhandlers import AFFeedPageHandler
+from handlers.affeedhandlers import AFBlogsRecentHandler
+from handlers.affeedhandlers import AFUserFavHandler
 
 from handlers.afbookhandlers import AFBookHandler
 from handlers.afbookhandlers import AFUserBookHandler
 from handlers.afbookhandlers import AFBookCreateHandler
+
+
+from handlers.statisticshandlers import ArticleDoLikeHandler
 
 app_handlers = {
     (r'/', IndexHandler), #MainHandler),
@@ -90,11 +98,17 @@ app_handlers = {
     (r'/book/([0-9a-zA-Z]+)', BookHandler),
     (r'/book/([0-9a-zA-Z]+)/catalog/([0-9]+)', BookChapterHandler),
 
+    #statistics
+    (r'/article-dolike', ArticleDoLikeHandler),
+
     (r'/afewords-book', AFBookHandler),
     (r'/user-book', AFUserBookHandler),
     (r'/book-create', AFBookCreateHandler),
 
     (r'/afewords-user', AFUserRecentHandler),
+
+    (r'/afewords-feed', AFFeedPageHandler),
+    (r'/user-like', AFUserFavHandler),
 
     (r'/settingpost-article_remove', ArticleRemoveHandler),
 

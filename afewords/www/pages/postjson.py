@@ -307,6 +307,9 @@ class CatalogSectionModifyJson(StatusJson):
 
 @with_attr
 class CatalogSectionNewJson(StatusJson):
+    doc = {
+        'node_id' : '', #node_id of new node
+    }
     error_info = {
         0 : u'添加成功',
         1 : u'章节不能为空',
@@ -317,12 +320,17 @@ class CatalogSectionNewJson(StatusJson):
 
 @with_attr
 class CatalogSectionDelJson(StatusJson):
-    doc = {
-        'node_id' : '', #node_id of new node
-    }
     error_info = {
         0 : u'删除成功',
         1 : u'知识谱不存在',
         2 : u'不存在的章节',
         5 : u'你无权作此操作',
+    }
+
+@with_attr
+class ArticleDoLikeJson(StatusJson):
+    error_info = {
+        0 : u'',
+        1 : u'不支持的类型',
+        2 : u'对象不存在',
     }
