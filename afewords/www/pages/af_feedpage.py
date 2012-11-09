@@ -37,6 +37,7 @@ class AFFeedMyselfPage(BasePage):
         'title': '我的动态 - 子曰',
         'page_type': 'feed',
         'subpage_type': 'myself',
+        'tag_list' : [],
         'blog_list': [],
         'current_page': 1,
         'paging_html': '',
