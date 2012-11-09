@@ -196,8 +196,8 @@
                 math_lib = {{ json_encode(article['equation_list']) }};
                 table_lib = {{ json_encode(article['tableform_list']) }};
                 ref_lib = {{ json_encode(article['reference_list']) }};
-                code_lib = {{ json_encode( article.langcode_lib ) }};
-                $("#write_textarea").lib_init(pic_lib, math_lib, table_lib, code_lib, ref_lib);	                  
+                code_lib = {{ json_encode( article['langcode_lib'] ) }};
+                //$("#write_textarea").lib_init(pic_lib, math_lib, table_lib, code_lib, ref_lib);	                  
             });
         </script>
     {% else %}
