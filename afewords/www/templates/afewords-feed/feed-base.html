@@ -12,10 +12,12 @@
 {% block left_page_html %}
 {% set subpage = doc['subpage_type'] %}
 <div id="page">
-<div id="page_title">动态</div>
+<div id="page_title">聚合</div>
 <ul>
-<li><a href="/afewords-feed"  class="current{{ int(subpage == "feed") }}">动态</a></li>
+<li><a href="/afewords-feed"  class="current{{ int(subpage == "index") }}">动态</a></li>
+<li><a href="/blog-lib"  class="current{{ int(subpage == "myself") }}">我的</a></li>
 <li><a href="/user-like" class="current{{ int(subpage == "like") }}">收藏</a></li>
+
 <li><a href="/write" class="current{{ int(subpage == "write") }}">执笔</a></li>
 </ul>
 </div>

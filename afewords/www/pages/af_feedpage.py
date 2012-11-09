@@ -1,4 +1,6 @@
+#coding=utf-8
 from basepage import *
+
 
 @with_attr
 class AFFeedPage(BasePage):
@@ -6,6 +8,7 @@ class AFFeedPage(BasePage):
 
     ''' for url /feed '''
     doc = {
+        'title': '动态 - 子曰',
         'page_type': 'feed',
         'subpage_type': 'index',
         'feed_list': [],    # list, like blog list
@@ -18,6 +21,7 @@ class AFFeedLikePage(BasePage):
     
     ''' for url /user-like '''
     doc = {
+        'title': '收藏 - 子曰',
         'page_type': 'feed',
         'subpage_type': 'like',
         'like_list': [],    # list, like blog list
@@ -30,6 +34,7 @@ class AFFeedMyselfPage(BasePage):
     ''' for url /blog-lib '''
     __template_file__ = "afewords-feed/feed-myself.html"
     doc = {
+        'title': '我的动态 - 子曰',
         'page_type': 'feed',
         'subpage_type': 'myself',
         'blog_list': [],
