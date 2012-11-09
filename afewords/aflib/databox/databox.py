@@ -75,6 +75,8 @@ class DataBox(object):
     
     mapper = {
         #name:writable
+        'release_time' : True,
+        'data_status' : True,
     }
     own_data = []
 
@@ -219,14 +221,6 @@ class DataBox(object):
             from aflib_conf import main_url
             return main_url
         return getter
-
-    @db_property
-    def data_status():
-        def getter(self):
-            return self.data['data_status']
-        def setter(self, value):
-            self.data['data_status'] = value
-        return getter, setter
 
     def remove(self):
         to_remove = self.get_propertys(*self.own_data)

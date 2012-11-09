@@ -1,11 +1,14 @@
 from mongokit import Document
+from datetime import datetime
 
 class AFDocument(Document):
     use_schemaless = True
     structure = {
+        'release_time' : datetime,
         'data_status' : basestring,
     }
     default_values = {
+        'release_time' : datetime.now,
         'data_status' : 'normal',
     }
 
