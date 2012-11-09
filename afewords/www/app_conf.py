@@ -59,6 +59,9 @@ from handlers.afbookhandlers import AFBookHandler
 from handlers.afbookhandlers import AFUserBookHandler
 from handlers.afbookhandlers import AFBookCreateHandler
 
+
+from handlers.statisticshandlers import ArticleDoLikeHandler
+
 app_handlers = {
     (r'/', IndexHandler), #MainHandler),
     (r'/test', TestHandler),
@@ -94,6 +97,9 @@ app_handlers = {
     (r'/settings-follower', UserSettingFollowerHandler),
     (r'/book/([0-9a-zA-Z]+)', BookHandler),
     (r'/book/([0-9a-zA-Z]+)/catalog/([0-9]+)', BookChapterHandler),
+
+    #statistics
+    (r'/article-dolike', ArticleDoLikeHandler),
 
     (r'/afewords-book', AFBookHandler),
     (r'/user-book', AFUserBookHandler),
