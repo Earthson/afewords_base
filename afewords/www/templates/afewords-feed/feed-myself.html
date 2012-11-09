@@ -14,7 +14,7 @@
 {% else %}
     <li><a href="/blog-lib?tag=default">所有</a></li>
 {% end %}
-{% for one_tag in user['tag_list'] %}
+{% for one_tag in doc['tag_list'] %}
     {% if search_tag == one_tag %}
         <li><a href="/blog-lib?tag={{ one_tag }}" class="current">{{ one_tag }}</a></li>
     {% else %}
