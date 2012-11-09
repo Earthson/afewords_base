@@ -33,7 +33,7 @@ class AFBookCreatePage( BasePage ):
     __template_file__ = "afewords-book/book-create.html"
     ''' for url /book-create '''
     doc = {
-        'title': '创建知识谱 - 子曰'
+        'title': '创建知识谱 - 子曰',
         'page_type': 'book',
         'subpage_type': 'create',
     }
