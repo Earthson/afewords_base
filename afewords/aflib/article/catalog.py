@@ -288,9 +288,19 @@ class Catalog(DataBox):
         self.node_lib[str(self.node_count)] = tmp_node
         self.node_info_lib[str(self.node_count)] = tmp_info
         self.node_count += 1
-        return self.node_count - 1
+        return str(self.node_count - 1)
 
+    def modify_node(self, node_id, title, section):
+        cnode = self.node_lib.sub_dict(node_id)
+        if cnode['title'] is None:
+            return False #node not exist
+        cnode['title'] = title
+        cnode['section'] = section
+        return True
+        
     def remove_node(self, node_id):
+        if not self.node_lib.sub_dict(node_id).load_all():
+            return False #node not exist
         tmp_rel_ids = self.get_node_list(node_id, 'articles').load_all()
         self.lib.relations_list.pull(*tuple(tmp_rel_ids))
         rels = Relation.get_instances('_id',
@@ -308,6 +318,7 @@ class Catalog(DataBox):
             each.remove()
         del self.lib.node_lib[node_id]
         del self.lib.node_info_lib[node_id]
+        return True
 
     def get_node_dict(self, node_id):
         tmp_path = 'node_lib'+'.'+str(node_id)
