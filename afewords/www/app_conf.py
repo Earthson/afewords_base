@@ -54,6 +54,7 @@ from handlers.afuserhandlers import AFUserRecentHandler
 from handlers.affeedhandlers import AFFeedPageHandler
 from handlers.affeedhandlers import AFBlogsRecentHandler
 from handlers.affeedhandlers import AFUserFavHandler
+from handlers.affeedhandlers import AFUserBlogLibHandler
 
 from handlers.afbookhandlers import AFBookHandler
 from handlers.afbookhandlers import AFUserBookHandler
@@ -109,6 +110,7 @@ app_handlers = {
 
     (r'/afewords-feed', AFFeedPageHandler),
     (r'/user-like', AFUserFavHandler),
+    (r'/blog-lib', AFUserBlogLibHandler),
 
     (r'/settingpost-article_remove', ArticleRemoveHandler),
 

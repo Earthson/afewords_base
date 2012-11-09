@@ -50,14 +50,13 @@ class BloggerBlogHandler(BaseBloggerHandler):
             page['author'] = usr.as_viewer(author)
         else:
             page['author'] = author.basic_info
-        page['tag_list'] = author.lib.tag_lib['alltags']
+        page['tag_list'] = author.alltags
         page['current_tag'] = paras['tag']
         enum = 7
         page['blog_list'], blog_cnt = author.blogs_info_view_by(usr, 
                 page['current_tag'], vfrom=enum*(page['current_page']-1), 
                 vlim=enum)
-        page['page_list'] = [i/enum + 1 
-                for i in range(0, blog_cnt, enum)]
+        page['page_list'] = [i/enum + 1 for i in range(0, blog_cnt, enum)]
         #for paging support 
         paradoc = dict()
         if paras['tag'] != 'default':
