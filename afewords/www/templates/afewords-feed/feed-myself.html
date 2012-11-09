@@ -1,7 +1,60 @@
 {% extends "feed-base.html" %}
 
-{% block afewords_feed_html %}
+{% block user_base_right_body %}
 
+{% set blog_list = doc['blog_list'] %}
+{% set search_tag = doc['current_tag'] %}
+
+<div id="left_div">
+<div id="left3_tag_nav" class="margin-left-0">
+{#<div id="left3_tag_tag">文章分类：</div>#}
+<ul>
+{% if search_tag == "default" %}
+    <li><a href="/blog-lib?tag=default"  class="current">所有</a></li>
+{% else %}
+    <li><a href="/blog-lib?tag=default">所有</a></li>
+{% end %}
+{% for one_tag in user['tag_list'] %}
+    {% if search_tag == one_tag %}
+        <li><a href="/blog-lib?tag={{ one_tag }}" class="current">{{ one_tag }}</a></li>
+    {% else %}
+        <li><a href="/blog-lib?tag={{ one_tag }}">{{ one_tag }}</a></li>
+    {% end %}
+{% end %}
+</ul>
+</div>
+</div>
+
+
+<div id="body_content">
+
+<div class="like blog-img margin-left-0">
+{% if search_tag == "default" %}
+    <div class="page_nav">所有 - 文章</div>
+{% else %}
+    <div class="page_nav">{{ search_tag }} - 文章</div>
+{% end %}
+
+<div class="div-20"></div>
+
+{% if not blog_list %}
+
+      <ul>
+      {% for kk in blog_list %}
+                    <li>
+                        <a href="/blog/{{ kk['aid'] }}" target="_blank">{{ kk['title'] }}</a>
+                        <a style="display:none" class="blog_edit" href="/write?id={{ kk['aid'] }}&edit=true" target="_blank">修改</a>
+                    </li>
+     {% end %}
+     </ul>
+    {{ doc['paging_html'] }}
+
+{% else %}
+No one
+{% end %}
+</div>
+
+</div>
 
 
 
