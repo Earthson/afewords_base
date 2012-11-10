@@ -59,7 +59,7 @@ class AFUserBlogLibHandler(BaseHandler):
         handler_page['current_page'] = handler_para['page']
         handler_page['tag_list'] = usr.alltags
         handler_page['current_tag'] = handler_para['tag']
-        enum = 7
+        enum = 10
         handler_page['blog_list'], blog_cnt = usr.blogs_info_view_by(usr, 
                 handler_page['current_tag'], 
                 vfrom=enum*(handler_para['page'] - 1), vlim=enum)
