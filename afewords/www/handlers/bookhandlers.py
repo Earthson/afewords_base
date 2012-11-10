@@ -60,7 +60,18 @@ class BookChapterHandler(BaseHandler):
             self.send_error(404)
             return
         handler_page['current_chapter'] = chapter_info
-        handler_page['book'] = catalog_obj.basic_info
+        handler_page['book'] = catalog_obj.obj_info_view_by('basic_info', 
+                                    usr, catalog_obj)
+        cids = [each['cid'] for each in handler_page['book']['chapter_list']]
+        cid = chapter_info['cid']
+        pre, nxt = None, None
+        for i in xrange(len(cids)): #get position of current
+            if cid == cids[i]:
+                pre = cids[i - 1] if i else None
+                nxt = cids[i + 1] if i + 1 < len(cids) else None
+                break
+        handler_page['previous_chapter'] = pre
+        handler_page['next_chapter'] = nxt
         handler_page['bid'] = bid
         handler_page.page_init()
         handler_page.render()
