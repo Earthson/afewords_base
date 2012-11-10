@@ -417,6 +417,13 @@ class Catalog(DataBox):
     @db_property
     def basic_info():
         def getter(self):
+            return dict(self.overview_info, summary=self.about.basic_info,
+                        chapter_list=self.node_list_info)
+        return getter
+
+    @db_property
+    def overview_info():
+        def getter(self):
             ans = dict()
             ans['bid'] = self.uid
             ans['name'] = self.name
@@ -425,8 +432,6 @@ class Catalog(DataBox):
             ans['complete_count'] = self.complete_count
             ans['author'] = self.owner.basic_info
             ans['complete_rate'] = self.complete_rate
-            ans['summary'] = self.about.basic_info
-            ans['chapter_list'] = self.node_list_info
             ans['relation_id'] = ''
             return ans
         return getter
@@ -439,13 +444,17 @@ class Catalog(DataBox):
         ans['release_time'] = self.release_time
         ans['all_catalog_count'] = self.node_sum
         ans['complete_count'] = self.complete_count
-        ans['author'] = self.owner.obj_info_view_by(info_name, 
+        if info_name in ('basic_info'):
+            ans['author'] = self.owner.obj_info_view_by(info_name, 
                             usr=usr, env=env, **kwargs)
+        else:
+            ans['author'] = self.owner.obj_info_view_by('overview_info',
+                                    usr, env, **kwargs)
         ans['complete_rate'] = self.complete_rate
-        if info_name not in ('overview_info'):
-            ans['summary'] = self.about.obj_info_view_by('basic_info',
+        if info_name in ('basic_info', 'edit_info'):
+            ans['summary'] = self.about.obj_info_view_by(info_name,
                             usr=usr, env=env, **kwargs)
-        ans['chapter_list'] = self.node_list_info
+            ans['chapter_list'] = self.node_list_info
         ans['relation_id'] = ''
 
         ans['permission'] = auth_str(self.authority_verify(
