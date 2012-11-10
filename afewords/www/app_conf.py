@@ -59,6 +59,10 @@ from handlers.affeedhandlers import AFUserBlogLibHandler
 from handlers.afbookhandlers import AFBookHandler
 from handlers.afbookhandlers import AFUserBookHandler
 from handlers.afbookhandlers import AFBookCreateHandler
+from handlers.afbookhandlers import AFBookEditInfoHandler
+from handlers.afbookhandlers import AFBookEditInviteHandler
+from handlers.afbookhandlers import AFBookEditAboutHandler
+from handlers.afbookhandlers import AFBookEditCatalogHandler
 
 
 from handlers.statisticshandlers import ArticleDoLikeHandler
@@ -105,6 +109,10 @@ app_handlers = {
     (r'/afewords-book', AFBookHandler),
     (r'/user-book', AFUserBookHandler),
     (r'/book-create', AFBookCreateHandler),
+    (r'/book-edit/([0-9a-zA-Z]+)', AFBookEditInfoHandler),
+    (r'/book-edit/([0-9a-zA-Z]+)/about', AFBookEditAboutHandler),
+    (r'/book-edit/([0-9a-zA-Z]+)/catalog', AFBookEditCatalogHandler),
+    (r'/book-edit/([0-9a-zA-Z]+)/invite', AFBookEditInviteHandler),
 
     (r'/afewords-user', AFUserRecentHandler),
 
