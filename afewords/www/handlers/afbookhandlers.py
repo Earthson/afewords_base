@@ -48,28 +48,28 @@ class AFBookCreateHandler(BaseHandler):
 
 class AFBookEditInfoHandler(BaseHandler):
     @with_login
-    def get(self):
+    def get(self, bid):
         handler_page = AFBookEditInfoPage(self)
         handler_page.render()
         return #0
 
 class AFBookEditAboutHandler(BaseHandler):
     @with_login
-    def get(self):
+    def get(self, bid):
         handler_page = AFBookEditAboutPage(self)
         handler_page.render()
         return #0
 
 class AFBookEditInviteHandler(BaseHandler):
     @with_login
-    def get(self):
+    def get(self, bid):
         handler_page = AFBookEditInvitePage(self)
         handler_page.render()
         return #0
 
 class AFBookEditCatalogHandler(BaseHandler):
     @with_login
-    def get(self):
+    def get(self, bid):
         handler_page =  AFBookEditCatalogPage(self)
         handler_page.render()
         return #0

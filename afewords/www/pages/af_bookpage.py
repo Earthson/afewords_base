@@ -47,7 +47,7 @@ class AFBookEditBasePage( BasePage ):
         'page_type': 'book',
         'subpage_type': 'myself',
         'edit_type': 'index',
-        'book': [], 
+        'book': {}, 
     }
 
 @with_attr
