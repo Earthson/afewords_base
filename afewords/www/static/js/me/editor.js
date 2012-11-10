@@ -1211,7 +1211,7 @@
             
         
             
-        $textarea.attr("spellcheck", false);
+        $textarea.attr({"spellcheck": false, "resize": "none"});
         $editor_menu.attr(menu_paras);
         
         var editor_menu_base_html = ['<ul>'],

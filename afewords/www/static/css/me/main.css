@@ -147,7 +147,19 @@ border-bottom: #fff 2px dotted;color: #999;float: left;padding: 0 10px;}
 #left3_tag_nav ul li a:hover{border-bottom: #a10 2px solid;text-decoration: none;}
 #left3_tag_nav ul li a.current{color: black;border-bottom: #a10 2px solid;background-color: #fff;}
 
+
 #body_content{float: left;width: 100%;margin-top: 20px;padding-bottom: 100px;}
+
+#body_con_nav{list-style-type: none;line-height: 33px;float: right; width: 100%; margin-top: 10px !important; 
+margin-bottom: 10px; display: block;}
+#body_con_nav li{float: left;padding: 0 5px;border-bottom: #ccc 1px dashed;display: list-item;width: auto !important;}
+#body_con_nav li a{font-size: 14px !important;line-height: 33px;display: block;
+border-bottom: #fff 2px dotted;color: #999 !important;float: left;padding: 0 10px;}
+#body_con_nav li a:hover{border-bottom: #a10 2px solid;text-decoration: none;}
+#body_con_nav li a.current{color: black !important;border-bottom: #a10 2px solid;background-color: #fff;}
+#body_con_nav li.tip{float: left; border:none; padding: auto 5px; line-height: 40px; color: #A66100;}
+
+
 
 #body_content .body_page{float: left;text-align: right;min-height: 30px;width: 90%;margin-left: 20px;padding: 10px 20px;margin-top: 20px;}
 #body_content .body_page span{font-size: 14px;margin: auto 5px;}
@@ -185,14 +197,15 @@ border-bottom: #ccc 1px dashed;}
 margin-top: 20px;position: relative;background: url('/static/img/button/heart_ok.png') 20px 10px  no-repeat;
 background-color: #ffffff;}
 
-#body_content .like ul{list-style-type: none;line-height: 25px;margin: 0 0 30px 0;width: 100%;float: left;}
-#body_content .like ul li{width: 90%;padding: 10px 8% 10px 2%;
+#body_content .like a.like_cancel{font-size: 12px;color: red;cursor: pointer;position: absolute;top: 12px;right: 10px;}
+#body_content .like a.like_cancel:hover{text-decoration: underline;}
+
+ul.like_ul{list-style-type: none;line-height: 25px;margin: 0 0 30px 0;width: 100%;float: left;}
+ul.like_ul li{width: 90%;padding: 10px 8% 10px 2%;
 float: left;border-bottom: #ccc 1px dotted;padding-left: 2%;position: relative;padding-right: 8%;vertical-align: middle;
 }
-#body_content .like ul li a{font-size: 14px; color: black;float: left;}
-#body_content .like ul li a:hover{ color: blue;}
-#body_content .like .like_cancel{font-size: 12px;color: red;cursor: pointer;position: absolute;top: 12px;right: 10px;}
-#body_content .like .like_cancel:hover{text-decoration: underline;}
+ul.like_ul li a{font-size: 14px; color: black;float: left;}
+ul.like_ul li a:hover{ color: blue;}
 
 
 /*** for follow and follower ***/

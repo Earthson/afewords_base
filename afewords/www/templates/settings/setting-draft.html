@@ -7,7 +7,7 @@
     <div class="page_nav"><span>草稿</span></div>
     <div class="div-20"></div>
     {% if doc['draft_list'] %}
-        <ul>
+        <ul class="like_ul">
         {% for kk in doc['draft_list'] %}
             {% if kk['article_type'] == "blog" %}
                 <li>

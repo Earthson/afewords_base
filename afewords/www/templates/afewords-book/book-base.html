@@ -15,7 +15,7 @@
 <div id="page_title">知识谱</div>
 <ul>
 <li><a href="/afewords-book"  class="current{{ int(subpage == "index") }}">站内</a></li>
-<li><a href="/user-book" class="current{{ int(subpage == "myself") }}">我的</a></li>
+<li><a href="/user-book" class="current{{ int(subpage == "myself") }}">审校</a></li>
 <li><a href="/book-create" class="current{{ int(subpage == "create") }}">新建</a></li>
 </ul>
 </div>
@@ -41,5 +41,7 @@
 <script type="text/javascript" src="{{ static_url("js/jq/jquery.Jcrop.min.js") }}" ></script>
 <script type="text/javascript" src="{{ static_url("js/me/login.js") }}" ></script>
 <script type="text/javascript" src="{{ static_url("js/me/write.js") }}" ></script>
+
+{% block afewords_book_more_script %}{% end %}
 
 {% end %}

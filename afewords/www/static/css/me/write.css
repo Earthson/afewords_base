@@ -76,12 +76,13 @@
 #write_menu{float:left;margin-top: 10px;width: 100%;position:relative;background-color: #ffffff;
 border:#cccccc 1px solid;border-bottom-width:0;line-height: 30px;font-size: 14px;color: #000;}
 #write_menu_base{width: 100%;height:36px;float: left;display: block;}
-#write_menu_base ul{list-style: none;float: left;height: 20px;line-height: 20px;margin: 8px;}
-#write_menu_base ul li{padding:0;float: left;cursor: pointer;height:20px;width: 20px;font-size: 14px;background-image: url('/static/img/write_menu.png');margin: 0 3px;}
+#write_menu_base ul{list-style: none;float: left !important;height: 20px !important;line-height: 20px !important;margin: 8px !important;}
+#write_menu_base ul li{padding:0 !important;float: left;cursor: pointer;height:20px;width: 20px !important;font-size: 14px;
+background-image: url('/static/img/write_menu.png');margin: 0 3px; border:none !important;}
 #write_menu_base ul li.bold{background-position: 0 0; }
 #write_menu_base ul li.title{background: none;text-align: center;}
 #write_menu_base ul li.italic{background-position: -60px 0;}
-#write_menu_base ul li.split{background-position: -178px 0;width: 5px;margin: 0;}
+#write_menu_base ul li.split{background-position: -178px 0;width: 5px !important;margin: 0;}
 #write_menu_base ul li.underline{background-position: -140px 0;}
 #write_menu_base ul li.del{background-position: -120px 0;}
 #write_menu_base ul li.ul{background-position: -20px 0;}
@@ -93,7 +94,7 @@ border:#cccccc 1px solid;border-bottom-width:0;line-height: 30px;font-size: 14px
 #write_menu_base ul li.part{background: none;text-align: center;}
 #write_menu_base ul li.image{background: url('/static/img/picture.gif') no-repeat 3px 3px;}
 #write_menu_base ul li.code{background: url('/static/img/code.png') no-repeat;}
-#write_menu_base ul li.math{background: url('/static/img/fxy_ok.png') no-repeat;width: 58px;}
+#write_menu_base ul li.math{background: url('/static/img/fxy_ok.png') no-repeat;width: 58px !important;}
 #write_menu_base ul li.table{background: url('/static/img/write_menu.png') no-repeat -580px -20px;}
 #write_menu_base ul li.ref{background: url('/static/img/write_menu.png') no-repeat -220px 0;}
 #write_menu_base ul li.letter{background: url('/static/img/sep_ok.png') no-repeat;}
