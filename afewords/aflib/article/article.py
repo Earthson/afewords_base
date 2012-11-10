@@ -479,6 +479,12 @@ class Article(DataBox):
 
     #property for page
     @db_property
+    def overview_info():
+        def getter(self):
+            return self.basic_info
+        return getter
+
+    @db_property
     def basic_info():
         def getter(self):
             ans = dict()
