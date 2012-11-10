@@ -106,6 +106,7 @@ class CatalogDoc(AFDocument):
         'remove_count' : int,
         'complete_count' : int,
         'release_time' : datetime,
+        'update_time' : datetime,
         'about_id' : ObjectId,
         'statistics_id' : ObjectId,
         'lib_id' : ObjectId,
@@ -118,6 +119,7 @@ class CatalogDoc(AFDocument):
         'remove_count' : 0,
         'complete_count' : 0,
         'release_time' : datetime.now,
+        'update_time' : datetime.now,
         'about_id' : None,
         'statistics_id' : Statistics.new_doc,
         'lib_id' : CatalogLib.new_doc,
@@ -137,6 +139,7 @@ class Catalog(DataBox):
         'remove_count' : True,
         'complete_count' : True,
         'release_time' : True,
+        'update_time' : True,
     }
     own_data = ['statistics', 'about', 'lib']
 
@@ -427,11 +430,12 @@ class Catalog(DataBox):
             ans = dict()
             ans['bid'] = self.uid
             ans['name'] = self.name
-            ans['release_time'] = self.release_time
+            ans['release_time'] = str(self.release_time)
             ans['all_catalog_count'] = self.node_sum
             ans['complete_count'] = self.complete_count
             ans['author'] = self.owner.basic_info
             ans['complete_rate'] = self.complete_rate
+            ans['update_time'] = str(self.update_time)
             ans['relation_id'] = ''
             return ans
         return getter
@@ -441,7 +445,8 @@ class Catalog(DataBox):
         ans = dict()
         ans['bid'] = self.uid
         ans['name'] = self.name
-        ans['release_time'] = self.release_time
+        ans['release_time'] = str(self.release_time)
+        ans['update_time'] = str(self.update_time)
         ans['all_catalog_count'] = self.node_sum
         ans['complete_count'] = self.complete_count
         if info_name in ('basic_info'):
@@ -488,7 +493,8 @@ class Catalog(DataBox):
             ans = dict()
             ans['bid'] = self.uid
             ans['name'] = self.name
-            ans['release_time'] = self.release_time
+            ans['release_time'] = str(self.release_time)
+            ans['update_time'] = str(self.update_time)
             ans['all_catalog_count'] = self.node_sum
             ans['complete_count'] = self.complete_count
             ans['author'] = self.owner.basic_info
