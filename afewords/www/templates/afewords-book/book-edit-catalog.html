@@ -2,7 +2,21 @@
 
 {% block afewords_book_html %}
 
+
+<div class="book_catalog" style="margin-top:10px;">
+<div class="book_catalog_add" book_id="{{ book['bid'] }}">添加新目录</div>
+
+
+
+<div class="book_catalog_con">
+{{ doc['catalog_html'] }}
+</div>
+</div>
+
+
 {% end %}
+
+
 
 
 

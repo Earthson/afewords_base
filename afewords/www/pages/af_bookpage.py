@@ -80,6 +80,6 @@ class AFBookEditAboutPage( AFBookEditBasePage ):
     ''' for url /book-edit/xxxx/about '''
     __template_file__ = "afewords-book/book-edit-about.html"
     doc = {
-        'edit_type': 'invite',
+        'edit_type': 'about',
         'about': {},    # dict, article src
     }

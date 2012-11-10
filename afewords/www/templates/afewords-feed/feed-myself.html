@@ -5,8 +5,20 @@
 {% set blog_list = doc['blog_list'] %}
 {% set search_tag = doc['current_tag'] %}
 
+
+<div id="body_content">
+
+<div class="like blog-img margin-left-0">
+{#
+{% if search_tag == "default" %}
+    <div class="page_nav">所有 - 文章</div>
+{% else %}
+    <div class="page_nav">{{ search_tag }} - 文章</div>
+{% end %}
+#}
+
 <div id="left_div">
-<div id="left3_tag_nav" class="margin-left-0">
+<div id="left3_tag_nav" class="margin-left-0" style="">
 {#<div id="left3_tag_tag">文章分类：</div>#}
 <ul>
 {% if search_tag == "default" %}
@@ -26,22 +38,11 @@
 </div>
 
 
-<div id="body_content">
-
-<div class="like blog-img margin-left-0">
-{% if search_tag == "default" %}
-    <div class="page_nav">所有 - 文章</div>
-{% else %}
-    <div class="page_nav">{{ search_tag }} - 文章</div>
-{% end %}
-
-
-
 <div class="div-20"></div>
 
 {% if blog_list %}
 
-      <ul>
+      <ul class="like_ul">
       {% for kk in blog_list %}
                     <li>
                         <a href="/blog/{{ kk['aid'] }}" target="_blank">{{ kk['title'] }}</a>
