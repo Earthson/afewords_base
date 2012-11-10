@@ -20,6 +20,13 @@ class AFBookHandler(BaseHandler):
         handler_page.render()
         return #0
 
+class AFUserBookPara(BaseHandlerPara):
+    paradoc = {
+        'id': '1',
+        'type': 'info', # 'info', 'about', 'catalog', 'invite'
+    }
+    
+
 class AFUserBookHandler(BaseHandler):
     @with_login
     def get(self):
@@ -36,5 +43,33 @@ class AFBookCreateHandler(BaseHandler):
     @with_login
     def get(self):
         handler_page = AFBookCreatePage(self)
+        handler_page.render()
+        return #0
+
+class AFBookEditInfoHandler(BaseHandler):
+    @with_login
+    def get(self):
+        handler_page = AFBookEditInfoPage(self)
+        handler_page.render()
+        return #0
+
+class AFBookEditAboutHandler(BaseHandler):
+    @with_login
+    def get(self):
+        handler_page = AFBookEditAboutPage(self)
+        handler_page.render()
+        return #0
+
+class AFBookEditInviteHandler(BaseHandler):
+    @with_login
+    def get(self):
+        handler_page = AFBookEditInvitePage(self)
+        handler_page.render()
+        return #0
+
+class AFBookEditCatalogHandler(BaseHandler):
+    @with_login
+    def get(self):
+        handler_page =  AFBookEditCatalogPage(self)
         handler_page.render()
         return #0

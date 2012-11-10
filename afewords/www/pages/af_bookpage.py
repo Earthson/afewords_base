@@ -52,7 +52,7 @@ class AFBookEditBasePage( BasePage ):
 
 @with_attr
 class AFBookEditInfoPage( AFBookEditBasePage):
-    ''' for url /book-edit '''
+    ''' for url /book-edit/xxx '''
     __template_file__ = "afewords-book/book-edit-info.html"
     doc = {
         'edit_type': 'info',
@@ -60,15 +60,16 @@ class AFBookEditInfoPage( AFBookEditBasePage):
 
 @with_attr
 class AFBookEditCatalogPage( AFBookEditBasePage ):
-    ''' for url /book-eidt?id=xxx&type=catalog '''
+    ''' for url /book-eidt/xxx/catalog '''
     __template_file__ = "afewords-book/book-edit-catalog.html"
     doc = {
         'edit_type': 'catalog',
+        'catalog_html': '',
     }
 
 @with_attr
 class AFBookEditInvitePage( AFBookEditBasePage ):
-    ''' for url /book-edit?id=xxx&type=invite '''
+    ''' for url /book-edit/xxx/invite '''
     __template_file__ = "afewords-book/book-edit-invite.html"
     doc = {
         'edit_type': 'invite',
@@ -76,7 +77,7 @@ class AFBookEditInvitePage( AFBookEditBasePage ):
 
 @with_attr
 class AFBookEditAboutPage( AFBookEditBasePage ):
-    ''' for url /book-edit?id=xxxx&type=about '''
+    ''' for url /book-edit/xxxx/about '''
     __template_file__ = "afewords-book/book-edit-about.html"
     doc = {
         'edit_type': 'invite',
