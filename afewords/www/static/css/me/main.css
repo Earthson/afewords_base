@@ -243,7 +243,7 @@ span.self-info-process a{color: blue;margin-left: 20px;font-size: 12px;text-deco
 margin-top: 20px;position: relative;background: url('/static/img/button/settings_ok.png') 20px 10px  no-repeat;
 min-height: 100px;background-color: #ffffff;}
 #body_content .my_group_image{background-image: url('/static/img/button/group_ok1.png');}
-#body_content .my_book_image{background-image: url('/static/img/button/book_ok3.png');}
+#body_content .my_book_image{background-image: url('/static/img/button/book_ok10.png');}
 
 /********** for notice ************/
 #body_content .notice{background-image: url('/static/img/button/email_ok.png');}
