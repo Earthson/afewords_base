@@ -1,0 +1,98 @@
+{% extends "book-base.html" %}
+
+
+{% block book_base_right_body %}
+{% set book = doc['book'] %}
+{% set author = book['author'] %}
+
+
+<div id="middle_book" class="middle_book_cover current_middle1">
+<div id="book_name">{{ book['name'] }}</div>
+<div id="book_admin"><a href="/blogger/{{ author['uid'] }}">{{ author['name'] }}</a>审</div>
+<div id="book_author">
+{#
+<a href="" >涂德巨</a>
+<span>联合著</span>
+#}<span>完成度 {{ book['complete_rate'] }}% (指定章节{{ book['complete_count'] }}/总章节数{{ book['all_catalog_count'] }})</span>
+</div>
+<div id="book_press">子曰出版社&reg;</div>
+</div>
+
+
+{#
+<div id="middle_book" class="middle_book_summary current_middle{{ int(want=="summary") }}">
+<div class="book_header"><span class="header_left">内容摘要</span><span class="header_right">{{ book['name'] }}</span></div>
+<div class="book_summary">
+{% if not doc['isedit']  %}
+    {% if doc['user'] and doc['user']['uid'] == author['uid'] %}
+        <div class="book_do_a" book_id="{{ book['bid'] }}"><a href="/book/{{ book['bid'] }}?load=summary&edit=yes">修改摘要</a></div>
+    {% end %}
+{% end %}
+<div class="book_summary_tip">内容摘要</div>
+<div class="book_summary_con">
+
+{% if doc['isedit']  %}
+<div id="book_write_wrap">
+<textarea id="write_textarea" class="book_textarea">{{ book['summary']['body'] }}</textarea>
+<button class="self-intro-button">提交</button><span class="self-info-process">&nbsp;</span>
+</div>
+{% else %}
+<div class="bb_con">
+{{ book['summary']['content']  }}
+</div>
+{% end %}
+</div>
+</div>
+<div class="book_footer">&nbsp;</div>
+</div>
+
+
+<div id="middle_book" class="middle_book_catalog current_middle{{ int(want=="catalog") }}">
+<div class="book_header"><span class="header_left">目录</span><span class="header_right">{{ book['name'] }}</span></div>
+<div class="book_catalog">
+{% if doc['isedit']  %}
+<div class="book_catalog_add" book_id="{{ book['bid'] }}">添加新目录</div>
+{% else %}
+    {% if doc['user']  and doc['user']['uid'] == author['uid'] %}
+        <div class="book_do_a" book_id="{{ book['bid'] }}"><a href="/book/{{ book['bid'] }}?load=catalog&edit=yes">修改目录</a></div>
+    {% end %}
+{% end %}
+<div class="book_catalog_tip">目录</div>
+<div class="book_catalog_con">
+
+{{ doc['catalog_html'] }}
+</div>
+</div>
+<div class="book_footer">&nbsp;</div>
+</div>
+#}
+
+<!-- for topic -->
+{#暂时关闭
+<div id="middle_book" class="middle_book_topic current_middle{{int(want=="topic")}}">
+<div class="book_header"><span class="header_left">讨论</span><span class="header_right">{{ book.name }}</span></div>
+<div class="book_summary">
+<div class="book_summary_tip">讨论</div>
+<div class="book_summary_con">
+讨论
+</div>
+</div>
+<div class="book_footer">&nbsp;</div>
+</div>
+
+
+<div id="middle_book" class="middle_book_feedback current_middle{{ int(want=="feedback") }}" >
+<div class="book_header"><span class="header_left">建议</span><span class="header_right">{{ book.name }}</span></div>
+<div class="book_summary">
+<div class="book_summary_tip">建议</div>
+<div class="book_summary_con">
+建议
+</div>
+</div>
+<div class="book_footer">&nbsp;</div>
+</div>
+#}
+
+{% end %}
+
+
