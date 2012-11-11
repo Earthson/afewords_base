@@ -47,10 +47,11 @@ class CheckPage(BasePage):
     '''
     __template_file__ = 'afewords-check.html'
     doc = {
+        'subpage_type': 'mail', # 'mail' or 'password'
         'check_type': 0,    # int , 0 for mail check, 1 for password reset
         'status': -1,   # int, describe the check code
         'info': '',     # unicode, describe the check info
-        'title' : u'子曰 - 验证邮件/密码重置',
+        'title' : u'验证邮件/密码重置 - 子曰',
     }
 
     error_info = {
@@ -103,7 +104,7 @@ class WritePage(BasePage):
     @login
     @get
     '''
-    __template_file__ = 'write.html'
+    __template_file__ = 'afewords-write.html'
     doc = {
         'article': {},    # see the [[ article ]] in data_format
         'isedit': False,        # bollean
@@ -128,7 +129,7 @@ class BlogPage(BasePage):
     blog page, show author blog
     @get 
     '''
-    __template_file__ = 'blog.html'
+    __template_file__ = 'afewords-blog.html'
     doc = {
         'ispreview': False, # bollean 
         'article': {},    # dict, see [[article]] definition in dataformat 
