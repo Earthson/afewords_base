@@ -1,7 +1,7 @@
 #coding=utf-8
 
 from basehandler import *
-from pages.bookpage import BookPage, BookChapter
+from pages.bookpage import BookPage, BookChapterPage, BookAboutPage, BookCatalogPage
 
 
 class BookHandlerPara(BaseHandlerPara):
@@ -45,11 +45,62 @@ class BookHandler(BaseHandler):
         return
 
 
+class BookAboutHandler(BaseHandler):
+    '''
+        bid get from url
+    '''
+    def get(self, bid):
+        from article.catalog import Catalog
+        handler_paras = BookHandlerPara(self)
+        handler_page = BookPage(self)
+        usr = self.current_user
+        handler_page['bid'] = bid
+        handler_page['isedit'] = handler_paras['edit']
+        handler_page['load_page'] = handler_paras['load']
+        catalog_obj = Catalog.by_id(bid)
+        if catalog_obj is None:
+            self.send_error(404)
+            return
+        if handler_page['isedit'] is True:
+            handler_page['book'] = catalog_obj.edit_info
+        else:
+            handler_page['book'] = catalog_obj.obj_info_view_by('basic_info', 
+                                    usr=usr)
+        handler_page.page_init()
+        handler_page.render()
+        return
+
+class BookCatalogHandler(BaseHandler):
+    '''
+        url /book/xxx/catalog
+        bid get from url
+    '''
+    def get(self, bid):
+        from article.catalog import Catalog
+        handler_paras = BookHandlerPara(self)
+        handler_page = BookPage(self)
+        usr = self.current_user
+        handler_page['bid'] = bid
+        handler_page['isedit'] = handler_paras['edit']
+        handler_page['load_page'] = handler_paras['load']
+        catalog_obj = Catalog.by_id(bid)
+        if catalog_obj is None:
+            self.send_error(404)
+            return
+        if handler_page['isedit'] is True:
+            handler_page['book'] = catalog_obj.edit_info
+        else:
+            handler_page['book'] = catalog_obj.obj_info_view_by('basic_info', 
+                                    usr=usr)
+        handler_page.page_init()
+        handler_page.render()
+        return
+
 
 class BookChapterHandler(BaseHandler):
     def get(self, bid, cnum):
         from article.catalog import Catalog
-        handler_page = BookChapter(self)
+        handler_page = BookChapterPage(self)
         usr = self.current_user
         catalog_obj = Catalog.by_id(bid)
         if catalog_obj is None:

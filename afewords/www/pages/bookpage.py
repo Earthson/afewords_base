@@ -29,10 +29,29 @@ class BookPage(BookBasePage):
 
 
 @with_attr
-class BookChapter(BookBasePage):
+class BookChapterPage(BookBasePage):
+    ''' for url /book/xxx/catalog/x '''
     __template_file__ = 'book/book-chapter.html'
     doc = {
         'load_page': 'chapter',
         'current_chapter': None,    # dict, see [[ chapter ]] in data_format 
+        'previous_chapter': {},
+        'next_chapter': {},
     }
 
+
+@with_attr
+class BookCatalogPage(BookBasePage):
+    ''' for url /book/xxx/catalog '''
+    __template_file__ = "book/book-catalog.html"
+    doc = {
+        'catalog_html': '',
+    }
+
+@with_attr
+class BookAboutPage(BookBasePage):
+    ''' for url /book/xxx/about '''
+    __template_file__ = "book/book-about.html"
+    doc = {
+        'about': {},    # see [[ article ]]
+    }

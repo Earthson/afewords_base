@@ -47,7 +47,8 @@ from handlers.settingcataloghandlers import CatalogSectionDelHandler
 
 from handlers.bookhandlers import BookHandler
 from handlers.bookhandlers import BookChapterHandler
-
+from handlers.bookhandlers import BookCatalogHandler
+from handlers.bookhandlers import BookAboutHandler
 
 from handlers.afuserhandlers import AFUserRecentHandler
 
@@ -101,7 +102,9 @@ app_handlers = {
     (r'/settings-follow', UserSettingFollowHandler),
     (r'/settings-follower', UserSettingFollowerHandler),
     (r'/book/([0-9a-zA-Z]+)', BookHandler),
+    (r'/book/([0-9a-zA-Z]+)/catalog', BookCatalogHandler),
     (r'/book/([0-9a-zA-Z]+)/catalog/([0-9]+)', BookChapterHandler),
+    (r'/book/([0-9a-zA-Z]+)/about', BookAboutHandler),
 
     #statistics
     (r'/article-dolike', ArticleDoLikeHandler),

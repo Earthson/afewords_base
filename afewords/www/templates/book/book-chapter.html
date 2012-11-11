@@ -1,0 +1,111 @@
+{% extends "book-index.html" %}
+
+
+{% block book_middle_other %}
+
+{% set want = doc['load_page'] %}
+{% set current_chapter = doc['current_chapter'] %}
+{% set book = doc['book'] %}
+
+
+<div id="middle_book" class="middle_book_node current_middle{{ int(want=="chapter") }}" >
+<div class="book_header"><span class="header_left">{{ current_chapter['chapter_num'] }}&nbsp;-&nbsp;{{ current_chapter['title'] }}</span><span class="header_right">{{ book['name'] }}</span></div>
+<div class="book_node_wrap">
+<div class="book_node_nav">
+<ul><li><a href="javascript:void(0)" class="current1" page="main">指定文章({{ current_chapter['spec_article_count'] }})</a></li>
+<li><a href="javascript:void(0)" page="article">推荐文章({{ current_chapter['article_count'] }})</a></li>
+<li><a href="javascript:void(0)" page="catalog">推荐知识谱({{ current_chapter['subcatalog_count'] }})</a></li></ul>
+</div>
+
+
+<div class="book_node_con">
+
+<div class="book_node_con_main">
+{% if current_chapter['spec_article_count'] == 0 %}
+章节{{ current_chapter['chapter_num'] }}尚未指定文章！
+{% else %}
+{% set current_article = current_chapter['spec_article_list'][0] %}
+{% set current_author = current_article['author'] %}
+<div class="book_node_author">作者：<a href="/blogger/{{ current_author['uid'] }}">{{ current_author['name'] }}</a></div>
+<div class="book_node_author">原文：<a href="/blog/{{ current_article['aid'] }}">{{ current_article['title'] }}</a></div>
+<div class="div-20"></div>
+<div class="bb_con">
+    {{ current_article['content'] }}
+</div>
+{% end %}
+</div>
+
+<div class="book_node_con_article con_current0">
+    <div class="book_node_con_recommend"><a href="javascript:void(0)" book_id="{{ book['bid'] }}" node_id="{{ current_chapter['cid'] }}">我要推荐文章</a></div>
+
+{% if current_chapter['article_count'] == 0 %}
+    暂无文章被推荐到章节{{ current_chapter['chapter_num'] }}中！
+{% else %}
+    <ul class="node_style" book_id="{{ book['bid'] }}" node_id="{{ current_chapter['cid'] }}">
+    {% for item in current_chapter['article_list'] %}
+        <li>
+        {% if item['article_type'] == 'Blog' %}
+            <a href="/blog/{{ item['aid'] }}" target="_blank">{{ item['title'] }}</a>
+        {% else %}
+            <a href="#" >wenzhang</a>
+        {% end %}
+        {% if user and user['uid'] == book['author']['uid'] %}
+        <span class="mark_article"><a href="javascript:void(0)" do="mark_recommend" relation_id="{{ item['relation_id'] }}">指定</a></span>
+        <span class="del_article"><a href="javascript:void(0)" do="del_recommend" relation_id="{{ item['relation_id'] }}">删除</a></span>
+        {% end %}
+        </li>
+    {% end %}
+    </ul>
+{% end %}
+</div>
+
+
+
+<div class="book_node_con_catalog con_current0">
+<div class="book_node_con_recommend">
+<a href="javascript:void(0)" book_id="{{ book['bid'] }}" node_id="{{ current_chapter['cid'] }}" want="catalog">我要推荐知识谱</a>
+</div>
+
+{% if current_chapter['subcatalog_count'] == 0 %}
+    暂无知识谱被推荐到章节{{ current_chapter['subcatalog_list'] }}中！
+{% else %}
+    <ul class="node_style" book_id="{{ book['bid'] }}" node_id="{{ current_chapter['cid'] }}">
+    {% for item in current_chapter['subcatalog_list'] %}
+        <li>
+            <a href="/book/{{ item['bid'] }}" target="_blank">{{ item['name'] }}</a>
+
+        {% if user and user['uid'] == book['auhtor']['uid'] %}
+        <span class="del_article"><a href="javascript:void(0)" do="del_recommend" relation_id="{{ item['relation_id'] }}">删除</a></span>
+        {% end %}
+        </li>
+    {% end %}
+    </ul>
+{% end %}
+
+</div>
+
+
+</div>
+
+
+</div>
+<div class="book_footer">&nbsp;</div>
+</div>
+
+{% end %}
+
+
+{% block script_book_node_bottom %}
+{% if doc['current_chapter']['spec_article_count'] != 0 %}
+<script type="text/javascript" src="{{ static_url("js/code/shCore.js") }}"></script>
+{%  for jjj in doc['current_chapter']['spec_article_list'][0]['js_list']  %}
+    <script type="text/javascript" src="{{ static_url("js/code/" + jjj) }}"></script>
+{% end %}
+<script type="text/javascript">
+$().ready(function(){
+	SyntaxHighlighter.all();
+});
+</script>
+{% end %}
+
+{%end %}
