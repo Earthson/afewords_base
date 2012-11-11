@@ -14,7 +14,26 @@
 
 <div id="middle-book-left">
 
+{% set book = doc['book'] %}
+{% set author = book['author'] %}
+{% set want = doc['load_page'] %}
+
+<div class="book_nav_title">
+<span class="book_name_tip"><a href="/book/{{ book['bid'] }}">{{ book['name'] }}</a></span>
+</div>
+
+<div class="book_tip current_tip{{ int(want=="summary") }}">
+<span page="middle_book_summary"><a href="/book/{{ book['bid'] }}/about" >摘要</a></span>
+</div>
+
+<div class="book_tip current_tip{{ int(want=="catalog") }}">
+<span page="middle_book_catalog"><a href="/book/{{ book['bid'] }}/catalog">目录</a></span>
+</div>
+
 {% block book_base_left_body %}
+
+
+
 {% end %}
 
 </div>

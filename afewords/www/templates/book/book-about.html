@@ -1,0 +1,27 @@
+{% extends "book-base.html" %}
+
+{% block book_base_right_body %}
+{% set book = doc['book'] %}
+
+<div id="middle_book" class="middle_book_summary current_middle1">
+<div class="book_header"><span class="header_left">内容摘要</span><span class="header_right">{{ book['name'] }}</span></div>
+<div class="book_summary">
+{#
+{% if doc['user'] and doc['user']['uid'] == author['uid'] %}
+        <div class="book_do_a" book_id="{{ book['bid'] }}"><a href="/book/{{ book['bid'] }}?load=summary&edit=yes">修改摘要</a></div>
+{% end %}
+#}
+<div class="book_summary_tip">内容摘要</div>
+<div class="book_summary_con">
+
+<div class="bb_con">
+{{ book['summary']['content']  }}
+</div>
+
+</div>
+</div>
+<div class="book_footer">&nbsp;</div>
+</div>
+
+
+{% end %}
