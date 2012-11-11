@@ -29,6 +29,9 @@
 <div id="middle_book" class="middle_book_node current_middle1" >
 <div class="book_header"><span class="header_left">{{ current_chapter['chapter_num'] }}&nbsp;-&nbsp;{{ current_chapter['title'] }}</span><span class="header_right">{{ book['name'] }}</span></div>
 <div class="book_node_wrap">
+
+<h1>{{ current_chapter['chapter_num'] }}&nbsp;-&nbsp;{{ current_chapter['title'] }}</h1>
+
 <div class="book_node_nav">
 <ul><li><a href="javascript:void(0)" class="current1" page="main">指定文章({{ current_chapter['spec_article_count'] }})</a></li>
 <li><a href="javascript:void(0)" page="article">推荐文章({{ current_chapter['article_count'] }})</a></li>
@@ -44,9 +47,8 @@
 {% else %}
 {% set current_article = current_chapter['spec_article_list'][0] %}
 {% set current_author = current_article['author'] %}
-<h5>{{ current_chapter['chapter_num'] }}&nbsp;-&nbsp;{{ current_chapter['title'] }}</h5>
-<div class="book_node_author">作者：<a href="/blogger/{{ current_author['uid'] }}">{{ current_author['name'] }}</a></div>
-<div class="book_node_author">原文：<a href="/blog/{{ current_article['aid'] }}">{{ current_article['title'] }}</a></div>
+
+<div class="book_node_author">[原文：<a href="/blog/{{ current_article['aid'] }}">{{ current_article['title'] }}</a> By <a href="/blogger/{{ current_author['uid'] }}">{{ current_author['name'] }}</a>]</div>
 <div class="div-20"></div>
 <div class="bb_con">
     {{ current_article['content'] }}

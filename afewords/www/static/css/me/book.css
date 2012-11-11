@@ -164,7 +164,8 @@ border-left: none;border-right: none;}
 .node_top_tip:hover{cursor: pointer;text-decoration: underline;}
 
 .book_node_wrap{width: 100%;float: left;margin-top: 0px;}
-.book_node_nav{width: 100%;float: left;margin-top: 5px;}
+.book_node_wrap h1{margin-top: 20px;}
+.book_node_nav{width: 100%;float: left;}
 .book_node_nav ul{list-style-type: none;line-height: 35px;float: right;border-bottom: #ccc 1px dotted;}
 .book_node_nav ul li{float: left;padding: 0 10px;}
 .book_node_nav ul li a{font-size: 12px !important;line-height: 35px;display: block;padding: 0 5px;border-bottom:#ffffff 2px solid;}
@@ -184,7 +185,7 @@ border-left: none;border-right: none;}
 
 .book_node_con > .con_current0{display: none;}
 
-.book_node_author{float: left;width: 100%;line-height: 30px;}
+.book_node_author{float: left;line-height: 30px;}
 .book_node_author a{margin-left: 5px;color: blue;}
 
 

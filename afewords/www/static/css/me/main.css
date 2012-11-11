@@ -2,6 +2,7 @@
 /***************** global style ********************/
 *{margin:0;padding:0;border:0;font-size: 14px;}
 body{ background:#ffffff;line-height:25px;width:100%;color:#000;font:14px/24px Arial, sans-serif;position: relative;}
+h1{font-size: 26px;line-height: 40px;}
 a{text-decoration:none;color: #777;}
 a:hover{color: blue;text-decoration: underline;}
 textarea, input[type="text"], input[type="password"] {

@@ -458,7 +458,7 @@ $Book.recommended_to_book = function(obj){
                 '<input type="hidden" name="do" value="recommended_to_book" />'+
                 '<input type="hidden" name="node_id" value="'+ node_id +'" />' +
                 '<p class="first">推荐到该知识谱</p>'+
-                '<p>很抱歉，我们在将来将提供更加自动化的操作，不过现在需要你填写具体的文章/知识谱的链接</p>' + 
+                //'<p>很抱歉，我们在将来将提供更加自动化的操作，不过现在需要你填写具体的文章/知识谱的链接</p>' + 
                 '<p>链接<input type="text" name="url" autocomplete="off"/></p>'+
                 '<p><span><button type="submit" id="recommend_button">推荐</button></span><span class="t_process">&nbsp;</span></p>';
     $html.html(html);

@@ -5,13 +5,9 @@
 <div id="middle_book" class="middle_book_catalog current_middle1">
 <div class="book_header"><span class="header_left">目录</span><span class="header_right">{{ book['name'] }}</span></div>
 <div class="book_catalog">
-{% if doc['isedit']  %}
-<div class="book_catalog_add" book_id="{{ book['bid'] }}">添加新目录</div>
-{% else %}
     {% if doc['user']  and doc['user']['uid'] == author['uid'] %}
         <div class="book_do_a" book_id="{{ book['bid'] }}"><a href="/book-edit/{{ book['bid'] }}/catalog">修改目录</a></div>
     {% end %}
-{% end %}
 <div class="book_catalog_tip">目录</div>
 <div class="book_catalog_con">
 
