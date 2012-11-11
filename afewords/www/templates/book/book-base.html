@@ -16,25 +16,41 @@
 
 {% set book = doc['book'] %}
 {% set author = book['author'] %}
-{% set want = doc['load_page'] %}
-
+{% set want = doc['subpage_type'] %}
+{#
 <div class="book_nav_mark">
 <span>知识谱</span>
 </div>
+
 <div class="book_nav_title">
 <span class="book_name_tip"><a href="/book/{{ book['bid'] }}">{{ book['name'] }}</a></span>
 </div>
+#}
+<div class="book_tip">
+<table>
+<tr>
+<td colspan="2" class="title"><a href="/book/{{ book['bid'] }}" >{{ book['name'] }}</a></td>
+</tr>
+<tr><td width="50%"><a href="/book/{{ book['bid'] }}/about" class="chosed{{ int(want=="about") }}">摘要</a></td>
+<td width="50%"><a href="/book/{{ book['bid'] }}/catalog" class="chosed{{ int(want=="catalog") }}">目录</a></td></tr>
+<tr><td class="time">最近更新</td><td class="time">2012-12-12</td></tr>
 
-<div class="book_tip current_tip{{ int(want=="summary") }}">
-<span page="middle_book_summary"><a href="/book/{{ book['bid'] }}/about" >摘要</a></span>
-</div>
-
-<div class="book_tip current_tip{{ int(want=="catalog") }}">
-<span page="middle_book_catalog"><a href="/book/{{ book['bid'] }}/catalog">目录</a></span>
-</div>
-
+{#
+<tr><td class="time">当前章节</td><td><a href="#">2</a></td></tr>
+<tr><td><a href="#">上一节</a></td><td><a href="#">下一节</a></td></tr>
+#}
 {% block book_base_left_body %}
 {% end %}
+</table>
+</div>
+
+{#
+<div class="book_tip">
+<span page="middle_book_catalog"><a href="/book/{{ book['bid'] }}/catalog">目录</a></span>
+</div>
+#}
+
+
 
 </div>
 

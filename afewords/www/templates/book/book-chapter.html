@@ -1,7 +1,26 @@
-{% extends "book-index.html" %}
+{% extends "book-base.html" %}
 
 
-{% block book_middle_other %}
+
+{% block book_base_left_body %}
+
+{% set current_chapter = doc['current_chapter'] %}
+{% set book = doc['book'] %}
+
+<tr><td class="time chosed">当前章节</td>
+<td><a href="/book/{{ book['bid'] }}/catalog/{{current_chapter['cid']}}" class="chosed1">{{ current_chapter['chapter_num'] }}</a></td></tr>
+<tr><td><a href="#">上一节</a></td><td><a href="#">下一节</a></td></tr>
+{#
+{% for item in book['chapter_list'] %}   
+<div class="book_tip_normal current_tip{{ int(doc['current_chapter']['cid'] == item['cid']) }}">
+<span class="book_node_tip"><a href="/book/{{book['bid']}}/catalog/{{ item['cid'] }}">{{ item['chapter_num'] }}&nbsp;-&nbsp;{{ item['title'] }}</a></span>
+</div>
+{% end %}
+#}
+{% end %}
+
+
+{% block book_base_right_body %}
 
 {% set want = doc['load_page'] %}
 {% set current_chapter = doc['current_chapter'] %}
@@ -25,6 +44,7 @@
 {% else %}
 {% set current_article = current_chapter['spec_article_list'][0] %}
 {% set current_author = current_article['author'] %}
+<h5>{{ current_chapter['chapter_num'] }}&nbsp;-&nbsp;{{ current_chapter['title'] }}</h5>
 <div class="book_node_author">作者：<a href="/blogger/{{ current_author['uid'] }}">{{ current_author['name'] }}</a></div>
 <div class="book_node_author">原文：<a href="/blog/{{ current_article['aid'] }}">{{ current_article['title'] }}</a></div>
 <div class="div-20"></div>
