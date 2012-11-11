@@ -536,6 +536,7 @@ $('button.self-intro-button').click(function(){
     $Book.edit_summary(this);
 });
 
+/*
 $('div.book_node_nav').find('a').click(function(){
     $Book.node_page_change(this);
 });
@@ -548,8 +549,10 @@ $('div.book_tip').find('span').click(function(){
 $('#middle_node_nav').find('span').click(function(){
     $Book.book_tip_chose(this);
 });
+*/
 
 
+/*
 (function(){
     function ww(){
         $('#middle-book-left').fix_to_head(20);
@@ -557,5 +560,6 @@ $('#middle_node_nav').find('span').click(function(){
     }
     setTimeout(ww, 500);
 })();
+*/
 
 })(jQuery);

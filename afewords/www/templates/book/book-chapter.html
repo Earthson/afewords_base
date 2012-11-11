@@ -7,8 +7,7 @@
 {% set current_chapter = doc['current_chapter'] %}
 {% set book = doc['book'] %}
 
-
-<div id="middle_book" class="middle_book_node current_middle{{ int(want=="chapter") }}" >
+<div id="middle_book" class="middle_book_node current_middle1" >
 <div class="book_header"><span class="header_left">{{ current_chapter['chapter_num'] }}&nbsp;-&nbsp;{{ current_chapter['title'] }}</span><span class="header_right">{{ book['name'] }}</span></div>
 <div class="book_node_wrap">
 <div class="book_node_nav">
@@ -44,7 +43,7 @@
     <ul class="node_style" book_id="{{ book['bid'] }}" node_id="{{ current_chapter['cid'] }}">
     {% for item in current_chapter['article_list'] %}
         <li>
-        {% if item['article_type'] == 'Blog' %}
+        {% if item['article_type'] == 'blog' %}
             <a href="/blog/{{ item['aid'] }}" target="_blank">{{ item['title'] }}</a>
         {% else %}
             <a href="#" >wenzhang</a>

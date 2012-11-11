@@ -33,6 +33,7 @@ class BookChapterPage(BookBasePage):
     ''' for url /book/xxx/catalog/x '''
     __template_file__ = 'book/book-chapter.html'
     doc = {
+        'subpage_type': 'chapter',
         'load_page': 'chapter',
         'current_chapter': None,    # dict, see [[ chapter ]] in data_format 
         'previous_chapter': {},
@@ -45,6 +46,7 @@ class BookCatalogPage(BookBasePage):
     ''' for url /book/xxx/catalog '''
     __template_file__ = "book/book-catalog.html"
     doc = {
+        'subpage_type': 'catalog',
         'catalog_html': '',
     }
 
@@ -53,5 +55,6 @@ class BookAboutPage(BookBasePage):
     ''' for url /book/xxx/about '''
     __template_file__ = "book/book-about.html"
     doc = {
+        'subpage_type': 'about',
         'about': {},    # see [[ article ]]
     }
