@@ -88,7 +88,7 @@
 </div>
 
 {% if current_chapter['subcatalog_count'] == 0 %}
-    暂无知识谱被推荐到章节{{ current_chapter['subcatalog_list'] }}中！
+    暂无知识谱被推荐到章节{{ current_chapter['chapter_num'] }}中！
 {% else %}
     <ul class="node_style" book_id="{{ book['bid'] }}" node_id="{{ current_chapter['cid'] }}">
     {% for item in current_chapter['subcatalog_list'] %}
