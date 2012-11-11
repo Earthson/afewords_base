@@ -6,11 +6,11 @@
 <div class="page_nav"><span>登陆</span></div>
 
 <div id="login_do">
-<form method="post" action="/login" onsubmit="return do_login_check()">
+<form method="post" action="/login">
 <table class="login">
 <tr><td width="20%" style="letter-spacing:8px;">邮箱</td><td width="80%" align="left"><input type="text" class="login_mail" id="login-email" name="email" />{{ xsrf_form_html() }}</td></tr>
 <tr><td style="letter-spacing:8px;">密码</td><td align="left"><input type="password" class="login_mail" name="pwd" /></td></tr>
-<tr><td>验证码</td><td align="left"><input type="text" class="login_mail" name="token" /></td></tr>
+<tr><td>验证码</td><td align="left"><input type="text" class="login_mail" autocomplete="off" name="token" /></td></tr>
 <tr><td>&nbsp;</td><td align="left"><span id="code_img">
 <img src="/code" alt="验证图片" class="code-img" ></span><span class="l-a code_change" onclick="change_code()">更换验证码</span>
 </td></tr>

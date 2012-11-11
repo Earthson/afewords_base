@@ -10,13 +10,32 @@
   <meta charset="UTF-8"/>
   <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/main.css") }}" />
   {% block css_link %} {% end %}
+  <script type="text/javascript">
+    {% if doc['user'] %}
+        AFWUser = { 
+            'login': true,
+            'name': "{{ doc['user']['name'] }}",
+            'id': "{{ doc['user']['uid'] }}"        
+        }
+    {% else %}
+        AFWUser = {};
+    {% end %}
+    AFWUser['page_type'] = "{{ doc['page_type'] }}";
+    AFWUser['subpage_type'] = "{{ doc['subpage_type'] }}";
+    
+</script>
+  {#
   <!--
   <script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.6.2/jquery.min.js"></script>
   -->
   <script type="text/javascript" >
     !window.jQuery && document.write(unescape('%3Cscript src="/static/js/jq/jquery.js"%3E%3C/script%3E'));
   </script>
+  #}
+  <script type="text/javascript" src="{{ static_url("js/jq/jquery.js") }}"></script>
+  <!--
   <script type="text/javascript" src="{{ static_url("js/jq/jquery.form.js") }}"></script>
+  -->
   <script type="text/javascript" src="{{ static_url("js/me/main.js") }}"></script>
 </head>
 <body>
@@ -103,6 +122,8 @@
 </div>
 {% block script_bottom %}{% end %}
 <script type="text/javascript" src="{{ static_url("js/me/index.js") }}"></script>
+<!--
 <script type="text/javascript" src="{{ static_url("js/me/init.js") }}"></script>
+-->
 </body>
 </html>
