@@ -52,7 +52,7 @@ class BookAboutHandler(BaseHandler):
     def get(self, bid):
         from article.catalog import Catalog
         handler_paras = BookHandlerPara(self)
-        handler_page = BookPage(self)
+        handler_page = BookAboutPage(self)
         usr = self.current_user
         handler_page['bid'] = bid
         handler_page['isedit'] = handler_paras['edit']
@@ -78,7 +78,7 @@ class BookCatalogHandler(BaseHandler):
     def get(self, bid):
         from article.catalog import Catalog
         handler_paras = BookHandlerPara(self)
-        handler_page = BookPage(self)
+        handler_page = BookCatalogPage(self)
         usr = self.current_user
         handler_page['bid'] = bid
         handler_page['isedit'] = handler_paras['edit']
