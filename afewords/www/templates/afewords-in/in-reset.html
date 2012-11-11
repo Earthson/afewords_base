@@ -1,0 +1,25 @@
+{% extends "in-base.html" %}
+
+{% block afewords_in_html %}
+
+<div class="follow margin-left-0">
+<div class="page_nav"><span>登陆</span></div>
+
+<div id="login_do">
+<table class="reg">
+<tr><td>您的邮箱</td><td align="left">
+<input type="text" class="login_mail" id="login-email" name="email" />{{ xsrf_form_html() }}</td></tr>
+<tr><td style="letter-spacing:1px;">设置密码</td><td align="left"><input type="password" class="login_mail" name="pwd" /></td></tr>
+<tr><td style="letter-spacing:1px;">确认密码</td><td align="left"><input type="password" class="login_mail" name="pwd_again" /></td></tr>
+<tr><td style="letter-spacing:5px;">验证码</td><td align="left"><input type="text" class="login_mail" name="token" /></td></tr>
+<tr><td>&nbsp;</td><td align="left"><span id="code_img">
+<img src="/code" alt="验证图片" class="code-img" ></span><span class="l-a code_change" onclick="change_code()">更换验证码</span>
+</td></tr>
+</table>
+
+<div><button type="submit" class="login_button">确认重置</button><span class="login-process"></span></div>
+</div>
+
+
+</div>
+{% end %}

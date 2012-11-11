@@ -17,8 +17,11 @@ class LoginPage(BasePage):
     @nologin
     @get  --- for show web page
     '''
-    __template_file__ = 'afewords-login.html'
-    doc = {}
+    __template_file__ = 'afewords-in/in-login.html'
+    doc = {
+        'subpage_type': 'login',
+        'title': '登陆 - 子曰',
+    }
 
 
 @with_attr
@@ -27,8 +30,10 @@ class RegisterPage(BasePage):
     @nologin
     @get  --- for show web page
     '''
-    __template_file__ = 'afewords-reg.html'
+    __template_file__ = 'afewords-in/in-reg.html'
     doc = {
+        'title': '注册 - 子曰',
+        'subpage_type': 'reg',
         'blog_list' : [],   # see dataformat
     }
 
@@ -69,9 +74,10 @@ class ResetPage(BasePage):
     @get  --- for show the web page
     reset password
     '''
-    __template_file__ = 'afewords-reset.html'
+    __template_file__ = 'afewords-in/in-reset.html'
     doc = {
-        'title' : u'子曰 - 密码重置',
+        'subpage_type': 'reset',
+        'title' : u'密码重置 - 子曰',
     }
 
 

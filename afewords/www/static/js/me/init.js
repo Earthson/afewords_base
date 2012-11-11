@@ -273,7 +273,7 @@ $Init.init_all =function(){
         if(page_height < window.screen.availHeight){
             var login_do_height = want_height - 50;
             var login_height = $('#login_do').height();
-            $('#login_do').css('margin-top', (login_do_height-login_height)/3 + "px");
+            //$('#login_do').css('margin-top', (login_do_height-login_height)/3 + "px");
         }else{
             $('#afw_info').css('height','300px');        
         }
