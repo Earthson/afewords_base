@@ -105,13 +105,14 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
                 contain: avatar, domain, tag, draft, notice    
     ********************/
     var flag_str = AFWUser['subpage_type'];    
-    var flag = flag_str == "domain" || flag_str == "avatar" || flag_str == "sdf";
+    var flag = flag_str == "domain" || flag_str == "avatar" || flag_str == "draft" 
+                    || flag_str == "notice" || flag_str == "tag";
     if( !flag ) return;
     $("#body_content").find(".page_nav").bind('click', function(e){
         var target = e.target,
             $target = jQuery(target);
         if(target.nodeName != "A")  return false;
-        
+        alert('loading');
         
     });
     
