@@ -496,8 +496,8 @@ border-left: #ccc 1px dotted;overflow: hidden;}
 color: red; float: left;}
 #login_do table.reg{line-height: 50px;}
 #login_do table.reg .space_20{letter-spacing: 20px;}
-#login #repeat_time_all{color: blue;font-size: 12px;}
-#login #repeat_time_all a{color: blue;font-size: 12px;text-decoration: underline;}
+#repeat_time_all{color: blue;font-size: 12px;}
+#repeat_time_all a{color: blue;font-size: 12px;text-decoration: underline;}
 
 
 

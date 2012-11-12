@@ -59,6 +59,53 @@ $.extend({
     
 });
 
+jQuery.afewords = jQuery.afewords || {};
+jQuery.afewords.tools = jQuery.afewords.tools || {};
+jQuery.extend(jQuery.afewords.tools, {
+    repeat_mail:    function(_mail_, $process, _end){
+                        var _start =  0;
+                        if(_end == undefined){ _end = 30; }
+                        
+                        function ajax_submit(obj){
+                            var mes = { 'email': jQuery(obj).attr("email") };
+                            jQuery.postJSON('/repeat-mail', mes, function(){ $process.ajax_process(); },
+                                function(response){
+                                    if(response.status != 0){
+                                        var texts = '发送失败，<span id="repeat_time_all">点击重新发送<span>！';
+                                        var end_time = 0;
+                                    }else{
+                                        var end_time = 30;
+                                        var texts = '验证邮件已经发送至您的邮箱！<span id="repeat_time_all"><span id="repeat_time" class="font-14">30</span>秒后可重新发送验证邮件！</span>';
+                                    }                                        
+                                    $process.right_process(texts);
+                                    var interval = jQuery.afewords.tools.repeat_mail(_mail_, $process, end_time);
+                                    interval["interval"]();                                         
+                                },
+                                function(textStatus){
+                                    var texts = '出现错误，<span id="repeat_time_all"><span id="repeat_time" class="font-14">30</span>秒后重新发送<span>！';
+                                    $process.error_process( texts); 
+                                    var interval = jQuery.afewords.tools.repeat_mail(_mail_, $process, 0);
+                                    interval["interval"]();                                    
+                                });
+                        }
+                        return {
+                            "interval": function(){
+                                            if(_start++ < _end){
+                                                $("#repeat_time").html(_end - _start);
+                                                setTimeout(arguments.callee, 1000);
+                                                                                            
+                                            }else{
+                                                var $tmp_link = $('<a></a>');
+                                                $tmp_link.attr({"href":"javascript:void(0);", "email": _mail_});
+                                                $tmp_link.text('重新发送邮件');
+                                                $("#repeat_time_all").html('').append($tmp_link);
+                                                $tmp_link.bind('click', function(){ ajax_submit(this)} );   
+                                            }
+                                        }                     
+                        }
+                    }
+})
+
 jQuery.fn.extend({
     FormToDict: function(){
                     var fields = this.serializeArray();
@@ -106,7 +153,26 @@ jQuery.fn.extend({
                         json[$(this).attr("name")] = $.trim($(this).val());	
                     });
                     return json;
-                }
+                },
+    // for button
+    to_disabled:    function(){
+                        $(this).attr("disabled", "disabled").css("color", "#ccc");    
+                    },
+    remove_disabled: function(){
+                        $(this).removeAttr("disabled").css("color", "black");
+                    },
+    // for process
+    right_process:  function(_text_, _color_){
+                        _color_ = _color_ || "blue";
+                        $(this).html(_text_).css("color", _color_);    
+                    },
+    error_process:  function(_text_, _color_ ){
+                        _color_ = _color_ || "red";
+                        $(this).html(_text_).css("color", _color_);    
+                    },
+    ajax_process:   function(){
+                        $(this).html('<img src="/static/img/ajax.gif" />'); 
+                    },
 });
 
 
