@@ -442,6 +442,10 @@ class Catalog(DataBox):
 
     def obj_info_view_by(self, info_name='basic_info', 
                             usr=None, env=None, **kwargs):
+        '''
+        info_name: ['basic_info', 'overview_info', 'with_summary', 'edit_info',
+            'edit_with_summary']
+        '''
         ans = dict()
         ans['bid'] = self.uid
         ans['name'] = self.name
@@ -456,10 +460,15 @@ class Catalog(DataBox):
             ans['author'] = self.owner.obj_info_view_by('overview_info',
                                     usr, env, **kwargs)
         ans['complete_rate'] = self.complete_rate
-        if info_name in ('basic_info', 'edit_info'):
-            ans['summary'] = self.about.obj_info_view_by(info_name,
+        if info_name == 'with_summary':
+            ans['summary'] = self.about.obj_info_view_by('basic_info',
                             usr=usr, env=env, **kwargs)
-            ans['chapter_list'] = self.node_list_info
+        elif info_name == 'edit_with_summary':
+            ans['summary'] = self.about.obj_info_view_by('edit_info',
+                            usr=usr, env=env, **kwargs)
+        else:
+            ans['summary'] = None
+        ans['chapter_list'] = self.node_list_info
         ans['relation_id'] = ''
 
         ans['permission'] = auth_str(self.authority_verify(

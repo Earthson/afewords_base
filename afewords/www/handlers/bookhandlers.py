@@ -62,9 +62,10 @@ class BookAboutHandler(BaseHandler):
             self.send_error(404)
             return
         if handler_page['isedit'] is True:
-            handler_page['book'] = catalog_obj.edit_info
+            handler_page['book'] = catalog_obj.obj_info_view_by(
+                        'edit_with_summary', usr=usr)
         else:
-            handler_page['book'] = catalog_obj.obj_info_view_by('basic_info', 
+            handler_page['book'] = catalog_obj.obj_info_view_by('with_summary', 
                                     usr=usr)
         handler_page.page_init()
         handler_page.render()
@@ -88,7 +89,8 @@ class BookCatalogHandler(BaseHandler):
             self.send_error(404)
             return
         if handler_page['isedit'] is True:
-            handler_page['book'] = catalog_obj.edit_info
+            handler_page['book'] = catalog_obj.obj_info_view_by('edit_info',
+                                    usr=usr)
         else:
             handler_page['book'] = catalog_obj.obj_info_view_by('basic_info', 
                                     usr=usr)
