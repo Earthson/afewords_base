@@ -156,7 +156,6 @@ class RepeatResetMailHandler(BaseHandler):
         email = self.get_esc_arg('email')
         pre_time = self.get_cookie('repeat', None)
         cur_time = time.time()
-        print pre_time
         if email is None or pre_time is None:
             status = 1 #invalid arguments
         elif cur_time - float(pre_time) < 30:

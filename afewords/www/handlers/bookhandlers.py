@@ -62,9 +62,10 @@ class BookAboutHandler(BaseHandler):
             self.send_error(404)
             return
         if handler_page['isedit'] is True:
-            handler_page['book'] = catalog_obj.edit_info
+            handler_page['book'] = catalog_obj.obj_info_view_by(
+                        'edit_with_summary', usr=usr)
         else:
-            handler_page['book'] = catalog_obj.obj_info_view_by('basic_info', 
+            handler_page['book'] = catalog_obj.obj_info_view_by('with_summary', 
                                     usr=usr)
         handler_page.page_init()
         handler_page.render()
@@ -88,7 +89,8 @@ class BookCatalogHandler(BaseHandler):
             self.send_error(404)
             return
         if handler_page['isedit'] is True:
-            handler_page['book'] = catalog_obj.edit_info
+            handler_page['book'] = catalog_obj.obj_info_view_by('edit_info',
+                                    usr=usr)
         else:
             handler_page['book'] = catalog_obj.obj_info_view_by('basic_info', 
                                     usr=usr)
@@ -118,11 +120,13 @@ class BookChapterHandler(BaseHandler):
         pre, nxt = None, None
         for i in xrange(len(cids)): #get position of current
             if cid == cids[i]:
-                pre = cids[i - 1] if i else None
-                nxt = cids[i + 1] if i + 1 < len(cids) else None
+                pre = i - 1 if i > 0 else None
+                nxt = i + 1 if i + 1 < len(cids) else None
                 break
-        handler_page['previous_chapter'] = pre
-        handler_page['next_chapter'] = nxt
+        handler_page['previous_chapter'] = \
+                handler_page['book']['chapter_list'][pre] if pre else None
+        handler_page['next_chapter'] = \
+                handler_page['book']['chapter_list'][nxt] if nxt else None
         handler_page['bid'] = bid
         handler_page.page_init()
         handler_page.render()
