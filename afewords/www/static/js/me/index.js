@@ -280,6 +280,17 @@ Global_Funs = {
                                             '</div>';
                                 $htmls = jQuery(htmls);
                                 var $pop_content = pop_page(350,180, $htmls);
+                                // bind 
+                                $htmls.find('button').click(function(e){
+                                    if(e.target.nodeName != "BUTTON")   return false;
+                                    var $button = jQuery(e.target), $process = $button.siblings("span.i_process");
+                                    var file_src = $htmls.find("input.i_file").val();
+                                    if(!file_src){  $process.error_process("请选择图片！"); return false; }
+                                    var img_reg = /.*\.(jpg|png|jpeg|gif)$/ig;
+	                                   if(!file_src.match(img_reg)) {  $process.error_process('图片格式为jpg,png,jpeg,gif！'); return false; }
+                                    $process.ajax_process();
+                                    $button.to_disabled();
+                                })
                     },
                     "check":    function(paras){},
                     "handler":  function(){}    
