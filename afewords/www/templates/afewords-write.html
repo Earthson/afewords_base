@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+
+
+
+{% block css_link %}
+
+<link rel="stylesheet" type="text/css" href="{{ static_url("css/me/write.css") }}">
+{% end %}
+
+{% block middle_body %}
+
+{% set article = doc['article'] %}
+{% set isedit = doc['isedit'] %}
+{% set article_type = doc['article_type'] %}
+{% set owner = doc['env'] %}
+
+<!-- left body start -->
+<div id="left" style="border-right-width:0;">
+<div id="write">
+
+{% if article_type not in ['about', 'group-about'] %}
+    {% if isedit %}
+        <input type="text" class="w_title" value="{{ article['title'] }}" />
+    {% else%}
+        <input type="text" class="w_title"  />
+    {% end %}
+{% end %}
+
+{% if article_type == 'blog' %}
+    {% if not isedit %}
+    <textarea class="w_summary" style="resize:none;display:none;" spellcheck="false">摘要</textarea>
+    {% else %}
+    <textarea class="w_summary" style="resize:none;display:none;" spellcheck="false">{{ article['summary'] }}</textarea>
+    {% end %}
+{% end %}
+
+{% if not isedit %}
+<textarea class="text" id="write_textarea"></textarea>
+{% else %}
+<textarea class="text" id="write_textarea">{{ article['body'] }}</textarea>
+{% end %}
+</div>
+</div>
+
+<!-- left body end -->
+
+<!-- right body start -->
+<div id="right">
+<div id="right_w">
+
+<div class="w-open">
+
+{% if article_type == 'blog' %}
+<span to="summary">展开摘要</span>
+{% end %}
+<span to="head">展开页头</span>
+</div>
+
+<div class="w-mark">{{ doc['do_title'] }}</div>
+
+
+
+{% if article_type == 'group-doc' %}
+<div class="w-class">
+<div class="w-nav" title="给文档归档，方便您对文档的管理">归档<span class="px-12 color-blue cursor-pointer" title="添加新的分类">&nbsp;&nbsp;添加新分类</span></div>
+<div>
+{% if not isedit %}
+    {% for tmp_tag in  owner['entity']['tag_list'] %}
+    <span class="w-class"><label><input type="checkbox" name="classes" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
+    {% end %}
+{% else %}
+    {% for tmp_tag in  owner['entity']['tag_list'] %}
+        {% if tmp_tag in article['tag_list'] %}
+            <span class="w-class"><label><input type="checkbox" name="classes" checked="checked" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
+        {% else %}
+            <span class="w-class"><label><input type="checkbox" name="classes" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
+        {% end %}
+    {% end %}
+{% end %}
+</div>
+</div>
+
+{% end %}
+
+
+{% if article_type == 'blog' %}
+<div class="w-class">
+<div class="w-nav" title="给文章归类，方便您对文章的管理">归类<span class="px-12 color-blue cursor-pointer" title="添加新的分类">&nbsp;&nbsp;添加新分类</span></div>
+<div>
+{% if not isedit %}
+    {% for tmp_tag in  owner['entity']['tag_list'] %}
+    <span class="w-class"><label><input type="checkbox" name="classes" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
+    {% end %}
+{% else %}
+    {% for tmp_tag in  owner['entity']['tag_list'] %}
+        {% if tmp_tag in article['tag_list'] %}
+            <span class="w-class"><label><input type="checkbox" name="classes" checked="checked" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
+        {% else %}
+            <span class="w-class"><label><input type="checkbox" name="classes" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
+        {% end %}
+    {% end %}
+{% end %}
+</div>
+</div>
+
+
+<div class="div-20"></div>
+
+<div class="w-key" id="write-keys">
+<div class="w-nav">标签<span class="px-12 color-blue">&nbsp;&nbsp;多个请用,或者，分开</span></div>
+{% if not isedit %}
+<span><textarea class="k-text" spellcheck="false" name="keys"></textarea></span>
+{% else %}
+<span><textarea class="k-text" spellcheck="false" name="keys">{{ ",".join(article['keywords']) }}</textarea></span>
+{% end %}
+</div>
+
+{% end %}
+
+<div class="div-20"></div>
+
+<div class="w-preview"><button do="preview">存稿</button><span></span></div>
+<div class="w-submit-result">&nbsp;</div>
+<div class="w-submit"><button type="submit" do="post">发布</button></div>
+</div>
+</div>
+<!-- right body end -->
+
+
+{% end %}
+
+
+{% block script_bottom %}
+
+
+{% set article = doc['article'] %}
+{% set isedit = doc['isedit'] %}
+{% set article_type = doc['article_type'] %}
+{% set env = doc['env'] %}
+<script type="text/javascript" >
+$().ready(function(){ 
+    $('body').css({'background-image': 'url(/static/img/wrap.png)',
+        'background-repeat': 'repeat'}); /*document.body.style.backgroundColor="#f8f8f8";*/ });
+</script>
+<script type="text/javascript" src="{{ static_url("js/me/write.js") }}" ></script>
+
+
+{# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<script type="text/javascript">
+$().ready(function(){
+$("#right").css("border-left-width",'0');
+
+{% if not isedit %}
+    {% set json_article = { "article_id": -1, "article_type": article_type, "env_type": owner['type'], "env_id": owner['entity']['gid'] if owner['type'] == 'group' else owner['entity']['uid'] } %}
+    {% if article_type in  ['about', 'blog'] %}
+        $("#write_textarea").CreateEditor({{ json_encode(json_article) }});
+        
+    {% elif  article_type in ['group-about', 'group-doc', 'group-topic', 'group-bulletin', 'group-feedback'] %}
+        $("#write_textarea").CreateEditor({{ json_encode(json_article) }});        
+    {% end %}
+    $("#write_textarea").summary_title_init();
+    var isedit = false;
+
+{% else %}
+
+    {% set json_article = { "article_id": article['aid'], "article_type": article_type, "env_type": owner['type'], "env_id": owner['entity']['gid'] if owner['type'] == 'group' else owner['entity']['uid'], 'body': article['body'] } %}
+    var init_target = $("#write_textarea");
+    {% if article_type in ['about', 'blog'] %}
+        init_target.CreateEditor({{ json_encode(json_article) }});
+    {% elif article_type in ['group-about', 'group-doc', 'group-topic', 'group-bulletin', 'group-feedback'] %}
+        $("#write_textarea").CreateEditor({{ json_encode(json_article) }});        
+    {% end %}
+
+init_target.summary_title_init();
+
+pic_lib = {{ json_encode(article['picture_list']) }};
+math_lib = {{ json_encode(article['equation_list']) }};
+table_lib = {{ json_encode(article['tableform_list']) }};
+ref_lib = {{ json_encode(article['reference_list']) }};
+code_lib = {{ json_encode(article['langcode_list']) }};
+
+init_target.lib_init({  "image_list": pic_lib , 
+                        "math_list": math_lib, 
+                        "table_list": table_lib, 
+                        "code_list": code_lib, 
+                        "reference_list": ref_lib
+                    });	
+$Write.window_close_alert();
+
+{% end %}
+})
+</script>
+===============================================================================#}
+<script src="{{ static_url("js/me/editor.js") }}"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+{% if not isedit %}
+    // not edit 
+    var article_json = {
+        "article_id": '-1',
+        "article_type": "{{ article_type }}" || 'blog',
+        "env_id": "{{ env['env_id'] }}",
+        "env_type": "{{ env['env_type'] }}"
+    };
+    
+{% else %}
+    // edit 
+    var article_json = {
+        "article_id": "{{ article['aid'] }}" || '-1',
+        "article_type": "{{ article['article_type'] }}" || 'blog',
+        "env_id": "{{ env['env_id'] }}",
+        "env_type": "{{ env['env_type'] }}",
+        {#//"body": "{{ article['body'] }}", #}
+        "src": {
+                    "math": {{ json_encode(article['equation_list']) }},
+                    "image": {{ json_encode(article['picture_list']) }},
+                    "table": {{ json_encode(article['tableform_list']) }},
+                    "reference": {{ json_encode(article['reference_list']) }},
+                    "code": {{ json_encode(article['langcode_list']) }}    
+                }
+    };
+    
+{% end %}
+    $("#right").css("border-left-width",'0');
+    $("#write_textarea").create_editor(article_json);
+});
+</script>
+
+
+{% end %}
+
