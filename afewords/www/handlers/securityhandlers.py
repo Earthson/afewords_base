@@ -145,6 +145,8 @@ class ResetHandler(BaseHandler):
         return
 
 
+from pages.postjson import RepeatMailJson
+
 class RepeatResetMailHandler(BaseHandler):
 
     @without_login_post
@@ -154,9 +156,10 @@ class RepeatResetMailHandler(BaseHandler):
         email = self.get_esc_arg('email')
         pre_time = self.get_cookie('repeat', None)
         cur_time = time.time()
-        if email is None or repeat is None:
+        print pre_time
+        if email is None or pre_time is None:
             status = 1 #invalid arguments
-        elif cur_time - pre_time < 30:
+        elif cur_time - float(pre_time) < 30:
                 status = 2 #within 30s
         else:
             usr = User.find_one({'email':email.lower()})

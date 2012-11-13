@@ -29,6 +29,7 @@ class UserSettingPasswordPage(UserSettingsPage):
     __template_file__ = 'settings/setting-password.html'
     doc = {
         'settings_type' : 'password',
+        'subpage_type': 'password',
     }
 
 
@@ -37,6 +38,7 @@ class UserSettingDomainPage(UserSettingsPage):
     __template_file__ = 'settings/setting-domain.html'
     doc = {
         'settings_type' : 'domain',
+        'subpage_type': 'domain',
         'domain' : '',
     }
 
@@ -46,6 +48,7 @@ class UserSettingAvatarPage(UserSettingsPage):
     __template_file__ = 'settings/setting-avatar.html'
     doc = {
         'settings_type' : 'avatar',
+        'subpage_type': 'avatar',
         'avatar_path' : '',
     }
 
@@ -65,6 +68,7 @@ class UserSettingTagPage(UserSettingsPage):
     __template_file__ = 'settings/setting-tag.html'
     doc = {
         'settings_type' : 'tag',
+        'subpage_type': 'tag',
         'tag_list' : [],   # see [[ tag_list ]] in data_format
     }
 
@@ -84,6 +88,7 @@ class UserSettingNoticePage(UserSettingsPage):
     __template_file__ = 'settings/setting-notice.html'
     doc = {
         'settings_type' : 'notice',
+        'subpage_type': 'notice',
         'notice_list' : [], # see [[ notice_list ]] in data_format
     }
 
@@ -93,5 +98,6 @@ class UserSettingDraftPage(UserSettingsPage):
     __template_file__ = 'settings/setting-draft.html'
     doc = {
         'settings_type' : 'draft',
+        'subpage_type': 'draft',
         'draft_list' : [],  # see [[ draft_list ]] in data_format
     }

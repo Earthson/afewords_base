@@ -6,7 +6,7 @@
 
     <!-- for tag -->
     <div class="like settings margin-left-0">
-    <div class="page_nav"><span>分类</span><span class="self-nav-a cursor-pointer tag_new">添加</span></div>
+    <div class="page_nav"><span>分类</span><span class="left20"><a href="javascript:void(0)">添加</a></span></div>
     <div class="div-20"></div>
     {% if doc['tag_list']  == [] %}
         <div id="tag-note">没有分类</div>
@@ -19,8 +19,6 @@
         </ul>
     {% end %}
     {{ doc['paging_html'] }}
-    <div class="div-20"></div>
-    <div class="div-20"></div>
     <div class="div-20"></div>
     </div>
 
