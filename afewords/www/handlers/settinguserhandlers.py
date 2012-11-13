@@ -122,7 +122,7 @@ class UserTagRemoveHandler(BaseHandler):
         return #0
 
 
-class UserTagAddHandlerPara(BaseHandlerPara):
+class UserTagAddPara(BaseHandlerPara):
     paradoc = {
         'new_tag' : '',
     }
