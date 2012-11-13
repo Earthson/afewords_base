@@ -14,7 +14,7 @@
         <ul class="ul like_ul">
         {% for tmp_tag in doc['tag_list'] %}
             <li class="li"><a href="/blog-lib?tag={{ url_escape(tmp_tag) }}" class="tag-link" >{{ tmp_tag }}</a> 
-            <span class="tag-del" style="display:none" tag="{{ tmp_tag }}">删除</span></li>
+            <span class="tag-del hide_span" tag="{{ tmp_tag }}" do="remove_tag">删除</span></li>
         {% end %}
         </ul>
     {% end %}

@@ -6,14 +6,14 @@
     <div class="notice margin-left-0">
     <div class="page_nav">
     <span>消息</span>
-    <span do="delete" is_all="yes" class="left20"><a href="javascript:void(0);">清空全部</a></span>
-    <span do="read" is_all="yes" class="left20"><a href="javascript:void(0);">设置已读</a></span></div>
+    <span class="left20"><a href="javascript:void(0);" do="delete_all">清空全部</a></span>
+    <span class="left20"><a href="javascript:void(0);" do="read_all">设置已读</a></span></div>
     <div class="div-20"></div>
     {% if doc['notice_list'] != [] %}
     <ul>
     {% for kk in doc['notice_list'] %}
         
-        <li index="{{ kk['index'] }}" class="noti-read-{{ str(kk['isread']) }}">{{ kk['content'] }}</li>
+        <li index="{{ kk['index'] }}" class="noti-read-{{ int(kk['isread']) }}">{{ kk['content'] }}</li>
         
     {% end %}
     </ul>

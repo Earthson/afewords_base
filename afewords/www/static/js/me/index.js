@@ -114,14 +114,95 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
         var target = e.target,
             $target = jQuery(target);
         var configs = Global_Funs[flag_str];
+        var url = '/';
         if(target.nodeName != "A")  return false;
         //alert('loading');
         if(pop_flag){
             configs["pop"]();
-        }        
+        }else{
+            switch(flag_str){
+                case 'notice':
+                    var to_do = $target.attr("do") || 'read_all';
+                    if(to_do == 'read_all')  url = '/settingpost-user_noti_markall';
+                    if(to_do == 'delete_all') url = '/settingpost-user_noti_empty';
+                    jQuery.postJSON(url, {}, function(){}, function(response){
+                        if(response.status == 0){
+                            var $notice_div = $('#body_content').find('ul');
+                            if(to_do == "read_all") $notice_div.find('li').removeClass('noti-read-False').addClass('noti-read-True');
+                            if(to_do == "delete_all")  $notice_div.html('<div>没有消息！</div>');                 
+                        }                    
+                    }, function(){});
+                    break;            
+            }        
+        }       
     });
-    
 })();
+
+
+(function(){
+    /************************
+        init like nav 
+    **********************/
+    var $like_ul = $("#body_content").find("ul.like_ul");
+    if($like_ul.length){
+        $like_ul.find('li').live({
+        'mouseover': function(){
+            $(this).children("span.hide_span").show();        
+        },'mouseout': function(){
+            $(this).children('span.hide_span').hide();        
+        }});
+        
+        $like_ul.live('click', function(event){
+            if(event.target.nodeName != "SPAN")     return;
+            var $target = jQuery(event.target);
+            var to_do = $target.attr("do");
+            if(!to_do)  return;
+            parse_request.call( $target );
+            
+        });    
+    }
+    
+    function parse_request(){
+        var $that = this;    // must be jquery object
+        var to_do = $that.attr("do");
+        var mes = {}, url = '/';
+        var before_fun = function(){},
+            error_fun = function(){},
+            handler_fun = function(){};
+        switch(to_do){
+            case 'remove_tag':  
+                mes['rm_tag'] = $that.attr("tag");
+                url = '/settingpost-user_removetag';
+               
+                break;
+            default:
+                break;        
+        }
+        
+        jQuery.postJSON(url, mes, before_fun, 
+            handle_fun, error_fun);
+        
+        function handle_fun(response){
+            if(response.status != 0)   return;
+            switch(to_do){
+                case 'remove_tag':
+                    $that.parent().remove();
+                    break;
+                default:
+                    break;            
+            }
+        }
+    }
+
+})();
+
+
+(function(){
+    /****************
+        init page nav of the body_content
+        contain: notice    
+    *******************/
+})()
 
 
 Global_Funs = {
@@ -228,6 +309,7 @@ Global_Funs = {
                                     var mes = $tag_html.DivToDict();
                                     
                                     if(!mes['tag']){    $process.error_process("请填写新的分类（15字内）！"); return;}
+                                    mes['new_tag'] = mes['tag'];
                                     jQuery.postJSON(url, mes, function(){ $process.ajax_process(); $this.to_disabled(); },
                                         function(response){
                                             if(response.status != 0){
@@ -252,7 +334,7 @@ Global_Funs = {
                                             break;
                                         case "tag":
                                             var tag_html = '<li class="li"><a href="/blog-lib/?tag=' + $.encode(mes['tag']) +'" class="tag-link" >' +
-                                                        $.encode(mes['tag']) +'</a><span class="tag-del" tag="' + $.encode(mes['tag']) +'">删除</span></li>';
+                                                        $.encode(mes['tag']) +'</a><span class="tag-del hide_span" tag="' + $.encode(mes['tag']) +'" do="remove_tag">删除</span></li>';
                                             var $ul = $('div.settings').find('ul');
                                             if($ul.length){
                                                 $ul.append(tag_html);                        

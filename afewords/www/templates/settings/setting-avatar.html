@@ -9,6 +9,7 @@
     <div class="settings margin-left-0">
     <div class="page_nav"><span>头像</span><span class="left20"><a href="javascript:void(0);">上传新头像</a></span></div>
     <div id="self">
+    {#
     <div class="self-img-up">
     <form action="/upload-image" method="post" target="self-iframe" enctype="multipart/form-data" >
     <table style="margin-top:25px;">
@@ -21,6 +22,7 @@
     </form>
     <iframe name="self-iframe" id="self-iframe" style="display:none;"></iframe>
     </div>
+    #}
     {% if doc['avatar_path'] != '' %}
         <div class="self-img-up" style="margin-top:20px;" id="self-img-up-tag">裁剪头像：</div>
         <table style="margin-top:5px;" id="form-avatar">
