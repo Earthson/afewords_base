@@ -111,6 +111,8 @@ class WritePage(BasePage):
         'env': {},    # dict, [[ env ]]
         'do_title': '',		# unicode
         'article_type': 'blog',	# unicode
+        'page_type': 'write',
+        'subpage_type': 'write',
     }
 
     def page_init(self):

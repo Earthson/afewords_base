@@ -28,9 +28,9 @@
 
 {% if article_type == 'blog' %}
     {% if not isedit %}
-    <textarea class="w_summary" style="resize:none;display:none;" spellcheck="false">摘要</textarea>
+    <textarea class="w_summary" style="resize:none;" spellcheck="false">摘要</textarea>
     {% else %}
-    <textarea class="w_summary" style="resize:none;display:none;" spellcheck="false">{{ article['summary'] }}</textarea>
+    <textarea class="w_summary" style="resize:none;" spellcheck="false">{{ article['summary'] }}</textarea>
     {% end %}
 {% end %}
 
@@ -51,9 +51,9 @@
 <div class="w-open">
 
 {% if article_type == 'blog' %}
-<span to="summary">展开摘要</span>
+<span do="summary">展开摘要</span>
 {% end %}
-<span to="head">展开页头</span>
+<span do="head">展开页头</span>
 </div>
 
 <div class="w-mark">{{ doc['do_title'] }}</div>
@@ -66,14 +66,14 @@
 <div>
 {% if not isedit %}
     {% for tmp_tag in  owner['entity']['tag_list'] %}
-    <span class="w-class"><label><input type="checkbox" name="classes" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
+    <span class="w-class"><label><input type="checkbox" name="tags" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
     {% end %}
 {% else %}
     {% for tmp_tag in  owner['entity']['tag_list'] %}
         {% if tmp_tag in article['tag_list'] %}
-            <span class="w-class"><label><input type="checkbox" name="classes" checked="checked" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
+            <span class="w-class"><label><input type="checkbox" name="tags" checked="checked" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
         {% else %}
-            <span class="w-class"><label><input type="checkbox" name="classes" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
+            <span class="w-class"><label><input type="checkbox" name="tags" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
         {% end %}
     {% end %}
 {% end %}
@@ -89,14 +89,14 @@
 <div>
 {% if not isedit %}
     {% for tmp_tag in  owner['entity']['tag_list'] %}
-    <span class="w-class"><label><input type="checkbox" name="classes" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
+    <span class="w-class"><label><input type="checkbox" name="tags" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
     {% end %}
 {% else %}
     {% for tmp_tag in  owner['entity']['tag_list'] %}
         {% if tmp_tag in article['tag_list'] %}
-            <span class="w-class"><label><input type="checkbox" name="classes" checked="checked" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
+            <span class="w-class"><label><input type="checkbox" name="tags" checked="checked" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
         {% else %}
-            <span class="w-class"><label><input type="checkbox" name="classes" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
+            <span class="w-class"><label><input type="checkbox" name="tags" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
         {% end %}
     {% end %}
 {% end %}
@@ -107,7 +107,7 @@
 <div class="div-20"></div>
 
 <div class="w-key" id="write-keys">
-<div class="w-nav">标签<span class="px-12 color-blue">&nbsp;&nbsp;多个请用,或者，分开</span></div>
+<div class="w-nav">关键词<span class="px-12 color-blue">&nbsp;&nbsp;多个请用,或者，分开</span></div>
 {% if not isedit %}
 <span><textarea class="k-text" spellcheck="false" name="keys"></textarea></span>
 {% else %}

@@ -175,8 +175,13 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
                 url = '/settingpost-user_removetag';
                
                 break;
-            default:
+            case 'remove_article':
+                mes['article_id'] = $that.attr("article_id");
+                mes['article_type'] = $that.attr("article_type");
+                url = '/settingpost-article_remove';
                 break;        
+            default:
+                break;
         }
         
         jQuery.postJSON(url, mes, before_fun, 
@@ -186,6 +191,9 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
             if(response.status != 0)   return;
             switch(to_do){
                 case 'remove_tag':
+                    $that.parent().remove();
+                    break;
+                case 'remove_article':
                     $that.parent().remove();
                     break;
                 default:
@@ -198,11 +206,135 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
 
 
 (function(){
+    /******* 
+        init page of the write_page
+        contain: write
+    ********/
+    var subpage = AFWUser['subpage_type'];
+    if(subpage == "write"){
+        write_page_init();
+    }
+
+    function write_page_init(){
+        var $right = jQuery("#right"),
+            $menu = jQuery('#write_menu'), 
+            $text = jQuery('#write_textarea'),
+            $summary = jQuery("textarea.w_summary"),
+            $title = jQuery("input.w_title"),
+            $tags = $right.find('div.w-class'),
+            $keywords = $right.find("textarea.k-text");
+            $process =  $right.find("div.w-submit-result");
+            
+        $right.find('div.w-open').children().bind('click', function(){
+            var $target = jQuery(this), to_do = $target.attr("do");
+            if(!to_do)  return;
+            if(to_do == "summary"){
+                $summary = $("textarea.w_summary");
+                if($summary.css("display") == "none"){  $target.html("隐藏摘要"); }
+                else {   $target.html("展开摘要"); }            
+                $summary.slideToggle("slow");
+            }else{
+                var $header = $("#head");
+                if($header.css("display") == "none") {  $target.html("隐藏页头")}
+                else{   $target.html("展开页头"); }
+                $header.slideToggle("slow");
+            }
+        }).click();
+        
+        $right.find('div.w-class').find('span.cursor-pointer')
+        .bind('click', function(){ Global_Funs["tag"]["pop"](); });
+        var $buttons = $right.find('button');
+        $buttons.bind('click', function(){       
+            var mes = get_paras();
+           
+            var url = '/update-article';
+            var $button = $(this);
+            var to_do = $button.attr("do");
+            mes['do'] = to_do;
+            
+            for(var i in mes){
+                console.log(i + '  ' +  mes[i]);            
+            }
+            if(mes['title'] !== false){
+                if(!mes['title'] || mes['title'] == "标题") {  $process.error_process("请填写标题！"); return; }           
+            }
+            if(mes['summary'] !== false){
+                if(mes['summary'] == "摘要")  mes['summary'] = '';           
+            }
+            if(!mes['body'] || mes['body'] == "内容"){    $process.error_process("请填写内容！");  return;}
+            
+            jQuery.postJSON(url, mes, function(){
+                $process.ajax_process();    $buttons.to_disabled();
+            }, function(response){
+                if(response.isnew != 0) $menu.attr('article_id', response.article_id);
+                if(response.status != 0){
+                    $process.error_process(response.info);  $buttons.remove_disabled();  return;                
+                }else{
+                    handle_fun(response, mes);                
+                }
+            }, function(textStatus){
+                $process.error_process("出现错误：" + textStatus);
+                $buttons.remove_disabled();            
+            });
+        });
+        
+        function get_paras(){
+            var mes = {
+                'env_id': $menu.attr("env_id"),
+                'env_type': $menu.attr('env_type'),
+                'article_id': $menu.attr('article_id'),
+                'article_type': $menu.attr('article_type'),
+                'father_id': $menu.attr('father_id'),
+                'father_type': $menu.attr('father_type'),
+                'iscomment': $menu.attr('iscomment'),
+                'body': $text.val(),
+                'summary': $summary.length > 0 ? $summary.val() : false,
+                'title': $title.length > 0 ? $title.val() : false,
+                'keywords': $keywords.val() || '',
+                'tags': $tags.DivToDict()['tags'] || []
+            };
+            return mes;
+        }
+        
+        function handle_fun(response, mes){
+            var url_dict = { 'blog': ''}
+            var basic_url = '/blog/';
+            switch(mes['article_type'].toLowerCase()){
+                case 'blog':
+                    basic_url = '/blog/' +  response.article_id;
+                    break;
+                case 'about':
+                    basic_url = '/blogger/' + AFWUser['id'] + '/about';
+                    break;
+                case 'group-topic':
+                    basic_url = '/group/' + mes['env_id'] + '/topic/' + response.article_id;
+                    break;
+                default:
+                    break;
+            }
+            $buttons.remove_disabled();
+            if(mes['do'] == 'preview'){
+                basic_url += '?preview=yes';
+                $process.right_process('操作成功！预览地址<a href="'+ basic_url +'" target="_blank">预览</a>');
+                return;            
+            }else{
+                $process.right_process('操作成功，1s后跳转到目的页！');
+                setTimeout( function (){ location.href=basic_url; }, 1000);            
+            }
+             
+        }
+    }    
+
+})();
+
+;(function(){
     /****************
         init page nav of the body_content
         contain: notice    
     *******************/
-})()
+})();
+
+
 
 
 Global_Funs = {

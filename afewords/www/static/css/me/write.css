@@ -244,7 +244,7 @@ font-size: 18px;text-align: center;font-weight: bolder; margin-top: 20px;line-he
 #write .w_summary{float: left;width:735px;padding:5px;border:#ccc 1px solid;height: 100px;
 line-height: 25px;font-size: 14px;letter-spacing: 0.5px;margin-top: 10px;}
 
-#write .text{float: left;width:735px;padding:5px;border:#ccc 1px solid;
+#write .text{float: left;width:735px;padding:5px;border:#ccc 1px solid; min-height: 300px; resize: none;
 line-height: 28px !important;font-size: 14px;}
 
 /******** right in write page ***********/
