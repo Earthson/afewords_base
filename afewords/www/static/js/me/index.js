@@ -147,9 +147,10 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
     if($like_ul.length){
         $like_ul.find('li').live({
         'mouseover': function(){
-            $(this).children("span.hide_span").show();        
+            $(this).children("span.hide_span").show().end().children('a.hide_a').show();
+                    
         },'mouseout': function(){
-            $(this).children('span.hide_span').hide();        
+            $(this).children('span.hide_span').hide().end().children('a.hide_a').hide();        
         }});
         
         $like_ul.live('click', function(event){
@@ -191,10 +192,10 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
             if(response.status != 0)   return;
             switch(to_do){
                 case 'remove_tag':
-                    $that.parent().remove();
+                    $that.parent().slideUp('slow').remove();
                     break;
                 case 'remove_article':
-                    $that.parent().remove();
+                    $that.parent().slideUp('slow').remove();
                     break;
                 default:
                     break;            

@@ -285,7 +285,7 @@ right: 10px;}
 
 /************ for blog lib **************/
 #body_content .blog-img{background-image: url('/static/img/button/pencil_ok1.png');}
-#body_content .blog-img a.blog_edit{font-size: 12px;color: blue;right: 10px;top: 12px;position: absolute;}
+#body_content .blog-img a.blog_edit{font-size: 12px;color: blue;right: 40px;top: 10px;position: absolute;}
 
 /************** for invite **************/
 #body_content .invite{}
