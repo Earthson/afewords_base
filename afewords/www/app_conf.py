@@ -101,7 +101,7 @@ app_handlers = {
     (r'/draft', UserSettingDraftHandler),
     (r'/settings-follow', UserSettingFollowHandler),
     (r'/settings-follower', UserSettingFollowerHandler),
-    (r'/book/([0-9a-zA-Z]+)', BookHandler),
+    (r'/book/([0-9a-zA-Z]+)', BookCatalogHandler),
     (r'/book/([0-9a-zA-Z]+)/catalog', BookCatalogHandler),
     (r'/book/([0-9a-zA-Z]+)/catalog/([0-9]+)', BookChapterHandler),
     (r'/book/([0-9a-zA-Z]+)/about', BookAboutHandler),

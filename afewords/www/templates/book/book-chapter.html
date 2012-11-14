@@ -6,10 +6,25 @@
 
 {% set current_chapter = doc['current_chapter'] %}
 {% set book = doc['book'] %}
+{% set previous_chapter = doc['previous_chapter'] %}
+{% set next_chapter = doc['next_chapter'] %}
+
+
+
+{% if previous_chapter %}
+{% set previous_link = '/book/' + book['bid'] + '/catalog/' + previous_chapter['cid'] %} 
+<tr><td colspan="2"><a href="{{ previous_link }}" >{{ previous_chapter['chapter_num'] }} - {{ previous_chapter['title'] }}</a></td></tr>
+<tr><td class="time">上一节</td><td class="time">{{ previous_chapter['chapter_num'] }}</td></tr>
+{% end %}
 
 <tr><td class="time chosed">当前章节</td>
 <td><a href="/book/{{ book['bid'] }}/catalog/{{current_chapter['cid']}}" class="chosed1">{{ current_chapter['chapter_num'] }}</a></td></tr>
-<tr><td><a href="#">上一节</a></td><td><a href="#">下一节</a></td></tr>
+
+{% if next_chapter %}
+{% set next_link = '/book/' + book['bid'] + '/catalog/' + next_chapter['cid'] %} 
+<tr><td class="time">下一节</td><td class="time">{{ next_chapter['chapter_num'] }}</td></tr>
+<tr><td colspan="2"><a href="{{ next_link }}" >{{ next_chapter['chapter_num'] }} - {{ next_chapter['title'] }}</a></td></tr>
+{% end %}
 {#
 {% for item in book['chapter_list'] %}   
 <div class="book_tip_normal current_tip{{ int(doc['current_chapter']['cid'] == item['cid']) }}">
