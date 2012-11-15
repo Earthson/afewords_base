@@ -3,18 +3,18 @@
 from basehandler import *
 from generator import *
 
-class ArticleDoLikePara(BaseHandlerPara):
+class ObjDoLikePara(BaseHandlerPara):
     paradoc = {
         'obj_id' : '',
         'obj_type' : '',
     }
 
-from pages.postjson import ArticleDoLikeJson
+from pages.postjson import ObjDoLikeJson
 
-class ArticleDoLikeHandler(BaseHandler):
+class ObjDoLikeHandler(BaseHandler):
     @with_login_post
     def post(self):
-        handler_json = ArticleDoLikeJson
+        handler_json = ObjDoLikeJson
         usr = self.current_user
         article_obj = generator(handler_para['obj_id'], 
                                 handler_para['obj_type'])

@@ -328,7 +328,7 @@ class CatalogSectionDelJson(StatusJson):
     }
 
 @with_attr
-class ArticleDoLikeJson(StatusJson):
+class ObjDoLikeJson(StatusJson):
     error_info = {
         0 : u'',
         1 : u'不支持的类型',

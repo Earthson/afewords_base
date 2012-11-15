@@ -66,7 +66,7 @@ from handlers.afbookhandlers import AFBookEditAboutHandler
 from handlers.afbookhandlers import AFBookEditCatalogHandler
 
 
-from handlers.statisticshandlers import ArticleDoLikeHandler
+from handlers.statisticshandlers import ObjDoLikeHandler
 
 app_handlers = {
     (r'/', IndexHandler), #MainHandler),
@@ -107,7 +107,7 @@ app_handlers = {
     (r'/book/([0-9a-zA-Z]+)/about', BookAboutHandler),
 
     #statistics
-    (r'/article-dolike', ArticleDoLikeHandler),
+    (r'/obj-dolike', ObjDoLikeHandler),
 
     (r'/afewords-book', AFBookHandler),
     (r'/user-book', AFUserBookHandler),
