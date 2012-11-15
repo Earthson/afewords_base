@@ -5,8 +5,8 @@ from generator import *
 
 class ArticleDoLikePara(BaseHandlerPara):
     paradoc = {
-        'article_id' : '',
-        'article_type' : '',
+        'obj_id' : '',
+        'obj_type' : '',
     }
 
 from pages.postjson import ArticleDoLikeJson
@@ -16,8 +16,8 @@ class ArticleDoLikeHandler(BaseHandler):
     def post(self):
         handler_json = ArticleDoLikeJson
         usr = self.current_user
-        article_obj = generator(handler_para['article_id'], 
-                                handler_para['article_type'])
+        article_obj = generator(handler_para['obj_id'], 
+                                handler_para['obj_type'])
         if article_obj is None:
             handler_json.by_status(2)
             handler_json.write()
