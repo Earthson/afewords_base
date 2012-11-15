@@ -79,7 +79,8 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
 
 (function(){
     /******* login page *********/
-    if(AFWUser['subpage_type'] == "login"){
+    var subpage = AFWUser['subpage_type'];
+    if(subpage == "login"){
         //alert(0);
         jQuery(document.getElementById("login_do")).find("form").bind('click', function(event){
             var target = event.target, $target = jQuery(target), that = this, $form = jQuery(that);
@@ -97,6 +98,17 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
             return true;
         })    
     }
+    if(subpage == "blog"){
+        // init blog page 
+        jQuery("#article_bottom_nav").bind('click', function(e){
+            if(e.target.nodeName != "SPAN") return;
+            var $target = jQuery(e.target),
+                to_do = $target.attr("do");
+            if(!to_do)  return;  
+            alert('loading');     
+        })
+    }
+    
     
 })();
 

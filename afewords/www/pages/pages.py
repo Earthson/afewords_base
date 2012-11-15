@@ -133,6 +133,8 @@ class BlogPage(BasePage):
     '''
     __template_file__ = 'afewords-blog.html'
     doc = {
+        'page_type': 'blog',
+        'subpage_type': 'blog',
         'ispreview': False, # bollean 
         'article': {},    # dict, see [[article]] definition in dataformat 
         'recommend_list': [], # list, see [[blog_list]] definition in dataformat
