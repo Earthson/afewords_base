@@ -61,7 +61,9 @@ class ArticleWriteHandler(BaseHandler):
         page.render()
         return
 
+from article import *
 from article.article import Article
+from article.comment import Comment
 
 def article_env_init(handler, handler_paras, handler_json):
     handler_json['article_id'] = handler_paras['article_id']
@@ -81,22 +83,21 @@ def article_env_init(handler, handler_paras, handler_json):
     if father is not None:
         handler.env = father.env
         handler.father = father
-        handler.article_obj.father = father
     elif not handler.env:
         return 14#Invalid Env Arguments
     if ref_comment is not None:
         handler.ref_comment = ref_comment
-        handler.article_obj.ref_comment = ref_comment
     if not Article.is_valid_id(handler_paras['article_id']):
+        print handler_paras['article_type']
         acls = cls_gen(handler_paras['article_type'])
         if not acls or not issubclass(acls, Article):
             return 11#Invalid Article Type
-        if not test_auth(env.authority_verify(usr), A_POST):
+        if not test_auth(handler.env.authority_verify(usr), A_POST):
             return 12#Permission Denied
         handler.article_obj = acls()
         if handler.article_obj is None:
             return 13#Article Create Failed
-        handler.article_obj.set_propertys(env=env, author=usr)
+        handler.article_obj.set_propertys(env=handler.env, author=usr)
         usr.add_to_drafts(handler.article_obj)
         handler_json.as_new(handler.article_obj) 
         #new Article Created
@@ -111,6 +112,11 @@ def article_env_init(handler, handler_paras, handler_json):
         if not test_auth(handler.article_obj.authority_verify(usr, env),
                         A_WRITE):
             return 16#WRITE Permission Denied
+    if ref_comment is not None:
+        handler.article_obj.ref_comment = ref_comment
+    if father is not None:
+        if not handler.article_obj.father_id:
+            handler.article_obj.father = handler.father
     return 0
 
 class BaseArticleUpdateHandler(BaseHandler):

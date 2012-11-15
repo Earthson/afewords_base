@@ -16,6 +16,11 @@ from authority import *
 from operator import itemgetter, attrgetter
 
 
+from article.article import Article
+from article.blog import Blog
+from article.comment import Comment
+
+
 @with_conn
 class UserLibDoc(AFDocument):
     __collection__ = 'UserLibDB'
