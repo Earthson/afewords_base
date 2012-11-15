@@ -118,5 +118,6 @@ class AFBookEditCatalogHandler(BaseHandler):
             return #permission denied
         handler_page['book'] = self.book.obj_info_view_by('basic_info',
                                 usr=usr, env=self.book)
+        handler_page.page_init()
         handler_page.render()
         return #0

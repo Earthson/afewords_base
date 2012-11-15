@@ -12,7 +12,16 @@ class AFBookPage(BasePage):
         'current_page' : 1,
         'paging_html': '',  # for paging
         'book_list': None,  # list
+        'bid' : '', #book id
     }
+    
+    def page_init(self):
+        from toolpages import CatalogPage
+        page = CatalogPage()
+        page['isedit'] = False
+        page['node_list'] = self['book']['chapter_list']
+        page['bid'] = self['bid']
+        self['catalog_html'] = page.render_string()
 
 @with_attr
 class AFBookMyselfPage(BasePage):
@@ -48,7 +57,16 @@ class AFBookEditBasePage( BasePage ):
         'subpage_type': 'myself',
         'edit_type': 'index',
         'book': {}, 
+        'bid' : '', #book id
     }
+
+    def page_init(self):
+        from toolpages import CatalogPage
+        page = CatalogPage()
+        page['isedit'] = True
+        page['node_list'] = self['book']['chapter_list']
+        page['bid'] = self['bid']
+        self['catalog_html'] = page.render_string()
 
 @with_attr
 class AFBookEditInfoPage( AFBookEditBasePage):
