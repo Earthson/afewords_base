@@ -156,12 +156,12 @@
     {% end %}
 
     {% if doc['ispreview'] is False %}
-        <div class="b_bottom_wrap" blog="{{ article['aid'] }}">
-            <span class="do-some bot-comment" ref_type="blog" father_id="{{ article['aid'] }}" father_type="blog" article_id="{{ article['aid'] }}" article_type="blog">评论</span>
-            <span class="do-some bot-like" ref_type="blog" article_id="{{ article['aid'] }}" article_type="blog" do="like">喜欢</span>
-            <span class="do-some bot-recom" ref_type="blog" article_id="{{ article['aid'] }}" article_type="blog" do="recommend">推荐</span>
-            <span class="do-some bot-share" ref_type="blog" article_id="{{ article['aid'] }}" article_type="blog" do="share">分享</span>
-            <span class="do-some bot-view" ref_type="blog" article_id="{{ article['aid'] }}" article_type="blog" do="view">浏览</span>
+        <div  id="article_bottom_nav" class="b_bottom_wrap" blog="{{ article['aid'] }}">
+            <span class="do-some bot-comment" ref_type="blog" father_id="{{ article['aid'] }}" father_type="blog" article_id="{{ article['aid'] }}" article_type="blog" do="comment">评论</span>
+            <span class="do-some bot-like" article_id="{{ article['aid'] }}" article_type="blog" do="like">喜欢</span>
+            <span class="do-some bot-recom" article_id="{{ article['aid'] }}" article_type="blog" do="recommend">推荐</span>
+            <span class="do-some bot-share" article_id="{{ article['aid'] }}" article_type="blog" do="share">分享</span>
+            <span class="do-some bot-view" article_id="{{ article['aid'] }}" article_type="blog" do="view">浏览</span>
             
             
             <span class="bot-author-name"><a href="/bloger/{{ author['uid'] }}">{{ author['name'] }}</a></span>
