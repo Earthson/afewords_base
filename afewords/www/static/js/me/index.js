@@ -80,6 +80,7 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
 (function(){
     /******* login page *********/
     var subpage = AFWUser['subpage_type'];
+    var page_type = AFWUser['page_type'];
     if(subpage == "login"){
         //alert(0);
         jQuery(document.getElementById("login_do")).find("form").bind('click', function(event){
@@ -98,14 +99,15 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
             return true;
         })    
     }
-    if(subpage == "blog"){
+    if(page_type == "blog"){
         // init blog page 
         jQuery("#article_bottom_nav").bind('click', function(e){
             if(e.target.nodeName != "SPAN") return;
             var $target = jQuery(e.target),
                 to_do = $target.attr("do");
             if(!to_do)  return;  
-            alert('loading');     
+            alert('loading');
+                 
         })
     }
     
@@ -522,6 +524,13 @@ Global_Funs = {
                     "check":    function(paras){},
                     "handler":  function(){}    
                 },
+    "blog":     {
+                    "comment":  function(){},
+                    "recomend": function(){},
+                    "like":     function(){},
+                    "share":    function(){},
+                    "view":     function(){}    
+                }
 }
 
 

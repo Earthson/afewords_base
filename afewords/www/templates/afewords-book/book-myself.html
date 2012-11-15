@@ -17,15 +17,9 @@
             <p><span class="book_one_proc">进度：{{ item['complete_rate'] }}%({{item['complete_count']}}/{{item['all_catalog_count']}})</span>
                 <span class="book_one_time">最近更新：2012-9-29</span></p>
             <p>
-            {% if 'd' in item['permission'] %}
             <a href="/book-edit/{{ item['bid'] }}/about" class="book_one_modify">管理摘要</a>
             <a href="/book-edit/{{ item['bid'] }}/catalog" class="book_one_modify">管理目录</a>
             <a href="/book-edit/{{ item['bid'] }}/invite" class="book_one_modify">管理编者</a>   
-            {% else %}
-            <a href="/book/{{ item['bid'] }}/about" class="book_one_modify">摘要</a>
-            <a href="/book/{{ item['bid'] }}/catalog" class="book_one_modify">目录</a>
-            <a href="/book/{{ item['bid'] }}/invite" class="book_one_modify">编者</a> 
-            {% end %}
             </p>
             </div>
             
