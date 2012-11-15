@@ -67,9 +67,7 @@ def article_env_init(handler, handler_paras, handler_json):
     handler_json['article_id'] = handler_paras['article_id']
     usr = handler.current_user
     env = generator(handler_paras['env_id'], handler_paras['env_type'])
-    handler.env = env #Store env obj
-    if not env:
-        return 14#Invalid Env Arguments
+    handler.env = env
     father = generator(handler_paras['father_id'], 
                 handler_paras['father_type'])
     ref_comment = None
@@ -78,6 +76,19 @@ def article_env_init(handler, handler_paras, handler_json):
             return 18#Invalid father
         ref_comment = generator(handler_paras['ref_comment'], 
                             handler_paras['article_type'])
+    handler.father = None
+    handler.ref_comment = None
+    if father is not None:
+        handler.env = father.env
+        if handler.env != env:
+            return 14 #Invalid Env Arguments, this error can be removed
+        handler.father = father
+        handler.article_obj.father = father
+    elif not handler.env:
+        return 14#Invalid Env Arguments
+    if ref_comment is not None:
+        handler.ref_comment = ref_comment
+        handler.article_obj.ref_comment = ref_comment
     if not Article.is_valid_id(handler_paras['article_id']):
         acls = cls_gen(handler_paras['article_type'])
         if not acls or not issubclass(acls, Article):
@@ -102,14 +113,6 @@ def article_env_init(handler, handler_paras, handler_json):
         if not test_auth(handler.article_obj.authority_verify(usr, env),
                         A_WRITE):
             return 16#WRITE Permission Denied
-    handler.father = None
-    handler.ref_comment = None
-    if father is not None:
-        handler.father = father
-        handler.article_obj.father = father
-    if ref_comment is not None:
-        handler.ref_comment = ref_comment
-        handler.article_obj.ref_comment = ref_comment
     return 0
 
 class BaseArticleUpdateHandler(BaseHandler):

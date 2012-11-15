@@ -297,7 +297,7 @@ class Article(DataBox):
         elif self.author is not None and self.author._id == usr._id:
             ret = set_auth(ret, A_READ | A_WRITE | A_DEL)
         tmp_fa = self.father
-        if tmpfa and tmpfa.author_id == usr._id:
+        if tmp_fa and tmp_fa.author_id == usr._id:
             ret = set_auth(ret, A_READ | A_DEL)
         tmp_env = self.env
         if tmp_env is not None:
