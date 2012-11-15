@@ -136,6 +136,7 @@ book: {}
     'chapter_list':[],  # see [[ chapter_list ]]
 
     'permission': 'r',  # unicode, for judge permission
+    'last_modify_time': '', # unicode
     @for recommend book 
     'relation_id': '',  # unicode
 }
