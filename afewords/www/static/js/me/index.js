@@ -78,7 +78,7 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
 });
 
 (function(){
-    /******* login page *********/
+    /******* login page, blog page *********/
     var subpage = AFWUser['subpage_type'];
     var page_type = AFWUser['page_type'];
     if(subpage == "login"){
@@ -106,8 +106,9 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
             var $target = jQuery(e.target),
                 to_do = $target.attr("do");
             if(!to_do)  return;  
-            alert('loading');
-                 
+            //alert('loading');
+            var configs = Global_Funs["blog"][to_do];
+            configs.call($target);   
         })
     }
     
@@ -525,9 +526,38 @@ Global_Funs = {
                     "handler":  function(){}    
                 },
     "blog":     {
-                    "comment":  function(){},
-                    "recomend": function(){},
-                    "like":     function(){},
+                    "comment":  function(){ // this must be the jquery object
+                                    var $that = this,
+                                        reply_comment = $that.attr("iscomment") == "true" || false;
+                                    var paras = {   "father_id": $that.attr("father_id"),
+                                                    "father_type": $that.attr("father_type"),
+                                                    "iscomment": true,
+                                                    "article_type": "comment"
+                                                    //"env_id": $that.attr("")
+                                                };
+                                    //if(reply_comment)
+                                    
+                                },
+                    "recomend": function(){
+                                    var $that = this,
+                                        article_type = "";
+                                },
+                    "like":     function(){
+                                    var $that = this,
+                                        url = '/obj-dolike',
+                                        like_status = $that.attr("like_status"),
+                                        mes = { 'obj_id': $that.attr("obj_id"),
+                                                "obj_type": $that.attr("obj_type")};
+                                    jQuery.postJSON(url, mes, function(){}, function(response){
+                                        if(response.status == 0){
+                                            if(like_status == "yes"){
+                                                $that.html("喜欢").attr("like_status", "no");                                            
+                                            }else{
+                                                $that.html("取消").attr("like_status", "yes");                                            
+                                            }                                        
+                                        }
+                                    },function(){});                    
+                    },
                     "share":    function(){},
                     "view":     function(){}    
                 }
