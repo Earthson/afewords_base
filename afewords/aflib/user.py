@@ -443,7 +443,7 @@ class User(DataBox):
     def like_post(self, obj):
         '''do not call this method. call reverse_like_post instead'''
         fav_lib = self.favorite_lib
-        fav_lib[obj.uid] = obj.cls_name
+        fav_lib[obj.uid] = [obj.cls_name, datetime.now()]
         obj.statistics.like_count += 1
 
     def dislike_post(self, obj):
