@@ -1,0 +1,27 @@
+{% extends "book-edit-base.html" %}
+
+{% block afewords_book_html %}
+
+
+<div class="book_catalog">
+<div class="book_catalog_add" book_id="{{ book['bid'] }}">添加新目录</div>
+
+
+
+<div class="book_catalog_con">
+{{ doc['catalog_html'] }}
+</div>
+</div>
+
+
+{% end %}
+
+
+
+
+
+
+{% block afewords_book_more_script %}
+
+
+{% end %}

@@ -1,0 +1,46 @@
+{% extends "../user-base.html" %}
+
+
+{% block css_link %}
+ <link rel="stylesheet" type="text/css" href="{{ static_url("css/jquery.Jcrop.css") }}" />
+ <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/write.css") }}" />
+ <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/book.css") }}" />
+  <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/group.css") }}" />
+{% end %}
+
+
+{% block left_page_html %}
+{% set subpage = doc['subpage_type'] %}
+<div id="page">
+<div id="page_title">聚合</div>
+<ul>
+<li><a href="/afewords-feed"  class="current{{ int(subpage == "index") }}">动态</a></li>
+<li><a href="/blog-lib"  class="current{{ int(subpage == "myself") }}">我的</a></li>
+<li><a href="/user-like" class="current{{ int(subpage == "like") }}">收藏</a></li>
+
+<li><a href="/write" class="current{{ int(subpage == "write") }}">执笔</a></li>
+</ul>
+</div>
+{% end %}
+
+{# this page for setting #}
+
+{% block user_base_right_body %}
+
+<div id="body_content">
+
+{% block afewords_feed_html %}{% end %}
+
+</div>
+
+
+
+
+{% end %}
+
+{% block script_bottom %}
+
+<script type="text/javascript" src="{{ static_url("js/me/login.js") }}" ></script>
+<script type="text/javascript" src="{{ static_url("js/me/write.js") }}" ></script>
+
+{% end %}

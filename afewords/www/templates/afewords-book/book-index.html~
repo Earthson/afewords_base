@@ -1,0 +1,46 @@
+{% extends "book-base.html" %}
+
+
+{% block afewords_book_html %}
+
+{% set book_list = doc['book_list'] %}
+<div class="like settings margin-left-0 my_book_image">
+    <div class="page_nav"><span>站内</span></div>
+    <div class="book_card_wrap">
+    {% if not book_list %}
+    No one
+    {% else %}
+        {% for item in book_list %}
+            <div class="book_card_one">
+            <table summary="" >
+            <tr><td>
+            <div class="book_card">
+            <div class="book_card_name"><a href="/book/{{ item['bid'] }}" target="_blank">{{ item['name'] }}</a></div>
+            </div></td><td>
+            <div class="book_card_feed">
+            <span class="card_tip"><a href="/blogger/{{ item['author']['uid'] }}" target="_blank">{{ item['author']['name'] }}</a>审</span>
+            {#<span class="card_tip"><a href="#">讨论</a></span>
+            <span class="card_tip"><a href="#">建议</a></span>
+            <span class="card_tip"><a href="#">文章</a></span>#}
+            <span class="card_tip"><a href="/book/{{ item['bid'] }}?want=catalog">目录</a></span>
+            <span class="card_tip">完成度 {{ item['complete_rate'] }}%({{item['complete_count']}}/{{item['all_catalog_count']}})</span>
+            {% if doc['user'] and item['author']['uid'] == doc['user']['uid'] %}
+            <span class="card_tip">
+                <a href="/book/{{ item['bid'] }}?want=catalog&edit=yes" target="_blank" class="book_modify">修改目录</a>
+                <a href="/book/{{ item['bid'] }}?want=summary&edit=yes" class="book_modify" target="_blank">修改摘要</a>
+            </span>
+            {% end %}
+            </div></td>
+            </tr>
+            </table>
+            </div>
+        {% end %}
+       
+    {% end %}
+    </div>
+    {{ doc['paging_html'] }}
+    <div class="div-20"></div>
+    </div>
+    
+    
+{% end %}

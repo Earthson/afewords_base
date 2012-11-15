@@ -1,0 +1,35 @@
+{% extends "feed-base.html" %}
+
+{% block afewords_feed_html %}
+
+{% set like_list = doc['like_list'] %}
+{% set page = doc['current_page'] %}
+
+<div class="like">
+<div class="page_name">喜欢</div>
+
+{% if not like_list %}
+    {% if page > 1 %}
+        已经浏览完！
+    {% else %}
+        Nothing
+    {% end %}
+{% else %}
+
+    <ul>
+        {% for like_one in like_list %}
+           <li><a href="/blog/{{ like_one['aid'] }}" target="_blank">{{ like_one['title'] }}</a>
+           <span class="tag-del hide_span" page="settings" do="unlike" obj_id="{{ like_one['aid'] }}" obj_type="blog">取消</span>
+           </li>
+        {% end %}
+
+    </ul>
+    {{ doc['paging_html'] }} 
+{% end %}
+
+</div>
+
+
+
+
+{% end %}
