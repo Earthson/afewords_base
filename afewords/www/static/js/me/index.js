@@ -625,15 +625,16 @@ Global_Funs = {
                                     jQuery.postJSON(url, mes, function(){}, function(response){
                                         if(response.status == 0){
                                             if(like_status == "yes"){
-                                                $that.html("喜欢").attr("like_status", "no");                                            
+                                                $that.html("取消").attr("like_status", "no"); return;                                        
                                             }else{
-                                                $that.html("取消").attr("like_status", "yes");                                            
+                                                $that.html("喜欢").attr("like_status", "yes"); return;                                     
                                             }                                        
                                         }
                                     },function(){});                    
                     },
                     "share":    function(){},
-                    "view":     function(){}    
+                    "view":     function(){},
+                    "getcomment": function(){}  
                 }
 }
 

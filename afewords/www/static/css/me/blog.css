@@ -97,6 +97,7 @@ width: 20px;height: 20px;background-position: 45px 20px;}
 .b_bottom_wrap span.bot-share{background: url('/static/img/button/sharing.png') 0 0px no-repeat;}
 .b_bottom_wrap span.bot-recom{background: url('/static/img/button/star_ok.png') 0 5px no-repeat;}
 .b_bottom_wrap span.bot-view{display: none;}
+.b_bottom_wrap span.bot-getcomment{display: none;}
 
 .b_bottom_wrap span.bot-author-name{float: right;color: blue;}
 .b_bottom_wrap span.bot-author-name a{color: blue;}
