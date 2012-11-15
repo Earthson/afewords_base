@@ -14,7 +14,8 @@ from pages.postjson import ObjDoLikeJson
 class ObjDoLikeHandler(BaseHandler):
     @with_login_post
     def post(self):
-        handler_json = ObjDoLikeJson
+        handler_para = ObjDoLikePara(self)
+        handler_json = ObjDoLikeJson(self)
         usr = self.current_user
         article_obj = generator(handler_para['obj_id'], 
                                 handler_para['obj_type'])
