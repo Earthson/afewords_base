@@ -80,8 +80,6 @@ def article_env_init(handler, handler_paras, handler_json):
     handler.ref_comment = None
     if father is not None:
         handler.env = father.env
-        if handler.env != env:
-            return 14 #Invalid Env Arguments, this error can be removed
         handler.father = father
         handler.article_obj.father = father
     elif not handler.env:

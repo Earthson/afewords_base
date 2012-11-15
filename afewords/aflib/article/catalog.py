@@ -247,7 +247,7 @@ class Catalog(DataBox):
 
     def recommend_article(self, node_id, article_obj):
         rr = Relation(attrs={"relation_type":"catalog-%s" % \
-                            article_obj.__class__.__name__})
+                            article_obj.class_name})
         rr.set_relation_set(self, article_obj)
         tmp = self.get_node_list(node_id, 'articles')
         tmp.push(rr._id)
