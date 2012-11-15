@@ -1,8 +1,0 @@
-{% extends "feed-base.html" %}
-
-{% block afewords_feed_html %}
-
-
-
-
-{% end %}
