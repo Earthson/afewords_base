@@ -65,7 +65,7 @@ class AFBookEditInfoHandler(BaseHandler):
         if status == 2:
             self.handler_page.render()
             return #permission denied
-        handler_page['book'] = self.book.obj_info_view_by('basic_info',
+        handler_page['book'] = self.book.obj_info_view_by('edit_info',
                                 usr=usr, env=self.book)
         handler_page.render()
         return #0
@@ -82,7 +82,7 @@ class AFBookEditAboutHandler(BaseHandler):
         if status == 2:
             self.handler_page.render()
             return #permission denied
-        handler_page['book'] = self.book.obj_info_view_by('edit_info',
+        handler_page['book'] = self.book.obj_info_view_by('edit_with_summary',
                                 usr=usr, env=self.book)
         handler_page.render()
         return #0

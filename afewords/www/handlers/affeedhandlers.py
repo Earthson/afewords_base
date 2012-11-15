@@ -31,6 +31,7 @@ class AFUserFavHandler(BaseHandler):
     '''usr's favorites'''
     @with_login
     def get(self):
+        from generator import generator
         handler_page = AFFeedLikePage(self)
         usr = self.current_user
         #todo Earthson

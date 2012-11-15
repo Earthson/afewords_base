@@ -4,20 +4,6 @@ from basehandler import *
 from pages.bookpage import BookPage, BookChapterPage, BookAboutPage, BookCatalogPage
 
 
-class BookHandlerPara(BaseHandlerPara):
-
-    paradoc = {
-        #todo deju
-        'edit': 'no',  # unicode, yes or not, edit book or not
-        'load': 'cover',    # unicode, cover or summary or catalog
-    }
-
-    def read(self):
-        BaseHandlerPara.read(self)
-        if self['load'] not in ('cover', 'summary', 'catalog', 'chapter'):
-            self['load'] = 'cover'
-        self['edit'] = False if self['edit'] != 'yes' else True
-
 
 class BookHandler(BaseHandler):
     '''
@@ -25,20 +11,14 @@ class BookHandler(BaseHandler):
     '''
     def get(self, bid):
         from article.catalog import Catalog
-        handler_paras = BookHandlerPara(self)
         handler_page = BookPage(self)
         usr = self.current_user
         handler_page['bid'] = bid
-        handler_page['isedit'] = handler_paras['edit']
-        handler_page['load_page'] = handler_paras['load']
         catalog_obj = Catalog.by_id(bid)
         if catalog_obj is None:
             self.send_error(404)
             return
-        if handler_page['isedit'] is True:
-            handler_page['book'] = catalog_obj.edit_info
-        else:
-            handler_page['book'] = catalog_obj.obj_info_view_by('basic_info', 
+        handler_page['book'] = catalog_obj.obj_info_view_by('basic_info', 
                                     usr=usr)
         handler_page.page_init()
         handler_page.render()
@@ -51,21 +31,14 @@ class BookAboutHandler(BaseHandler):
     '''
     def get(self, bid):
         from article.catalog import Catalog
-        handler_paras = BookHandlerPara(self)
         handler_page = BookAboutPage(self)
         usr = self.current_user
         handler_page['bid'] = bid
-        handler_page['isedit'] = handler_paras['edit']
-        handler_page['load_page'] = handler_paras['load']
         catalog_obj = Catalog.by_id(bid)
         if catalog_obj is None:
             self.send_error(404)
             return
-        if handler_page['isedit'] is True:
-            handler_page['book'] = catalog_obj.obj_info_view_by(
-                        'edit_with_summary', usr=usr)
-        else:
-            handler_page['book'] = catalog_obj.obj_info_view_by('with_summary', 
+        handler_page['book'] = catalog_obj.obj_info_view_by('with_summary', 
                                     usr=usr)
         handler_page.page_init()
         handler_page.render()
@@ -78,21 +51,14 @@ class BookCatalogHandler(BaseHandler):
     '''
     def get(self, bid):
         from article.catalog import Catalog
-        handler_paras = BookHandlerPara(self)
         handler_page = BookCatalogPage(self)
         usr = self.current_user
         handler_page['bid'] = bid
-        handler_page['isedit'] = handler_paras['edit']
-        handler_page['load_page'] = handler_paras['load']
         catalog_obj = Catalog.by_id(bid)
         if catalog_obj is None:
             self.send_error(404)
             return
-        if handler_page['isedit'] is True:
-            handler_page['book'] = catalog_obj.obj_info_view_by('edit_info',
-                                    usr=usr)
-        else:
-            handler_page['book'] = catalog_obj.obj_info_view_by('basic_info', 
+        handler_page['book'] = catalog_obj.obj_info_view_by('basic_info', 
                                     usr=usr)
         handler_page.page_init()
         handler_page.render()

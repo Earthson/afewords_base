@@ -28,8 +28,8 @@ class UserLibDoc(AFDocument):
         'blog_list' : [ObjectId],
         'posted_topic_list' : [ObjectId],
         'favorite_lib' : {
-            #objid : objtype
-            basestring : basestring,
+            #objid : [objtype, timein],
+            basestring : [basestring, datetime],
         },
         'follow_user_lib' : {
             #objid : relation_type

@@ -450,7 +450,7 @@ class Catalog(DataBox):
         ans['bid'] = self.uid
         ans['name'] = self.name
         ans['release_time'] = str(self.release_time)
-        ans['update_time'] = str(self.update_time)
+        ans['last_modify_time'] = str(self.update_time)
         ans['all_catalog_count'] = self.node_sum
         ans['complete_count'] = self.complete_count
         if info_name in ('basic_info'):
