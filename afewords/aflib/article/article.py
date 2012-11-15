@@ -296,6 +296,9 @@ class Article(DataBox):
             return ret
         elif self.author is not None and self.author._id == usr._id:
             ret = set_auth(ret, A_READ | A_WRITE | A_DEL)
+        tmp_fa = self.father
+        if tmpfa and tmpfa.author_id == usr._id:
+            ret = set_auth(ret, A_READ | A_DEL)
         tmp_env = self.env
         if tmp_env is not None:
             tmp = tmp_env.authority_verify(usr)

@@ -34,13 +34,6 @@ class Comment(Article):
         'ref_comment_info' : False,
     }
 
-    @with_user_status
-    def authority_verify(self, usr, env=None, **kwargs):
-        ret = Article.authority_verify(self, usr, env, **kwargs)
-        if usr._id == self.father_id:
-            ret |= A_DEL
-        return ret
-
     def set_by_info(self, infodoc):
         ans = dict()
         ans['body'] = infodoc['body']
