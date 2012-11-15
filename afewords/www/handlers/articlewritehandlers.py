@@ -88,7 +88,6 @@ def article_env_init(handler, handler_paras, handler_json):
     if ref_comment is not None:
         handler.ref_comment = ref_comment
     if not Article.is_valid_id(handler_paras['article_id']):
-        print handler_paras['article_type']
         acls = cls_gen(handler_paras['article_type'])
         if not acls or not issubclass(acls, Article):
             return 11#Invalid Article Type
