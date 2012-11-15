@@ -107,6 +107,7 @@ class CatalogDoc(AFDocument):
         'complete_count' : int,
         'release_time' : datetime,
         'update_time' : datetime,
+        'keywords' : [basestring],
         'about_id' : ObjectId,
         'statistics_id' : ObjectId,
         'lib_id' : ObjectId,
@@ -120,6 +121,7 @@ class CatalogDoc(AFDocument):
         'complete_count' : 0,
         'release_time' : datetime.now,
         'update_time' : datetime.now,
+        'keywords' : [],
         'about_id' : None,
         'statistics_id' : Statistics.new_doc,
         'lib_id' : CatalogLib.new_doc,
@@ -140,6 +142,7 @@ class Catalog(DataBox):
         'complete_count' : True,
         'release_time' : True,
         'update_time' : True,
+        'keywords' : True,
     }
     own_data = ['statistics', 'about', 'lib']
 
@@ -431,6 +434,7 @@ class Catalog(DataBox):
         ans['all_catalog_count'] = self.node_sum
         ans['complete_count'] = self.complete_count
         ans['statistics'] = self.statistics.basic_info
+        ans['keywords'] = self.keywords
         if info_name in ('basic_info'):
             ans['author'] = self.owner.obj_info_view_by(info_name, 
                             usr=usr, env=env, **kwargs)
