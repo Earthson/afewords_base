@@ -288,8 +288,8 @@ class User(DataBox):
         from article.blog import Blog
         from article.comment import Comment
         a_mapper = {
-            Blog.__name__ : self.post_blog,
-            Comment.__name__ : self.post_comment,
+            Blog.cls_name : self.post_blog,
+            Comment.cls_name : self.post_comment,
         }
         return a_mapper[article_type](article_obj)
 
