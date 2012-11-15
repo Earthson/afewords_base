@@ -146,10 +146,10 @@ jQuery.fn.extend({
                                 break;  
                         }
                     });
-                    root_this.children().find('textarea').each(function(){
+                    root_this.find('textarea').each(function(){
                         json[$(this).attr("name")] = $.trim($(this).val());	
                     });
-                    root_this.children().find('select').each(function(){
+                    root_this.find('select').each(function(){
                         json[$(this).attr("name")] = $.trim($(this).val());	
                     });
                     return json;

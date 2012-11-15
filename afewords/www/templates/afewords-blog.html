@@ -208,7 +208,8 @@ $().ready(function(){
         'background-attachment':'fixed'}); /*document.body.style.backgroundColor="#f8f8f8";*/ });
 </script>
 
-<script type="text/javascript" src="{{ static_url("js/me/write.js") }}"></script>
+<script type="text/javascript" src="{{ static_url("js/me/editor.js") }}"></script>
+{#
 {% if article is not None %}
     <script type="text/javascript" >
     $(document).ready(function(){
@@ -221,6 +222,7 @@ $().ready(function(){
     });
     </script>
 {% end %}
+#}
 
 
 <script type="text/javascript" src="{{ static_url("js/code/shCore.js") }}"></script>
