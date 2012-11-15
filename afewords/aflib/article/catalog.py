@@ -417,29 +417,6 @@ class Catalog(DataBox):
         return getter
 
     #property for page&json
-    @db_property
-    def basic_info():
-        def getter(self):
-            return dict(self.overview_info, summary=self.about.basic_info,
-                        chapter_list=self.node_list_info)
-        return getter
-
-    @db_property
-    def overview_info():
-        def getter(self):
-            ans = dict()
-            ans['bid'] = self.uid
-            ans['name'] = self.name
-            ans['release_time'] = str(self.release_time)
-            ans['all_catalog_count'] = self.node_sum
-            ans['complete_count'] = self.complete_count
-            ans['author'] = self.owner.basic_info
-            ans['complete_rate'] = self.complete_rate
-            ans['update_time'] = str(self.update_time)
-            ans['relation_id'] = ''
-            return ans
-        return getter
-
     def obj_info_view_by(self, info_name='basic_info', 
                             usr=None, env=None, **kwargs):
         '''
@@ -453,6 +430,7 @@ class Catalog(DataBox):
         ans['last_modify_time'] = str(self.update_time)
         ans['all_catalog_count'] = self.node_sum
         ans['complete_count'] = self.complete_count
+        ans['statistics'] = self.statistics.basic_info
         if info_name in ('basic_info'):
             ans['author'] = self.owner.obj_info_view_by(info_name, 
                             usr=usr, env=env, **kwargs)
@@ -495,25 +473,6 @@ class Catalog(DataBox):
             ans['url'] = self.obj_url
             return ans
         return getter
-
-    @db_property
-    def edit_info():
-        def getter(self):
-            ans = dict()
-            ans['bid'] = self.uid
-            ans['name'] = self.name
-            ans['release_time'] = str(self.release_time)
-            ans['update_time'] = str(self.update_time)
-            ans['all_catalog_count'] = self.node_sum
-            ans['complete_count'] = self.complete_count
-            ans['author'] = self.owner.basic_info
-            ans['complete_rate'] = self.complete_rate
-            ans['summary'] = self.about.edit_info
-            ans['chapter_list'] = self.node_list_info
-            ans['relation_id'] = ''
-            return ans
-        return getter
-
 
     @db_property
     def obj_url():
