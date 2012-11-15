@@ -90,12 +90,18 @@ width: 20px;height: 20px;background-position: 45px 20px;}
 
 
 .b_bottom_wrap{float: left;width: 100%;margin-top: 100px;}
-.b_bottom_wrap span.bot-comment{cursor: pointer;font-size: 14px;color: blue;
-background: url('/static/img/button/comment_ok1.png') 0 5px no-repeat;text-indent: 20px;display: inline-block;}
-.b_bottom_wrap span.bot-comment:hover{text-decoration: underline;}
+.b_bottom_wrap span.do-some{cursor: pointer;font-size: 14px;color: blue;text-indent: 20px;display: inline-block; margin-right: 20px;}
+.b_bottom_wrap span.do-some:hover{text-decoration: underline;}
+.b_bottom_wrap span.bot-comment{background: url('/static/img/button/comment_ok1.png') 0 5px no-repeat;}
+.b_bottom_wrap span.bot-like{background: url('/static/img/button/heart_ok.png') 0 5px no-repeat;}
+.b_bottom_wrap span.bot-share{background: url('/static/img/button/sharing.png') 0 0px no-repeat;}
+.b_bottom_wrap span.bot-recom{background: url('/static/img/button/star_ok.png') 0 5px no-repeat;}
+.b_bottom_wrap span.bot-view{display: none;}
+
 .b_bottom_wrap span.bot-author-name{float: right;color: blue;}
 .b_bottom_wrap span.bot-author-name a{color: blue;}
 .b_bottom_wrap span.bot-time{float: right;}
+
 
 .bb_title{font-size: 26px;font-weight: bolder;width: 100%;line-height: 40px;float: left;
 text-align: center;border-bottom: #000 1px dashed;margin-bottom: 20px;}
