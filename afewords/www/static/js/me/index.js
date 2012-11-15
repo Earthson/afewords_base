@@ -533,12 +533,86 @@ Global_Funs = {
                                                     "father_type": $that.attr("father_type"),
                                                     "iscomment": true,
                                                     "article_type": "comment"
-                                                    //"env_id": $that.attr("")
                                                 };
-                                    //if(reply_comment)
+                                    var create_flag = false;
+                                    var $comment_block = jQuery("div.b_com"); 
+                                    var reply_block_html = '<div class="com_reply" id="write_comment_zone">' +
+                                                            '<div id="ref_comment_lib">' + 
+                                                            '</div>' +
+                                                            '<textarea class="bcr_text" id="write_textarea" spellcheck="false" name="body"></textarea>' +
+                                                            //'<input type="hidden" name="ref_comment" value="sdfsdf" />' + 
+                                                            '<div class="bcr_con"><button>提交</button>'+
+                                                            '<span class="comment_process">&nbsp;</span></div>' +
+                                                            '</div>'
+                                    var $reply_block = jQuery("#write_comment_zone");
+                                    if(!$reply_block.length) {
+                                        $reply_block = jQuery(reply_block_html);
+                                    }else{ create_flag = true; }
+                                    var $reply_comment_nest = $reply_block.find('#ref_comment_lib');
+                                    var $reply_textarea = $reply_block.find('#write_textarea');
+                                    if(reply_comment){
+                                        var reply_comment_id = $that.attr("comment_id");
+                                        var reply_author_id = $that.attr("author_id");
+                                        var reply_author_name = $that.attr("author_name");
+                                        var reply_comment_body= $that.parent('.com_nav').siblings(".bb_con1").children('.bb_con').text() || '';
+                                        
+                                        var reply_comment_short = reply_comment_body.slice(0, 100 > reply_comment_body.length ? reply_comment_body.length: 100);
+                                        // reply to comment 
+                                        var hidden_input = '<input type="hidden" name="ref_comment" value="'+ reply_comment_id +'" />';                                   
+                                        var reply_comment_html = '<div class="ref_comment_one">'+
+                                                                '<a href="javascript:void(0);" class="link_close" comment_pos="' + reply_comment_id + '">X</a>' +
+                                                                '<p>'+ reply_comment_short +'<a href="/blogger/' + reply_author_id + '" class="ref_author">'+
+                                                                jQuery.encode(reply_author_name)+'</a></p></div>';
+                                        $reply_comment_nest.html(reply_comment_html);
+                                        $reply_comment_nest.append(hidden_input);
+                                    }
+                                    $comment_block.append($reply_block);
+                                    if(!create_flag){
+                                        $reply_textarea.create_editor(paras); 
+                                        bind_post_comment();                  
+                                    }
+                                    //if(AFWUser['login']){}
+                                    function parse_comment_request(){
+                                        var $menu = jQuery("#write_menu");
+                                        var mes = $reply_block.DivToDict();
+                                        var mes1 = {
+                                            'do': 'post',
+                                            'article_type': 'comment',
+                                            'father_id': $menu.attr('father_id'),
+                                            'father_type': $menu.attr('father_type')                                 
+                                        }
+                                        jQuery.extend(mes, mes1);
+                                        for(var i in mes){
+                                            console.log(i + '  ' + mes[i]);                                       
+                                        }
+                                        return mes;
+                                    }
+                                    
+                                    function bind_post_comment(){
+                                        var $button = $reply_block.find('button'), $process = $button.siblings('.comment_process');
+                                        $button.bind('click', function(){
+                                            var mes = parse_comment_request();
+                                            if(!mes['body'] || mes['body'] == "内容"){    $process.error_process("评论内容不能为空！"); return; }
+                                            jQuery.postJSON('/update-article', mes, function(){
+                                                    $process.ajax_process();  $button.to_disabled();                                            
+                                            },function(response){
+                                                if(response.status!= 0){
+                                                    $process.error_process(response.info); $button.remove_disabled();  return;                                                
+                                                }else{
+                                                    $process.right_process("评论成功，输入框即将关闭！"); 
+                                                    setTimeout(function(){  $reply_block.remove(); }, 1000);
+                                                                                               
+                                                }
+                                            }, function(textStatus){
+                                                $process.error_process("出现错误：" + textStatus);
+                                                $button.remove_disabled();                                            
+                                            });
+                                        })                               
+                                    }
                                     
                                 },
-                    "recomend": function(){
+                    "recommend": function(){
+                                    // recommend to the book
                                     var $that = this,
                                         article_type = "";
                                 },
