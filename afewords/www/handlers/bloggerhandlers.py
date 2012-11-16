@@ -80,7 +80,7 @@ class BloggerBookHandler(BaseBloggerHandler):
             handler_page['author'] = usr.as_viewer(author)
         else:
             handler_page['author'] = author.basic_info
-        handler_page['book_list'] = [each.basic_info 
+        handler_page['book_list'] = [each.obj_info_view_by('basic_info', usr)
                 for each in author.managed_catalogs]
         handler_page.page_init()
         handler_page.render()
