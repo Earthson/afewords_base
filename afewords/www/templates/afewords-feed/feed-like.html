@@ -16,7 +16,7 @@
     {% end %}
 {% else %}
 
-    <ul>
+    <ul class="like_ul">
         {% for like_one in like_list %}
            <li><a href="/blog/{{ like_one['aid'] }}" target="_blank">{{ like_one['title'] }}</a>
            <span class="tag-del hide_span" page="settings" do="unlike" obj_id="{{ like_one['aid'] }}" obj_type="blog">取消</span>
