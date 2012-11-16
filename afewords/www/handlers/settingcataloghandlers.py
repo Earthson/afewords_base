@@ -124,3 +124,77 @@ class CatalogSectionDelHandler(BaseHandler):
         handler_json.by_status(0)
         handler_json.write()
         return #0
+
+
+class RecArticleToBookPara(BaseHandlerPara):
+    paradoc = {
+        'book_id' : '',
+        'node_id' : '',
+        'article_id' : '',
+        'article_type' : 'blog',
+    }
+
+
+from pages.postjson import RecArticleToBookJson
+
+class RecArticleToBookHandler(BaseHandler):
+    @with_login_post
+    def post(self):
+        handler_para = RecArticleToBookPara(self)
+        handler_json = RecArticleToBookJson(self)
+        usr = self.current_user
+        book = Catalog.by_id(handler_para['book_id'])
+        if book is None:
+            handler_json.by_status(2)
+            handler_json.write()
+            return #book not exist
+        article_obj = generator(handler_para['article_id'], 
+                                handler_para['article_type'])
+        if article_obj is None:
+            handler_json.by_status(1)
+            handler_json.write()
+            return #article not exist
+        rr = article_obj.add_to_catalog(book, handler_para['node_id'])
+        if rr is None:
+            handler_json.by_status(3)
+            handler_json.write()
+            return #section not exist
+        handler_json.by_status(0)
+        handler_json.write()
+        return #0
+
+class DelArticleFromBookPara(BaseHandlerPara):
+    paradoc = {
+        'book_id' : '',
+        'node_id' : '',
+        'article_id' : '',
+        'article_type' : 'blog',
+    }
+
+
+from pages.postjson import DelArticleFromBookJson
+
+class DelArticleFromBookHandler(BaseHandler):
+    @with_login_post
+    def post(self):
+        handler_para = DelArticleFromBookPara(self)
+        handler_json = DelArticleFromBookJson(self)
+        usr = self.current_user
+        book = Catalog.by_id(handler_para['book_id'])
+        article_obj = generator(handler_para['article_id'], 
+                                handler_para['article_type'])
+        if article_obj is None:
+            handler_json.by_status(1)
+            handler_json.write()
+            return #article not exist
+        auth_tmp = article_obj.authority_verify(usr, env=book)
+        if book is not None:
+            auth_tmp |= book.authority_verify(usr, env=book)
+        if test_auth(auth_tmp, A_WRITE) is False:
+            handler_json.by_status(2)
+            handler_json.write()
+            return #permission denied
+        rr = article_obj.remove_from_catalog(book, handler_para['node_id'])
+        handler_json.by_status(0)
+        handler_json.write()
+        return #0

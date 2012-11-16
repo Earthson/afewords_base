@@ -344,6 +344,33 @@ class Article(DataBox):
         self.data['body_version'] += 1
         self.save()
 
+    def get_relation_to_catalog(self, catalog_obj, node_id):
+        from relation import Relation
+        tmp_lib = self.lib.relation_catalogs
+        tmp = tmp_lib[catalog_obj.uid+'#'+node_id]
+        if tmp is not None:
+            return Relation.by_id(tmp)
+        return None
+
+    def add_to_catalog(self, catalog_obj, node_id):
+        '''relation_obj will be returned'''
+        rr = self.get_relation_to_catalog(catalog_obj, node_id)
+        if rr:
+            return rr
+        rr = catalog_obj.recommend_article(node_id, self)
+        if rr is None:
+            return None
+        self.lib.relation_catalogs[catalog_obj.uid+'#'+node_id] = rr._id
+        return rr
+
+    def remove_from_catalog(self, catalog_obj, node_id):
+        rr = self.get_relation_to_catalog(catalog_obj, node_id)
+        if not rr:
+            return None
+        del self.lib.relation_catalogs[catalog_obj.uid+'#'+node_id]
+        if catalog_obj is not None:
+            catalog_obj.remove_article(node_id, rr)
+
     def comments_info_view_by(self, usr=None):
         if usr:
             return [each.obj_info_view_by('comment_info_for_json', usr)

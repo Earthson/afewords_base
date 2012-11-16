@@ -334,3 +334,20 @@ class ObjDoLikeJson(StatusJson):
         1 : u'不支持的类型',
         2 : u'对象不存在',
     }
+
+@with_attr
+class RecArticleToBookJson(StatusJson):
+    error_info = {
+        0 : u'',
+        1 : u'文章不存在',
+        2 : u'知识谱不存在',
+        3 : u'章节不存在',
+    }
+
+@with_attr
+class DelArticleFromBookJson(StatusJson):
+    error_info = {
+        0 : u'',
+        1 : u'文章不存在',
+        2 : u'您无权进行此操作',
+    }

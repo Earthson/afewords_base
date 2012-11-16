@@ -246,11 +246,13 @@ class Catalog(DataBox):
             self.get_node_dict(node_id)['spec_count'] -= 1
 
     def recommend_article(self, node_id, article_obj):
+        if self.get_node_dict(node_id)['title'] is None:
+            return None
         rr = Relation(attrs={"relation_type":"catalog-%s" % \
-                            article_obj.class_name})
+                            article_obj.cls_name})
         rr.set_relation_set(self, article_obj)
-        tmp = self.get_node_list(node_id, 'articles')
-        tmp.push(rr._id)
+        tmp_list = self.get_node_list(node_id, 'articles')
+        tmp_list.push(rr._id)
         self.lib.relations_list.push(rr._id)
         self.get_node_dict(node_id)['article_count'] += 1
         return rr

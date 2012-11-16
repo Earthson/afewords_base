@@ -64,6 +64,8 @@ from handlers.afbookhandlers import AFBookEditInfoHandler
 from handlers.afbookhandlers import AFBookEditInviteHandler
 from handlers.afbookhandlers import AFBookEditAboutHandler
 from handlers.afbookhandlers import AFBookEditCatalogHandler
+from handlers.afbookhandlers import RecArticleToBookHandler
+from handlers.afbookhandlers import DelArticleFromBookHandler
 
 
 from handlers.statisticshandlers import ObjDoLikeHandler
@@ -139,6 +141,8 @@ app_handlers = {
     (r'/settingpost-book_section_new', CatalogSectionNewHandler),
     (r'/settingpost-book_section_modify', CatalogSectionModifyHandler),
     (r'/settingpost-book_section_del', CatalogSectionDelHandler),
+    (r'/settingpost-book_article_rec', RecArticleToBookHandler),
+    (r'/settingpost-book_article_del', DelArticleFromBookHandler),
 }
 
 app_settings = {
