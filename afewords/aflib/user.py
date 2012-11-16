@@ -6,6 +6,7 @@ from emmongodict.emmongodict import EmMongoDict
 from bson import ObjectId
 from datetime import datetime
 
+from article import * #try init all article packages
 from article.about import About
 from article.avatar import Avatar
 
@@ -16,9 +17,6 @@ from authority import *
 from operator import itemgetter, attrgetter
 
 
-from article.article import Article
-from article.blog import Blog
-from article.comment import Comment
 
 
 @with_conn
