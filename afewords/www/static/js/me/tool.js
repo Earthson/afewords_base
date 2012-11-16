@@ -449,9 +449,6 @@ jQuery.afewords.tools.Global_Funs = {
                                             'father_type': $menu.attr('father_type')                                 
                                         }
                                         jQuery.extend(mes, mes1);
-                                        for(var i in mes){
-                                            console.log(i + '  ' + mes[i]);                                       
-                                        }
                                         return mes;
                                     }
                                     
@@ -500,7 +497,10 @@ jQuery.afewords.tools.Global_Funs = {
                                     },function(){});                    
                     },
                     "share":    function(){},
-                    "view":     function(){},
+                    "view":     function(){
+                                    var $that = this;
+                                    
+                                },
                     "getcomment": function(){   // this must be jquery object
                                     var $that = this;                    
                                     var mes = { 'article_id': $that.attr('article_id'),

@@ -112,6 +112,7 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
             var configs = Global_Funs["blog"][to_do];
             configs.call($target);   
         }).find('span.bot-getcomment').click();
+        setTimeout(function(){ $article_bottom.find('span.bot-view').click(); }, 5000);
         var $article_comment = jQuery("#article_comment");
         $article_comment.live('click', function(e){
             if(e.target.nodeName != 'SPAN' && e.target.nodeName != "A") return;
@@ -121,7 +122,7 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
             
             var configs = Global_Funs['blog'][to_do];
             configs.call($target);        
-        })
+        });
         
     }
     
