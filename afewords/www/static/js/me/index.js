@@ -209,8 +209,14 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
                 mes['article_id'] = $that.attr("article_id");
                 mes['article_type'] = $that.attr("article_type");
                 url = '/settingpost-article_remove';
-                break;        
+                break; 
+            case 'unlike':
+                mes['obj_id'] = $that.attr("obj_id");
+                mes['obj_type'] = $that.attr("obj_type");
+                url = '/obj-dolike';
+                break;       
             default:
+                return;
                 break;
         }
         
@@ -221,9 +227,8 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
             if(response.status != 0)   return;
             switch(to_do){
                 case 'remove_tag':
-                    $that.parent().slideUp('slow').remove();
-                    break;
                 case 'remove_article':
+                case 'unlike':
                     $that.parent().slideUp('slow').remove();
                     break;
                 default:
