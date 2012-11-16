@@ -24,23 +24,21 @@ class ArticleWriteHandler(BaseHandler):
         page = WritePage(self)
         usr = self.current_user
         page['article_type'] = pageparas['type']
-        pageparas['env_type'] = pageparas['env_type']
-        pageparas['type'] = pageparas['type']
         if not pageparas['type']:
             self.send_error(404, error_info=u'Invalid Article Type') #todo Earthson
             return
-        if not pageparas['env_id'] and not pageparas['env_type']:
-            page['env'] = usr.as_env
-            env_info = (usr._id, usr.__class__.__name__)
-        else:
+        env = None
+        if pageparas['env_id'] or pageparas['env_type']:
             env = generator(pageparas['env_id'], pageparas['env_type'])
             if not env:
                 self.send_error(404, error_info=u'Invalid Envirenment')
                 return
-            env_info = (env.__class__.__name__, env._id)
+            env_info = env.obj_info
             page['env'] = env.as_env
-
         if not pageparas['id']:
+            if not env:
+                self.send_error(404, error_info=u'Invalid Envirenment')
+                return
             page.page_init()
             page.render()
             return
@@ -49,14 +47,13 @@ class ArticleWriteHandler(BaseHandler):
         if toedit is None:
             self.send_error(404, error_info=u'Article Not Found')
             return
-        if (toedit.env_id, toedit.env_type) != env_info:
-            self.send_error(404, error_info=u'Invalid Envirenment')
-            return
-        auth_ret = toedit.authority_verify(usr)
+        env = toedit.env
+        page['env'] = env.as_env
+        auth_ret = toedit.authority_verify(usr, env=env)
         if not test_auth(auth_ret, A_WRITE):
             self.send_error(404, error_info=u'Permission Denied')
             return
-        page['article'] = toedit.edit_info
+        page['article'] = toedit.obj_info_view_by('edit_info', usr=usr, env=env)
         page.page_init()
         page.render()
         return

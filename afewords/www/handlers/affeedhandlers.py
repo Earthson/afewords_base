@@ -26,15 +26,30 @@ class AFBlogsRecentHandler(BaseHandler):
         handler_page.render()
         return #0
 
+class AFUserFavPara(BaseHandlerPara):
+    doc = {
+        'page' : 1,
+    }
+
+    def read():
+        try:
+            self['page'] = int(self.handler.get_esc_arg('page', self['page']))
+        except:
+            self['page'] = 1
+
 
 class AFUserFavHandler(BaseHandler):
     '''usr's favorites'''
     @with_login
     def get(self):
-        from generator import generator
+        from generator import list_generator
+        handler_para = AFUserFavPara(self)
         handler_page = AFFeedLikePage(self)
         usr = self.current_user
-        #todo Earthson
+        fav_all = [(ek, ev[0], ev[1])
+                for ek, ev in usr.lib.favorite_lib.load_all().iteritems()]
+        fav_all = sorted(fav_all, key=lambda it: it[2], reverse=True)
+        handler_page.page_init()
         handler_page.render()
         return #0
 

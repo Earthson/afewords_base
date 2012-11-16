@@ -390,6 +390,11 @@ class User(DataBox):
             return [each.basic_info for each in drafts if each]
         return getter
 
+    def fav_info_view_by(self, usr=None, vfrom=0, vlim=20):
+        fav_all = [(ek, ev[0], ev[1])
+                for ek, ev in usr.lib.favorite_lib.load_all().iteritems()]
+        fav_all = sorted(fav_all, key=lambda it: it[2], reverse=True)
+
     def blogs_info_view_by(self, usr=None, tagname=None, vfrom=0, vlim=20):
         from article.blog import Blog
         if tagname and tagname != 'default':
