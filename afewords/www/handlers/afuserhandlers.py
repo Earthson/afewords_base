@@ -11,7 +11,7 @@ class AFUserRecentHandler(BaseHandler):
         handler_page = AFUserLibPage(self)
         usr = self.current_user
         try:
-            usrs = sorted(User.by_ids(recent_users.get_slice(-20)),
+            usrs = sorted(User.by_ids(recent_users.get_slice(-50)),
                             reverse=True)
         except:
             usrs = []

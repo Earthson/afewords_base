@@ -37,8 +37,9 @@ class ArticleWriteHandler(BaseHandler):
             page['env'] = env.as_env
         if not pageparas['id']:
             if not env:
-                self.send_error(404, error_info=u'Invalid Envirenment')
-                return
+                env = usr
+                env_info = env.obj_info
+                page['env'] = env.as_env
             page.page_init()
             page.render()
             return
