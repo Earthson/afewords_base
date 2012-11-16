@@ -217,8 +217,8 @@ ul.like_ul li a:hover{ color: blue;}
 #body_content .follow{width: 88%;float: left;margin-left: 20px;border:#aaa 1px dotted;padding: 35px 20px 20px 20px;
 margin-top: 30px;position: relative;background: url('/static/img/button/user_ok.png') 20px 10px  no-repeat;
 background-color: #ffffff;}
-#body_content .follow ul{list-style-type: none;line-height: 40px;margin: 10px 0 50px 0;width: 100%;float: left;}
-#body_content .follow ul li{float: left;display: inline-block;border:#ccc 1px dotted;margin: 0 30px 30px 0;}
+#body_content .follow_ul{list-style-type: none;line-height: 40px;margin: 10px 0 50px 0;width: 100%;float: left;}
+#body_content .follow_ul li{float: left;display: inline-block;border:#ccc 1px dotted;margin: 0 30px 30px 0;}
 
 #body_content .follow_one{min-width: 150px;float: left;height: 100px;}
 #body_content .follow_one img{float: left;width: 100px;height: 100px;}
