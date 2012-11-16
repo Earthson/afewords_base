@@ -48,5 +48,24 @@ def cls_gen(objtype):
 def generator(objid, objtype):
     return id_generator(cls_gen(objtype))(objid)
 
+def list_generator(objinfos):
+    '''input list of [objuid, objtype]'''
+    cls_map = dict()
+    objs_map = dict()
+    for each in objinfos:
+        tmp_cls = cls_gen(each[1])
+        if tmp_cls is None:
+            continue
+        tmp_cls_name = tmp_cls.cls_name
+        if tmp_cls_name not in cls_map:
+            cls_map[tmp_cls_name] = list([each[0]])
+        else:
+            cls_map[tmp_cls_name].append(each[0])
+    for ek, ev in cls_map.items():
+        tmps = cls_gen(ek).by_ids(ev)
+        objs_map.update((each.uid, each) for each in tmps)
+    return [objs_map[eid] if eid in objs_map else None 
+                    for eid, etype in objinfos]
+
 def ungenerator(obj):
     return obj._id, obj.__class__.__name__
