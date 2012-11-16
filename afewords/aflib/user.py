@@ -405,7 +405,7 @@ class User(DataBox):
         toview = [each for each in list_generator(toview) if each]
         tmp2 = set([each.uid for each in toview])
         self.lib.favorite_lib.delete_propertys(tuple(tmp - tmp2))
-        return [each.obj_info_view_by('basic_info', usr, env=usr) 
+        return [each.obj_info_view_by('overview_info', usr, env=usr) 
                     for each in toview], len_toview
 
     def blogs_info_view_by(self, usr=None, tagname=None, vfrom=0, vlim=20):

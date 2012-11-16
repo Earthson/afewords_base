@@ -56,8 +56,6 @@ class AFUserFavHandler(BaseHandler):
         #para need to be add. 
         handler_page['urlparas'] = paradoc
         handler_page['baseurl'] = self.request_url
-        print handler_page['like_list']
-        print usr.lib.favorite_lib.load_all()
         handler_page.page_init()
         handler_page.render()
         return #0
