@@ -113,6 +113,8 @@ class EmMongoList(object):
 
     @auto_coll_do
     def pull(self, *objs):
+        if not objs:
+            return
         return self.coll.update(spec=self.spec,
                         document={'$pullAll':{self.path:objs}})
 

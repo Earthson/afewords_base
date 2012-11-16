@@ -126,6 +126,8 @@ class EmMongoDict(object):
 
     @auto_coll_do
     def delete_propertys(self, keylist):
+        if not keylist:
+            return
         if self.path is not None:
             keylist = [self.path+'.'+str(each) for each in keylist]
         return coll_delete_keys(self.coll, keys=keylist, spec=self.spec)

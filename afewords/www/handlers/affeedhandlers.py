@@ -31,7 +31,7 @@ class AFUserFavPara(BaseHandlerPara):
         'page' : 1,
     }
 
-    def read():
+    def read(self):
         try:
             self['page'] = int(self.handler.get_esc_arg('page', self['page']))
         except:
@@ -46,9 +46,18 @@ class AFUserFavHandler(BaseHandler):
         handler_para = AFUserFavPara(self)
         handler_page = AFFeedLikePage(self)
         usr = self.current_user
-        fav_all = [(ek, ev[0], ev[1])
-                for ek, ev in usr.lib.favorite_lib.load_all().iteritems()]
-        fav_all = sorted(fav_all, key=lambda it: it[2], reverse=True)
+        handler_page['current_page'] = handler_para['page']
+        enum = 10
+        handler_page['like_list'], like_cnt = usr.fav_info_view_by(usr,
+                    vfrom=enum*(handler_para['page'] - 1), vlim=enum) 
+        handler_page['page_list'] = [i/enum + 1 
+                            for i in range(0, like_cnt, enum)]
+        paradoc = dict()
+        #para need to be add. 
+        handler_page['urlparas'] = paradoc
+        handler_page['baseurl'] = self.request_url
+        print handler_page['like_list']
+        print usr.lib.favorite_lib.load_all()
         handler_page.page_init()
         handler_page.render()
         return #0

@@ -394,6 +394,19 @@ class User(DataBox):
         fav_all = [(ek, ev[0], ev[1])
                 for ek, ev in usr.lib.favorite_lib.load_all().iteritems()]
         fav_all = sorted(fav_all, key=lambda it: it[2], reverse=True)
+        toview = [each[0:2] for each in fav_all]
+        len_toview = len(toview)
+        if vfrom > len_toview:
+            return [], len_toview
+        if vfrom + vlim > len_toview:
+            vlim = len_toview - vfrom
+        toview = toview[vfrom:(vfrom+vlim)]
+        tmp = set([each[0] for each in toview])
+        toview = [each for each in list_generator(toview) if each]
+        tmp2 = set([each.uid for each in toview])
+        self.lib.favorite_lib.delete_propertys(tuple(tmp - tmp2))
+        return [each.obj_info_view_by('basic_info', usr, env=usr) 
+                    for each in toview], len_toview
 
     def blogs_info_view_by(self, usr=None, tagname=None, vfrom=0, vlim=20):
         from article.blog import Blog
@@ -414,7 +427,7 @@ class User(DataBox):
             self.lib.blog_list.pull(*tuple(tmp - tmp2)) 
             #try remove item not exist
         if usr: 
-            return [each.obj_info_view_by('basic_info', usr) 
+            return [each.obj_info_view_by('basic_info', usr, env=usr) 
                         for each in toview], len_toview
         return [each.basic_info for each in toview], len_toview
 
