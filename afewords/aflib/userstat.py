@@ -54,7 +54,6 @@ class UserStatMongo(EmMongoDict):
         elif time_now - time_last < 2000:
             return False
         view_doc['last_time'] = time_now
-        print view_doc.inca('count')
         return True
 
 @with_mapper

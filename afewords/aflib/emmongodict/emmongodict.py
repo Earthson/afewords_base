@@ -1,4 +1,5 @@
 from connbase import *
+from bson import ObjectId
 
 class EmMongoDict(object):
     '''
@@ -44,7 +45,7 @@ class EmMongoDict(object):
         return cls.coll.insert(doc_or_docs=doc)
 
     @classmethod
-    @wuto_coll_do
+    @auto_coll_do
     def by_id(cls, oid):
         if not cls.is_valid_id(oid):
             return None

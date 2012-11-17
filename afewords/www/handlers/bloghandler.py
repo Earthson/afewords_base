@@ -9,6 +9,7 @@ class BlogHandler(BaseHandler):
     def get(self, bid):
         from article.blog import Blog
         usr = self.current_user
+        userstat = self.userstat
         blog_to = Blog.by_id(bid)
         if(blog_to is None): 
             return self.send_error(404);
@@ -18,6 +19,8 @@ class BlogHandler(BaseHandler):
         page['article'] = blog_to.view_info
         page['article'] = blog_to.obj_info_view_by('view_info', 
                     usr=usr, env=usr)
+        if userstat.view_article(blog_to):
+            blog_to.statistics.view_count += 1
         if usr:
             page['islike'] = usr.is_like(blog_to)
         page.render()

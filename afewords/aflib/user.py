@@ -217,7 +217,7 @@ class User(DataBox):
     def stat_info_doc():
         '''user statistics info'''
         def getter(self):
-            return UserStatMongo(spec={'_id':self.data['userstat_id']})
+            return UserStatMongo.by_id(self.data['userstat_id'])
         return getter
 
     @db_property
