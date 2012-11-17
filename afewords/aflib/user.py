@@ -10,6 +10,8 @@ from article import * #try init all article packages
 from article.about import About
 from article.avatar import Avatar
 
+from userstat import UserStat, UserStatMongo
+
 from generator import *
 
 from authority import *
@@ -127,11 +129,12 @@ class UserDoc(AFDocument):
         'invitations' : int,
         'domain' : basestring,
         'account_status' : basestring,
-        'release_time' : basestring,
+        'release_time' : datetime,
 
         'avatar_id' : ObjectId,
         'about_id' : ObjectId,
         'lib_id' : ObjectId,
+        'userstat_id' : ObjectId,
     }
     required_fields = ['email']
     default_values = {
@@ -147,6 +150,7 @@ class UserDoc(AFDocument):
         'about_id' : None,
         'lib_id' : UserLib.new_doc,
         'release_time' : datetime.now,
+        'userstat_id' : UserStat.new_doc,
     }
     indexes = [
         {
@@ -181,6 +185,7 @@ class User(DataBox):
         'avatar_id' : False,
         'about_id' : False,
         'lib_id' : False,
+        'userstat_id' : False,
     }
     own_data =  ['avatar', 'about', 'lib']
 
@@ -199,6 +204,20 @@ class User(DataBox):
     def draft_count():
         def getter(self):
             return len(self.lib.drafts_lib.load_all())
+        return getter
+
+    @db_property
+    def stat_info():
+        '''user statistics info'''
+        def getter(self):
+            return UserStat.by_id(self.data['userstat_id'])
+        return getter
+
+    @db_property
+    def stat_info_doc():
+        '''user statistics info'''
+        def getter(self):
+            return UserStatMongo(spec={'_id':self.data['userstat_id']})
         return getter
 
     @db_property

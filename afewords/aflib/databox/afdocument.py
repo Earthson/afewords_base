@@ -16,8 +16,11 @@ class AFDocument(Document):
         try:
             return Document.__getitem__(self, key)
         except KeyError:
-            self[key] = self.default_values[key]
-            return self.default_values[key]
+            ans = self.defult_values[key]
+            if callable(ans):
+                ans = ans()
+            self[key] = ans
+            return ans
 
     def remove(self):
         #self['data_status'] = 'removed'
