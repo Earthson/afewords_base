@@ -305,7 +305,7 @@ class Catalog(DataBox):
         self.node_count += 1
         return str(self.node_count - 1)
 
-def modify_node(self, node_id, title, section):
+    def modify_node(self, node_id, title, section):
         cnode = self.lib.node_lib.sub_dict(node_id)
         if cnode['title'] is None:
             return False #node not exist
