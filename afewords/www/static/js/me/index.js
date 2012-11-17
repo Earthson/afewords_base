@@ -390,9 +390,41 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
             $process.error_process("出现错误：" + textStatus); $target.remove_disabled();        
         };
     });
+    // init for book manage 
+    $body_content.find("#book_wrap").live('click', function(e){
+        if(e.target.nodeName != "SPAN") return;
+        var $target = jQuery(e.target),
+            to_do = $target.attr("do");
+        if(!to_do)  return;
+        switch(to_do){
+            case "add_chapter":
+            case "modify_chapter":
+                Global_Funs['book_chapter_manage']["add_modify_chapter"].call($target, sort_node_fun);
+                break;
+            case "remove_chapter":
+                break;
+             default:
+                break;           
+        }
+        
+    });
+    
+    function sort_node_fun(){
+        //sort the node for chapter eidt
+        var $catalog_ul = jQuery("ul.catalog_ul");
+        
+        
+        function get_all_node(){
+                    
+        }    
+    }
 })();
 
+(function(){
+    /*  init page, for book
+    */
 
+})();
 
 
 

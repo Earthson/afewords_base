@@ -3,7 +3,7 @@
 {% set book_id = doc['bid'] %}
 {% set nest = 1 %}
 {% set normal_li = u'<li node_id="%s"><span class="num">%s</span><span><a href="/book/%s/catalog/%s">%s</a></span>%s%s</li>' %}
-{% set edit_li = u'<span class="catalog_edit">修改</span><span class="catalog_del">删除</span></li>' %}
+{% set edit_li = u'<span class="catalog_edit" do="modify_chapter">修改</span><span class="catalog_del" do="remove_chapter">删除</span></li>' %}
 {% set complete_point = u'<span class="complete%s">%s/%s/%s&nbsp;%s</span>' %}
 
 {% if len(node_list) < 1 %} 
@@ -57,7 +57,7 @@
                 <li chapter_id="{{ cid }}">
                     <span class="num">{{ c_n }}</span>
                     <span><a href="/book/{{ book_id }}/catalog/{{ cid }}">{{ title }}</a></span>
-                    <span class="catalog_edit">修改</span><span class="catalog_del">删除</span></li>
+                    <span class="catalog_edit" do="modify_chapter">修改</span><span class="catalog_del" do="remove_chapter">删除</span></li>
                 </li>
             {% end %}
 
@@ -86,7 +86,7 @@
                     <li chapter_id="{{ cid }}">
                     <span class="num">{{ c_n }}</span>
                     <span><a href="/book/{{ book_id }}/catalog/{{ cid }}">{{ title }}</a></span>
-                    <span class="catalog_edit">修改</span><span class="catalog_del">删除</span></li>
+                    <span class="catalog_edit" do="modify_chapter">修改</span><span class="catalog_del" do="remove_chapter">删除</span></li>
                     </li>
                 {% end %}
                 

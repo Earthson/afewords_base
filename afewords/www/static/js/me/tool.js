@@ -61,6 +61,11 @@ $.extend({
                     if(!email || !email_reg.test(email))    return false;
                     return true;
     },
+    check_chapter: function(_num){
+                    var _num_reg = /^\d+(\.\d+)*$/gi;
+                    if(!_num || _num.search(_num_reg) == -1)    return false;
+                    return true;    
+    },
     close_window_alert: function(){
         jQuery(window).unbind('beforeunload');
         jQuery(window).unload(function(){});    
@@ -545,7 +550,10 @@ jQuery.afewords.tools.Global_Funs = {
                         }     
                 },
     "body_content_button":{
-                "crop_avatar":      function( $body_content, $process, mes ){},
+                "crop_avatar":      function( $body_content, $process, mes ){
+                                        alert("开发中...");
+                                        return false;                
+                },
                 "modify_password":  function( $body_content, $process, mes ){
                                         var $button = this;
                                         if(!mes['passwd_old']){ $process.error_process("请填写原密码！"); return [false]; }
@@ -593,7 +601,75 @@ jQuery.afewords.tools.Global_Funs = {
                                         }
                                         return [true, url, right_handle];                 
                 }    
-    }
+    },
+    "book_chapter_manage": {
+                "add_modify_chapter":  function( callback ){
+                
+                                var $that = this, book_id = $that.attr("book_id"), to_do = $that.attr("do"),
+                                    $li, old_title = '', old_node_id = '', old_section = '', $catalog_ul,
+                                    url = '/settingpost-book_section_new', tip_str = "添加新";
+                                if(to_do == "modify_chapter"){
+                                    $li = $that.parent();
+                                    old_title = $li.children("span").eq(1).text();
+                                    old_node_id = $li.attr("chapter_id");
+                                    old_section = $li.children("span").eq(0).text();
+                                    $catalog_ul = jQuery("#book_wrap").find("ul.catalog_ul");
+                                    book_id = $catalog_ul.eq(0).attr("book_id") || '';
+                                    url = '/settingpost-book_section_modify';
+                                    tip_str = "修改";
+                                }
+
+                                var pop_html = '<div id="pop_insert_table">' +
+                                                '<input type="hidden" name="book_id" value="'+book_id+'" />'+
+                                                '<input type="hidden" name="node_id" value="'+ old_node_id +'" />' +
+                                                '<p class="first">'+ tip_str +'目录</p>'+
+                                                '<p>章节<input type="text" name="section" autocomplete="off" value="'+ old_section +'" /></p>'+
+                                                '<p>标题<input type="text" name="title" autocomplete="off" value="'+ old_title +'" /></p>'+
+                                                '<p><button type="submit" id="catalog_add_button">提交</button><span class="t_process">&nbsp;</span></p>'+
+                                                '</div>';
+                                var $pop_html = jQuery(pop_html);
+                                var $pop_content = pop_page(400, 200, $pop_html);
+                                $pop_html.bind('click', function(e){
+                                    if(e.target.nodeName != "BUTTON")   return;
+                                    var $target = jQuery(e.target), $process = $target.siblings("span");
+                                    var mes = $pop_html.DivToDict();
+                                    if(!jQuery.check_chapter(mes['section'])){
+                                        $process.error_process("章节不规范，例如1, 1.2"); 
+                                        return;                                   
+                                    }
+                                    if(!mes['title']) { $process.error_process("请填写标题！");   return;}
+                                    
+                                    jQuery.postJSON(url, mes, function(){
+                                        $process.ajax_process(); $target.to_disabled();                                    
+                                    }, function(response){
+                                        if(response.status != 0){
+                                            $process.error_process(response.info);  $target.remove_disabled();                                        
+                                        }else{
+                                            $process.right_process("操作成功！");
+                                            switch(to_do){
+                                                case "add_chapter":
+                                                    var li_html = '<li chapter_id='+ response.node_id +'><span class="num">'+ jQuery.encode(mes['section']) +
+                                                            '</span><span><a href="#">'+ jQuery.encode(mes['title']) +'</a></span></li>';
+                                                    catalog_ul.append(li_html);
+                                                    call_back();
+                                                    break;
+                                                case "modify_chapter":
+                                                    $li.children("span").eq(1).find('a').html(mes['title']);
+                                                    if( mes['section'] != old_section ){
+                                                        $li.children("span").eq(0).html(mes['section']);
+                                                        call_back();                                                   
+                                                    }
+                                                    break;                                            
+                                            }
+                                            pop_page_close();                                        
+                                        }                                    
+                                    }, function(textStatus){    $process.error_process("出现错误：" + textStatus);  $target.remove_disabled(); });                     
+                                })
+                                                
+                },
+                "remove_chapter": function(){}    
+    }  
+    
 }
 
 
