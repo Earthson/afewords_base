@@ -44,6 +44,8 @@ from handlers.settinguserhandlers import UserAvatarCropHandler
 from handlers.settingcataloghandlers import CatalogSectionModifyHandler
 from handlers.settingcataloghandlers import CatalogSectionNewHandler
 from handlers.settingcataloghandlers import CatalogSectionDelHandler
+from handlers.settingcataloghandlers import RecArticleToBookHandler
+from handlers.settingcataloghandlers import DelArticleFromBookHandler
 
 from handlers.bookhandlers import BookHandler
 from handlers.bookhandlers import BookChapterHandler
@@ -64,8 +66,6 @@ from handlers.afbookhandlers import AFBookEditInfoHandler
 from handlers.afbookhandlers import AFBookEditInviteHandler
 from handlers.afbookhandlers import AFBookEditAboutHandler
 from handlers.afbookhandlers import AFBookEditCatalogHandler
-from handlers.afbookhandlers import RecArticleToBookHandler
-from handlers.afbookhandlers import DelArticleFromBookHandler
 
 
 from handlers.statisticshandlers import ObjDoLikeHandler
