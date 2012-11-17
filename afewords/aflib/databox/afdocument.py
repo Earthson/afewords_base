@@ -20,6 +20,7 @@ class AFDocument(Document):
             if callable(ans):
                 ans = ans()
             self[key] = ans
+            self.save()
             return ans
 
     def remove(self):
