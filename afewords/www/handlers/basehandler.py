@@ -115,6 +115,35 @@ class BaseHandler(RequestHandler):
             usr = None
         return usr
 
+    def get_userstat(self):
+        from global_info import unreg_users
+        usr = self.current_user
+        if usr is not None:
+            return usr.stat_info_doc
+        stat_id = self.get_cookie('STAT', None)
+        stat_id_token = self.get_secure_cookie('STATT', None)
+        if stat_id is not None and stat_id_token == stat_id:
+            old_stat = UserStatMongo.by_id(stat_id)
+            if old_stat:
+                return old_stat
+        old_stat = unreg_users.pop_head()
+        if old_stat is not None:
+            UserStatMongo.by_id(old_stat).remove()
+        new_stat = UserStatMongo()
+        new_id = new_stat['_id']
+        unreg_user.push(new_id)
+        self.set_cookie('STAT', str(new_id), expires_days=1)
+        self.set_secure_cookie('STATT', str(new_id))
+        return new_stat
+
+    @property
+    def userstat(self):
+        try:
+            return self.__user_stat
+        except:
+            self.__user_stat = self.get_userstat()
+            return self.__user_stat
+
     @property
     def request_url(self):
         return (self.request.protocol + "://" + \

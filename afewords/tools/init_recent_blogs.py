@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from global_info import recent_blogs, recent_books, recent_users
+from global_info import recent_blogs, recent_books, recent_users, unreg_users
 from article.blog import Blog
 from article.catalog import Catalog
 from user import User
@@ -25,3 +25,5 @@ user_all = sorted([User(each)
 for each in user_all:
     recent_users.push(each._id)
     recent_users.pop_head()
+
+unreg_users.set_all([None for i in range(5000)])

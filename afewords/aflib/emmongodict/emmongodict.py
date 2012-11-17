@@ -43,6 +43,17 @@ class EmMongoDict(object):
             return data['_id']
         return cls.coll.insert(doc_or_docs=doc)
 
+    @classmethod
+    @wuto_coll_do
+    def by_id(cls, oid):
+        if not cls.is_valid_id(oid):
+            return None
+        oid = ObjectId(oid)
+        ans = cls(spec={'_id':oid})
+        if ans.is_exist():
+            return ans
+        return None
+
     @staticmethod
     def is_valid_id(oid):
         from bson import ObjectId
