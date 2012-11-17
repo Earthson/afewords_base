@@ -104,7 +104,7 @@ class CatalogSectionDelHandler(BaseHandler):
     @with_login_post
     def post(self):
         handler_para = CatalogSectionDelPara(self)
-        handler_para = CatalogSectionDelJson(self)
+        handler_json = CatalogSectionDelJson(self)
         usr = self.current_user
         book = Catalog.by_id(handler_para['book_id'])
         if book is None:
