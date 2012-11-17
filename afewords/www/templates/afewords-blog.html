@@ -26,7 +26,7 @@
 <table id="blog_tip">
 <tr><td colspan="2" class="no_border"><span class="tip_mark">文</span></td></tr>
 <tr><td width="40%">作者</td><td width="60%"><a href="/blogger/{{ author['uid'] }}">{{ author['name'] }}</a></td></tr>
-<tr><td>发布</td><td>{{ article['release_time'][:10] }}</td></tr>
+<tr><td>发布</td><td>{{ str(article['release_time'])[:10] }}</td></tr>
 <tr><td>评论</td><td>{{ article['comment_count'] }}</td></tr>
 <tr><td>喜欢</td><td>{{ statis['like_count'] }}</td></tr>
 <tr><td>浏览</td><td>{{ statis['view_count'] }}</td></tr>
@@ -166,7 +166,7 @@
             
             
             <span class="bot-author-name"><a href="/bloger/{{ author['uid'] }}">{{ author['name'] }}</a></span>
-            <span class="bot-time">{{ article['release_time'][:16] }}&nbsp;/&nbsp;</span>
+            <span class="bot-time">{{ str(article['release_time'])[:16] }}&nbsp;/&nbsp;</span>
         </div>
         </div>
 

@@ -25,7 +25,7 @@
             <div class="summary">摘要：{{ blog_one['summary'] }}</div>
         {% end %}
         <div class="content">{{ blog_one['content_short'] }}</div>
-        <div class="control"><span class="time">{{ blog_one['release_time'][:10] }}</span></div>
+        <div class="control"><span class="time">{{ str(blog_one['release_time'])[:10] }}</span></div>
         </div>
     {% end %}
     

@@ -30,7 +30,7 @@
 
 {% block book_base_right_body %}
 
-{% set want = doc['load_page'] %}
+
 {% set current_chapter = doc['current_chapter'] %}
 {% set book = doc['book'] %}
 
@@ -65,7 +65,7 @@
 </div>
 
 <div class="book_node_con_article con_current0">
-    <div class="book_node_con_recommend"><a href="javascript:void(0)" book_id="{{ book['bid'] }}" node_id="{{ current_chapter['cid'] }}">我要推荐文章</a></div>
+    <span class="book_node_con_recommend" book_id="{{ book['bid'] }}" node_id="{{ current_chapter['cid'] }}">我要推荐文章</span>
 
 {% if current_chapter['article_count'] == 0 %}
     暂无文章被推荐到章节{{ current_chapter['chapter_num'] }}中！
@@ -73,15 +73,15 @@
     <ul class="node_style" book_id="{{ book['bid'] }}" node_id="{{ current_chapter['cid'] }}">
     {% for item_dict in current_chapter['article_list'] %}
         {% set item = item_dict['entity'] %}        
-        <li>
+        <li relation_id="{{ item_dict['rid'] }}">
         {% if item['article_type'] == 'blog' %}
             <a href="/blog/{{ item['aid'] }}" target="_blank">{{ item['title'] }}</a>
         {% else %}
             <a href="#" >wenzhang</a>
         {% end %}
         {% if user and user['uid'] == book['author']['uid'] %}
-        <span class="mark_article"><a href="javascript:void(0)" do="mark_recommend" relation_id="{{ item_dict['rid'] }}">指定</a></span>
-        <span class="del_article"><a href="javascript:void(0)" do="del_recommend" relation_id="{{ item_dict['rid'] }}">删除</a></span>
+        <span class="mark_article">指定</span>
+        <span class="del_article">删除</span>
         {% end %}
         </li>
     {% end %}
@@ -92,9 +92,9 @@
 
 
 <div class="book_node_con_catalog con_current0">
-<div class="book_node_con_recommend">
-<a href="javascript:void(0)" book_id="{{ book['bid'] }}" node_id="{{ current_chapter['cid'] }}" want="catalog">我要推荐知识谱</a>
-</div>
+<span class="book_node_con_recommend" book_id="{{ book['bid'] }}" node_id="{{ current_chapter['cid'] }}" want="catalog">
+我要推荐知识谱
+</span>
 
 {% if current_chapter['subcatalog_count'] == 0 %}
     暂无知识谱被推荐到章节{{ current_chapter['chapter_num'] }}中！

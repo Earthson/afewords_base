@@ -18,16 +18,6 @@ line-height: 28px;padding: 5px 0;margin-left: 10px;position: relative; border-bo
 
 .book_tip{text-align: left;color: #666;line-height: 28px;position: relative; }
 
-
-
-/*
-.current_tip1{background-color:#a66f00;color: #ffffff;border-bottom: #a10 1px solid;border-top:#a10 1px solid;}
-.current_tip1 a{color: #ffffff;}
-.current_tip1 a:hover{color: #ffffff;text-decoration: none;}
-
-
-.book_tip span{float: left;display: inline-block;cursor: pointer;}
-*/
 .book_page_a{color: #369;margin:0 3px;padding: 0 2px;}
 .book_page_current1{background-color: #369;color: #fff;}
 .book_page_current1:hover{color: #fff;background-color: blue;}
@@ -171,8 +161,8 @@ border-left: none;border-right: none;}
 .book_node_con_article{float: left;width: 100%;min-height: 100px;position: relative;}
 .book_node_con_catalog{float: left;width: 100%;min-height: 100px;position: relative;}
 
-.book_node_con_recommend{right: 0;top: -20px;position: absolute;}
-.book_node_con_recommend a{color: blue;font-size: 12px;line-height: 40px;}
+.book_node_con_recommend{right: 0;top: -20px;position: absolute;color: blue;font-size: 12px;line-height: 40px; cursor: pointer;}
+.book_node_con_recommend:hover{text-decoration: underline;}
 
 .book_node_con > .con_current0{display: none;}
 
@@ -188,10 +178,11 @@ float: left;border-bottom: #ccc 1px dotted;padding-left: 2%;position: relative;p
 .node_style li a:hover{ color: blue;}
 .node_style .like_cancel{font-size: 12px;color: red;cursor: pointer;position: absolute;top: 12px;right: 10px;}
 .node_style .like_cancel:hover{text-decoration: underline;}
-.node_style span.mark_article{position: absolute; right: 35px;top: 8px;}
-.node_style span.mark_article a{font-size: 12px;}
-.node_style span.del_article{position: absolute;right: 0;top: 8px;}
-.node_style span.del_article a{font-size: 12px;color: red;}
+.node_style span{cursor: pointer;position: absolute;font-size: 12px;top: 8px;}
+.node_style span:hover{text-decoration: underline;}
+.node_style span.mark_article{ right: 35px; color: blue;}
+.node_style span.del_article{right: 0;color: red;}
+
 
 
 .book_create{width: 100%;float: left;height: auto;margin-top: 20px;margin-bottom: 60px;}
