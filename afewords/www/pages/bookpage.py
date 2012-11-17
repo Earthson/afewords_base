@@ -7,9 +7,9 @@ from basepage import BasePage, with_attr
 class BookBasePage(BasePage):
     __template_file__ = 'book/book-base.html'
     doc = {
+        'page_type': 'book',
         'book':{},  # dict, see [[ book ]] in data_format
         'catalog_html': '', # unicode
-        'load_page': 'cover',   # unicode, cover, summary, catalog, chapter
         'isedit' : False,
         'bid' : '', #id of book
     }
@@ -34,7 +34,6 @@ class BookChapterPage(BookBasePage):
     __template_file__ = 'book/book-chapter.html'
     doc = {
         'subpage_type': 'chapter',
-        'load_page': 'chapter',
         'current_chapter': None,    # dict, see [[ chapter ]] in data_format 
         'previous_chapter': {},
         'next_chapter': {},

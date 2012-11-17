@@ -100,12 +100,13 @@
     暂无知识谱被推荐到章节{{ current_chapter['chapter_num'] }}中！
 {% else %}
     <ul class="node_style" book_id="{{ book['bid'] }}" node_id="{{ current_chapter['cid'] }}">
-    {% for item in current_chapter['subcatalog_list'] %}
+    {% for item_dict in current_chapter['subcatalog_list'] %}
+        {% set item = item_dict['entity'] %}
         <li>
             <a href="/book/{{ item['bid'] }}" target="_blank">{{ item['name'] }}</a>
 
         {% if user and user['uid'] == book['auhtor']['uid'] %}
-        <span class="del_article"><a href="javascript:void(0)" do="del_recommend" relation_id="{{ item['relation_id'] }}">删除</a></span>
+        <span class="del_article"><a href="javascript:void(0)" do="del_recommend" relation_id="{{ item_dict['rid'] }}">删除</a></span>
         {% end %}
         </li>
     {% end %}

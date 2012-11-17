@@ -483,6 +483,18 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
 (function(){
     /*  init page, for book
     */
+    var page_type = AFWUser['page_type'];
+    if(page_type != "book") return;
+    $("div.book_node_nav").bind('click', function(e){
+        if(e.target.nodeName != "A")    return;
+        var $target = jQuery(e.target),
+            load_page = $target.attr("page");
+            
+        if($target.hasClass("current1"))    return;
+        $target.addClass("current1").parent().siblings().children().removeClass("current1");
+        var $page_entity = $("div.book_node_con");
+        $page_entity.find(".book_node_con_"+ load_page).siblings().addClass("con_current0").end().removeClass("con_current0");
+    });
 
 })();
 
