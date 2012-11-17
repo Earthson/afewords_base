@@ -314,7 +314,7 @@ class Catalog(DataBox):
         return True
         
     def remove_node(self, node_id):
-        if not self.node_lib.sub_dict(node_id).load_all():
+        if not self.lib.node_lib.sub_dict(node_id).load_all():
             return False #node not exist
         tmp_rel_ids = self.get_node_list(node_id, 'articles').load_all()
         self.lib.relations_list.pull(*tuple(tmp_rel_ids))

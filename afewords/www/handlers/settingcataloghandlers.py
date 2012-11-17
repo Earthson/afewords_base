@@ -111,7 +111,7 @@ class CatalogSectionDelHandler(BaseHandler):
             handler_json.by_status(1)
             handler_json.write()
             return #book not exist
-        auth_tmp = bookauthority_verify(usr=usr, env=book)
+        auth_tmp = book.authority_verify(usr=usr, env=book)
         if test_auth(auth_tmp, A_DEL) is False:
             handler_json.by_status(5)
             handler_json.write()
