@@ -2,6 +2,7 @@ from databox.afdocument import AFDocument
 from databox.mongokit_utils import with_conn
 from databox.databox import *
 
+from generator import *
 
 
 @with_conn
