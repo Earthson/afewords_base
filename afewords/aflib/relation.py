@@ -49,7 +49,7 @@ class Relation(DataBox):
         return ret
 
     def set_relation_set(self, *objs):
-        tmp = [ungenerate(each) for each in objs]
+        tmp = [ungenerator(each) for each in objs]
         self.relation_set = tmp
 
     def get_relation_set_objs(self):
