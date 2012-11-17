@@ -46,6 +46,8 @@ from handlers.settingcataloghandlers import CatalogSectionNewHandler
 from handlers.settingcataloghandlers import CatalogSectionDelHandler
 from handlers.settingcataloghandlers import RecArticleToBookHandler
 from handlers.settingcataloghandlers import DelArticleFromBookHandler
+from handlers.settingcataloghandlers import SpecArticleToBookHandler
+from handlers.settingcataloghandlers import UnSpecArticleFromBookHandler
 
 from handlers.bookhandlers import BookHandler
 from handlers.bookhandlers import BookChapterHandler
@@ -143,6 +145,8 @@ app_handlers = {
     (r'/settingpost-book_section_del', CatalogSectionDelHandler),
     (r'/settingpost-book_article_rec', RecArticleToBookHandler),
     (r'/settingpost-book_article_del', DelArticleFromBookHandler),
+    (r'/settingpost-book_article_spec', SpecArticleToBookHandler),
+    (r'/settingpost-book_article_unspec', UnSpecArticleFromBookHandler),
 }
 
 app_settings = {

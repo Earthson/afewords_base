@@ -225,25 +225,32 @@ class Catalog(DataBox):
             ret = set_auth(ret, A_READ | A_POST)
         return ret
 
-    def spec_blog_to(self, node_id, rel_obj):
+    def spec_article_to(self, node_id, rel_obj):
         tmp = self.get_node_list(node_id, 'main')
         tmp_all = tmp.load_all()
+        if tmp_all is None:
+            return False
         if rel_obj._id in tmp_all:
-            return None
+            return True
         if len(tmp) == 0:
             self.complete_count += 1
         tmp.push(rel_obj._id)
         self.get_node_dict(node_id)['spec_count'] += 1
+        return True
 
-    def unspec_blog_to(self, node_id, rel_obj):
+    def unspec_article_to(self, node_id, rel_obj):
         tmp = self.get_node_list(node_id, 'main')
-        tmpset = set(tmp.load_all())
+        tmp_all = tmp.load_all()
+        if tmp_all is None:
+            return False
+        tmpset = set(tmp_all)
         if rel_obj._id in tmpset:
             tmpset.discard(rel_obj._id)
             if len(tmpset) == 0:
                 self.complete_count -= 1
             tmp.set_list(list(tmpset))
             self.get_node_dict(node_id)['spec_count'] -= 1
+        return True
 
     def recommend_article(self, node_id, article_obj):
         if self.get_node_dict(node_id)['title'] is None:

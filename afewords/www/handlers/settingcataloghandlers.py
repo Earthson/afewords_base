@@ -199,12 +199,13 @@ class DelArticleFromBookHandler(BaseHandler):
         handler_json.write()
         return #0
 
+from relation import Relation
+
 class SpecArticleToBookPara(BaseHandlerPara):
     paradoc = {
         'book_id' : '',
         'node_id' : '',
-        'article_id' : '',
-        'article_type' : 'blog',
+        'relation_id' : '',
     }
 
 from pages.postjson import SpecArticleToBookJson
@@ -216,22 +217,64 @@ class SpecArticleToBookHandler(BaseHandler):
         handler_json = SpecArticleToBookJson(self)
         usr = self.current_user
         book = Catalog.by_id(handler_para['book_id'])
-        article_obj = generator(handler_para['article_id'], 
-                                handler_para['article_type'])
+        relation_obj = Relation.by_id(handler_para['relations_id'])
         if book is None:
             handler_json.by_status(2)
             handler_json.write()
             return #book not exist
-        if article_obj is None:
+        if relation_obj is None:
             handler_json.by_status(1)
             handler_json.write()
-            return #article not exist
+            return #relation not exist
         auth_tmp = book.authority_verify(usr, env=book)
         if test_auth(auth_tmp, A_WRITE) is False:
             handler_json.by_status(4)
             handler_json.write()
             return #permission denied
-        rr = article_obj.remove_from_catalog(book, handler_para['node_id'])
+        status = book.spec_article_to(handler_para['node_id'], relation_obj)
+        if status is False:
+            handler_json.by_status(3)
+            handler_json.write()
+            return #set failed, node_id may not exist
+        handler_json.by_status(0)
+        handler_json.write()
+        return #0
+
+class UnSpecArticleFromBookPara(BaseHandlerPara):
+    paradoc = {
+        'book_id' : '',
+        'node_id' : '',
+        'relation_id' : '',
+    }
+
+from pages.postjson import UnSpecArticleFromBookJson
+
+class UnSpecArticleFromBookHandler(BaseHandler):
+    @with_login_post
+    def post(self):
+        handler_para = UnSpecArticleFromBookPara(self)
+        handler_json = UnSpecArticleFromBookJson(self)
+        usr = self.current_user
+        book = Catalog.by_id(handler_para['book_id'])
+        relation_obj = Relation.by_id(handler_para['relations_id'])
+        if book is None:
+            handler_json.by_status(2)
+            handler_json.write()
+            return #book not exist
+        if relation_obj is None:
+            handler_json.by_status(1)
+            handler_json.write()
+            return #relation not exist
+        auth_tmp = book.authority_verify(usr, env=book)
+        if test_auth(auth_tmp, A_WRITE) is False:
+            handler_json.by_status(4)
+            handler_json.write()
+            return #permission denied
+        status = book.unspec_article_to(handler_para['node_id'], relation_obj)
+        if status is False:
+            handler_json.by_status(3)
+            handler_json.write()
+            return #set failed, node_id may not exist
         handler_json.by_status(0)
         handler_json.write()
         return #0
