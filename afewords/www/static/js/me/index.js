@@ -402,20 +402,80 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
                 Global_Funs['book_chapter_manage']["add_modify_chapter"].call($target, sort_node_fun);
                 break;
             case "remove_chapter":
+                Global_Funs['book_chapter_manage']["remove_chapter"].call($target, sort_node_fun);
                 break;
              default:
                 break;           
         }
         
     });
-    
+    //setTimeout(sort_node_fun,2000);
     function sort_node_fun(){
         //sort the node for chapter eidt
         var $catalog_ul = jQuery("ul.catalog_ul");
+        var new_html = '';
+        var all_li = get_all_node();
+        var nest = 1;
+        for(var i = 0, li_len = all_li.length; i < li_len ; i++){
+            var current_li = all_li[i];
+            var current_nest = current_li[0].split('.').length;
+            if(current_nest > nest ){
+                new_html += '<ul class="margin">';
+                new_html += current_li[1].html();
+                nest++;           
+            }else{
+                if(current_nest == nest){ new_html += current_li[1].html();  }
+                else{
+                    for(var j=0; j < nest - current_nest; j++){
+                        new_html += '</ul>';
+                    }
+                    new_html += current_li[1].html();
+                }
+            }
+        }
+        $catalog_ul.html(new_html);
         
         
         function get_all_node(){
-                    
+            var $li_list = $catalog_ul.find("li");
+            var li_array = [], array_length = 0;
+            $li_list.each(function(){
+                var $li = jQuery(this);
+                li_array[array_length ++] = [ $li.children("span").eq(0).html(), $li.clone().wrap('<p>').parent()];
+            });
+            
+            li_array.sort(function(a,b){
+                return sort_fun(a,b);    
+            });
+            return li_array;
+            function sort_fun(a, b){
+                var deep = 0;
+                var a_list = a[0].split('.'), b_list = b[0].split('.'),
+                    a_nest = a_list.length, b_nest = b_list.length;
+
+                function my_cmp(deep){
+                    var a_int = parseInt(a_list[deep], 10),
+                        b_int = parseInt(b_list[deep], 10);
+                
+                    if(deep+1 >= Math.min(a_nest, b_nest)){
+                        if(a_nest==b_nest){  return a_int - b_int;  }
+                        else{
+                            if(a_int == b_int ){ 
+                                if(a_nest > b_nest)   return 1;//return parseInt(a_list[deep+1], 10);
+                                return -1;//parseInt(b_list[deep+1], 10);
+                            }
+                            return a_int - b_int;
+                        }             
+                    }else{
+                        if(a_int != b_int) return a_int - b_int;
+                        else{
+                            deep++;
+                            return my_cmp(deep);
+                        }
+                    }
+                }       
+                return my_cmp(0);          
+            };
         }    
     }
 })();

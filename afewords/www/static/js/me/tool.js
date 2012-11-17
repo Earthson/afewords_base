@@ -667,7 +667,19 @@ jQuery.afewords.tools.Global_Funs = {
                                 })
                                                 
                 },
-                "remove_chapter": function(){}    
+                "remove_chapter": function(call_back){
+                        var $that = this, $catalog_ul = jQuery("ul.catalog_ul"), book_id = $catalog_ul.attr("book_id");
+                        var $li = $that.parent(),
+                            node_id = $li.attr("chapter_id"),
+                            url = '/settingpost-book_section_del',
+                            mes = {'book_id': book_id, 'node_id': node_id};
+                        jQuery.postJSON(url, mes, function(){}, function(response){
+                            if(response.status == 0){
+                                $that.parent().remove();
+                                call_back();                            
+                            }                        
+                        }, function(){});              
+                }    
     }  
     
 }
