@@ -367,6 +367,9 @@ class Catalog(DataBox):
         if not rels:
             return list()
         articles = self.get_articles_from_relations(rels)
+        for rel, earticle in zip(rels, articles):
+            if earticle is None:
+                self.remove_article(node_id, erel)
         return sorted([dict(
                     article=earticle.obj_info_view_by('basic_info', usr, env),
                     up_count=erel.up_count,
@@ -374,7 +377,7 @@ class Catalog(DataBox):
                     activity=erel.activity,
                     rid=erel.uid,
                     release_time=erel.release_time,
-                    ) for erel, earticle in zip(rels, articles)],
+                    ) for erel, earticle in zip(rels, articles) if earticle],
                 key=lambda it:it['activity'], reverse=True)
 
     def get_node_info_view_by(self, node_id, usr=None, env=None):
