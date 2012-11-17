@@ -378,7 +378,7 @@ class Catalog(DataBox):
             if earticle is None:
                 self.remove_article(node_id, erel)
         return sorted([dict(
-                    article=earticle.obj_info_view_by('basic_info', usr, env),
+                    entity=earticle.obj_info_view_by('basic_info', usr, env),
                     up_count=erel.up_count,
                     down_count=erel.down_count,
                     activity=erel.activity,
@@ -446,8 +446,8 @@ class Catalog(DataBox):
         ans = dict()
         ans['bid'] = self.uid
         ans['name'] = self.name
-        ans['release_time'] = str(self.release_time)
-        ans['last_modify_time'] = str(self.update_time)
+        ans['release_time'] = self.release_time
+        ans['last_modify_time'] = self.update_time
         ans['all_catalog_count'] = self.node_sum
         ans['complete_count'] = self.complete_count
         ans['statistics'] = self.statistics.basic_info

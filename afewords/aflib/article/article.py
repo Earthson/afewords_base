@@ -524,7 +524,8 @@ class Article(DataBox):
             ans['summary'] = self.abstract
             ans['content'] = self.view_body
             ans['content_short'] = self.view_body_short
-            ans['release_time'] = str(self.release_time)
+            ans['release_time'] = self.release_time
+            ans['update_time'] = self.update_time
             tmp = self.author
             ans['author'] = None if tmp is None  else tmp.basic_info
             ans['comment_count'] = self.comment_count
