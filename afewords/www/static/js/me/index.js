@@ -495,7 +495,19 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
         var $page_entity = $("div.book_node_con");
         $page_entity.find(".book_node_con_"+ load_page).siblings().addClass("con_current0").end().removeClass("con_current0");
     });
+    
+    $("div.book_node_con").bind('click', function(e){
+        if(e.target.nodeName != "SPAN") return;
+        var $target = jQuery(e.target),
+            to_do = $target.attr("do");
+        if(!to_do)  return;   
+        Global_Funs["book_chapter_manage"][to_do].call($target, callback);
+         
+    });
 
+    function callback(){
+        setTimeout(function(){ location.href=location.href;}, 1000);    
+    }
 })();
 
 

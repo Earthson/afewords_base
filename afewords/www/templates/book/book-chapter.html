@@ -65,7 +65,7 @@
 </div>
 
 <div class="book_node_con_article con_current0">
-    <span class="book_node_con_recommend" book_id="{{ book['bid'] }}" node_id="{{ current_chapter['cid'] }}">我要推荐文章</span>
+    <span class="book_node_con_recommend" book_id="{{ book['bid'] }}" node_id="{{ current_chapter['cid'] }}" do="recommend_article" page="book">我要推荐文章</span>
 
 {% if current_chapter['article_count'] == 0 %}
     暂无文章被推荐到章节{{ current_chapter['chapter_num'] }}中！
@@ -73,15 +73,15 @@
     <ul class="node_style" book_id="{{ book['bid'] }}" node_id="{{ current_chapter['cid'] }}">
     {% for item_dict in current_chapter['article_list'] %}
         {% set item = item_dict['entity'] %}        
-        <li relation_id="{{ item_dict['rid'] }}">
+        <li relation_id="{{ item_dict['rid'] }}" article_id="{{item['aid']}}" article_type="{{ item['article_type'] }}">
         {% if item['article_type'] == 'blog' %}
             <a href="/blog/{{ item['aid'] }}" target="_blank">{{ item['title'] }}</a>
         {% else %}
             <a href="#" >wenzhang</a>
         {% end %}
         {% if user and user['uid'] == book['author']['uid'] %}
-        <span class="mark_article">指定</span>
-        <span class="del_article">删除</span>
+        <span class="mark_article" do="spec_article">指定</span>
+        <span class="del_article" do="remove_article">删除</span>
         {% end %}
         </li>
     {% end %}

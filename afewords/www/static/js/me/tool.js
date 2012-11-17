@@ -69,6 +69,14 @@ $.extend({
     close_window_alert: function(){
         jQuery(window).unbind('beforeunload');
         jQuery(window).unload(function(){});    
+    },
+    get_article_from_url:   function(url){
+                    var url_list = url.split('/'), list_len = url_list.length;
+                    if(list_len < 3) return {'return': false};
+                    return {'article_id': url_list[list_len-1], 'article_type': url_list[list_len-2], "return": true};
+    },
+    get_book_from_url:  function(url){
+    
     }
     
 });
@@ -684,7 +692,60 @@ jQuery.afewords.tools.Global_Funs = {
                                 call_back();                            
                             }                        
                         }, function(){});              
-                }    
+                },
+                "recommend_article": function( callback){
+                    // this is must be jquery object     
+                    var $that = this, book_id = $that.attr("book_id"), node_id = $that.attr("node_id");
+                    var pop_html = '<div id="pop_insert_table">' +
+                                    '<p class="first">推荐文章到该知识谱</p>'+
+                                    '<input type="hidden" name="book_id" value="'+ book_id +'" />'+
+                                    '<input type="hidden" name="node_id" value="'+ node_id +'" />' +
+                                    '<p>链接<input type="text" name="url" autocomplete="off"/></p>'+
+                                    '<p><button type="submit" id="recommend_button">推荐</button><span class="t_process">&nbsp;</span></p>'+
+                                    '</div>';
+                    var $pop_html = jQuery(pop_html);
+                    var $pop_content = pop_page(450,200, $pop_html);
+                    $pop_content.bind('click', function(e){
+                        if(e.target.nodeName != "BUTTON")   return;
+                        var $target = jQuery(e.target), $process = $target.siblings("span"),
+                            mes = $pop_content.DivToDict();
+                        if(!mes['url']){    $process.error_process("请填写文章链接！");   return;}
+                        var mes1 = jQuery.get_article_from_url(mes['url']);
+                        if(!mes1['return']) {   $process.error_process("链接未能正确识别！"); return;}
+                        jQuery.extend(mes, mes1);
+                        var url = '/settingpost-book_article_rec';
+                        jQuery.postJSON(url, mes, function(){
+                            $process.ajax_process();    $target.to_disabled();                        
+                        }, function(response){
+                            if(response.status != 0){   $process.error_process(response.info);  $target.remove_disabled(); } 
+                            else{
+                                $process.right_process("推荐成功！");
+                                callback();
+                                pop_page_close();                            
+                            }                       
+                        }, function(textStatus){
+                                $process.error_process("出现错误:" + textStatus);   $target.remove_disabled();                        
+                        });
+                    });        
+                },
+                "spec_article": function(){
+                    alert("开发中...")
+                },
+                "remove_article": function(){
+                    var $that = this, $li = $that.parent(), $ul = $li.parent();
+                    var mes = { 'book_id': $ul.attr("book_id"),
+                                "node_id": $ul.attr("node_id"),
+                                "article_id": $li.attr("article_id"),
+                                "article_type": $li.attr("article_type")};
+                    var book_id = $ul.attr("book_id"),  node_id = $ul.attr("node_id"),
+                        article_id = $li.attr("article_id"), article_type = $li.attr("article_type");
+                    var url = '/settingpost-book_article_del';
+                    jQuery.postJSON(url, mes, function(){}, function(response){
+                        if(response.status == 0 ){
+                            $li.remove();                        
+                        }                    
+                    }, function(){});
+                }
     }  
     
 }
