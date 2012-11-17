@@ -76,7 +76,7 @@ class UserDomainSettingHandler(BaseHandler):
 class UserPasswordSettingPara(BaseHandlerPara):
     paradoc = {
         'passwd_old' : '',
-        'pwsswd_new' : '',
+        'passwd_new' : '',
     }
 
 

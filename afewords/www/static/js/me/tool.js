@@ -55,7 +55,16 @@ $.extend({
                         success:function(response) {   if(callback_success) callback_success(response);   }, 
     		                  error: function(response, textStatus) { callback_error(textStatus);   }
 	                   });
-            }	
+            },
+    check_email: function(email){
+                    var email_reg = (/^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/);
+                    if(!email || !email_reg.test(email))    return false;
+                    return true;
+    },
+    close_window_alert: function(){
+        jQuery(window).unbind('beforeunload');
+        jQuery(window).unload(function(){});    
+    }
     
 });
 
@@ -222,11 +231,7 @@ pop_page_close = function(){
 jQuery.afewords.tools.Global_Funs = {
     "login": {
                 "check": function(paras){
-                            var res = { status: -1, info: ''};
-                            var email_reg = (/^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/);
-                            if(!paras['email'] || !email_reg.test(paras['email']))
-                                return [-1, '请您填写正确的邮箱！'];
-                            //alert(0);
+                            if(!jQuery.check_email(paras['email'])) return [-1, '请您填写正确的邮箱！'];
                             if(!paras['pwd'])
                                 return [-1, '请填写密码！'];
                             if(!paras['token'])
@@ -237,10 +242,7 @@ jQuery.afewords.tools.Global_Funs = {
     "reg": {
                 "url": '/reg',
                 "check": function(paras){
-                            var email_reg = (/^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/);
-                            if(!paras['email']|| !email_reg.test(paras['email'])){ 
-                                return [-1, '请您填写正确的邮箱！']; 
-                            }
+                            if(!jQuery.check_email(paras['email'])) return [-1, '请您填写正确的邮箱！'];
                             if(!paras['name']){ return [-1, '请您填写姓名！'];  }	
                             if(paras['name'].length < 2){ return [-1, '姓名至少为两个字！'];  }
                             
@@ -259,8 +261,7 @@ jQuery.afewords.tools.Global_Funs = {
     "reset":    {
                     "url": "/reset",
                     "check": function(paras){
-                                var email_reg = (/^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/);
-                                if(!paras['email']|| !email_reg.test(paras['email']))  return [-1, '请您填写正确的邮箱！'];
+                                if(!jQuery.check_email(paras['email'])) return [-1, '请您填写正确的邮箱！'];
                                 if(!paras['pwd'] || paras['pwd'].length < 4) return [-1, '设置的密码需要4位以上！'];
                                 if(!paras['pwd'] != paras['pwd_again']) return [-1, "确认密码出错！"]
                                 if(!paras['token']) return [-1, '请您填写验证码！']
@@ -542,7 +543,57 @@ jQuery.afewords.tools.Global_Funs = {
                     "close_ref": function(){
                                     this.parent().remove();                    
                         }     
-                }
+                },
+    "body_content_button":{
+                "crop_avatar":      function( $body_content, $process, mes ){},
+                "modify_password":  function( $body_content, $process, mes ){
+                                        var $button = this;
+                                        if(!mes['passwd_old']){ $process.error_process("请填写原密码！"); return [false]; }
+                                        if(!mes['passwd_new'] || mes['passwd_new'].length < 4){ $process.error_process("新密码不少于4位"); return [false];}
+                                        if(mes['passwd_new_again'] != mes['passwd_new']){   $process.error_process("确认密码不一致！");  return [false]; } 
+                                        return [true, '/settingpost-user_passwd', right_handle];
+                                        function right_handle(response){
+                                            if(response.status != 0){
+                                                $process.error_process(response.info); $button.remove_disabled();                                            
+                                            }else{
+                                                $process.right_process("密码修改成功！");
+                                                setTimeout(function(){
+                                                    $process.right_process('');
+                                                    $body_content.find('input').val('');
+                                                    $button.remove_disabled();                                                
+                                                }, 1500);                                            
+                                            }
+                                        }        
+                },
+                "create_book":      function( $body_content, $process, mes ){
+                                        alert("开发中....");
+                                        return [false];                
+                },
+                "invite_friend":    function( $body_content, $process, mes){
+                                        var $that = this;  // this must be jquery object, it is jquery(button)
+                                        
+                                        if(!jQuery.check_email(mes['email'])){
+                                            $process.error_process("请填写正确的邮箱！");
+                                            return [false];                                        
+                                        }
+                                        
+                                        var url ='/settingpost-invite';
+                                        function right_handle(response){
+                                            if(response.status !=0){
+                                                $process.error_process(response.info); $that.remove_disabled();                                            
+                                            }else{
+                                                $process.right_process("邀请成功！"); 
+                                                
+                                                setTimeout(function(){ 
+                                                    $process.right_process("你可继续邀请！");
+                                                    $body_content.find('input').val(''); 
+                                                    $that.remove_disabled();
+                                                    }, 1500);                                           
+                                            }
+                                        }
+                                        return [true, url, right_handle];                 
+                }    
+    }
 }
 
 

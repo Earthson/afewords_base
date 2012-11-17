@@ -153,14 +153,19 @@ border-bottom: #fff 2px dotted;color: #999;float: left;padding: 0 10px;}
 
 #body_content{float: left;width: 100%;margin-top: 20px;padding-bottom: 100px;}
 
-#body_con_nav{list-style-type: none;line-height: 33px;float: right; width: 100%; margin-top: 10px !important; 
-margin-bottom: 10px; display: block;}
+#body_content #book_wrap{padding-left: 10px;padding-right: 10px;}
+
+#body_con_nav{list-style-type: none;line-height: 33px;float: right; width: 100%; margin-top: 30px; 
+margin-bottom: 20px; display: block;}
 #body_con_nav li{float: left;padding: 0 5px;border-bottom: #ccc 1px dashed;display: list-item;width: auto !important;}
-#body_con_nav li a{font-size: 14px !important;line-height: 33px;display: block;
-border-bottom: #fff 2px dotted;color: #999 !important;float: left;padding: 0 10px;}
+#body_con_nav li a{font-size: 14px;line-height: 33px;display: block;
+border-bottom: #fff 2px dotted;color: #999;float: left;padding: 0 10px;}
 #body_con_nav li a:hover{border-bottom: #a10 2px solid;text-decoration: none;}
-#body_con_nav li a.current1{color: black !important;border-bottom: #a10 2px solid;background-color: #fff;}
-#body_con_nav li.tip{float: left; border:none; padding: auto 5px; line-height: 40px; color: #A66100;}
+#body_con_nav li a.current1{color: black;border-bottom: #a10 2px solid;background-color: #fff;}
+#body_con_nav li.tip{float: left; border:none; padding: auto 5px; color: #A66100;}
+#body_con_nav li.tip a{color: blue;border:none;display: inline;padding: 0;border-bottom: #ccc 1px dotted;line-height: 36px;}
+#body_con_nav li.tip a:hover{text-decoration: none;}
+
 
 
 
@@ -197,10 +202,12 @@ border-bottom: #ccc 1px dashed;}
 #body_content .page_nav  a{color: blue;font-size: 12px;}
 
 
+
 #body_content .like{width: 88%;float: left;margin-left: 20px;border:#aaa 1px dotted;padding: 35px 20px 20px 20px;
 margin-top: 30px;position: relative;background: url('/static/img/button/heart_ok.png') 20px 10px  no-repeat;
 background-color: #ffffff;}
 
+#body_content .body_content_book{width: 94% !important;}
 #body_content .like a.like_cancel{font-size: 12px;color: red;cursor: pointer;position: absolute;top: 12px;right: 10px;}
 #body_content .like a.like_cancel:hover{text-decoration: underline;}
 

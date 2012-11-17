@@ -121,3 +121,9 @@ class AFBookEditCatalogHandler(BaseHandler):
         handler_page.page_init()
         handler_page.render()
         return #0
+
+class RecArticleToBookHandler(BaseHandler):
+    pass
+
+class DelArticleFromBookHandler(BaseHandler):
+    pass
