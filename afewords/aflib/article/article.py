@@ -375,7 +375,7 @@ class Article(DataBox):
         if usr:
             return [each.obj_info_view_by('comment_info_for_json', usr)
                         for each in self.comments]
-        return [each.comment_info for each in self.comments] 
+        return [each.comment_info_for_json for each in self.comments] 
 
     @db_property
     def comments():
