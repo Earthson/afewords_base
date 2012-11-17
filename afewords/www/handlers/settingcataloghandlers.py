@@ -5,6 +5,7 @@ from basehandler import *
 
 from article.catalog import Catalog
 from user import User
+from generator import generator
 
 from authority import *
 
