@@ -49,7 +49,7 @@ def generator(objid, objtype):
     return id_generator(cls_gen(objtype))(objid)
 
 def list_generator(objinfos):
-    '''input list of [objuid, objtype]
+    '''input list of [objid, objtype]
     output list of objs, None if not exist
     '''
     cls_map = dict()
@@ -66,8 +66,8 @@ def list_generator(objinfos):
     for ek, ev in cls_map.items():
         tmps = cls_gen(ek).by_ids(ev)
         objs_map.update((each.uid, each) for each in tmps)
-    return [objs_map[eid] if eid in objs_map else None 
+    return [objs_map[str(eid)] if str(eid) in objs_map else None 
                     for eid, etype in objinfos]
 
 def ungenerator(obj):
-    return obj._id, obj.__class__.__name__
+    return obj._id, obj.cls_name

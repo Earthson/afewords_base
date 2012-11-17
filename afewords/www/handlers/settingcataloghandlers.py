@@ -198,3 +198,40 @@ class DelArticleFromBookHandler(BaseHandler):
         handler_json.by_status(0)
         handler_json.write()
         return #0
+
+class SpecArticleToBookPara(BaseHandlerPara):
+    paradoc = {
+        'book_id' : '',
+        'node_id' : '',
+        'article_id' : '',
+        'article_type' : 'blog',
+    }
+
+from pages.postjson import SpecArticleToBookJson
+
+class SpecArticleToBookHandler(BaseHandler):
+    @with_login_post
+    def post(self):
+        handler_para = SpecArticleToBookPara(self)
+        handler_json = SpecArticleToBookJson(self)
+        usr = self.current_user
+        book = Catalog.by_id(handler_para['book_id'])
+        article_obj = generator(handler_para['article_id'], 
+                                handler_para['article_type'])
+        if book is None:
+            handler_json.by_status(2)
+            handler_json.write()
+            return #book not exist
+        if article_obj is None:
+            handler_json.by_status(1)
+            handler_json.write()
+            return #article not exist
+        auth_tmp = book.authority_verify(usr, env=book)
+        if test_auth(auth_tmp, A_WRITE) is False:
+            handler_json.by_status(4)
+            handler_json.write()
+            return #permission denied
+        rr = article_obj.remove_from_catalog(book, handler_para['node_id'])
+        handler_json.by_status(0)
+        handler_json.write()
+        return #0

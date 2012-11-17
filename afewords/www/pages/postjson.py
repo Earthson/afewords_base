@@ -351,3 +351,23 @@ class DelArticleFromBookJson(StatusJson):
         1 : u'文章不存在',
         2 : u'您无权进行此操作',
     }
+
+@with_attr
+class SpecArticleToBookJson(StatusJson):
+    error_info = {
+        0 : u'',
+        1 : u'文章不存在',
+        2 : u'知识谱不存在',
+        3 : u'章节不存在',
+        4 : u'您无权进行此操作',
+    }
+
+@with_attr
+class UnSpecArticleFromBookJson(StatusJson):
+    error_info = {
+        0 : u'',
+        1 : u'文章不存在',
+        2 : u'知识谱不存在',
+        3 : u'章节不存在',
+        4 : u'您无权进行此操作',
+    }

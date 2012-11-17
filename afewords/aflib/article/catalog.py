@@ -293,13 +293,13 @@ class Catalog(DataBox):
             'articles':list(),
             'catalogs':list(),
         }
-        self.node_lib[str(self.node_count)] = tmp_node
-        self.node_info_lib[str(self.node_count)] = tmp_info
-        self.node_count += 1
+        self.lib.node_lib[str(self.node_count)] = tmp_node
+        self.lib.node_info_lib[str(self.node_count)] = tmp_info
+        self.lib.node_count += 1
         return str(self.node_count - 1)
 
     def modify_node(self, node_id, title, section):
-        cnode = self.node_lib.sub_dict(node_id)
+        cnode = self.lib.node_lib.sub_dict(node_id)
         if cnode['title'] is None:
             return False #node not exist
         cnode['title'] = title
@@ -356,16 +356,27 @@ class Catalog(DataBox):
             sub_dict(node_id).sub_dict(lib_type).load_all()
         return Relation.by_ids(rids)
 
-    def get_blogs_from_relations(self, relations):
+    def get_articles_from_relations(self, relations):
         '''lib_type: articles, main'''
-        from blog import Blog
-        bids = [each[0] for each_rel in relations
-                    for each in each_rel.relation_set 
-                    if each[1] == Blog.__name__]
-        blogs = Blog.by_ids(bids)
-        blogs.sort()
-        return blogs
-    
+        return list_generator([each_rel.relation_set[1] 
+                                for each_rel in relations])
+
+    def get_relations_info_from_node_view_by(self, lib_type, node_id, 
+                usr=None, env=None):
+        rels = self.get_relations_from_node(lib_type, node_id)
+        if not rels:
+            return list()
+        articles = self.get_articles_from_relations(rels)
+        return sorted([dict(
+                    article=earticle.obj_info_view_by('basic_info', usr, env),
+                    up_count=erel.up_count,
+                    down_count=erel.down_count,
+                    activity=erel.activity,
+                    rid=erel.uid,
+                    release_time=erel.release_time,
+                    ) for erel, earticle in zip(rels, articles)],
+                key=lambda it:it['activity'], reverse=True)
+
     def get_node_info_view_by(self, node_id, usr=None, env=None):
         snode = self.lib.node_lib.sub_dict(node_id).load_all()
         if not snode:
@@ -377,16 +388,10 @@ class Catalog(DataBox):
         ans['article_count'] = snode['article_count']
         ans['spec_article_count'] = snode['spec_count']
         ans['subcatalog_count'] = snode['subcatalog_count']
-        article_rels = self.get_relations_from_node('articles', node_id)
-        article_list = self.get_blogs_from_relations(article_rels)
-        ans['article_list'] = [dict(each.obj_info_view_by(
-            'basic_info', usr, env), relation_id=each_r.uid)
-            for each, each_r in zip(article_list, article_rels)]
-        spec_rels = self.get_relations_from_node('main', node_id)
-        spec_list = self.get_blogs_from_relations(spec_rels)
-        ans['spec_article_list'] = [dict(each.obj_info_view_by(
-                    'basic_info', usr, env), relation_id=each_r.uid)
-                    for each, each_r in zip(spec_list, spec_rels)]
+        ans['article_list'] = self.get_relations_info_from_node_view_by(
+                                    'articles', node_id, usr, env)
+        ans['spec_article_list'] = self.get_relations_info_from_node_view_by(
+                                    'main', node_id, usr, env)
         ans['subcatalog_list'] = list()
         return ans
 
@@ -453,7 +458,6 @@ class Catalog(DataBox):
         else:
             ans['summary'] = None
         ans['chapter_list'] = self.node_list_info
-        ans['relation_id'] = ''
 
         ans['permission'] = auth_str(self.authority_verify(
                     usr, env, **kwargs))
