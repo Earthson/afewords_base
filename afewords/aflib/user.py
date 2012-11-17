@@ -224,11 +224,7 @@ class User(DataBox):
     def about():
         '''introduction page to user'''
         def getter(self):
-            ans = About.by_id(self.data['about_id'])
-            if ans is None:
-                ans = About(attrs={'author':self, 'env':self})
-                return ans, True
-            return ans
+            return About.by_id(self.data['about_id'])
         return getter
 
     @db_property

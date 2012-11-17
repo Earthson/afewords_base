@@ -16,7 +16,7 @@ class AFDocument(Document):
         try:
             return Document.__getitem__(self, key)
         except KeyError:
-            ans = self.defult_values[key]
+            ans = self.default_values[key]
             if callable(ans):
                 ans = ans()
             self[key] = ans
