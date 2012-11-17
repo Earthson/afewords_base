@@ -25,13 +25,6 @@
 <tr><td class="time">下一节</td><td class="time">{{ next_chapter['chapter_num'] }}</td></tr>
 <tr><td colspan="2"><a href="{{ next_link }}" >{{ next_chapter['chapter_num'] }} - {{ next_chapter['title'] }}</a></td></tr>
 {% end %}
-{#
-{% for item in book['chapter_list'] %}   
-<div class="book_tip_normal current_tip{{ int(doc['current_chapter']['cid'] == item['cid']) }}">
-<span class="book_node_tip"><a href="/book/{{book['bid']}}/catalog/{{ item['cid'] }}">{{ item['chapter_num'] }}&nbsp;-&nbsp;{{ item['title'] }}</a></span>
-</div>
-{% end %}
-#}
 {% end %}
 
 
@@ -60,7 +53,7 @@
 {% if current_chapter['spec_article_count'] == 0 %}
 章节{{ current_chapter['chapter_num'] }}尚未指定文章！
 {% else %}
-{% set current_article = current_chapter['spec_article_list'][0] %}
+{% set current_article = current_chapter['spec_article_list'][0]['entity'] %}
 {% set current_author = current_article['author'] %}
 
 <div class="book_node_author">[原文：<a href="/blog/{{ current_article['aid'] }}">{{ current_article['title'] }}</a> By <a href="/blogger/{{ current_author['uid'] }}">{{ current_author['name'] }}</a>]</div>
@@ -78,7 +71,8 @@
     暂无文章被推荐到章节{{ current_chapter['chapter_num'] }}中！
 {% else %}
     <ul class="node_style" book_id="{{ book['bid'] }}" node_id="{{ current_chapter['cid'] }}">
-    {% for item in current_chapter['article_list'] %}
+    {% for item_dict in current_chapter['article_list'] %}
+        {% set item = item_dict['entity'] %}        
         <li>
         {% if item['article_type'] == 'blog' %}
             <a href="/blog/{{ item['aid'] }}" target="_blank">{{ item['title'] }}</a>
@@ -86,8 +80,8 @@
             <a href="#" >wenzhang</a>
         {% end %}
         {% if user and user['uid'] == book['author']['uid'] %}
-        <span class="mark_article"><a href="javascript:void(0)" do="mark_recommend" relation_id="{{ item['relation_id'] }}">指定</a></span>
-        <span class="del_article"><a href="javascript:void(0)" do="del_recommend" relation_id="{{ item['relation_id'] }}">删除</a></span>
+        <span class="mark_article"><a href="javascript:void(0)" do="mark_recommend" relation_id="{{ item_dict['rid'] }}">指定</a></span>
+        <span class="del_article"><a href="javascript:void(0)" do="del_recommend" relation_id="{{ item_dict['rid'] }}">删除</a></span>
         {% end %}
         </li>
     {% end %}

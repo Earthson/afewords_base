@@ -606,14 +606,15 @@ jQuery.afewords.tools.Global_Funs = {
                 "add_modify_chapter":  function( callback ){
                 
                                 var $that = this, book_id = $that.attr("book_id"), to_do = $that.attr("do"),
-                                    $li, old_title = '', old_node_id = '', old_section = '', $catalog_ul,
-                                    url = '/settingpost-book_section_new', tip_str = "添加新";
+                                    $li, old_title = '', old_node_id = '', old_section = '',
+                                    url = '/settingpost-book_section_new', tip_str = "添加新",
+                                    $catalog_ul = jQuery("#book_wrap").find("ul.catalog_ul");
                                 if(to_do == "modify_chapter"){
                                     $li = $that.parent();
                                     old_title = $li.children("span").eq(1).text();
                                     old_node_id = $li.attr("chapter_id");
                                     old_section = $li.children("span").eq(0).text();
-                                    $catalog_ul = jQuery("#book_wrap").find("ul.catalog_ul");
+                                    
                                     book_id = $catalog_ul.eq(0).attr("book_id") || '';
                                     url = '/settingpost-book_section_modify';
                                     tip_str = "修改";
@@ -648,16 +649,20 @@ jQuery.afewords.tools.Global_Funs = {
                                             $process.right_process("操作成功！");
                                             switch(to_do){
                                                 case "add_chapter":
-                                                    var li_html = '<li chapter_id='+ response.node_id +'><span class="num">'+ jQuery.encode(mes['section']) +
-                                                            '</span><span><a href="#">'+ jQuery.encode(mes['title']) +'</a></span></li>';
-                                                    catalog_ul.append(li_html);
-                                                    call_back();
+                                                    var li_html = '<li chapter_id='+ response.node_id +'>'+ 
+                                                                '<span class="num">'+ jQuery.encode(mes['section']) +'</span>'+
+                                                                '<span><a href="/book/'+ book_id +'/catalog/'+response.node_id +'">'+ jQuery.encode(mes['title']) +'</a></span>'+ 
+                                                                '<span class="catalog_edit" do="modify_chapter">修改</span>' +
+                                                                '<span class="catalog_del" do="remove_chapter">删除</span>' +                                                               
+                                                                '</li>';
+                                                    $catalog_ul.append(li_html);
+                                                    callback();
                                                     break;
                                                 case "modify_chapter":
                                                     $li.children("span").eq(1).find('a').html(mes['title']);
                                                     if( mes['section'] != old_section ){
                                                         $li.children("span").eq(0).html(mes['section']);
-                                                        call_back();                                                   
+                                                        callback();                                                   
                                                     }
                                                     break;                                            
                                             }
