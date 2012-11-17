@@ -3,6 +3,7 @@ from tornado.web import RequestHandler
 
 
 from user import User
+from userstat import UserStatMongo, UserStat
 from generator import id_generator, index_generator
 
 from afutils.security import *
@@ -131,7 +132,7 @@ class BaseHandler(RequestHandler):
             UserStatMongo.by_id(old_stat).remove()
         new_stat = UserStatMongo()
         new_id = new_stat['_id']
-        unreg_user.push(new_id)
+        unreg_users.push(new_id)
         self.set_cookie('STAT', str(new_id), expires_days=1)
         self.set_secure_cookie('STATT', str(new_id))
         return new_stat
