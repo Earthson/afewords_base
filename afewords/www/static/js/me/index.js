@@ -170,9 +170,10 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
 
 (function(){
     /************************
-        init like nav 
+        init like nav or other
     **********************/
-    var $like_ul = $("#body_content").find("ul.like_ul");
+    var $body_content = jQuery("#body_content");
+    var $like_ul = $body_content.find("ul.like_ul");
     if($like_ul.length){
         $like_ul.find('li').live({
         'mouseover': function(){
@@ -188,10 +189,9 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
             var to_do = $target.attr("do");
             if(!to_do)  return;
             parse_request.call( $target );
-            
         });    
     }
-    
+
     function parse_request(){
         var $that = this;    // must be jquery object
         var to_do = $that.attr("do");
@@ -354,7 +354,8 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
                 return;            
             }else{
                 $process.right_process('操作成功，1s后跳转到目的页！');
-                setTimeout( function (){ location.href=basic_url; }, 1000);            
+                setTimeout( function (){ location.href=basic_url; }, 1000);   
+                jQuery.close_window_alert();         
             }
              
         }
@@ -364,9 +365,31 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
 
 ;(function(){
     /****************
-        init page nav of the body_content
-        contain: notice    
+        init page nav of the body_content  BUTTON
+        contain: password, avatar, invite
     *******************/
+    var $body_content = jQuery("#body_content");
+    $body_content.bind('click', function(e){
+        if(e.target.nodeName != "BUTTON")   return;
+        var $target = jQuery(e.target), $process = $target.siblings("span");
+        var to_do = $target.attr("do");
+        if(!to_do)  return;
+        var configs = Global_Funs['body_content_button'];
+        var mes = $body_content.DivToDict();
+        if(!to_do in configs)   return;
+        
+        var ret = configs[to_do].call($target, $body_content, $process, mes); 
+        if(!ret || !ret[0]) return;
+        for(var i = 0; i < ret.length; i++) console.log(i+ ret[i]);
+        var url = ret[1], right_handle = ret[2], error_handle = ret[3] || _error_handle;
+        jQuery.postJSON(url, mes, function(){
+            $process.ajax_process();    $target.to_disabled();        
+        }, right_handle, error_handle);
+        
+        function _error_handle(textStatus){
+            $process.error_process("出现错误：" + textStatus); $target.remove_disabled();        
+        };
+    });
 })();
 
 
