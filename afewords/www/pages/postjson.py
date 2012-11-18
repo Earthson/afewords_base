@@ -336,6 +336,12 @@ class ObjDoLikeJson(StatusJson):
 
 @with_attr
 class RecArticleToBookJson(StatusJson):
+    doc = {
+        'book_title': '',
+        'chapter_title': '',
+        'article_title': '',
+        'relation_id': '',  # new relation id to passby
+    }
     error_info = {
         0 : u'',
         1 : u'文章不存在',
