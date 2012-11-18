@@ -203,13 +203,12 @@ class GetCommentJson(StatusJson):
 
 
 @with_attr
-class ArticleRemoveJson(StatusJson):
+class ObjRemoveJson(StatusJson):
     error_info = {
         0 : u'删除成功',
         1 : u'请登入后再尝试',
-        2 : u'文章不存在',
-        3 : u'错误的环境参数',
-        4 : u'您没有删除权限',
+        2 : u'对象不存在',
+        3 : u'您没有删除权限',
     }
 
 

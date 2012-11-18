@@ -15,9 +15,9 @@ from handlers.bloggerhandlers import BloggerAboutHandler
 from handlers.articlewritehandlers import ArticleWriteHandler
 from handlers.articlewritehandlers import ArticleUpdateHandler
 from handlers.articlewritehandlers import ArticleSrcHandler
-from handlers.articleremovehandlers import ArticleRemoveHandler
 from handlers.commenthandlers import CommentGetHandler
 
+from handlers.objremovehandler import ObjRemoveHandler
 
 from handlers.settingspagehandlers import UserSettingInviteHandler
 from handlers.settingspagehandlers import UserSettingPasswordHandler
@@ -127,7 +127,7 @@ app_handlers = {
     (r'/user-like', AFUserFavHandler),
     (r'/blog-lib', AFUserBlogLibHandler),
 
-    (r'/settingpost-article_remove', ArticleRemoveHandler),
+    (r'/settingpost-obj_remove', ObjRemoveHandler),
 
     (r'/settingpost-invite', UserInviteHandler),
     (r'/settingpost-user_domain', UserDomainSettingHandler),
