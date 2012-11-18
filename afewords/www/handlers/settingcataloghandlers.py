@@ -160,6 +160,10 @@ class RecArticleToBookHandler(BaseHandler):
             handler_json.by_status(3)
             handler_json.write()
             return #section not exist
+        handler_json['book_title'] = book.name
+        handler_json['chapter_title'] = book.get_node_dict(node_id)['title']
+        handler_json['article_title'] = article_obj.name
+        handler_json['relation_id'] = rr.uid
         handler_json.by_status(0)
         handler_json.write()
         return #0
