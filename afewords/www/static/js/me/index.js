@@ -506,6 +506,7 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
     });
 
     function callback(){
+        
         setTimeout(function(){ location.href=location.href;}, 1000);    
     }
 })();
