@@ -44,7 +44,7 @@
                 <li chapter_id="{{ cid }}">
                     <span class="num">{{ c_n }}</span>
                     <span><a href="/book/{{ book_id }}/catalog/{{ cid }}">{{ title }}</a></span>
-                    <span class="complete{{ int(s_a_c>0) }}">{{ s_a_c }}/{{ a_c }}/{{ s_c }}&nbsp;
+                    <span class="complete{{ int(s_a_c>0) }}">{{ s_a_c }}/{{ a_c }}&nbsp;
                     {% if s_a_c == 0 %} 
                         &times;
                     {% else %}
@@ -73,7 +73,7 @@
                     <li chapter_id="{{ cid }}">
                     <span class="num">{{ c_n }}</span>
                     <span><a href="/book/{{ book_id }}/catalog/{{ cid }}">{{ title }}</a></span>
-                    <span class="complete{{ int(s_a_c>0) }}">{{ s_a_c }}/{{ a_c }}/{{ s_c }}&nbsp;
+                    <span class="complete{{ int(s_a_c>0) }}">{{ s_a_c }}/{{ a_c }}&nbsp;
                     {% if s_a_c == 0 %} 
                         &times;
                     {% else %}
