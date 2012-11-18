@@ -47,7 +47,7 @@
                     <li>
                         <a href="/blog/{{ kk['aid'] }}" target="_blank">{{ kk['title'] }}</a>
                         <a style="display:none" class="blog_edit hide_a" href="/write?id={{ kk['aid'] }}&edit=true" target="_blank">修改</a>
-                        <span class="tag-del hide_span" article_id="{{ kk['aid'] }}" article_type="blog" do="remove_article">删除</span>
+                        <span class="tag-del hide_span" obj_id="{{ kk['aid'] }}" obj_type="blog" do="remove_article">删除</span>
                     </li>
      {% end %}
      </ul>

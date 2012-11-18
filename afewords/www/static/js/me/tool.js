@@ -76,7 +76,9 @@ $.extend({
                     return {'article_id': url_list[list_len-1], 'article_type': url_list[list_len-2], "return": true};
     },
     get_book_from_url:  function(url){
-    
+                    var url_list = url.split('/'), list_len = url_list.length;
+                    if(list_len < 4)    return {'return': false};
+                    return {'return': true, 'book_id': url_list[list_len-3], 'node_id': url_list[list_len-1]};
     }
     
 });
@@ -491,8 +493,8 @@ jQuery.afewords.tools.Global_Funs = {
                                 },
                     "recommend": function(){
                                     // recommend to the book
-                                    var $that = this,
-                                        article_type = "";
+                                    var $that = this, configs = jQuery.afewords.tools.Global_Funs;
+                                    configs["book_chapter_manage"]["recommend_article"].call($that, function(){});
                                 },
                     "like":     function(){
                                     var $that = this,
@@ -695,11 +697,15 @@ jQuery.afewords.tools.Global_Funs = {
                 },
                 "recommend_article": function( callback){
                     // this is must be jquery object     
-                    var $that = this, book_id = $that.attr("book_id"), node_id = $that.attr("node_id");
+                    var $that = this, book_id = $that.attr("book_id") || '', node_id = $that.attr("node_id") || '',
+                        article_id = $that.attr("article_id") || '',    article_type = $that.attr("article_type") || '',
+                        in_page = $that.attr("in_page");
                     var pop_html = '<div id="pop_insert_table">' +
-                                    '<p class="first">推荐文章到该知识谱</p>'+
+                                    '<p class="first">推荐文章到知识谱</p>'+
                                     '<input type="hidden" name="book_id" value="'+ book_id +'" />'+
                                     '<input type="hidden" name="node_id" value="'+ node_id +'" />' +
+                                    '<input type="hidden" name="article_id" value="'+ article_id +'" />'+
+                                    '<input type="hidden" name="article_type" value="'+ article_type +'" />' +
                                     '<p>链接<input type="text" name="url" autocomplete="off"/></p>'+
                                     '<p><button type="submit" id="recommend_button">推荐</button><span class="t_process">&nbsp;</span></p>'+
                                     '</div>';
@@ -709,8 +715,13 @@ jQuery.afewords.tools.Global_Funs = {
                         if(e.target.nodeName != "BUTTON")   return;
                         var $target = jQuery(e.target), $process = $target.siblings("span"),
                             mes = $pop_content.DivToDict();
-                        if(!mes['url']){    $process.error_process("请填写文章链接！");   return;}
-                        var mes1 = jQuery.get_article_from_url(mes['url']);
+                        if(!mes['url']){   $process.error_process("请填写链接！");  return;}
+                        var mes1;
+                        if(in_page == "book"){
+                            mes1 = jQuery.get_article_from_url(mes['url']);
+                        }else{
+                            mes1 = jQuery.get_book_from_url(mes['url']);                        
+                        }
                         if(!mes1['return']) {   $process.error_process("链接未能正确识别！"); return;}
                         jQuery.extend(mes, mes1);
                         var url = '/settingpost-book_article_rec';
@@ -729,7 +740,27 @@ jQuery.afewords.tools.Global_Funs = {
                     });        
                 },
                 "spec_article": function(){
-                    alert("开发中...");
+                    var $that = this, $li = $that.parent(), $ul = $li.parent(),
+                        is_default = $that.attr("is_default") == "yes", 
+                        url = '/settingpost-book_article_spec';
+                    if(is_default) {  url = '/settingpost-book_article_unspec'; }
+                    var mes = { 'book_id': $ul.attr("book_id"),
+                                'node_id': $ul.attr("node_id"),
+                                'relation_id': $li.attr("relation_id")};
+                    jQuery.postJSON(url, mes, function(){}, function(response){
+                        if(response.status == 0){
+                            if(is_default){
+                                $that.attr("is_default", "no").html("默认加载"); 
+                            }else{
+                                
+                                $ul.find('li').each(function(){
+                                    $(this).find('span.mark_article').attr("is_default", "no").html('默认加载');                         
+                                });    
+                                $that.attr("is_default", "yes").html("取消默认");                         
+                            }                
+                        }                    
+                    }, function(){});
+
                 },
                 "remove_article": function(){
                     var $that = this, $li = $that.parent(), $ul = $li.parent();

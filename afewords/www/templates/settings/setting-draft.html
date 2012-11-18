@@ -13,7 +13,7 @@
                 <li>
                 <a href="/write?id={{ kk['aid'] }}" class="draft-link" target="_blank">{{ "未完成文章" if not kk['title'] else kk['title'] }}</a>
                 <span class="draft_time">{{ kk['release_time'][:16] }}</span>
-                <span class="tag-del hide_span" article_id="{{ kk['aid'] }}" article_type="blog" do="remove_article">删除</span>
+                <span class="tag-del hide_span" obj_id="{{ kk['aid'] }}" obj_type="blog" do="remove_article">删除</span>
                 </li>
             {% elif kk['article_type'] == 'feedback' %}
                 
