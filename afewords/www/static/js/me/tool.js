@@ -729,7 +729,7 @@ jQuery.afewords.tools.Global_Funs = {
                     });        
                 },
                 "spec_article": function(){
-                    alert("开发中...")
+                    alert("开发中...");
                 },
                 "remove_article": function(){
                     var $that = this, $li = $that.parent(), $ul = $li.parent();
