@@ -32,71 +32,6 @@
 <tr><td>浏览</td><td>{{ statis['view_count'] }}</td></tr>
 </table>
 
-
-{#
-<div class="blog_tip" title="作者">
-<span class="blog_author"><a href="/blogger/{{ author['uid'] }}">{{ author['name'] }}</a></span>
-</div>
-
-<div class="blog_tip" title="发布时间">
-<span class="blog_tip_time">{{ article['release_time'][:16] }}</span>
-</div>
-
-{% if article['keywords'] != [] %}
-<div class="blog_tip" title="关键词">
-<span class="bb_tag">
-{% for item in article['keywords'] %}
-<span class="tag_one"><span class="tag-label"></span><span class="tag-text">{{ item }}</span></span>
-{% end %}
-</span>
-</div>
-{% end %}
-
-
-{% if doc['ispreview'] is False %}
-    <div class="blog_tip"  title="喜欢人数">
-    <span class="blog_tip_like"><span>{{ statis['like_count'] }}</span>
-    {% if doc['islike'] is False %}
-        <span class="blog_tip_do" obj_id="{{ article['aid'] }}" do="like" kind="blog">+1</span>
-    {% else %}
-        <span class="blog_tip_do" obj_id="{{ article['aid'] }}" do="unlike" kind="blog">-1</span>
-    {% end %}
-    </span>
-    </div>
-    
-<div class="blog_tip" title="评论人数">
-<span class="blog_tip_comment"><span>{{ article['comment_count'] }}</span>
-<span class="blog_tip_do" ref_type="blog"  father_id="{{ article['aid'] }}" father_type="blog">+1</span></span>
-</div>
-
-
-<div class="blog_tip" title="浏览人数">
-<span class="blog_tip_view" do="view" obj_id="{{ article['aid'] }}" kind="blog">{{ statis['view_count'] }}</span>
-</div>
-
-<div class="blog_tip" title="推荐到知识谱">
-<span class="blog_tip_star" do="recommend" obj_id="{{ article['aid'] }}" kind="blog">
-<a href="javascript:void(0);" article_id="{{ article['aid'] }}" article_type="blog">推荐到知识谱</a>
-</span>
-</div>
-
-
-{% if doc['recommend_list'] %}
-<div class="blog_tip">
-<span>推荐</span>
-<ul class="blog-recom">
-{% for item in doc['recommend_list'] %}
-    <li><a href="/blog/{{ item['aid'] }}">{{ item['title'] }}</a></li>
-{% end %}
-</ul>
-</div>
-{% end %}
-
-
-{% end %}
-#}
-
-
 </div>
 
 
@@ -160,8 +95,10 @@
             <span class="do-some bot-comment" iscomment="false" father_id="{{ article['aid'] }}" father_type="blog" article_id="{{ article['aid'] }}" article_type="blog" do="comment">评论</span>
             <span class="do-some bot-like" obj_id="{{ article['aid'] }}" like_status="{{ "yes" if doc['islike'] else "no" }}" obj_type="blog" do="like">{{ "取消" if doc['islike'] else "喜欢" }}</span>
             <span class="do-some bot-recom" article_id="{{ article['aid'] }}" article_type="blog" do="recommend">推荐</span>
+            {#  for future
             <span class="do-some bot-share" article_id="{{ article['aid'] }}" article_type="blog" do="share">分享</span>
             <span class="do-some bot-view" article_id="{{ article['aid'] }}" article_type="blog" do="view">浏览</span>
+            #}
             <span class="do-some bot-getcomment" article_id="{{ article['aid'] }}" article_type="blog" do="getcomment">获得评论</span>
             
             

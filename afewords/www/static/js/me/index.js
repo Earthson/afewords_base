@@ -206,9 +206,9 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
                
                 break;
             case 'remove_article':
-                mes['article_id'] = $that.attr("article_id");
-                mes['article_type'] = $that.attr("article_type");
-                url = '/settingpost-article_remove';
+                mes['obj_id'] = $that.attr("obj_id");
+                mes['obj_type'] = $that.attr("obj_type");
+                url = '/settingpost-obj_remove';
                 break; 
             case 'unlike':
                 mes['obj_id'] = $that.attr("obj_id");
