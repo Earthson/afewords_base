@@ -233,11 +233,12 @@ class Catalog(DataBox):
             return False
         if rel_obj._id in tmp_all:
             return True
-        if len(tmp) == 0:
+        if not tmp_all:
             self.complete_count += 1
         #tmp.push(rel_obj._id)
         tmp.set_all([rel_obj._id])
-        self.get_node_dict(node_id)['spec_count'] += 1
+        #self.get_node_dict(node_id)['spec_count'] += 1
+        self.get_node_dict(node_id)['spec_count'] = 1
         return True
 
     def unspec_article_to(self, node_id, rel_obj):
