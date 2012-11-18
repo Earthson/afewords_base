@@ -218,7 +218,7 @@ class SpecArticleToBookHandler(BaseHandler):
         handler_json = SpecArticleToBookJson(self)
         usr = self.current_user
         book = Catalog.by_id(handler_para['book_id'])
-        relation_obj = Relation.by_id(handler_para['relations_id'])
+        relation_obj = Relation.by_id(handler_para['relation_id'])
         if book is None:
             handler_json.by_status(2)
             handler_json.write()
