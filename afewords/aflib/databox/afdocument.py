@@ -5,10 +5,12 @@ class AFDocument(Document):
     use_schemaless = True
     structure = {
         'release_time' : datetime,
+        'update_time' : datetime,
         'data_status' : basestring,
     }
     default_values = {
         'release_time' : datetime.now,
+        'update_time' : datetime.now,
         'data_status' : 'normal',
     }
 

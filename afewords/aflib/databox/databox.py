@@ -76,6 +76,7 @@ class DataBox(object):
     mapper = {
         #name:writable
         'release_time' : True,
+        'update_time' : True,
         'data_status' : True,
     }
     own_data = []
