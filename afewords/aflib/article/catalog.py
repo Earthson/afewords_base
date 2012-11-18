@@ -36,6 +36,7 @@ class CatalogLibDoc(AFDocument):
         'node_info_lib' : {
             #node_id
             basestring : {
+                #'default' : ObjectId,
                 'main' : [ObjectId],
                 'articles' : [ObjectId],
                 'catalogs' : [ObjectId],
@@ -234,7 +235,8 @@ class Catalog(DataBox):
             return True
         if len(tmp) == 0:
             self.complete_count += 1
-        tmp.push(rel_obj._id)
+        #tmp.push(rel_obj._id)
+        tmp.set_all([rel_obj._id])
         self.get_node_dict(node_id)['spec_count'] += 1
         return True
 
@@ -296,6 +298,7 @@ class Catalog(DataBox):
             'spec_count':0,
         }
         tmp_info = {
+            #'default' : None,
             'main':list(),
             'articles':list(),
             'catalogs':list(),
@@ -377,6 +380,11 @@ class Catalog(DataBox):
         for rel, earticle in zip(rels, articles):
             if earticle is None:
                 self.remove_article(node_id, erel)
+        default_id = self.get_node_list(node_id, 'main').load_all()
+        if default_id:
+            default_id = default_id[0]
+        else:
+            default_id = None
         return sorted([dict(
                     entity=earticle.obj_info_view_by('basic_info', usr, env),
                     up_count=erel.up_count,
@@ -384,6 +392,7 @@ class Catalog(DataBox):
                     activity=erel.activity,
                     rid=erel.uid,
                     release_time=erel.release_time,
+                    is_default=False if erel._id != default_id else True,
                     ) for erel, earticle in zip(rels, articles) if earticle],
                 key=lambda it:it['activity'], reverse=True)
 
