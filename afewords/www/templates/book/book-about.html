@@ -7,7 +7,7 @@
 <div class="book_header"><span class="header_left">摘要</span><span class="header_right">{{ book['name'] }}</span></div>
 <div class="book_summary">
 {% if doc['user'] and doc['user']['uid'] == author['uid'] %}
-        <div class="book_do_a" book_id="{{ book['bid'] }}"><a href="/write?id={{ book['bid'] }}&type=book-about">修改摘要</a></div>
+        <div class="book_do_a" book_id="{{ book['bid'] }}"><a href="/write?id={{ book['bid'] }}&type=about">修改摘要</a></div>
 {% end %}
 <div class="book_summary_tip">摘要</div>
 <div class="book_summary_con">
