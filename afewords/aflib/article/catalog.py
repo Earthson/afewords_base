@@ -148,6 +148,8 @@ class Catalog(DataBox):
         'release_time' : True,
         'update_time' : True,
         'keywords' : True,
+        'about_id' : False,
+        'statistics_id' : False,
     }
     own_data = ['statistics', 'about', 'lib']
 
