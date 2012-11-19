@@ -314,11 +314,18 @@ class User(DataBox):
     def post_article(self, article_type, article_obj):
         from article.blog import Blog
         from article.comment import Comment
+        from article.about import About
         a_mapper = {
             Blog.cls_name : self.post_blog,
             Comment.cls_name : self.post_comment,
+            About.cls_name : self.post_normal_article,
         }
         return a_mapper[article_type](article_obj)
+
+    def post_normal_article(self, article_obj):
+        aid = article_obj.uid
+        article_obj.do_post()
+        del self.lib.drafts_lib[aid]
 
     def post_blog(self, blogobj):
         blogid = blogobj.uid
