@@ -8,4 +8,4 @@ for each in usrs:
         for ek in tmp.keys():
             tmp[ek] = 'owner'
         each.lib.managed_catalog_lib.set_all(tmp)
-        print tmp
+#        print tmp
