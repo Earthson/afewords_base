@@ -79,6 +79,43 @@ $.extend({
                     var url_list = url.split('/'), list_len = url_list.length;
                     if(list_len < 4)    return {'return': false};
                     return {'return': true, 'book_id': url_list[list_len-3], 'node_id': url_list[list_len-1]};
+    },
+    cursor_to_top: function(){
+    
+                    var times = 10;
+                    var pass = 1,
+                        $to_top = jQuery("#go-to-top");
+                    jQuery(window).scroll(function(){
+                        var scroll_top = $(this).scrollTop();
+                        var screen_height = document.body.offsetHeight;
+                        if(scroll_top > screen_height){
+                            $to_top.fadeIn('slow').die().live('click', function(){
+                                times = 10;
+                                pass = 1;
+                                go_algorithm(1);
+                            });            
+                        }else{
+                            $to_top.fadeOut('slow');            
+                        }
+                    });
+        
+                    function go_algorithm(){
+                        var scroll_top = $(window).scrollTop();
+                        var screen_height = document.body.offsetHeight;
+                        var dif = scroll_top - screen_height;
+                        if( dif > 0){
+                            if(dif < 40){
+                                document.body.scrollTop = 0;
+                                dif = 0;
+                            }else{
+                                document.body.scrollTop = dif - dif/times;
+                                dif = dif - dif/times;
+                                pass++;
+                                times = (10 - pass) <= 0 ? 5 : (10-pass);
+                                setTimeout(go_algorithm,50);   
+                            };
+                        }
+                    }
     }
     
 });

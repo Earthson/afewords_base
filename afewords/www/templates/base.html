@@ -57,7 +57,10 @@
 </div>
 {% set user = doc['user'] %}
 {% if user %}
-<div id="feed-back"><a href="/help-feedback" target="_blank">反馈</a></div>
+<div id="feed-back">
+<a href="/help-feedback" target="_blank">反馈</a>
+<a href="/help-feedback" target="_blank">关于</a>
+</div>
 {% end %}
 <div id="go-to-top">&nbsp;</div>
 
@@ -113,6 +116,7 @@
 {% block middle_body %}{% end %}
 </div>
 
+{#
 <!--
 <div id="footer">
 <ul>
@@ -120,6 +124,7 @@
 </ul>
 </div>
 -->
+#}
 </div>
 {% block script_bottom %}{% end %}
 <script type="text/javascript" src="{{ static_url("js/me/index.js") }}"></script>
