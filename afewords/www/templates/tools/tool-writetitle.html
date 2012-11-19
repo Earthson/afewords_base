@@ -4,4 +4,6 @@
     关于
 {% elif doc['article_type'] in doc['article_type_dict'].keys() %}
     <a href="/group/{{ doc['owner']['entity']['gid'] }}" target="_blank">{{ doc['owner']['entity']['name'] }}小组</a> - {{ article_type_dict[doc['article_type']] }}
+{% elif doc['article_type'] == 'book-about' %}
+<a href="/book/{{ doc['owner']['env_id'] }}" target="_blank">{{ doc['owner']['entity']['name'] }}</a> - 摘要
 {% end %}

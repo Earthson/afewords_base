@@ -39,7 +39,7 @@ $("#head_user_block").bind({
         $middle.css("min-height", surplus_height + "px"); 
            
     }
-        
+    jQuery.cursor_to_top();   
 })();
 
 $(document.body).live('click', function(event){
