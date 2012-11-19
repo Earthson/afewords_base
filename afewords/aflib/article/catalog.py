@@ -153,6 +153,8 @@ class Catalog(DataBox):
 
     def __init__(self, data, *args, **kwargs):
         DataBox.__init__(self, data, *args, **kwargs)
+        if data is None:
+            self.about.set_propertys(env=self, author_id=self.data['owner_id'])
 
     @db_property
     def statistics():
@@ -175,9 +177,10 @@ class Catalog(DataBox):
             if ans is None:
                 ans = About()
                 self.data['about_id'] = ans._id
-                ans.set_propertys(author_id=self.data['owner_id'], 
-                                    env=self)
+                ans.set_propertys(author_id=self.data['owner_id'], env=self)
                 return ans, True
+            if not ans.owner_id or not ans.env_id or not ans.env_type:
+                ans.set_propertys(author_id=self.data['owner_id'], env=self)
             return ans
         def setter(self, value):
             self.data['about_id'] = value._id
@@ -461,6 +464,7 @@ class Catalog(DataBox):
         '''
         ans = dict()
         ans['bid'] = self.uid
+        ans['about_id'] = self.about_id
         ans['name'] = self.name
         ans['release_time'] = self.release_time
         ans['last_modify_time'] = self.update_time

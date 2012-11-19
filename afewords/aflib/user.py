@@ -193,6 +193,7 @@ class User(DataBox):
         DataBox.__init__(self, data, *args, **kwargs)
         if data is None:
             self.domain = self.uid
+            self.about.set_propertys(env=self, author_id=self._id)
 
     @db_property
     def notice_count():
@@ -224,7 +225,15 @@ class User(DataBox):
     def about():
         '''introduction page to user'''
         def getter(self):
-            return About.by_id(self.data['about_id'])
+            ans = About.by_id(self.data['about_id'])
+            if ans is None:
+                ans = About()
+                self.data['about_id'] = ans._id
+                ans.set_propertys(author_id=self.data['owner_id'], env=self)
+                return ans, True
+            if not ans.owner_id or not ans.env_id or not ans.env_type:
+                ans.set_propertys(author_id=self.data['owner_id'], env=self)
+            return ans
         return getter
 
     @db_property
