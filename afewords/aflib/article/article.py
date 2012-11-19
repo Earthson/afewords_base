@@ -356,7 +356,7 @@ class Article(DataBox):
         '''relation_obj will be returned'''
         rr = self.get_relation_to_catalog(catalog_obj, node_id)
         if rr:
-            return rr
+            return rr #already exist
         rr = catalog_obj.recommend_article(node_id, self)
         if rr is None:
             return None
