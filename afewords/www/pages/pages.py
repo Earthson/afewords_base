@@ -121,7 +121,8 @@ class WritePage(BasePage):
         tmp['isedit'] = self['isedit']
         tmp['env'] = self['env']
         tmp['article_type'] = self['article_type']
-        self['do_title'] = tmp.render_string()
+        print '#', tmp['article_type']
+        #self['do_title'] = tmp.render_string()
 
 
 """ +++++++ for blog page """

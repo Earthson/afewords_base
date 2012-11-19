@@ -57,10 +57,6 @@ class CatalogLib(EmMongoDict):
         'collection' : 'CatalogLibDB',
     }
 
-    @class_property
-    def cls_alias(cls):
-        return 'book'
-
     @property
     def own_data(self):
         ans = list()
@@ -157,6 +153,10 @@ class Catalog(DataBox):
         DataBox.__init__(self, data, *args, **kwargs)
         if data is None:
             self.about.set_propertys(env=self, author_id=self.data['owner_id'])
+
+    @class_property
+    def cls_alias(cls):
+        return 'book'
 
     @db_property
     def statistics():

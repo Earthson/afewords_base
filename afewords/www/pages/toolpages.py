@@ -57,5 +57,3 @@ class WriteTitlePage(BaseToolPage):
         'article_type': 'blog', # unicode
         'article_type_dict': article_type_dict,
     }
-    def set_article_type(self, article_type, env_type):
-        pass
