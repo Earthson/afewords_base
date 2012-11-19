@@ -48,6 +48,7 @@ class ArticleWriteHandler(BaseHandler):
             self.send_error(404, error_info=u'Article Not Found')
             return
         page['article_type'] = toedit.article_type_with_env
+        print page['article_type']
         env = toedit.env
         page['env'] = env.as_env
         auth_ret = toedit.authority_verify(usr, env=env)

@@ -229,10 +229,10 @@ class User(DataBox):
             if ans is None:
                 ans = About()
                 self.data['about_id'] = ans._id
-                ans.set_propertys(author_id=self.data['owner_id'], env=self)
+                ans.set_propertys(author_id=self._id, env=self)
                 return ans, True
             if not ans.owner_id or not ans.env_id or not ans.env_type:
-                ans.set_propertys(author_id=self.data['owner_id'], env=self)
+                ans.set_propertys(author_id=self._id, env=self)
             return ans
         return getter
 
