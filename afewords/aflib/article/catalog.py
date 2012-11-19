@@ -273,9 +273,11 @@ class Catalog(DataBox):
 
     def remove_article(self, node_id, rel_obj):
         self.lib.relations_list.pull(rel_obj._id)
-        self.get_node_list(node_id, 'articles').pull(rel_obj._id)
         self.unspec_article_to(node_id, rel_obj)
-        self.get_node_dict(node_id)['article_count'] -= 1
+        tmp_list = self.get_node_list(node_id, 'articles')
+        if rel_obj._id in tmp_list:
+            tmp_list.pull(rel_obj._id)
+            self.get_node_dict(node_id)['article_count'] -= 1
         rel_obj.remove()
 
     def recommend_subcatalog(self, node_id, subcatalog_obj):
