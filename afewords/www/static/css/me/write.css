@@ -237,14 +237,14 @@ width: 250px;min-height:300px;overflow-x:hidden;overflow-y:auto; box-shadow: 2px
 
 
 /*write page */
-#write{font-size: 16px;position:relative;z-index: 1;padding-bottom: 50px;float: left;padding-right: 5px;width: 745px;margin-top: 0px;}
+#write{font-size: 16px;position:relative;z-index: 1;float: left;padding-right: 5px;width: 745px;margin-top: 0px;}
 #write .w_title{float:left;outline: 0;border:#ccc 1px solid;width:100%;height: 40px;
 font-size: 18px;text-align: center;font-weight: bolder; margin-top: 20px;line-height: 40px;}
 
 #write .w_summary{float: left;width:735px;padding:5px;border:#ccc 1px solid;height: 100px;
 line-height: 25px;font-size: 14px;letter-spacing: 0.5px;margin-top: 10px;}
 
-#write .text{float: left;width:735px;padding:5px;border:#ccc 1px solid; min-height: 300px; resize: none;
+#write .text{float: left;width:735px;padding:5px;border:#ccc 1px solid; min-height: 430px; resize: none;
 line-height: 28px !important;font-size: 14px;}
 
 /******** right in write page ***********/

@@ -3,19 +3,7 @@
 {% block afewords_user_html %}
 
 <div class="settings margin-left-0">
-    {#
-    {% if user.domain == 'afewords.com' %}
-        <div class="page_nav"><span>邀请好友</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>此帐号邀请无限制</span></div>
-        <div class="div-20"></div>
-        <table>
-        <tr><td width="15%" valign="top">好友邮箱</td>
-        <td width="85%"><input type="text" name="email" class="email_textarea" spellcheck="false" /></td></tr> 
-        <tr><td colspan="2"><button class="self-intro-button">邀请</button><span class="self-info-process">&nbsp;</span></td></tr>
-        </table>
-        <div class="div-20"></div>
-        <div class="div-20"></div>
-    {% else %}
-    #}
+
         {% if doc['invite_count'] < 5 %}
         <div class="page_nav"><span>邀请好友</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>还可邀请{{ 5 - doc['invite_count'] }}人</span></div>
         <div class="div-20"></div>
@@ -34,9 +22,6 @@
         <div class="div-20"></div>
         </div>
         {% end %}
-    {#
-    {% end %}
-    #}
 
-
+</div>
 {% end %}

@@ -731,7 +731,9 @@ jQuery.afewords.tools.Global_Funs = {
                             if(response.status != 0){   $process.error_process(response.info);  $target.remove_disabled(); } 
                             else{
                                 $process.right_process("推荐成功！");
-                                callback();
+                                if(in_page == "book"){
+                                    callback.call($that, response, mes);
+                                }
                                 pop_page_close();                            
                             }                       
                         }, function(textStatus){

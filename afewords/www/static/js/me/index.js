@@ -20,6 +20,27 @@ $("#head_user_block").bind({
             //$(this).siblings().slideDown(); 
         }
 });
+(function(){
+    var page_height = jQuery(window.document).height(),
+        head_height = 91,
+        footer_height = 61,
+        $middle = jQuery('#middle'),
+        middle_height = $middle.height(),
+        page_type = AFWUser['page_type'],
+        summary_height = 112,
+        surplus_height = page_height - head_height - footer_height;
+    //alert(page_height);
+    if(page_type == "write"){
+        surplus_height -= summary_height;
+        surplus_height += head_height;        
+    }    
+    if(middle_height < surplus_height){
+        
+        $middle.css("min-height", surplus_height + "px"); 
+           
+    }
+        
+})();
 
 $(document.body).live('click', function(event){
     var $head_user = jQuery(document.getElementById("head_user"));
@@ -275,7 +296,7 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
                 $header.slideToggle("slow");
             }
         }).click();
-        
+        jQuery("#footer").hide();
         $right.find('div.w-class').find('span.cursor-pointer')
         .bind('click', function(){ Global_Funs["tag"]["pop"](); });
         var $buttons = $right.find('button');
@@ -505,9 +526,28 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
          
     });
 
-    function callback(){
-        
-        setTimeout(function(){ location.href=location.href;}, 1000);    
+    function callback(response, mes){
+        var permission = AFWUser['permission'], $that = this, book_id = $that.attr("book_id"),
+            node_id = $that.attr("node_id"),
+            $node_con = $that.parent(),
+            $node_con_ul = $node_con.find("#book_node_article"), 
+            li_html = '';
+        li_html = '<li relation_id="'+ response.relation_id +'">'+
+                    '<a href="/blog/'+ mes['article_id'] +'" target="_blank">'+ response.article_title +'</a>';
+        if(permission){
+            li_html += '<span class="mark_article" do="spec_article" is_default="no">默认加载</span>'+
+                        '<span class="del_article" do="remove_article">删除</span>';     
+        }
+        li_html += '</li>';
+
+        if($node_con_ul.length < 1){
+            li_html = '<ul id="book_node_article" class="node_style" book_id="'+ mes['book_id'] +'" node_id="'+ mes['node_id'] +'">' + li_html + '</ul>';
+            $node_con.append(li_html);
+        }else{
+            $node_con_ul.append(li_html);
+        }
+              
+        //setTimeout(function(){ location.href=location.href;}, 1000);    
     }
 })();
 
