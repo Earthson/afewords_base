@@ -114,7 +114,8 @@ class AFBookEditCatalogHandler(BaseHandler):
             self.send_error(404)
             return #book not found
         if status == 2:
-            self.handler_page.render()
+            #handler_page.render()
+            self.redirect('/')
             return #permission denied
         handler_page['bid'] = bid
         handler_page['book'] = self.book.obj_info_view_by('basic_info',
