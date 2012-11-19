@@ -123,7 +123,8 @@ app_handlers = {
 
     (r'/afewords-user', AFUserRecentHandler),
 
-    (r'/afewords-feed', AFFeedPageHandler),
+    #(r'/afewords-feed', AFFeedPageHandler),
+    (r'/afewords-feed', AFBlogsRecentHandler),
     (r'/user-like', AFUserFavHandler),
     (r'/blog-lib', AFUserBlogLibHandler),
 

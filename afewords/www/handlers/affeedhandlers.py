@@ -13,7 +13,7 @@ class AFFeedPageHandler(BaseHandler):
         return #0
 
 class AFBlogsRecentHandler(BaseHandler):
-    def post(self):
+    def get(self):
         handler_page = AFFeedPage(self)
         usr = self.current_user
         try:
@@ -21,6 +21,8 @@ class AFBlogsRecentHandler(BaseHandler):
                                 reverse=True)
         except:
             blogs = []
+        handler_page['id_list'] = [each for each in 
+                    (recent_blogs.load_all()[:-20][::-1]) if each]
         handler_page['feed_list'] = [each.obj_info_view_by('basic_info',
                 usr=usr, env=None) for each in blogs]
         handler_page.render()
