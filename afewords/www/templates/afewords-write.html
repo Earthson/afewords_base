@@ -18,7 +18,7 @@
 <div id="left" style="border-right-width:0;">
 <div id="write">
 
-{% if article_type not in ['about', 'book-about'] %}
+{% if article_type not in ['user-about', 'book-about'] %}
     {% if isedit %}
         <input type="text" class="w_title" value="{{ article['title'] }}" />
     {% else%}
@@ -141,6 +141,7 @@
 $().ready(function(){ 
     $('body').css({'background-image': 'url(/static/img/wrap.png)',
         'background-repeat': 'repeat'});});
+    AFWUser['article_type'] = "{{ doc['article_type'] }}";
 </script>
 
 <script src="{{ static_url("js/me/editor.js") }}"></script>

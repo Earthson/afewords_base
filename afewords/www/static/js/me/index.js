@@ -355,15 +355,15 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
         function handle_fun(response, mes){
             var url_dict = { 'blog': ''}
             var basic_url = '/blog/';
-            switch(mes['article_type'].toLowerCase()){
+            switch(AFWUser['article_type'].toLowerCase()){
                 case 'blog':
                     basic_url = '/blog/' +  response.article_id;
                     break;
-                case 'about':
+                case 'user-about':
                     basic_url = '/blogger/' + AFWUser['id'] + '/about';
                     break;
-                case 'group-topic':
-                    basic_url = '/group/' + mes['env_id'] + '/topic/' + response.article_id;
+                case 'book-about':
+                    basic_url = '/book/' + mes['env_id'] + '/about';
                     break;
                 default:
                     break;
