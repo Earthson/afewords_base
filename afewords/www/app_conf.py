@@ -117,7 +117,7 @@ app_handlers = {
     (r'/user-book', AFUserBookHandler),
     (r'/book-create', AFBookCreateHandler),
     (r'/book-edit/([0-9a-zA-Z]+)', AFBookEditInfoHandler),
-    (r'/book-edit/([0-9a-zA-Z]+)/about', AFBookEditAboutHandler),
+#    (r'/book-edit/([0-9a-zA-Z]+)/about', AFBookEditAboutHandler),
     (r'/book-edit/([0-9a-zA-Z]+)/catalog', AFBookEditCatalogHandler),
     (r'/book-edit/([0-9a-zA-Z]+)/invite', AFBookEditInviteHandler),
 
