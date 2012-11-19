@@ -12,7 +12,7 @@
 <ul id="body_con_nav">
     <li class="tip"><a href="/book/{{ book['bid'] }}" >{{ book['name'] }}</a></li>
     <li class="tip">：</li>
-    <li><a href="/write?id={{ book['bid'] }}&type=about" class="current{{ int(edit_type=="about") }}">摘要</a></li>
+    <li><a href="/write?id={{ book['summary']['aid'] }}&type=about" class="current{{ int(edit_type=="about") }}">摘要</a></li>
     <li><a href="/book-edit/{{ book['bid'] }}/catalog" class="current{{ int(edit_type=="catalog") }}">目录</a></li>
     <li><a href="/book-edit/{{ book['bid'] }}/invite"  class="current{{ int(edit_type == "invite") }}">编者</a></li>
 </ul>
