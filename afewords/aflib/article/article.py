@@ -273,8 +273,8 @@ class Article(DataBox):
         'privilege' : True,
         'father_id' : False,
         'father_type' : False,
-        'statistics_id' : True,
-        'lib_id' : True,
+        'statistics_id' : False,
+        'lib_id' : False,
         'is_posted' : True,
     }
     own_data = ['statistics', 'lib']
