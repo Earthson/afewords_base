@@ -231,7 +231,7 @@ class User(DataBox):
                 self.data['about_id'] = ans._id
                 ans.set_propertys(author_id=self._id, env=self)
                 return ans, True
-            if not ans.owner_id or not ans.env_id or not ans.env_type:
+            if not ans.author_id or not ans.env_id or not ans.env_type:
                 ans.set_propertys(author_id=self._id, env=self)
             return ans
         return getter
