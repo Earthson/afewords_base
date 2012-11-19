@@ -143,26 +143,10 @@
 $().ready(function(){ 
     $('body').css({'background-image': 'url(/static/img/wrap.png)',
         'background-repeat': 'repeat',
-        'background-attachment':'fixed'}); /*document.body.style.backgroundColor="#f8f8f8";*/ });
+        'background-attachment':'fixed'});});
 </script>
 
 <script type="text/javascript" src="{{ static_url("js/me/editor.js") }}"></script>
-{#
-{% if article is not None %}
-    <script type="text/javascript" >
-    $(document).ready(function(){
-        current_load_blog = {
-            'id': '{{ article['aid'] }}',
-            'comment': ''+ ((location.hash.match('#com-([^#]*)') !=null) ? location.hash.match('#com-([^#]*)')[1] : ''),
-        }
-        $("#write_textarea").CreateEditor('','comment','','{{ article['aid'] }}');
-        $Write.comment_get($("div.b_bottom_wrap").find("span.bot-comment"));
-    });
-    </script>
-{% end %}
-#}
-
-
 <script type="text/javascript" src="{{ static_url("js/code/shCore.js") }}"></script>
 {%  for jjj in article['js_list']  %}
     <script type="text/javascript" src="{{ static_url("js/code/" + jjj) }}"></script>

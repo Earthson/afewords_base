@@ -24,19 +24,7 @@
     AFWUser['subpage_type'] = "{{ doc['subpage_type'] }}";
     
 </script>
-  {#
-  <!--
-  <script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.6.2/jquery.min.js"></script>
-  -->
-  <script type="text/javascript" >
-    !window.jQuery && document.write(unescape('%3Cscript src="/static/js/jq/jquery.js"%3E%3C/script%3E'));
-  </script>
-  #}
   <script type="text/javascript" src="{{ static_url("js/jq/jquery.js") }}"></script>
-  <!--
-  <script type="text/javascript" src="{{ static_url("js/jq/jquery.form.js") }}"></script>
-  
-  <script type="text/javascript" src="{{ static_url("js/me/main.js") }}"></script>-->
   <script type="text/javascript" src="{{ static_url("js/me/tool.js") }}"></script>
 </head>
 <body>
@@ -128,8 +116,5 @@
 </div>
 {% block script_bottom %}{% end %}
 <script type="text/javascript" src="{{ static_url("js/me/index.js") }}"></script>
-<!--
-<script type="text/javascript" src="{{ static_url("js/me/init.js") }}"></script>
--->
 </body>
 </html>
