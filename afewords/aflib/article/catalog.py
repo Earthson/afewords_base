@@ -57,6 +57,10 @@ class CatalogLib(EmMongoDict):
         'collection' : 'CatalogLibDB',
     }
 
+    @class_property
+    def cls_alias(cls):
+        return 'book'
+
     @property
     def own_data(self):
         ans = list()

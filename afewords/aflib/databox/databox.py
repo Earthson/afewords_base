@@ -115,6 +115,16 @@ class DataBox(object):
         '''cls_alias may be basestring or list/tuple of basestrings'''
         return cls.__name__.lower()
 
+    @class_property
+    def first_alias(cls):
+        '''first one in cls_alias'''
+        ans = cls.cls_alias
+        if isinstance(ans, basestring):
+            return ans
+        elif isinstance(ans, tuple) or isinstance(ans, list):
+            return ans[0]
+        return ans
+
     @classmethod
     def new_doc(cls):
         return cls()._id

@@ -43,7 +43,8 @@ class WriteTitlePage(BaseToolPage):
     __template_file__ = 'tool-writetitle.html'
     article_type_dict = {
         'blog': "文章",
-        'about': "关于",
+        'user-about': "关于",
+        'book-about': " 知识谱摘要",
         'group-about': "关于",
         'group-feedback': "反馈",
         'group-doc': "文档",
@@ -56,3 +57,5 @@ class WriteTitlePage(BaseToolPage):
         'article_type': 'blog', # unicode
         'article_type_dict': article_type_dict,
     }
+    def set_article_type(self, article_type, env_type):
+        pass

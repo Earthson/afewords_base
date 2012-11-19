@@ -644,3 +644,9 @@ class Article(DataBox):
             from aflib_utils import strip_tags
             return strip_tags(self.view_body, 60) + '...' + self.author_url
         return getter
+
+    @db_property
+    def article_type_with_env():
+        def getter(self):
+            return self.first_alias
+        return getter
