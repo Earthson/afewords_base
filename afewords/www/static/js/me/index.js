@@ -4,22 +4,24 @@ jQuery(document).ready(function(){
 var $Tools = jQuery.afewords.tools;
 var Global_Funs = $Tools.Global_Funs;
 //head nav (user self)
-$("#head_user_block").bind({
-    click: function(event){ event.stopPropagation(); },
-    mouseover: function(event){ 
-                    var target = event.target, $target = $(target);
-                    if(target.id == "head_user_link" ){
-                        var $ul = $target.siblings().eq(0);
-                        
-                        if($ul.css("display") == "none")
-                        $ul.slideDown();//.bind('mouseout', function(){
-                        //    $(this).slideUp();                        
-                        //});                    
-                    }
-                    event.stopPropagation();
-            //$(this).siblings().slideDown(); 
-        }
-});
+
+(function(){
+    var $head_user_block = jQuery("#head_user_block"),
+        $head_user_link = $head_user_block.find("#head_user_link"),
+        $head_user_ul = $head_user_block.find("ul");
+    $head_user_link.live('mouseover', function(){
+        $head_user_ul.slideDown();
+    });
+    $head_user_block.live('mouseout', function(){
+        $head_user_ul.hide();    
+    });
+    $head_user_ul.live({
+        'mouseout': function(){ $(this).hide(); },
+        'mouseover': function(){ $(this).show(); }    
+    });
+})();
+
+
 (function(){
     var page_height = jQuery(window.document).height(),
         head_height = 91,
@@ -89,21 +91,7 @@ $("#head_user_block").bind({
 
 })();
 
-$(document.body).live('click', function(event){
-    var $head_user = jQuery(document.getElementById("head_user"));
-    if($head_user.css("display") == "block") $head_user.hide();
-    
-    /****** bind login *********/
-    var target = event.target,
-        $target = jQuery(target);
-    if(target.nodeName == "BUTTON"){
-        // afewords-in
-        if(AFWUser.subpage_type == "login"){
-                    
-        }
-    }
-    
-});
+
 
 
 jQuery(document.getElementById("login_do")).bind('click', function(event){

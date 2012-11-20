@@ -342,7 +342,7 @@ right: 10px;}
 #head .left{float: left; width: 50%;height: 100%;font-weight: bolder;text-indent: 5px;line-height: 90px;}*/
 
 #head{width: 100%;float: left;margin:0 0 auto 0;height: 90px;border-bottom: #a10 1px dotted; }
-#head .head_logo{position: absolute;top: 0;left: 0;line-height: 90px;z-index: 100;}
+#head .head_logo{position: absolute;top: 0;left: 0;line-height: 90px;}
 #head .head_logo a{color: #660000;font-size: 36px;font-weight: bolder;}
 #head .head_logo a:hover{ text-decoration: none;}
 
@@ -401,7 +401,7 @@ text-indent: 14px;position: relative;}
 #head .right .login{float: right;padding: 0 20px 0 10px;background:url('/static/img/button/login_ok.png') no-repeat 5px 14px;
 text-indent: 14px;}
 
-#head_user{display: block;position: absolute;z-index: 100;background-color: white; border:#ccc 1px solid;}
+#head_user{display: block;position: absolute;z-index: 100;background-color: white; border:#ccc 1px solid; top: 30px;}
 #head_user li{list-style: none; text-align: center; padding: 4px 15px; text-indent: 0; line-height: 25px;}
 #head_user li:hover{background-color: #F5F3EF;}
 
