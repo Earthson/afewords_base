@@ -3,9 +3,10 @@ jQuery(document).ready(function(){
 
 var $Tools = jQuery.afewords.tools;
 var Global_Funs = $Tools.Global_Funs;
-//head nav (user self)
+
 
 (function(){
+    // for head userself nav 
     var $head_user_block = jQuery("#head_user_block"),
         $head_user_link = $head_user_block.find("#head_user_link"),
         $head_user_ul = $head_user_block.find("ul");
@@ -19,10 +20,8 @@ var Global_Funs = $Tools.Global_Funs;
         'mouseout': function(){ $(this).hide(); },
         'mouseover': function(){ $(this).show(); }    
     });
-})();
-
-
-(function(){
+    
+    // for middle body height
     var page_height = jQuery(window.document).height(),
         head_height = 91,
         footer_height = 61,
@@ -32,20 +31,20 @@ var Global_Funs = $Tools.Global_Funs;
         summary_height = 112,
         subpage_type = AFWUser['subpage_type'],
         surplus_height = page_height - head_height - footer_height;
-    //alert(page_height);
+
     if(page_type == "write"){
         surplus_height -= summary_height;
         surplus_height += head_height;        
     }    
     if(middle_height < surplus_height){
-        
-        $middle.css("min-height", surplus_height + "px"); 
-           
+        $middle.css("min-height", surplus_height + "px");      
     }
+    
+    // for go to top
     jQuery.cursor_to_top();   
     
+    // for load-feed page
     if(page_type == "feed" && subpage_type == "feed"){
-        
         jQuery(window).scroll(function(){
             if($middle.length <1)   return;
             var scroll_height = document.body.scrollHeight;
@@ -116,6 +115,20 @@ var Global_Funs = $Tools.Global_Funs;
                 $load_process.find('.f-con').error_process("异常：" + textStatus);                    
         });
     };
+    
+    // for write feedback
+    jQuery("#feed-back").live('click', function(e){
+        if(e.target.nodeName != "A")    return;
+        var $target = jQuery(e.target),
+            to_do = $target.attr("do");
+        if(!to_do)  return;
+        if(to_do != "write-feedback")   return;
+        alert("loading");
+        var pop_html = '<div id="pop_insert_table">' + 
+                                                "<p class='first'>个性化</p><p>新链接后缀<input type='text' name='domain' />" + 
+                                                "<p><button>修改</button><span class='t_process' style='width:70%'></span></p>"+
+                                              '</div>';    
+    });
 
 })();
 
@@ -608,9 +621,7 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
             $node_con.append(li_html);
         }else{
             $node_con_ul.append(li_html);
-        }
-              
-        //setTimeout(function(){ location.href=location.href;}, 1000);    
+        }  
     }
 })();
 
