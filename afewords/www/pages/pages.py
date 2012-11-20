@@ -120,7 +120,7 @@ class WritePage(BasePage):
         tmp = WriteTitlePage()
         tmp['isedit'] = self['isedit']
         tmp['env'] = self['env']
-        tmp['article_type'] = self['article_type']
+        tmp['article_type'] = self['article_type_with_env']
         self['do_title'] = tmp.render_string()
 
 
