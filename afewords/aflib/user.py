@@ -568,7 +568,11 @@ class User(DataBox):
 
     def json_info_view_by(self, info_name='overview',
                         usr=None, env=None, **kwargs):
-        pass
+        ans = dict()
+        ans['uid'] = self.uid
+        ans['name'] = self.name
+        ans['thumb'] = self.avatar.thumb_url
+        return ans
         
 
     def is_like(self, obj):

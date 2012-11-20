@@ -523,7 +523,7 @@ class Article(DataBox):
         author = self.author
         ans['author'] = None if author is None else author.json_info_view_by(
                         'overview', usr, env, **kwargs)
-        ans['env'] = self.env.json_info_view_by('overview', usr, env, **kwargs)
+        #ans['env'] = self.env.json_info_view_by('overview', usr, env, **kwargs)
         return ans
 
     def obj_info_view_by(self, info_name='basic_info',
