@@ -3,8 +3,8 @@
 {% block afewords_feed_html %}
 
 {% for item in doc['feed_list'] %}
-
 {% set author = item['author'] %}
+
 <div id="feed">
 <div class="f-body">
 <div class="f-control">
@@ -33,15 +33,6 @@
 
 {% end %}
 
-
-<!--
-<script type="text/javascript" src="{{ static_url("js/me/home.js") }}"></script>
-<script type="text/javascript" >
-$().ready(function(){
-    get_feed_by_id();
-});
-</script>
--->
 <script type="text/javascript">
 AFWUser['id_list'] = {{ [str(item) for item in  doc['id_list']] }};
 AFWUser['is_loading'] = false;
