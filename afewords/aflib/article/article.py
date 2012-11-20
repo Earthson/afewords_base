@@ -104,19 +104,13 @@ class ArticleLib(EmMongoDict):
 
     @property
     def own_data(self):
-        ans = []
-        ans += [self.comment_list.generator(each) 
-                for each in self.comment_list.load_list()]
-        ans += [self.picture_lib.generator(each)
-                for each in self.picture_lib.load_doc().values()]
-        ans += [self.langcode_lib.generator(each)
-                for each in self.langcode_lib.load_doc().values()]
-        ans += [self.equation_lib.generator(each)
-                for each in self.equation_lib.load_doc().values()]
-        ans += [self.tableform_lib.generator(each)
-                for each in self.tableform_lib.load_doc().values()]
-        ans += [self.reference_lib.generator(each)
-                for each in self.reference_lib.load_doc().values()]
+        ans = list()
+        ans += cls_gen('comment').by_ids(self.comment_list.load_list())
+        ans += cls_gen('picture').by_ids(self.picture_lib.values())
+        ans += cls_gen('langcode').by_ids(self.langcode_lib.values())
+        ans += cls_gen('equation').by_ids(self.equation_lib.values())
+        ans += cls_gen('tableform').by_ids(self.tableform_lib.values())
+        ans += cls_gen('tableform').by_ids(self.reference_lib.values())
         return ans
 
     @property

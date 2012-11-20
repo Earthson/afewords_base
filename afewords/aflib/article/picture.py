@@ -67,8 +67,14 @@ class Picture(DataBox):
 
     def remove(self):
         import os
-        os.remove(self.file_os_path)
-        os.remove(self.thumb_os_path)
+        try:
+            os.remove(self.file_os_path)
+        except OSError as e:
+            print(e)
+        try:
+            os.remove(self.thumb_os_path)
+        except OSError as e:
+            print (e)
         DataBox.remove(self)
 
     @db_property
