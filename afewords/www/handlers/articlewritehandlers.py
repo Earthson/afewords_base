@@ -23,8 +23,10 @@ class ArticleWriteHandler(BaseHandler):
         pageparas = ArticleWritePara(self)
         page = WritePage(self)
         usr = self.current_user
+        page['article_type'] = pageparas['type']
         if not pageparas['type']:
-            self.send_error(404, error_info=u'Invalid Article Type') #todo Earthson
+            self.send_error(404, error_info=u'Invalid Article Type') 
+            #todo Earthson
             return
         env = None
         if pageparas['env_id'] or pageparas['env_type']:
@@ -47,7 +49,6 @@ class ArticleWriteHandler(BaseHandler):
         if toedit is None:
             self.send_error(404, error_info=u'Article Not Found')
             return
-        page['article_type'] = pageparas['type']
         page['article_type_with_env'] = toedit.article_type_with_env
         env = toedit.env
         page['env'] = env.as_env
