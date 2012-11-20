@@ -44,6 +44,7 @@ $().ready(function(){
 -->
 <script type="text/javascript">
 AFWUser['id_list'] = {{ [str(item) for item in  doc['id_list']] }};
+AFWUser['is_loading'] = false;
 </script>
 
 {% end %}
