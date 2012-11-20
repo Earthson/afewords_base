@@ -16,7 +16,6 @@ class BlogHandler(BaseHandler):
         preview = self.get_esc_arg('preview', 'no')
         page = BlogPage(self)
         page['ispreview'] = True if preview == 'yes' else False
-        page['article'] = blog_to.view_info
         page['article'] = blog_to.obj_info_view_by('view_info', 
                     usr=usr, env=usr)
         if userstat.view_article(blog_to):

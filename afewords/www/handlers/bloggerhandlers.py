@@ -96,7 +96,8 @@ class BloggerAboutHandler(BaseBloggerHandler):
         handler_page = BloggerAboutPage(self)
         handler_page['author'] = usr.as_viewer(author) \
                     if usr else author.basic_info
-        handler_page['about'] = author.about.basic_info
+        handler_page['about'] = author.about.obj_info_view_by('basic_info',
+                                    usr=usr, env=author)
         handler_page.page_init()
         handler_page.render()
         return

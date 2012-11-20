@@ -17,12 +17,11 @@ class AFBlogsRecentHandler(BaseHandler):
         handler_page = AFFeedPage(self)
         usr = self.current_user
         try:
-            blogs = sorted(Blog.by_ids(recent_blogs.get_slice(-20)),
-                                reverse=True)
+            blogs = sorted(Blog.by_ids(recent_blogs.get_slice(-10)))
         except:
             blogs = []
-        handler_page['id_list'] = [each for each in 
-                    (recent_blogs.load_all()[:-20][::-1]) if each]
+        handler_page['id_list'] = [str(each) for each in 
+                    (recent_blogs.load_all()[100:-10][::-1]) if each]
         handler_page['feed_list'] = [each.obj_info_view_by('basic_info',
                 usr=usr, env=None) for each in blogs]
         handler_page.render()

@@ -508,41 +508,47 @@ class Article(DataBox):
             return self.basic_info
         return getter
 
-    @db_property
-    def basic_info():
-        def getter(self):
-            ans = dict()
-            ans['article_type'] = self.cls_name
-            ans['aid'] = self.uid
-            ans['title'] = self.title
-            ans['summary'] = self.abstract
-            ans['content'] = self.view_body
-            ans['content_short'] = self.view_body_short
-            ans['release_time'] = self.release_time
-            ans['update_time'] = self.update_time
-            tmp = self.author
-            ans['author'] = None if tmp is None else tmp.basic_info
-            ans['comment_count'] = self.comment_count
-            tmp = self.statistics
-            ans['statistics'] = None if tmp is None else tmp.basic_info
-            ans['keywords'] = self.keywords
-            ans['tag_list'] = self.tag
-            ans['privilege'] = self.privilege
-            ans['env'] = self.env_info
-            ans['js_list'] = self.js_list
-            ans['permission'] = 'r'
-            return ans
-        return getter
+    def obj_info_view_by(self, info_name='basic_info',
+                            usr=None, env=None, **kwargs):
+        ans = dict()
+        ans['article_type'] = self.cls_name
+        ans['aid'] = self.uid
+        ans['title'] = self.title
+        ans['summary'] = self.abstract
+        ans['content'] = self.view_body
+        ans['content_short'] = self.view_body_short
+        ans['release_time'] = self.release_time
+        ans['update_time'] = self.update_time
+        ans['keywords'] = self.keywords
+        ans['tag_list'] = self.tag
+        ans['privilege'] = self.privilege
+        ans['comment_count'] = self.comment_count
+        ans['js_list'] = self.js_list
 
-    def article_info_view_by(self, info_name='basic_info', 
-                    usr=None, env=None, **kwargs):
-        ans = self.get_propertys(info_name)[0]
-        ans['permission'] = auth_str(self.authority_verify(usr, env, **kwargs))
-        if usr:
-            ans['author'] = usr.as_viewer_to_uinfo(ans['author'])
+        ans['env'] = self.env_info
+
+        author = self.author
+        ans['author'] = None if author is None else author.obj_info_view_by(
+                            'basic_info', usr, env, **kwargs)
+        ans['statistics'] = self.statistics.basic_info
+
+        if info_name in ['edit_info']:
+            ans['body'] = self.body
+            ans['picture_list'] = [each.basic_info for each in self.pictures]
+            ans['equation_list'] = [each.basic_info 
+                                        for each in self.equations]
+            ans['tableform_list'] = [each.basic_info 
+                                        for each in self.tableforms]
+            ans['reference_list'] = [each.basic_info 
+                                        for each in self.references]
+            ans['langcode_list'] = [each.basic_info
+                                        for each in self.langcodes]
+        if info_name in ['view_info']:
+            ans['recommend_list'] = [] #Todo Earthson
+
+        ans['permission'] = auth_str(self.authority_verify(
+                                            usr, env, **kwargs))
         return ans
-
-    obj_info_view_by = article_info_view_by
 
     @db_property
     def pictures():
@@ -577,30 +583,6 @@ class Article(DataBox):
         def getter(self):
             from langcode import Langcode
             return Langcode.by_ids(self.lib.langcode_lib.values())
-        return getter
-
-    @db_property
-    def edit_info():
-        def getter(self):
-            ans = self.basic_info
-            ans['body'] = self.body
-            ans['picture_list'] = [each.basic_info for each in self.pictures]
-            ans['equation_list'] = [each.basic_info for each in self.equations]
-            ans['tableform_list'] = [each.basic_info 
-                                        for each in self.tableforms]
-            ans['reference_list'] = [each.basic_info 
-                                        for each in self.references]
-            ans['langcode_list'] = [each.basic_info
-                                        for each in self.langcodes]
-            return ans
-        return getter
-
-    @db_property
-    def view_info():
-        def getter(self):
-            ans = self.basic_info
-            ans['recommend_list'] = [] #Todo Earthson
-            return ans
         return getter
 
     @db_property
