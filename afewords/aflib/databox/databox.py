@@ -236,5 +236,6 @@ class DataBox(object):
     def remove(self):
         to_remove = self.get_propertys(*self.own_data)
         for each in to_remove:
-            each.remove()
+            if each is not None:
+                each.remove()
         self.data.remove()
