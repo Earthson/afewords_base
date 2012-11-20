@@ -61,7 +61,10 @@ $("#head_user_block").bind({
     }
     
     function load_feed_fun(){
-        if(!AFWUser['id_list'].length)  return;
+        if(!AFWUser['id_list'].length)  {
+            // some thing
+            return;
+        }
         var load_list = AFWUser['id_list'].splice(0, 20),
             url = '/load-feed',
             mes = {'id': load_list},
@@ -77,7 +80,7 @@ $("#head_user_block").bind({
                 $load_process.find('.f-con').error_process(response.info);        
             }else{
                 $load_process.remove();
-                         
+                // some thing    
             }
         }, function(textStatus){
                 $load_process.find('.f-con').error_process("异常：" + textStatus);                    
