@@ -507,11 +507,29 @@ class User(DataBox):
         self.follow_group_lib.pop(str(group._id))
         self.managed_group_lib.pop(str(group._id))
 
+    def create_catalog(self, name, keywords=''):
+        from article.catalog import Catalog
+        newobj = Catalog(attrs={'name':name, 'keywords':keywords, 'owner':self})
+        self.lib.managed_catalog_lib[newobj.uid] = ['admin', datetime.now()]
+        return newobj
+
+    def accept_catalog_management(self, catalog_obj):
+        '''call from catalog_obj by catalog_obj.add_manager'''
+        mclib = self.lib.managed_catalog_lib
+        if catalog_obj.uid in mclib:
+            return True
+        mclib[catalog_obj.uid] = ['admin', datetime.now()]
+        return True
+
+    def cancel_catalog_management(self, catalog_obj):
+        '''call from catalog_obj by catalog_obj.remove_manager'''
+        pass #todo Earthson
+
     def accept_group_management(self, group):
-        self.managed_group_lib.update(**{str(group._id):datetime.now()})
+        self.lib.managed_group_lib.update(**{str(group._id):datetime.now()})
 
     def cancel_group_management(self, group):
-        self.managed_group_lib.pop(str(group._id))
+        self.lib.managed_group_lib.pop(str(group._id))
 
     def like_post(self, obj):
         '''do not call this method. call reverse_like_post instead'''

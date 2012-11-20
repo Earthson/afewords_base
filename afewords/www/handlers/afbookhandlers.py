@@ -35,12 +35,33 @@ class AFUserBookHandler(BaseHandler):
         return #0
 
 
+class AFBookCreatePara(BaseHandlerPara):
+    paradoc = {
+        'name' : '',
+        'keywords' : '',
+    }
+
+    def read(self):
+        BaseHandlerPara.read(self)
+        self['keywords'] = self['keywords'].replace('，', ',')
+        self['keywords'] = self['keywords'].split(',')
+
+
 class AFBookCreateHandler(BaseHandler):
     @with_login
     def get(self):
         handler_page = AFBookCreatePage(self)
         handler_page.render()
         return #0
+
+    @with_login_post
+    def post(self):
+        handler_para = AFBookCreatePara(self)
+        usr = self.current_user
+        if not handler_para['name']:
+            return
+        usr.create_catalog(handler_para['name'], handler_para['keywords'])
+        return
 
 def bookedit_init(handler, bid, page):
     book = Catalog.by_id(bid)
