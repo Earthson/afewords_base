@@ -1,7 +1,9 @@
-{% if doc['article_type'] == 'blog' %}
+
+{% set article_type = doc['article_type'] %}
+{% if article_type == 'blog' %}
     文章
-{% elif doc['article_type'] == 'user-about' %}
+{% elif article_type == 'user-about' %}
     关于
-{% elif doc['article_type'] == 'book-about' %}
+{% elif article_type == 'book-about' %}
     知识谱摘要
 {% end %}

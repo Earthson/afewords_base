@@ -4,22 +4,24 @@ jQuery(document).ready(function(){
 var $Tools = jQuery.afewords.tools;
 var Global_Funs = $Tools.Global_Funs;
 //head nav (user self)
-$("#head_user_block").bind({
-    click: function(event){ event.stopPropagation(); },
-    mouseover: function(event){ 
-                    var target = event.target, $target = $(target);
-                    if(target.id == "head_user_link" ){
-                        var $ul = $target.siblings().eq(0);
-                        
-                        if($ul.css("display") == "none")
-                        $ul.slideDown();//.bind('mouseout', function(){
-                        //    $(this).slideUp();                        
-                        //});                    
-                    }
-                    event.stopPropagation();
-            //$(this).siblings().slideDown(); 
-        }
-});
+
+(function(){
+    var $head_user_block = jQuery("#head_user_block"),
+        $head_user_link = $head_user_block.find("#head_user_link"),
+        $head_user_ul = $head_user_block.find("ul");
+    $head_user_link.live('mouseover', function(){
+        $head_user_ul.slideDown();
+    });
+    $head_user_block.live('mouseout', function(){
+        $head_user_ul.hide();    
+    });
+    $head_user_ul.live({
+        'mouseout': function(){ $(this).hide(); },
+        'mouseover': function(){ $(this).show(); }    
+    });
+})();
+
+
 (function(){
     var page_height = jQuery(window.document).height(),
         head_height = 91,
@@ -28,6 +30,7 @@ $("#head_user_block").bind({
         middle_height = $middle.height(),
         page_type = AFWUser['page_type'],
         summary_height = 112,
+        subpage_type = AFWUser['subpage_type'],
         surplus_height = page_height - head_height - footer_height;
     //alert(page_height);
     if(page_type == "write"){
@@ -40,23 +43,55 @@ $("#head_user_block").bind({
            
     }
     jQuery.cursor_to_top();   
-})();
-
-$(document.body).live('click', function(event){
-    var $head_user = jQuery(document.getElementById("head_user"));
-    if($head_user.css("display") == "block") $head_user.hide();
     
-    /****** bind login *********/
-    var target = event.target,
-        $target = jQuery(target);
-    if(target.nodeName == "BUTTON"){
-        // afewords-in
-        if(AFWUser.subpage_type == "login"){
-                    
-        }
+    if(page_type == "feed" && subpage_type == "feed"){
+        
+        jQuery(window).scroll(function(){
+            if($middle.length <1)   return;
+            var scroll_height = document.body.scrollHeight;
+            var client_height = window.screen.height;
+            var top= window.pageYOffset ||   
+                        (document.compatMode == 'CSS1Compat' ?    
+                        document.documentElement.scrollTop :   
+                        document.body.scrollTop);
+           if(top >= (parseInt(scroll_height)- client_height)){
+                if(AFWUser['is_loading'])   return;
+                AFWUser['is_loading'] = true;
+                load_feed_fun();         
+           }             
+        });    
     }
     
-});
+    function load_feed_fun(){
+        if(!AFWUser['id_list'].length)  {
+            // some thing
+            return;
+        }
+        var load_list = AFWUser['id_list'].splice(0, 20),
+            url = '/load-feed',
+            mes = {'id': load_list},
+            $body_content = jQuery("#body_content"),
+            $load_process = jQuery('<div id="feed" class="feed_process">'+
+                            '<div class="f-body">'+
+                            '<div class="f-con"><img src="/static/img/loading_bar.gif" /></div></div></div>');
+                            
+        jQuery.postJSON(url, mes, function(){
+            $body_content.append($load_process);
+        }, function(response){
+            if(response.status != 0){
+                $load_process.find('.f-con').error_process(response.info);        
+            }else{
+                $load_process.remove();
+                // some thing    
+            }
+        }, function(textStatus){
+                $load_process.find('.f-con').error_process("异常：" + textStatus);                    
+        });
+    };
+
+})();
+
+
 
 
 jQuery(document.getElementById("login_do")).bind('click', function(event){
