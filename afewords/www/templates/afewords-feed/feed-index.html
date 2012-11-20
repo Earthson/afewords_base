@@ -10,7 +10,7 @@
 <div class="f-control">
 <div class="f-author">
 <a href="/blogger/{{ author['uid'] }}" target="_blank">{{ author['name'] }}</a>
-<span class="f-sub">-</span><span class="f-type">执笔</span>
+<span class="f-sub">-</span><span class="f-type">{{ str(item['release_time'])[:16] }}执笔</span>
 </div>
 </div>
 <div class="f-con">
