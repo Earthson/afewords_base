@@ -20,7 +20,7 @@ class AFBlogsRecentHandler(BaseHandler):
             blogs = sorted(Blog.by_ids(recent_blogs.get_slice(-10)))
         except:
             blogs = []
-        handler_page['id_list'] = [str(each) for each in 
+        handler_page['id_list'] = [str(each)+'##blog' for each in 
                     (recent_blogs.load_all()[100:-10][::-1]) if each]
         handler_page['feed_list'] = [each.obj_info_view_by('basic_info',
                 usr=usr, env=None) for each in blogs]

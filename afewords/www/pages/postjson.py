@@ -201,6 +201,15 @@ class GetCommentJson(StatusJson):
         1 : u'被评论的文章不存在',
     }
 
+@with_attr
+class GetArticleOverviewsJson(StatusJson):
+    doc = {
+        'article_list' : [],
+    }
+    error_info = {
+        0 : '',
+    }
+
 
 @with_attr
 class ObjRemoveJson(StatusJson):

@@ -49,6 +49,8 @@ from handlers.settingcataloghandlers import DelArticleFromBookHandler
 from handlers.settingcataloghandlers import SpecArticleToBookHandler
 from handlers.settingcataloghandlers import UnSpecArticleFromBookHandler
 
+from handlers.loadhandlers import GetArticleOverviewsHandler
+
 from handlers.bookhandlers import BookHandler
 from handlers.bookhandlers import BookChapterHandler
 from handlers.bookhandlers import BookCatalogHandler
@@ -124,6 +126,7 @@ app_handlers = {
     (r'/afewords-user', AFUserRecentHandler),
 
     #(r'/afewords-feed', AFFeedPageHandler),
+    (r'/load-feed', GetArticleOverviewsHandler),
     (r'/afewords-feed', AFBlogsRecentHandler),
     (r'/user-like', AFUserFavHandler),
     (r'/blog-lib', AFUserBlogLibHandler),

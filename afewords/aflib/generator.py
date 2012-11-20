@@ -54,6 +54,7 @@ def list_generator(objinfos):
     '''
     cls_map = dict()
     objs_map = dict()
+    objinfos = [each for each in objinfos if len(each) == 2]
     for each in objinfos:
         tmp_cls = cls_gen(each[1])
         if tmp_cls is None:
