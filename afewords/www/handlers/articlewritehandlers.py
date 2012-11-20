@@ -24,6 +24,7 @@ class ArticleWriteHandler(BaseHandler):
         page = WritePage(self)
         usr = self.current_user
         page['article_type'] = pageparas['type']
+        page['article_type_with_env'] = page['article_type']
         article_cls = cls_gen(pageparas['type'])
         if not article_cls or not issubclass(article_cls, Article):
             self.send_error(404, error_info=u'Invalid Article Type') 
@@ -42,7 +43,8 @@ class ArticleWriteHandler(BaseHandler):
                 env = usr
                 env_info = env.obj_info
                 page['env'] = env.as_env
-            page['article_type_with_env'] = env.first_alias + '-' + article_cls.first_alias
+            page['article_type_with_env'] = env.first_alias + \
+                                    '-' + article_cls.first_alias
             page.page_init()
             page.render()
             return

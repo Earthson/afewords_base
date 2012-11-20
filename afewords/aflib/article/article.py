@@ -508,6 +508,24 @@ class Article(DataBox):
             return self.basic_info
         return getter
 
+    def json_info_view_by(self, info_name='overview',
+                            usr=None, env=None, **kwargs):
+        ans = dict()
+        ans['article_type'] = self.cls_name
+        ans['aid'] = self.uid
+        ans['title'] = self.title
+        ans['content_short'] = self.view_body_short
+        ans['update_time'] = str(self.update_time)
+        ans['release_time'] = str(self.release_time)
+        ans['keywords'] = self.keywords
+        ans['tag_list'] = self.tag
+        #ans['privilege'] = self.privilege
+        author = self.author
+        ans['author'] = None if author is None else author.json_info_view_by(
+                        'overview', usr, env, **kwargs)
+        ans['env'] = self.env.json_info_view_by('overview', usr, env, **kwargs)
+        return ans
+
     def obj_info_view_by(self, info_name='basic_info',
                             usr=None, env=None, **kwargs):
         ans = dict()
@@ -624,5 +642,6 @@ class Article(DataBox):
     @db_property
     def article_type_with_env():
         def getter(self):
-            return self.first_alias
+            env_cls = cls_gen(self.env_type)
+            return env_cls.first_alias + '-' + self.first_alias
         return getter

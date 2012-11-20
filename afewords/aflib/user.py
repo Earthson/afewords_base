@@ -565,6 +565,10 @@ class User(DataBox):
         uinfo['isfollow'] = usr.is_follow(self.uid)
         uinfo['isme'] = (self.uid == usr.uid)
         return uinfo
+
+    def json_info_view_by(self, info_name='overview',
+                        usr=None, env=None, **kwargs):
+        pass
         
 
     def is_like(self, obj):
