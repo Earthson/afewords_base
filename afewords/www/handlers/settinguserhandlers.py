@@ -2,12 +2,12 @@
 
 import re
 from basehandler import *
+from user import User
 
 class UserInvitePara(BaseHandlerPara):
     paradoc = {
         'email' : '',
     }
-
 
 from pages.postjson import InviteJson
 
@@ -34,6 +34,52 @@ class UserInviteHandler(BaseHandler):
         handler_json.by_status(0)
         handler_json.write()
 
+
+class UserFollowPara(BaseHandlerPara):
+    paradoc = {
+        'uid':'',
+    }
+
+from pages.postjson import UserFollowJson
+
+class UserFollowHandler(BaseHandler):
+    @with_login_post
+    def post(self):
+        handler_para = UserFollowPara(self)
+        handler_json = UserFollowJson(self)
+        usr = self.current_user
+        tofollow = User.by_id(handler_para['uid'])
+        if tofollow is None:
+            handler_json.by_status(1)
+            handler_json.write()
+            return #user not exist
+        if usr.follow_user(tofollow) is False:
+            handler_json.by_status(2)
+            handler_json.write()
+            return #request denied
+        handler_json.by_status(0)
+        handler_json.write()
+        return #0
+
+class UserUnfollowPara(BaseHandlerPara):
+    paradoc = {
+        'uid' : '',
+    }
+
+from pages.postjson import UserUnfollowJson
+
+class UserUnfollowHandler(BaseHandler):
+    @with_login_post
+    def post(self):
+        handler_para = UserUnfollowPara(self)
+        handler_json = UserUnfollowJson(self)
+        usr = self.current_user
+        tounfollow = User.by_id(handler_para['uid'])
+        if tounfollow:
+            usr.unfollow_user(tounfollow)
+        handler_json.by_status(0)
+        handler_json.write()
+        return #0
 
 class UserDomainSettingPara(BaseHandlerPara):
     paradoc = {

@@ -230,6 +230,19 @@ class InviteJson(StatusJson):
         3 : u'邮件地址不合法',
     }
 
+@with_attr
+class UserFollowJson(StatusJson):
+    error_info = {
+        0 : u'',
+        1 : u'用户不存在',
+        2 : u'请求被拒绝',
+    }
+
+@with_attr
+class UserUnfollowJson(StatusJson):
+    error_info = {
+        0 : u'',
+    }
 
 @with_attr
 class UserDomainSettingJson(StatusJson):

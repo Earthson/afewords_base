@@ -38,22 +38,22 @@ class UserLibDoc(AFDocument):
             basestring : [basestring, datetime],
         },
         'follow_user_lib' : {
-            #objid : relation_type
-            basestring : basestring,
+            #objid : [relation_type, timeadd]
+            basestring : [basestring, datetime],
         },
         'follower_user_lib' : {
-            #objid : relation_type
-            basestring : basestring,
+            #objid : [relation_type, timeadd]
+            basestring : [basestring, datetime],
         },
         'follow_group_lib' : {
-            #objid : membership_type
-            basestring : basestring,
+            #objid : [membership_type, timadd]
+            basestring : [basestring, datetime],
         },
         'managed_catalog_lib' : {
-            #objid : membership_type(admin/owner)
-            basestring : basestring,
+            #objid : [membership_type(admin/owner), timeadd]
+            basestring : [basestring, datetime],
         },
-        'recommended_list' : [(ObjectId, basestring)],
+        'recommended_list' : [(ObjectId, basestring)], #[id, type]
         'notification_lib' : {
             #noti_id
             basestring : {
@@ -487,12 +487,15 @@ class User(DataBox):
         statusobj.do_post()
 
     def follow_user(self, usr):
-        self.follow_user_lib.add_obj(usr)
-        usr.follower_user_lib.add_obj(self)
+        val = ['normal', datetime.now()]
+        self.lib.follow_user_lib[usr.uid] = val
+        usr.lib.follower_user_lib[self.uid] = val
+        return True
 
     def unfollow_user(self, usr):
-        self.follow_user_lib.remove_obj(usr._id)
-        usr.follower_user_lib.remove_obj(self._id)
+        del self.lib.follow_user_lib[usr.uid]
+        del usr.lib.follower_user_lib[self.uid]
+        return True
 
     def follow_group(self, group):
         status = group.accept_user(self)
