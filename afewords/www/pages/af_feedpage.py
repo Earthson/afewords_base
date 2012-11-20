@@ -10,8 +10,9 @@ class AFFeedPage(BasePage):
     doc = {
         'title': '动态 - 子曰',
         'page_type': 'feed',
-        'subpage_type': 'index',
+        'subpage_type': 'feed',
         'feed_list': [],    # list, like blog list
+        'id_list': [],
     }
 
 

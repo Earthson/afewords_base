@@ -33,6 +33,7 @@
 
 {% end %}
 
+
 <!--
 <script type="text/javascript" src="{{ static_url("js/me/home.js") }}"></script>
 <script type="text/javascript" >
@@ -41,4 +42,8 @@ $().ready(function(){
 });
 </script>
 -->
+<script type="text/javascript">
+AFWUser['id_list'] = {{ [str(item) for item in  doc['id_list']] }};
+</script>
+
 {% end %}
