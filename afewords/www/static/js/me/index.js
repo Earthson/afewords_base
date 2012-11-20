@@ -69,7 +69,7 @@ var Global_Funs = $Tools.Global_Funs;
         }
         var load_list = AFWUser['id_list'].splice(0, 20),
             url = '/load-feed',
-            mes = {'id': load_list},
+            mes = {'toload': load_list},
             $body_content = jQuery("#body_content"),
             $load_process = jQuery('<div id="feed" class="feed_process">'+
                             '<div class="f-body">'+
@@ -82,6 +82,34 @@ var Global_Funs = $Tools.Global_Funs;
                 $load_process.find('.f-con').error_process(response.info);        
             }else{
                 $load_process.remove();
+                var feeds = response.article_list, feed;
+                var feed_html = '';
+                for(var i = 0; i < feeds.length; i ++){
+                    feed = feeds[i];
+                    var summary = feed.summary ? '<div class="f-con">' + feed['summary'] +'</div>' : '';
+                    feed_html += '<div id="feed">' +
+                                '<div class="f-body">' +
+                                '<div class="f-control">' +
+                                '<div class="f-author">' + 
+                                '<a href="/blogger/' + feed.author.uid + '" target="_blank">' + feed.author.name + '</a>' +
+                                '<span class="f-sub">-</span><span class="f-type">' + feed['release_time'] + '</span>'+
+                                '</div>' +
+                                '</div>' +
+                                '<div class="f-con">'+
+                                '<a href="/blog/' + feed.aid + '" target="_blank">' + feed['title'] + '</a>'+
+                                '</div>'+
+                                '<div>' + feed.content_short + '<a target="_blank" class="blog_detail" href="/blog/'+ feed.aid +'">...</a>' +
+                                '</div>'+
+                                '</div>'+
+                                '<div class="f-pic">' +
+                                '<a href="/blogger/' + feed.author['uid'] + '" target="_blank">' +
+                                '<img src="'+  feed.author['thumb'] + '" />' +
+                                '</a>' +
+                                '</div>' +
+                                '</div>';
+                }
+                $body_content.append(feed_html);
+                AFWUser['is_loading'] = false;
                 // some thing    
             }
         }, function(textStatus){
