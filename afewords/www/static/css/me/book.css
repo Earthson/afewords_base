@@ -98,7 +98,7 @@ span.complete1{font-size: 12px;color: green;margin-left: 10px;}
 .book_card_wrap{width: 100%;height: auto;background-color: #ffffff;margin-top: 20px;margin-bottom: 50px;padding: 0%;float: left;}
 
 
-.book_card_one{width: 300px;float: left;border:#ccc 1px dotted;padding: 20px;margin-right: 10px;margin-bottom: 20px;}
+.book_card_one{width: 300px;float: left;border:#ccc 1px dotted;padding: 20px;margin-left: 10px;margin-bottom: 20px;}
 .book_name_p{ background: url('/static/img/tip.png') no-repeat 0 3px; text-indent: 20px;margin-left: -10px !important;}
 .book_name_p a{color: blue;text-decoration: none;text-indent: 20px;}
 .book_card_one p{font-size: 12px;margin-left: 10px;}
