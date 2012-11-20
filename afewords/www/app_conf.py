@@ -40,6 +40,8 @@ from handlers.settinguserhandlers import UserNotiReadHandler
 from handlers.settinguserhandlers import UserNotiRemoveHandler
 from handlers.settinguserhandlers import UserAvatarUploadHandler
 from handlers.settinguserhandlers import UserAvatarCropHandler
+from handlers.settinguserhandlers import UserFollowHandler
+from handlers.settinguserhandlers import UserUnfollowHandler
 
 from handlers.settingcataloghandlers import CatalogSectionModifyHandler
 from handlers.settingcataloghandlers import CatalogSectionNewHandler
@@ -144,6 +146,8 @@ app_handlers = {
     (r'/settingpost-user_noti_remove', UserNotiRemoveHandler),
     (r'/settingpost-user_avatar_upload', UserAvatarUploadHandler),
     (r'/settingpost-user_avatar_crop', UserAvatarCropHandler),
+    (r'/settingpost-user_follow', UserFollowHandler),
+    (r'/settingpost-user_unfollow', UserUnfollowHandler),
     (r'/settingpost-book_section_new', CatalogSectionNewHandler),
     (r'/settingpost-book_section_modify', CatalogSectionModifyHandler),
     (r'/settingpost-book_section_del', CatalogSectionDelHandler),
