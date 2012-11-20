@@ -33,27 +33,6 @@ var settings_type = "{{ doc['settings_type'] }}";
 </script>
 
 
-<!--
-<div id="top_nav">
-<ul>
-<li><a href="/settings-invite" class="current{{ int( doc['settings_type'] =='invite') }}">邀请好友</a></li>
-<li><a href="/settings-domain" class="current{{ int( doc['settings_type'] =='domain') }}">个性化</a></li>
-<li><a href="/settings-password" class="current{{ int(doc['settings_type'] =='password') }}">密码</a></li>
-<li><a href="/settings-avatar" class="current{{ int(doc['settings_type']=='avatar') }}">头像</a></li>
-<li><a href="/settings-tag" class="current{{ int(doc['settings_type']=='tag') }}">执笔分类</a></li>
-{# <li><a href="/settings-like" class="current{{ int(doc['settings_type']=='like') }}">喜欢</a></li> #}
-<li><a href="/settings-follower" class="current{{ int(doc['settings_type'] =='follower') }}">关注我</a></li>
-<li><a href="/settings-follow" class="current{{ int(doc['settings_type'] =='follow') }}">我关注</a></li>
-
-{#<li><a href="/settings-about" class="current{{ int(doc['settings_type']=='about') }}">关于我</a></li>#}
-
-<li><a href="/draft" class="current{{ int(doc['settings_type']=='draft') }}">草稿箱</a></li>
-<li><a href="/notice" class="current{{ int(doc['settings_type']=='notice') }}">消息</a></li>
-</ul>
-</div>
--->
-
-
 <div id="body_content">
 
 {% block setting_html %}{% end %}
@@ -71,21 +50,5 @@ var settings_type = "{{ doc['settings_type'] }}";
 
 <script type="text/javascript" src="{{ static_url("js/jq/jquery.Jcrop.min.js") }}" ></script>
 <script type="text/javascript" src="{{ static_url("js/me/login.js") }}" ></script>
-<script type="text/javascript" src="{{ static_url("js/me/write.js") }}" ></script>
-{#
-{% if kind == "about" %}
-<script type="text/javascript" >
- $(document).ready(function(){
-        $("#write_textarea").CreateEditor("about","about",'', "0");
-        pic_lib = {{ json_encode(src_lib['p']) }};
-        math_lib = {{ json_encode(src_lib['m']) }};
-        table_lib = {{ json_encode(src_lib['t']) }};
-        ref_lib = {{ json_encode(src_lib['r']) }};
-        code_lib = {{ json_encode(src_lib['c']) }};
-        $("#write_textarea").lib_init(pic_lib, math_lib, table_lib, code_lib, ref_lib);	       
-});
-</script>
-{% end %}
-#}
 
 {% end %}
