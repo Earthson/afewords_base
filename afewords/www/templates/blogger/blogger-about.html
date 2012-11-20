@@ -11,9 +11,9 @@
 {% set about = doc['about'] %}
 
 <!-- for about -->
-{% if author != {} %}
+{% if author %}
 <div class="about">
-{% if user != {} and user['uid'] == author['uid'] %}
+{% if user and user['uid'] == author['uid'] %}
 <div class="page_name"><a href="/write?id={{ about['aid'] }}&type=about">编辑</a></div>
 {% else %}
 
