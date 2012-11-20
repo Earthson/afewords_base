@@ -209,6 +209,9 @@ class EmMongoDict(object):
 
     set_all = set_doc
 
+    def clear(self):
+        self.set_all(dict())
+
     @classmethod
     @auto_coll_do
     def load_docs(cls, spec_key=None, spec_values=None):

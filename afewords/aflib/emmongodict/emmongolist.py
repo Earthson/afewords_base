@@ -139,6 +139,9 @@ class EmMongoList(object):
 
     set_all = set_list
 
+    def clear(self):
+        self.set_all(list())
+
     @auto_coll_do
     def remove(self):
         '''remove list from db'''
