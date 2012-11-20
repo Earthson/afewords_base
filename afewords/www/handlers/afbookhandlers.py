@@ -58,9 +58,9 @@ class AFBookCreateHandler(BaseHandler):
     def post(self):
         handler_para = AFBookCreatePara(self)
         usr = self.current_user
-        if not handler_para['name']:
-            return
-        usr.create_catalog(handler_para['name'], handler_para['keywords'])
+        if handler_para['name']:
+            usr.create_catalog(handler_para['name'], handler_para['keywords'])
+        self.redirect('/book-create')
         return
 
 def bookedit_init(handler, bid, page):
