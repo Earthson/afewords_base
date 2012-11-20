@@ -11,10 +11,6 @@
 <ul>
 
     <li><a href="/blogger/{{ author['uid'] }}" class="current{{ int(blogger_type=="blog") }}">文章</a></li>
-{#
-    <li><a href="/blogger/{{ author['uid'] }}/follow" class="current{{ int(blogger_type =="follow") }}">关注</a></li>
-    <li><a href="/blogger/{{ author['uid'] }}/like" class="current{{ int(blogger_type=="like") }}">喜欢</a></li>
-#}
      <li><a href="/blogger/{{ author['uid'] }}/book" class="current{{ int(blogger_type=="book") }}">知识谱</a></li>
     <li><a href="/blogger/{{ author['uid'] }}/about"  class="current{{ int(blogger_type=="about") }}">About</a></li>
 
@@ -25,7 +21,7 @@
 
 <div id="left_div">
 <div id="left3_tag_nav">
-<!--<div id="left3_tag_tag">执笔：</div>-->
+
 <ul>
 {% if doc['current_tag'] == "default" and blogger_type == "blog" %}
     <li><a href="/blogger/{{ author['uid'] }}?tag=default"  class="current">所有</a></li>
@@ -39,13 +35,6 @@
         <li><a href="/blogger/{{ author['uid'] }}?tag={{ one_tag }}">{{ one_tag }}</a></li>
     {% end %}
 {% end %}
-<!--
-<li><a href="#" >Linux</a></li>
-<li><a href="#">C++</a></li>
-<li><a href="#">Python</a></li>
-<li><a href="#">Java</a></li>
-<li><a href="#">生活</a></li>
--->
 </ul>
 </div>
 </div>
@@ -55,9 +44,6 @@
 
 {% block blog_base_left_body %}{% end %}
 
-<!--
-<div class="body_page"><span>页</span><span><a href="#" class="current">1</a></span><span><a href="#">2</a></span><span><a href="#">3</a></span></div>
--->
 </div>
 
 </div>
@@ -66,6 +52,8 @@
 <div class="user_avatar">
 <img src="{{ author['thumb'] }}" alt="{{ author['name']  }}" >
 <div class="user_name">{{ author['name'] }}</div>
+
+{# for future 
 {% if user != {}  and user['uid'] != author['uid'] %}
     <div class="user_control">
     {% if author['isfollow'] is False %}
@@ -76,6 +64,7 @@
     <!--<span>留言</span>-->
     </div>
 {% end %}
+#}
 </div>
 </div>
 

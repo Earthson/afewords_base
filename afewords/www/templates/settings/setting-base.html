@@ -2,9 +2,9 @@
 
 
 {% block css_link %}
-
+{% if doc['subpage_type'] == 'avatar' %}
  <link rel="stylesheet" type="text/css" href="{{ static_url("css/jquery.Jcrop.css") }}" />
- <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/write.css") }}" />
+{% end %}
  
 {% end %}
 
@@ -47,8 +47,7 @@ var settings_type = "{{ doc['settings_type'] }}";
 {% end %}
 
 {% block script_bottom %}
-
+{% if doc['subpage_type'] == 'avatar' %}
 <script type="text/javascript" src="{{ static_url("js/jq/jquery.Jcrop.min.js") }}" ></script>
-<script type="text/javascript" src="{{ static_url("js/me/login.js") }}" ></script>
-
+{% end %}
 {% end %}

@@ -59,30 +59,6 @@
 <div class="w-mark">{{ doc['do_title'] }}</div>
 
 
-
-{% if article_type == 'group-doc' %}
-<div class="w-class">
-<div class="w-nav" title="给文档归档，方便您对文档的管理">归档<span class="px-12 color-blue cursor-pointer" title="添加新的分类">&nbsp;&nbsp;添加新分类</span></div>
-<div>
-{% if not isedit %}
-    {% for tmp_tag in  owner['entity']['tag_list'] %}
-    <span class="w-class"><label><input type="checkbox" name="tags" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
-    {% end %}
-{% else %}
-    {% for tmp_tag in  owner['entity']['tag_list'] %}
-        {% if tmp_tag in article['tag_list'] %}
-            <span class="w-class"><label><input type="checkbox" name="tags" checked="checked" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
-        {% else %}
-            <span class="w-class"><label><input type="checkbox" name="tags" value="{{ tmp_tag }}" />{{ tmp_tag }}</label></span>
-        {% end %}
-    {% end %}
-{% end %}
-</div>
-</div>
-
-{% end %}
-
-
 {% if article_type == 'blog' %}
 <div class="w-class">
 <div class="w-nav" title="给文章归类，方便您对文章的管理">归类<span class="px-12 color-blue cursor-pointer" title="添加新的分类">&nbsp;&nbsp;添加新分类</span></div>
@@ -163,7 +139,6 @@ $(document).ready(function(){
         "article_type": "{{ article['article_type'] }}" || 'blog',
         "env_id": "{{ env['env_id'] }}",
         "env_type": "{{ env['env_type'] }}",
-        {#//"body": "{{ article['body'] }}", #}
         "src": {
                     "math": {{ json_encode(article['equation_list']) }},
                     "image": {{ json_encode(article['picture_list']) }},
