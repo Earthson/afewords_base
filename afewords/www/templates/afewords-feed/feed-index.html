@@ -2,15 +2,43 @@
 
 {% block afewords_feed_html %}
 
+{% for item in doc['feed_list'] %}
 
+{% set author = item['author'] %}
+<div id="feed">
+<div class="f-body">
+<div class="f-control">
+<div class="f-author">
+<a href="/blogger/{{ author['uid'] }}" target="_blank">{{ author['name'] }}</a>
+<span class="f-sub">-</span><span class="f-type">执笔</span>
+</div>
+</div>
+<div class="f-con">
+<a href="/blog/{{ item['aid'] }}" target="_blank">{{ item['title'] }}</a>
+</div>
+{% if item['summary'] %}
+<div class="f-con">{{ item['summary'] }}</div>
+{% end %}
+<div>
+{{ item['content_short'] }}
+<a target="_blank" class="blog_detail" href="/blog/{{ item['aid'] }}">...</a>
+</div>
+</div>
+<div class="f-pic">
+<a href="/blogger/{{ author['uid'] }}" target="_blank">
+<img src="{{ author['thumb'] }}" />
+</a>
+</div>
+</div>
 
+{% end %}
 
-
+<!--
 <script type="text/javascript" src="{{ static_url("js/me/home.js") }}"></script>
 <script type="text/javascript" >
 $().ready(function(){
     get_feed_by_id();
 });
 </script>
-
+-->
 {% end %}
