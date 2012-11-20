@@ -9,6 +9,7 @@ from datetime import datetime
 from article import * #try init all article packages
 from article.about import About
 from article.avatar import Avatar
+from article.blog import Blog
 
 from userstat import UserStat, UserStatMongo
 
@@ -74,6 +75,16 @@ class UserLib(EmMongoDict):
         'db' : 'afewords',
         'collection' : 'UserLibDB',
     }
+
+    @property
+    def own_data(self):
+        ans = list()
+        ans += [each for each in list_generator( [(ek, ev[0]) 
+                    for ek, ev in self.drafts_lib.items()]) 
+                if each is not None]
+        ans += Blog.by_ids(self.blog_list.load_all())
+        return ans
+
     @property
     def drafts_lib(self):
         return self.sub_dict('drafts_lib')
@@ -194,6 +205,13 @@ class User(DataBox):
         if data is None:
             self.domain = self.uid
             self.about.set_propertys(env=self, author_id=self._id)
+
+    def remove(self):
+        '''just log off'''
+        self.logoff()
+
+    def logoff(self):
+        self.account_status = 'logoff'
 
     @db_property
     def notice_count():

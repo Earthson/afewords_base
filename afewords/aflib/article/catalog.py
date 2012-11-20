@@ -60,25 +60,22 @@ class CatalogLib(EmMongoDict):
     @property
     def own_data(self):
         ans = list()
-        #todo Earthson
+        ans += [each for each in Relation.by_ids(relations_list.load_all())]
         return ans
 
     @property
     def parent_catalogs(self):
-        return self.sub_dict('parent_catalogs',
-                    generator=id_generator(Catalog))
+        return self.sub_dict('parent_catalogs')
 
     @property
     def feedback_list(self):
         from feedback import Feedback
-        return self.sub_list('feedback_list',
-                    generator=id_generator(Feedback))
+        return self.sub_list('feedback_list')
 
     @property
     def topic_list(self):
         from topic import Topic
-        return self.sub_list('topic_list',
-                    generator=id_generator(Topic))
+        return self.sub_list('topic_list')
 
     @property
     def node_lib(self):
@@ -90,8 +87,7 @@ class CatalogLib(EmMongoDict):
 
     @property
     def relations_list(self):
-        return self.sub_list('relations_list',
-                    generator=id_generator(Relation))
+        return self.sub_list('relations_list')
 
 
 @with_conn
