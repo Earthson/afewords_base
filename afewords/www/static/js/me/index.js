@@ -67,7 +67,7 @@ var Global_Funs = $Tools.Global_Funs;
             // some thing
             return;
         }
-        var load_list = AFWUser['id_list'].splice(0, 20),
+        var load_list = AFWUser['id_list'].splice(0, 15),
             url = '/load-feed',
             mes = {'toload': load_list},
             $body_content = jQuery("#body_content"),
