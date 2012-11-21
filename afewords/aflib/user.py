@@ -198,7 +198,7 @@ class User(DataBox):
         'lib_id' : False,
         'userstat_id' : False,
     }
-    own_data =  ['avatar', 'about', 'lib']
+    own_data =  ['avatar', 'about', 'lib', 'stat_info']
 
     def __init__(self, data=None, *args, **kwargs):
         DataBox.__init__(self, data, *args, **kwargs)
