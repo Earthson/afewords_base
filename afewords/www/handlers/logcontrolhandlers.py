@@ -22,6 +22,7 @@ class LoginHandler(BaseHandler):
         if email is None or pwd is None:
             error_info['error'] = 1
         elif token is None or token.lower() != cookie_code:
+            self.set_secure_cookie('ver_code', random_string(20))
             error_info['error'] = 2
             error_info['email'] = email
         else:

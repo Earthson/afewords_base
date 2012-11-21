@@ -22,6 +22,7 @@ class AFGlobalDoc(AFDocument):
         'recent_books' : list,
         'recent_users' : list,
         'unreg_users' : list,
+        'recent_feedbacks' : list,
     }
     default_values = {
         'invitations_count' : 0,
@@ -29,6 +30,7 @@ class AFGlobalDoc(AFDocument):
         'recent_books' : [None for i in range(200)],
         'recent_users' : [None for i in range(200)],
         'unreg_users' : [None for i in range(5000)],
+        'recent_feedbacks' : [None for i in range(200)],
     }
 
 if AFGlobalDoc.find_one() is None:
@@ -41,3 +43,4 @@ recent_blogs = global_info.sub_list('recent_blogs')
 recent_books = global_info.sub_list('recent_books')
 recent_users = global_info.sub_list('recent_users')
 unreg_users = global_info.sub_list('unreg_users')
+recent_feedbacks = global_info.sub_list('recent_feedbacks')

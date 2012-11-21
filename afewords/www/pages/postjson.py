@@ -398,3 +398,12 @@ class UnSpecArticleFromBookJson(StatusJson):
         3 : u'章节不存在',
         4 : u'您无权进行此操作',
     }
+
+@with_attr
+class FeedbackJson(StatusJson):
+    error_info = {
+        0 : u'',
+        1 : u'验证码错误',
+        2 : u'邮箱不合法',
+        3 : u'内容太短',
+    }

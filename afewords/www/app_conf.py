@@ -76,6 +76,8 @@ from handlers.afbookhandlers import AFBookEditCatalogHandler
 
 from handlers.statisticshandlers import ObjDoLikeHandler
 
+from handlers.feedbackhandlers import FeedbackHandler
+
 app_handlers = {
     (r'/', IndexHandler), #MainHandler),
     (r'/test', TestHandler),
@@ -155,6 +157,8 @@ app_handlers = {
     (r'/settingpost-book_article_del', DelArticleFromBookHandler),
     (r'/settingpost-book_article_spec', SpecArticleToBookHandler),
     (r'/settingpost-book_article_unspec', UnSpecArticleFromBookHandler),
+
+    (r'/post-feedback', FeedbackHandler),
 }
 
 app_settings = {

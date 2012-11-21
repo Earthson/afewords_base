@@ -79,6 +79,7 @@ class RegisterHandler(BaseHandler):
         else:
             cookie_token = self.get_secure_cookie('ver_code', None)
             if token is None or token.lower() != cookie_token:
+                self.set_secure_cookie('ver_code', random_string(20))
                 info.by_status(4)
             else:
                 status = user_reg(email, pwd, sex, name)

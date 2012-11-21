@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from global_info import recent_blogs, recent_books, recent_users, unreg_users
+from global_info import *
 from article.blog import Blog
 from article.catalog import Catalog
 from user import User
@@ -27,3 +27,4 @@ for each in user_all:
     recent_users.pop_head()
 
 unreg_users.set_all([None for i in range(5000)])
+recent_feedbacks.set_all([None for i in range(200)])
