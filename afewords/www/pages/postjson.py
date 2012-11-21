@@ -163,6 +163,10 @@ class ArticleSrcJson(StatusJson):
     }
     error_info = dict(error_info, **_img_error_doc)
 
+    def __init__(self, handler=None, doc=None):
+        super(ArticleSrcJson, self).__init__(handler, doc)
+        self.is_json = True
+
     def as_new(self, article_obj):
         '''for article'''
         self['article_isnew'] = 1
@@ -173,8 +177,11 @@ class ArticleSrcJson(StatusJson):
         self['src_alias'] = src_obj.alias
 
     def write(self):
-        self.handler.write(str(self.to_json()))
-
+        ans = self.to_json
+        if self.is_json is True:
+            self.handler.write(ans)
+            return
+        self.handler.write('<textarea' + str(ans) + '</textarea>')
 
 
 @with_attr
