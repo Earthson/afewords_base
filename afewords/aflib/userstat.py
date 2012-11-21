@@ -28,6 +28,7 @@ class UserStatDoc(AFDocument):
 
 class UserStatMongo(EmMongoDict):
     datatype = UserStatDoc
+    own_data = []
 
     db_info = {
         'db' : 'afewords',
@@ -63,3 +64,4 @@ class UserStat(DataBox):
     mapper = {
         'article_views' : True,
     }
+    own_data = []
