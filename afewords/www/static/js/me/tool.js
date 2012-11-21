@@ -425,21 +425,42 @@ jQuery.afewords.tools.Global_Funs = {
                                             '<input type="hidden" name="_xsrf" value="' + jQuery.getCookie("_xsrf") + '" />'+
                                             '<p><input class="i_file" type="file" name="picture"  /></p>'+
                                             '<p><button type="submit" class="i_button">上传</button><span class="i_process" id="src_process">&nbsp;</span></p></form>' +
-                                            '<iframe name="up_picture_iframe" id="up_picture_iframe" style="display:none"></iframe>' +
+                                            '<iframe name="up_picture_iframe" id="up_picture_iframe" style="display:none" src="about:_blank"></iframe>' +
                                             '</div>';
                                 $htmls = jQuery(htmls);
                                 var $pop_content = pop_page(350,180, $htmls);
                                 // bind 
-                                $htmls.find('button').click(function(e){
-                                    if(e.target.nodeName != "BUTTON")   return false;
-                                    var $button = jQuery(e.target), $process = $button.siblings("span.i_process");
+                                var $form = $htmls.find("form"),
+                                    $process = $form.find("#src_process"),
+                                    $button = $form.find("button");
+                                $form.submit(function(){
                                     var file_src = $htmls.find("input.i_file").val();
-                                    if(!file_src){  $process.error_process("请选择图片！"); return false; }
+                                    if(!file_src){  $process.error_process("请选择图片"); return false; }
                                     var img_reg = /.*\.(jpg|png|jpeg|gif)$/ig;
-	                                   if(!file_src.match(img_reg)) {  $process.error_process('图片格式为jpg,png,jpeg,gif！'); return false; }
+                                    if(!file_src.match(img_reg)) {  $process.error_process('图片格式为jpg,png,jpeg,gif！'); return false; }
                                     $process.ajax_process();
                                     $button.to_disabled();
-                                })
+                                    
+                                    var $image_iframe = $htmls.find("#up_picture_iframe").eq(0);
+                                    //image_iframe = window.frames["up_picture_iframe"];
+                                    $image_iframe.load(function(){
+
+                                        var iframe_document = window.frames["up_picture_iframe"].document;
+                                        alert(iframe_document);
+                                        if(!iframe_document)    return;
+                                        alert(iframe_document.body.innerHTML);  
+                                        
+                                                              
+                                    });
+                                    
+                                    $image_iframe.error(function(){
+                                        alert("error");                                   
+                                    });
+                                    return true;                                
+                                });
+                                
+                                
+                                
                     },
                     "check":    function(paras){},
                     "handler":  function(){}    
@@ -456,7 +477,7 @@ jQuery.afewords.tools.Global_Funs = {
                                     var create_flag = false;
                                     var $comment_block = jQuery("div.b_com"); 
                                     var info_html = '',
-                                        login_flag = AFWUser['login'];
+                                        login_flag = true || AFWUser['login'];
                                     if(!login_flag){
                                         info_html = '<div class="com_info"><p>姓名<input type="text" /><span class="note">*建议登陆后评论</span></p>' +
                                                     '<p>邮箱<input type="text" name="email" /></p>'  +

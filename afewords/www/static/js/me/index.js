@@ -157,7 +157,7 @@ var Global_Funs = $Tools.Global_Funs;
             jQuery.postJSON(url, mes, function(){
                 $process.ajax_process(); $target.to_disabled();            
             }, function(response){
-                if(response != 0){  $process.error_process(response.info);  $target.remove_disabled(); }
+                if(response.status != 0){  $process.error_process(response.info);  $target.remove_disabled(); }
                 else{  $process.right_process("反馈成功，感谢您！");  pop_page_close();  }            
             }, function(textStatus){
                 $process.error_process("出现错误：" + textStatus); $target.remove_disabled();            
