@@ -172,6 +172,9 @@ class ArticleSrcJson(StatusJson):
         self['src_isnew'] = 1
         self['src_alias'] = src_obj.alias
 
+    def write(self):
+        self.handler.write(str(self.to_json()))
+
 
 
 @with_attr

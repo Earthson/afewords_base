@@ -347,7 +347,7 @@ class User(DataBox):
 
     def post_blog(self, blogobj):
         blogid = blogobj.uid
-        self.lib.blog_list.push(blogid)
+        self.lib.blog_list.push(blogobj._id)
         blogobj.do_post()
         del self.lib.drafts_lib[blogid]
         for each in blogobj.tag:
