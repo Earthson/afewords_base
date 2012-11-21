@@ -177,7 +177,7 @@ class ArticleSrcJson(StatusJson):
         self['src_alias'] = src_obj.alias
 
     def write(self):
-        ans = self.to_json
+        ans = self.to_json()
         if self.is_json is True:
             self.handler.write(ans)
             return
