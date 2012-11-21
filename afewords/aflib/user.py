@@ -432,11 +432,12 @@ class User(DataBox):
         def getter(self):
             draft_lib = self.lib.drafts_lib
             tmp = draft_lib.items()
-            drafts = [generator(eid, etype) for eid, etype in tmp]
+            drafts = list_generator(tmp)
             for i in xrange(len(tmp)):
                 if drafts[i] is None:
                     del draft_lib[tmp[i][0]]
-            return [each.basic_info for each in drafts if each]
+            return [each.obj_info_view_by('basic_info', self) 
+                        for each in drafts if each]
         return getter
 
     def fav_info_view_by(self, usr=None, vfrom=0, vlim=20):
@@ -475,10 +476,8 @@ class User(DataBox):
             tmp2 = set(each._id for each in toview)
             self.lib.blog_list.pull(*tuple(tmp - tmp2)) 
             #try remove item not exist
-        if usr: 
-            return [each.obj_info_view_by('basic_info', usr, env=usr) 
+        return [each.obj_info_view_by('basic_info', usr, env=usr) 
                         for each in toview], len_toview
-        return [each.basic_info for each in toview], len_toview
 
     def post_status(self, statusobj):
         statusid = statusobj._id
