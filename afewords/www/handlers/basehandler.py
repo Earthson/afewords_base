@@ -76,6 +76,7 @@ class BaseHandlerPara(object):
     def __setitem__(self, key, value):
         self.paradoc[key] = value
 
+from afutils.img_utils import upload_img
 
 class IMGHandlerPara(BaseHandlerPara):
     paradoc = {
