@@ -314,6 +314,10 @@ class UserAvatarUploadJson(StatusJson):
     }
     error_info = dict(error_info, **_img_error_doc)
 
+    def write(self):
+        ans = self.to_json()
+        self.handler.write('<textarea>' + str(ans) + '</textarea>')
+
 
 @with_attr
 class UserAvatarCropJson(StatusJson):
