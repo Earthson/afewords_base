@@ -91,7 +91,7 @@ var Global_Funs = $Tools.Global_Funs;
                                 '<div class="f-control">' +
                                 '<div class="f-author">' + 
                                 '<a href="/blogger/' + feed.author.uid + '" target="_blank">' + feed.author.name + '</a>' +
-                                '<span class="f-sub">-</span><span class="f-type">' + feed['release_time'] + '</span>'+
+                                '<span class="f-sub">-</span><span class="f-type">' + feed.release_time.substr(5,11) + '</span>'+
                                 '</div>' +
                                 '</div>' +
                                 '<div class="f-con">'+
@@ -123,11 +123,46 @@ var Global_Funs = $Tools.Global_Funs;
             to_do = $target.attr("do");
         if(!to_do)  return;
         if(to_do != "write-feedback")   return;
-        alert("loading");
+        var login_flag = AFWUser['login'],
+            info_html = '', 
+            pop_height = 370;
+        if(!login_flag){
+            info_html = '<p>称呼  <input type="text" class="feedback" name="name" /><span class="feedback">*当前为未登陆状态，可<a href="/login">登陆</a>后反馈</span></p>' +
+                        '<p>邮箱  <input type="text" class="feedback" name="email" /><span class="feedback">*方便联系您</span></p>' + 
+                        '<p>验证码 <input type="text" class="feedback_token" name="token" />' + 
+                            '<span id="code_img" class="feedback"><img src="/code" class="feedback" /></span>' +
+                            '<a href="javascript:void(0)" onclick="change_code(\'feedback\');" class="feedback">换一张</a></p>';
+            pop_height = 500;        
+        }        
         var pop_html = '<div id="pop_insert_table">' + 
-                                                "<p class='first'>个性化</p><p>新链接后缀<input type='text' name='domain' />" + 
-                                                "<p><button>修改</button><span class='t_process' style='width:70%'></span></p>"+
-                                              '</div>';    
+                        '<p class="first">反馈 - 错误/不足</p>' + 
+                        info_html +
+                        '<p><textarea name="feedback">想说：</textarea>' + 
+                        '<p><button>提交</button><span class="t_process" style="width:70%"></span></p>'+
+                        '</div>';
+        var $pop_content = pop_page(600,pop_height, pop_html);
+        $pop_content.bind('click', function(e){
+            if(e.target.nodeName != "BUTTON")   return;
+            var $target = jQuery(e.target),
+                $process = $target.siblings("span"),
+                mes = $pop_content.DivToDict();
+            if(!login_flag){
+                // not login
+                if(!mes['name']){   $process.error_process("请填写称呼！"); return; }
+                if(!mes['email'] || !jQuery.check_email(mes['email'])){ $process.error_process("请填写正确的邮箱！"); return;}
+                if(!mes['token']){ $process.error_process("请填写验证码！");  return; }
+            }      
+            if(!mes['feedback'] || mes['feedback'] == "想说："){ $process.error_process("请填写反馈内容！"); return;}
+            var url = '/post-feedback';
+            jQuery.postJSON(url, mes, function(){
+                $process.ajax_process(); $target.to_disabled();            
+            }, function(response){
+                if(response != 0){  $process.error_process(response.info);  $target.remove_disabled(); }
+                else{  $process.right_process("反馈成功，感谢您！");  pop_page_close();  }            
+            }, function(textStatus){
+                $process.error_process("出现错误：" + textStatus); $target.remove_disabled();            
+            });
+        });    
     });
 
 })();

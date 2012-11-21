@@ -237,6 +237,16 @@ margin-top: 5px;margin-bottom: 5px;padding-top: 5px;padding-bottom: 5px;}
 .b_com .com_page_before span{font-size: 14px;color: blue;margin-left: 10px;padding: 2px 4px;}
 .b_com .com_page_before span:hover{background-color: #039;color: white;cursor: pointer;}
 
+/* for unlogin */
+.com_info{}
+.com_info p{line-height: 40px;}
+.com_info span.note{color: #A66100; font-size: 12px;margin-left: 20px;}
+.com_info input[type='text']{width:50%;height:30px;margin-left:10px;line-height: 30px;font-size: 16px;}
+.com_info a.code{color: blue; margin-left: 20px;font-size: 12px;}
+.com_info input.token{width: 20%;}
+.com_info span.token_img{margin-left: 20px;}
+.com_info span.token_img img{position: relative;top: 5px;}
+
 
 .b_com .com_one{width: 98%;float: left;padding: 10px 5px 10px 5px;border-bottom: #ccc 1px dashed;}
 .b_com .com_one .com_pic{width: 50px;float: left;height: 50px;}

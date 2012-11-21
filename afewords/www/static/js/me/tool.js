@@ -455,7 +455,17 @@ jQuery.afewords.tools.Global_Funs = {
                                                 };
                                     var create_flag = false;
                                     var $comment_block = jQuery("div.b_com"); 
+                                    var info_html = '',
+                                        login_flag = AFWUser['login'];
+                                    if(!login_flag){
+                                        info_html = '<div class="com_info"><p>姓名<input type="text" /><span class="note">*建议登陆后评论</span></p>' +
+                                                    '<p>邮箱<input type="text" name="email" /></p>'  +
+                                                    '<p>验证码<input type="text" class="token" name="token" /><span id="code_img" class="token_img"><img src="/code" /></span><a href="javascript:void(0)" onclick="change_code();" class="code">更换图片</a></p>' +                                   
+                                                    '</div>';
+                                    }
+
                                     var reply_block_html = '<div class="com_reply" id="write_comment_zone">' +
+                                                            info_html + 
                                                             '<div id="ref_comment_lib">' + 
                                                             '</div>' +
                                                             '<textarea class="bcr_text" id="write_textarea" spellcheck="false" name="body"></textarea>' +
@@ -509,6 +519,11 @@ jQuery.afewords.tools.Global_Funs = {
                                         var $button = $reply_block.find('button'), $process = $button.siblings('.comment_process');
                                         $button.bind('click', function(){
                                             var mes = parse_comment_request();
+                                            if(!login_flag){
+                                                if(!mes['name']){ $process.error_process("请填写姓名！"); return; }
+                                                if(!mes['email'] || !jQuery.check_email(mes['email'])) { $process.error_process("请填写正确的邮箱！"); return; } 
+                                                if(!mes['token']) { $process.error_process("请填写验证码！"); return; }                                         
+                                            }
                                             if(!mes['body'] || mes['body'] == "内容"){    $process.error_process("评论内容不能为空！"); return; }
                                             jQuery.postJSON('/update-article', mes, function(){
                                                     $process.ajax_process();  $button.to_disabled();                                            
@@ -818,6 +833,12 @@ jQuery.afewords.tools.Global_Funs = {
                 }
     }  
     
+}
+
+change_code = function(classname){
+    classname = classname || '';
+    var $img = jQuery("#code_img");
+    $img.html('<img src="/code" class="'+classname+'" />');
 }
 
 
