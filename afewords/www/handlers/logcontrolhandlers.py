@@ -13,7 +13,7 @@ class LoginHandler(BaseHandler):
 
     @without_login_post
     def post(self):
-        cookie_code = self.get_secure_cookie('ver_code', None)
+        cookie_code = self.get_vercode()
         email = self.get_esc_arg('email')
         pwd = self.get_esc_arg('pwd')
         token = self.get_esc_arg('token')
@@ -22,7 +22,6 @@ class LoginHandler(BaseHandler):
         if email is None or pwd is None:
             error_info['error'] = 1
         elif token is None or token.lower() != cookie_code:
-            self.set_secure_cookie('ver_code', random_string(20))
             error_info['error'] = 2
             error_info['email'] = email
         else:

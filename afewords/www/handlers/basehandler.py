@@ -156,6 +156,11 @@ class BaseHandler(RequestHandler):
     def get_esc_args(self, name):
         return [arg_escape(each) for each in self.get_arguments(name)]
 
+    def get_vercode(self):
+        ans = self.get_secure_cookie('ver_code', None)
+        self.set_secure_cookie('ver_code', random_string(20))
+        return ans
+
     def get(self):
         return self.redirect("/")
 

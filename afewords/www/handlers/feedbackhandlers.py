@@ -20,10 +20,9 @@ class FeedbackHandler(BaseHandler):
         handler_para = FeedbackPara(self)
         handler_json = FeedbackJson(self)
         usr = self.current_user
-        cookie_code = self.get_secure_cookie('ver_code', None)
+        cookie_code = self.get_vercode()
         token = handler_para['token']
         if not usr and (token is None or token.lower() != cookie_code):
-            self.set_secure_cookie('ver_code', random_string(20))
             handler_json.by_status(1)
             handler_json.write()
             return #code error 
