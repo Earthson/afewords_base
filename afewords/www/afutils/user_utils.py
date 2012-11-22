@@ -22,6 +22,7 @@ def user_reg(email, password, sex, name):
     doc = {
         'sex' : sex,
         'name' : name,
+        'password' : password,
         'token' : token,
         'domain' : usr.uid,
         'account_status' : 'unverified',
