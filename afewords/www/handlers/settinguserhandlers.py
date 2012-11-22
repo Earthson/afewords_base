@@ -280,6 +280,7 @@ class UserAvatarUploadHandler(BaseHandler):
         usr_avatar = usr.avatar
         usr_avatar.pic_file = handler_para['picture']
         usr_avatar.thumb_file = handler_para['picture']
+        handler_json['img_url'] = usr_avatar.url
         handler_json.by_status(0)
         handler_json.write()
         return #0

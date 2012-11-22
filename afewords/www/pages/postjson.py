@@ -309,6 +309,9 @@ class UserNotiRemoveJson(StatusJson):
 
 @with_attr
 class UserAvatarUploadJson(StatusJson):
+    doc = {
+        'img_url' : '', #url of uploaded img
+    }
     error_info = {
         0 : u'头像上传成功',
     }
