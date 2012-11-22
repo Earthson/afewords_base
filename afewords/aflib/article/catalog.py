@@ -145,7 +145,7 @@ class Catalog(DataBox):
     }
     own_data = ['statistics', 'about', 'lib']
 
-    def __init__(self, data, *args, **kwargs):
+    def __init__(self, data=None, *args, **kwargs):
         DataBox.__init__(self, data, *args, **kwargs)
         if data is None:
             self.about.set_propertys(env=self, author_id=self.data['owner_id'])
