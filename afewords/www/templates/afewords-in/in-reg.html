@@ -2,7 +2,7 @@
 
 {% block afewords_in_html %}
 
-<div class="follow margin-left-0">
+<div class="follow">
 <div class="page_nav"><span>注册</span></div>
 
 <div id="login_do">
@@ -21,8 +21,11 @@
 <button type="submit" class="login_button">注册</button><span class="login-process"></span>
 </div>
 </div>
-
-
-
 </div>
+<script type="text/javascript" >
+jQuery(function(){
+    var email = jQuery.getQuery("email");
+    jQuery("#login-email").val(email);
+});
+</script>
 {% end %}

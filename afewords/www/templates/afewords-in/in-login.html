@@ -2,7 +2,7 @@
 
 {% block afewords_in_html %}
 
-<div class="follow margin-left-0">
+<div class="follow">
 <div class="page_nav"><span>登陆</span></div>
 
 <div id="login_do">
@@ -18,6 +18,15 @@
 </table>
 </form>
 </div>
-
 </div>
+
+<script type="text/javascript" >
+jQuery(function(){
+    var error = jQuery.getQuery("error");
+    var email = jQuery.getQuery("email");
+    jQuery("#login-email").val(email);
+    var errors = ['邮箱或密码不能为空！', '验证码错误！', '邮箱未注册！', '密码有误，请您重新填写！', '用户不存在！'];
+    jQuery("span.login-process").html(errors[parseInt(error) + 1]);
+});
+</script>
 {% end %}
