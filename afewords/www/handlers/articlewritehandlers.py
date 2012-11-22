@@ -271,14 +271,14 @@ class ArticleSrcHandler(BaseArticleUpdateHandler):
             handler_json.by_status(8)
             handler_json.write()
             return #Unsupported Operation
+        scls = cls_gen(handler_paras['src_type'])
         if handler_paras['do'] == 'new':
-            scls = cls_gen(handler_paras['src_type'])
             if scls is None:
                 handler_json.by_status(5)
                 handler_json.write()
                 return #Unsupported Ref Type
             src_obj = scls()
-            tmps = self.article_obj.add_ref(handler_paras['src_type'], src_obj)
+            tmps = self.article_obj.add_ref(src_obj)
             if tmps is False:
                 handler_json.by_status(19)
                 handler_json.write()
@@ -291,13 +291,13 @@ class ArticleSrcHandler(BaseArticleUpdateHandler):
             handler_json.write()
             return #0
         elif handler_paras['do'] == 'remove':
-            self.article_obj.remove_ref(handler_paras['src_type'],
-                                handler_paras['src_alias'])
+            self.article_obj.remove_ref(scls.first_alias, 
+                            handler_paras['src_alias'])
             handler_json.by_status(0)
             handler_json.write()
             return #0
         elif handler_paras['do'] == 'edit':
-            src_obj = self.article_obj.get_ref(handler_paras['src_type'],
+            src_obj = self.article_obj.get_ref(src_obj.first_alias,
                                 handler_paras['src_alias']) 
             if src_obj is None:
                 handler_json.by_status(18)

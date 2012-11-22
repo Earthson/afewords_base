@@ -155,7 +155,8 @@ class ArticleLib(EmMongoDict):
         return self.sub_dict('relation_catalogs',
                         generator=None)
 
-    def add_ref(self, reftype, refobj):
+    def add_ref(self, refobj):
+        reftype = refobj.first_alias
         libname = self.get_libname(reftype)
         if libname is None:
             return False
@@ -309,9 +310,9 @@ class Article(DataBox):
     def refinder(self, reftype, refname):
         return self.lib.refinder(reftype, refname)
 
-    def add_ref(self, reftype, refobj):
+    def add_ref(self, refobj):
         self.do_update()
-        return self.lib.add_ref(reftype, refobj)
+        return self.lib.add_ref(refobj)
 
     def get_ref(self, reftype, refalias):
         return self.lib.get_ref(reftype, refalias)
