@@ -9,36 +9,40 @@
     <div class="settings">
     <div class="page_nav"><span>头像</span><span class="left20"><a href="javascript:void(0);">上传新头像</a></span></div>
     <table id="avatar_wrap_nav">
-    <tr><td width="20%;">裁剪</td><td width="50%">&nbsp;</td><td width="30%" align="center"><button>裁剪</button></td></tr>
+    <tr><td width="20%;">裁剪</td><td width="50%" align="center" id="crop-process">&nbsp;</td>
+    <td width="30%" align="center"><button id="crop-button" do="crop_avatar">裁剪</button>
+        <input type="hidden" name="sx" id="pos-sx" value="0" />
+        <input type="hidden" name="sy" id="pos-sy" value="0" />
+        <input type="hidden" name="ex" id="pos-ex" value="0" />
+        <input type="hidden" name="ey" id="pos-ey" value="0" />
+    </td></tr>
     </table>
 
     {% if doc['avatar_path'] != '' %}
         <table id="avatar_wrap_form">
         <tr>
         <td width="70%" rowspan="2" id="crop-contain">
-        <img src="{{ doc['avatar_path'] }}" id="crop-obj" alt="Flowers" />
+        <img src="{{ doc['avatar_path'] }}" id="crop-obj" />
         </td>
         <td width="30%" align="center">
-        <div style="width:120px;height:120px;overflow:hidden;">
-        <img src="{{ doc['avatar_path'] }}" id="preview-120" alt="Preview" />
+        <div id="crop-120">
+        <img src="{{ doc['avatar_path'] }}" id="preview-120" />
         </div>
         </td>
         </tr>
         <tr>
-        <td align="center"><div style="width:50px;height:50px;overflow:hidden;">
-        <img src="{{ doc['avatar_path'] }}" id="preview-50" alt="Preview" />
+        <td align="center"><div id="crop-50">
+        <img src="{{ doc['avatar_path'] }}" id="preview-50" />
         </div>
-        <input type="hidden" name="pos-x" id="pos-x" value="0" />
-        <input type="hidden" name="pos-y" id="pos-y" value="0" />
-        <input type="hidden" name="pos-w" id="pos-w" value="0" />
-        <input type="hidden" name="pos-time" id="pos-time" value="1" />
         </td>        
         </tr>
         </table>
+
     {% end %}
     <div class="div-20"></div>
     <div class="div-20"></div>
     </div>
+
 
 
 {% end %}

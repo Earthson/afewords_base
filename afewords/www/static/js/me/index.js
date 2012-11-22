@@ -297,6 +297,7 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
             }        
         }       
     });
+    
 })();
 
 

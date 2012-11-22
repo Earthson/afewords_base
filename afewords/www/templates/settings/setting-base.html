@@ -49,5 +49,8 @@ var settings_type = "{{ doc['settings_type'] }}";
 {% block script_bottom %}
 {% if doc['subpage_type'] == 'avatar' %}
 <script type="text/javascript" src="{{ static_url("js/jq/jquery.Jcrop.min.js") }}" ></script>
+<script type="text/javascript" >
+jQuery.crop_picture_init();
+</script>
 {% end %}
 {% end %}

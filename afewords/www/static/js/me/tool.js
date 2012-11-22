@@ -116,6 +116,72 @@ $.extend({
                             };
                         }
                     }
+    },
+    crop_picture_init: function(){
+    
+        var jcrop_api, boundx, boundy,
+            $image_block = jQuery('#crop-contain>img').eq(0),
+            block_width = 0,
+            image_width = 0,
+            new_image = new Image(),
+            $pos_sx = jQuery("#pos-sx"),
+            $pos_sy = jQuery("#pos-sy"),
+            $pos_ex = jQuery("#pos-ex"),
+            $pos_ey = jQuery("#pos-ey"),
+            s_x = s_y = e_x = e_y = 0,
+            $preview_120 = jQuery("#preview-120"),
+            $preview_50 = jQuery("#preview-50");
+            new_image.src = $image_block.get(0).src,
+            $button = jQuery('#crop-button'),
+            $process = jQuery('#crop-process'),
+            times = 0;
+        $image_block.load(function(){
+            image_width = new_image.width;
+            times = image_width / $image_block.width() ;
+            $image_block.Jcrop({
+                onChange: updatePreview,
+                onSelect: updatePreview,
+                aspectRatio: 1,
+                minSize : [150,150],
+                setSelect:[0,0,150,150],
+                bgColor: 'black',
+                maxSize:[400,400]
+            },function(){
+                var bounds = this.getBounds();
+                boundx = bounds[0];
+                boundy = bounds[1];
+                jcrop_api = this;
+            });
+        });
+        
+        
+        function updatePreview(c){
+            if(parseInt(c.w, 10) < 0)   return;
+            var rx = 120 / c.w;
+            var ry = 120 / c.h;
+            $preview_120.css({
+                    width: Math.round(rx * boundx) + 'px',
+                    height: Math.round(ry * boundy) + 'px',
+                    marginLeft: '-' + Math.round(rx * c.x) + 'px',
+                    marginTop: '-' + Math.round(ry * c.y) + 'px'
+            });
+            var rx_1 = 50/c.w;
+            var ry_1 = 50/c.h;
+            $preview_50.css({
+                width: Math.round(rx_1 * boundx) + 'px',
+                height: Math.round(ry_1 * boundy) + 'px',
+                marginLeft: '-' + Math.round(rx_1 * c.x) + 'px',
+                marginTop: '-' + Math.round(ry_1 * c.y) + 'px'
+            });
+            var true_width = c.w * times, true_height = c.h * times;
+            s_x = parseInt(c.x * times, 10); s_y = parseInt(c.y * times, 10); 
+            e_x = parseInt(s_x + true_width, 10), e_y = parseInt(s_y + true_height, 10);
+            $pos_sx.val(s_x);
+            $pos_sy.val(s_y);
+            $pos_ex.val(e_x);
+            $pos_ey.val(e_y);
+            $button.removeAttr("disabled").css("color", "black");
+        };
     }
     
 });
@@ -233,7 +299,7 @@ jQuery.fn.extend({
                     },
     ajax_process:   function(){
                         $(this).html('<img src="/static/img/ajax.gif" />'); 
-                    },
+                    }
 });
 
 
@@ -453,6 +519,15 @@ jQuery.afewords.tools.Global_Funs = {
                                             $button.remove_disabled();                                        
                                         }else{
                                             $process.right_process("上传成功！");
+                                            pop_page_close();
+                                            var htmls = create_crop_block(response);
+                                            var $avatar_form = jQuery("#avatar_wrap_form");
+                                            if(!$avatar_form.length){
+                                                jQuery("#avatar_wrap_nav").after(htmls);                                            
+                                            }else{
+                                                $avatar_form.replaceWith(htmls);                                            
+                                            }
+                                            jQuery.crop_picture_init();
                                         }                                     
                                                               
                                     });
@@ -462,6 +537,23 @@ jQuery.afewords.tools.Global_Funs = {
                                     });
                                     return true;                                
                                 });
+                                function create_crop_block(response){
+                                     return '<table id="avatar_wrap_form">'+
+                                            '<tr>' +
+                                            '<td width="70%" rowspan="2" id="crop-contain">'+
+                                            '<img src="'+ response.img_url +'" id="crop-obj" />' +
+                                            '</td>' +
+                                            '<td width="30%" align="center">'+
+                                            '<div id="crop-120">'+
+                                            '<img src="'+ response.img_url +'" id="preview-120" />' +
+                                            '</div>'+
+                                            '</td></tr>' +
+                                            '<tr>' +
+                                            '<td align="center"><div id="crop-50">'+
+                                            '<img src="' + response.img_url + '" id="preview-50" />'+
+                                            '</div></td></tr>'+
+                                            '</table>';
+                                }
                                 
                                 
                                 
@@ -638,7 +730,21 @@ jQuery.afewords.tools.Global_Funs = {
                 },
     "body_content_button":{
                 "crop_avatar":      function( $body_content, $process, mes ){
-                                        alert("开发中...");
+                                        var $button = $(this),
+                                            $process = jQuery("#crop-process"),
+                                            mes = $body_content.DivToDict(),
+                                            url = '/settingpost-user_avatar_crop';
+                                        jQuery.postJSON(url, mes, function(){
+                                            $process.ajax_process(); $button.to_disabled();                                        
+                                        }, function(response){
+                                            if(response.status != 0){
+                                                $process.error_process(response.info); $button.remove_disabled();                                            
+                                            }else{
+                                                $process.right_process("设置成功！");                                     
+                                            }
+                                        }, function(textStatus){
+                                            $process.error_process("出现错误：" + textStatus); $button.remove_disabled();                                        
+                                        });
                                         return false;                
                 },
                 "modify_password":  function( $body_content, $process, mes ){

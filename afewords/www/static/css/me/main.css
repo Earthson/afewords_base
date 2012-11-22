@@ -600,4 +600,6 @@ min-height: 1px;}
 
 #crop-contain{}
 #crop-contain img{max-width: 500px;max-height: 500px;}
+#crop-50{height: 50px;width: 50px; overflow: hidden;}
+#crop-120{height: 120px; width: 120px; overflow: hidden;}
 
