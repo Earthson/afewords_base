@@ -596,8 +596,8 @@ min-height: 1px;}
 #pop_insert_table a.feedback{color: blue; font-size: 12px;margin-left: 20px;}
 
 #avatar_wrap_nav{float: left;width: 100%;margin-top: 20px;margin-bottom: 20px;}
-#avatar_wrap_form{float: left;width: 100%;margin-top: 20px;margin-bottom: 20px;overflow: hidden;}
-#avatar_wrap_form img{min-width: 100%;overflow: hidden;}
-#crop-contain{max-height: 100%;}
+#avatar_wrap_form{float: left;width: 100%;margin-top: 20px;margin-bottom: 20px;}
+
+#crop-contain{}
 #crop-contain img{max-width: 500px;max-height: 500px;}
 

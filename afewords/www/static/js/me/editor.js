@@ -426,7 +426,7 @@
                         "image": function( image_obj ){
                                         image_obj["src_alias"] = image_obj["src_alias"] || image_obj["alias"] || '-1';
                                         image_obj["title"] = image_obj["title"] || image_obj["name"] || '';
-                                        image_obj["img_url"] = image_obj["img_url"] || image_obj["tbumb_name"] || '';
+                                        image_obj["img_url"] = image_obj["img_url"] || image_obj["thumb_name"] || '';
                                         this.attr("src_alias", image_obj.src_alias);
                                         this.find("#src_view_title").html("图" + image_obj.src_alias);
                                         this.attr("src_alias", image_obj.src_alias);
