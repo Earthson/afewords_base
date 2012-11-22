@@ -43,7 +43,7 @@ class AFBookCreatePara(BaseHandlerPara):
 
     def read(self):
         BaseHandlerPara.read(self)
-        self['keywords'] = self['keywords'].replace('，', ',')
+        self['keywords'] = self['keywords'].replace(u'，', u',')
         self['keywords'] = self['keywords'].split(',')
 
 from pages.postjson import AFBookCreateJson
@@ -67,6 +67,8 @@ class AFBookCreateHandler(BaseHandler):
         book_new = usr.create_catalog(handler_para['name'], 
                                         handler_para['keywords'])
         handler_json['about_id'] = str(book_new.about_id)
+        handler_json.by_status(0)
+        handler_json.write()
         return
 
 def bookedit_init(handler, bid, page):
