@@ -46,10 +46,7 @@ class BloggerBlogHandler(BaseBloggerHandler):
         paras = BloggerBlogPara(self)
         page = BloggerBlogPage(self)
         page['current_page'] = paras['page']
-        if usr:
-            page['author'] = usr.as_viewer(author)
-        else:
-            page['author'] = author.basic_info
+        page['author'] = author.obj_info_view_by('basic_info', usr, usr)
         page['tag_list'] = author.alltags
         page['current_tag'] = paras['tag']
         enum = 7

@@ -20,8 +20,8 @@ def random_string(num):
     return salt
 
 def is_email(email):
-    reg = r"^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$"
-    return re.match(reg, email) is not None
+    from afutils.mail_utils import validate_email
+    return validate_email(email)
 
 def arg_escape(value):
     if isinstance(value, basestring):

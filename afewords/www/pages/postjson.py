@@ -238,6 +238,7 @@ class InviteJson(StatusJson):
         1 : u'您没有可用的邀请名额',
         2 : u'邀请发送失败',
         3 : u'邮件地址不合法',
+        4 : u'系统未开放邀请',
     }
 
 @with_attr

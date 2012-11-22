@@ -100,7 +100,7 @@ class Picture(DataBox):
             f_ospath = self.thumb_os_path
             if f_ospath:
                 try:
-                    return Image.open(self.data['thumb_name'])
+                    return Image.open(f_ospath)
                 except IOError, e:
                     return None
             return None
@@ -119,8 +119,9 @@ class Picture(DataBox):
             f_ospath = self.file_os_path
             if f_ospath:
                 try:
-                    return Image.open(self.data['file_name'])
+                    return Image.open(f_ospath)
                 except IOError, e:
+                    print(e)
                     return None
             return None
         def setter(self, value):

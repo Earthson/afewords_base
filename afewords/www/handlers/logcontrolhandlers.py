@@ -26,9 +26,9 @@ class LoginHandler(BaseHandler):
             error_info['email'] = email
         else:
             usr, status_code, status_info = user_login(email, pwd)
-            if status_code == 1:
+            if status_code:
                 error_info['email'] = email
-                error_info['error'] = 5
+                error_info['error'] = status_code#5
         if error_info:
             self.redirect_with_para('/login', error_info)
             return
