@@ -18,7 +18,7 @@ class BlogHandler(BaseHandler):
         page['ispreview'] = True if preview == 'yes' else False
         page['article'] = blog_to.obj_info_view_by('view_info', 
                     usr=usr, env=usr)
-        if userstat.view_article(blog_to):
+        if preview != 'yes' and userstat.view_article(blog_to):
             blog_to.statistics.view_count += 1
         if usr:
             page['islike'] = usr.is_like(blog_to)
