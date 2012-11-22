@@ -1,0 +1,36 @@
+{% extends "book-base.html" %}
+
+{% block book_base_right_body %}
+{% set book = doc['book'] %}
+{% set author = book['author'] %}
+
+<div id="middle_book" class="middle_book_catalog current_middle1">
+<div class="book_header"><span class="header_left">信息</span><span class="header_right">{{ book['name'] }}</span></div>
+
+
+<div class="book_summary">
+
+<div class="book_summary_tip">信息</div>
+<div class="book_summary_con">
+
+<div class="bb_con">
+审校：deju.tu
+创建时间：2012-8-23
+目录：34
+完成度：80%
+联合编者：earthson
+关键词：tornado, xxxx
+浏览：1023
+喜欢：1
+最近更新：2012-12-1
+</div>
+
+</div>
+</div>
+
+
+<div class="book_footer">&nbsp;</div>
+</div>
+
+
+{% end %}
