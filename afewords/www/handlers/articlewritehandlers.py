@@ -259,7 +259,9 @@ class ArticleSrcHandler(BaseArticleUpdateHandler):
         if status == 0 and handler_paras.error_code > 0:
             #data read error
             status = handler_paras.error_code
-        if handler_paras['src_type'] in ['img', 'image']:
+        if handler_paras['do'] in ['new'] and \
+                handler_paras['src_type'] in ['img', 'image']:
+            #do not return json if upload_img
             handler_json.is_json = False
         if status != 0:
             handler_json.by_status(status)
