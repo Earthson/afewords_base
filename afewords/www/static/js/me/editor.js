@@ -921,18 +921,24 @@
         this.handle_src_right = function(response, paras){
             /**********the handler function after the ajax submit ************/
             var _self_ = this,
-                $src_bar_contain = _self_.$lib_bars[paras["src_type"]], 
-                $src_one,
                 src_type = paras["src_type"],
+                $src_bar_contain = _self_.$lib_bars[src_type], 
+                $src_one,
                 init_funs = _self_.editor_config.default_block_html["init"];
-                
-            paras["src_alias"] = response.src_alias;
             
             if(paras["do"] == "new"){
                 // new src
+                paras["src_alias"] = response.src_alias;
+                if(src_type == "image"){
+                    paras["img_url"] = response.img_url;            
+                }
                 $src_one = $src_bar_contain.find(".one").eq(0).clone();
                 init_funs[src_type].call($src_one, paras);       
-                $src_bar_contain.find("#crtm").append($src_one.css("display", "block"));
+                if(paras['src_type'] != 'image'){
+                    $src_bar_contain.find("#crtm").append($src_one.css("display", "block"));
+                }else{
+                    $src_bar_contain.find(".i").append($src_one.css("display", "block"));               
+                }                
                 $src_one.find(".src_insert").click();
                 _self_.pop_page_close();
                 return;
