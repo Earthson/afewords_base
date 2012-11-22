@@ -283,6 +283,7 @@ class ArticleSrcHandler(BaseArticleUpdateHandler):
             src_obj.set_by_info(handler_paras.load_doc())
             if handler_paras['src_type'] == 'img':
                 handler_json['img_url'] = src_obj.thumb_url
+                handler_json.is_json = False
             handler_json.by_status(0)
             handler_json.write()
             return #0
