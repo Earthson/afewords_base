@@ -297,7 +297,7 @@ class ArticleSrcHandler(BaseArticleUpdateHandler):
             handler_json.write()
             return #0
         elif handler_paras['do'] == 'edit':
-            src_obj = self.article_obj.get_ref(src_obj.first_alias,
+            src_obj = self.article_obj.get_ref(scls.first_alias,
                                 handler_paras['src_alias']) 
             if src_obj is None:
                 handler_json.by_status(18)
