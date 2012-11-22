@@ -425,3 +425,13 @@ class FeedbackJson(StatusJson):
         2 : u'邮箱不合法',
         3 : u'内容太短',
     }
+
+@with_attr
+class AFBookCreateJson(StatusJson):
+    doc = {
+        'about_id' : '',
+    }
+    error_info = {
+        0 : u'知识谱创建成功',
+        1 : u'请先给知识谱命名',
+    }
