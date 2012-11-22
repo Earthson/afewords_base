@@ -31,6 +31,7 @@ class UserInviteHandler(BaseHandler):
             handler_json.by_status(2)
             handler_json.write()
             return #send mail failed
+        usr.invite_user(handler_para['email'])
         handler_json.by_status(0)
         handler_json.write()
 

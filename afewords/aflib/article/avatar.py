@@ -45,5 +45,5 @@ class Avatar(Picture):
             if not self.data['file_name']:
                 return self.pic_main_url + \
                     'static/avatar/small/afewords-user.jpg'
-            return self.pic_main_url + self.pic_path + self.file_name
+            return self.pic_main_url + self.thumb_path + self.file_name
         return getter

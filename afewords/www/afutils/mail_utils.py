@@ -6,7 +6,7 @@ import smtplib
 import logging
 import re
 
-_mail_rex = re.compile('^[_.0-9a-z-]+@([0-9a-z][0-9a-z-]+.)+[a-z]{2,4}$')
+_mail_rex = re.compile('^[_.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+.)+[a-zA-Z]{2,4}$')
 
 def validate_email(email_address):
     return _mail_rex.match(email_address) is not None

@@ -49,13 +49,14 @@ def email_verification(usr):
 def invite_other(invitor, invitee_mail):
     from invitation import Invitation
     from mails import send_invite
-    
+
+    invitee_mail = invitee_mail.lower()
     if not Invitation.is_exist({'email':invitee_mail}):
         gcnt = global_info['invitations_count']
         if gcnt >= af_conf['invitation_limit']:
-            return 1 #invitation not available, full
+            return 4 #invitation not available, full
         if invitor.invitations <= 0:
-            return 4 #your pool is empty
+            return 1 #your pool is empty
         invi = Invitation(attrs={'email' : invitee_mail})
         invi.date = datetime.now()
         invi.invitor = invitor.email
