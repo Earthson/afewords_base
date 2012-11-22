@@ -153,7 +153,9 @@ $.extend({
                 jcrop_api = this;
             });
         });
-        
+        $image_block.error(function(){
+            $process.error_process("图片打开失败！");
+        });
         
         function updatePreview(c){
             if(parseInt(c.w, 10) < 0)   return;
