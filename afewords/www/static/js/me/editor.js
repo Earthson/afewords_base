@@ -888,7 +888,7 @@
         }
            
         this.ajax_new_image_bind = function( $form ){
-
+            var that  = this;
             //alert($form.html());
             $form.submit(function(){
                 var $this = $(this),
@@ -911,7 +911,7 @@
                         $button.removeAttr("disabled").css("color", "black");                    
                     }else{
                         $process.html("上传成功！").css("color", "blue");
-                                            
+                        that.handle_src_right(response, mes);                    
                     }
                 });         
                 return true;
