@@ -8,37 +8,34 @@
     <!-- for avatar -->
     <div class="settings">
     <div class="page_nav"><span>头像</span><span class="left20"><a href="javascript:void(0);">上传新头像</a></span></div>
-    <div id="self">
+    <table id="avatar_wrap_nav">
+    <tr><td width="20%;">裁剪</td><td width="50%">&nbsp;</td><td width="30%" align="center"><button>裁剪</button></td></tr>
+    </table>
+
     {% if doc['avatar_path'] != '' %}
-        <div class="self-img-up" style="margin-top:20px;" id="self-img-up-tag">裁剪头像：</div>
-        <table style="margin-top:5px;" id="form-avatar">
+        <table id="avatar_wrap_form">
         <tr>
-        <td rowspan="5" id="crop-contain">
+        <td width="70%" rowspan="2" id="crop-contain">
         <img src="{{ doc['avatar_path'] }}" id="crop-obj" alt="Flowers" />
         </td>
-        </tr>
-        <tr><td align="center" width="150px;">
+        <td width="30%" align="center">
         <div style="width:120px;height:120px;overflow:hidden;">
         <img src="{{ doc['avatar_path'] }}" id="preview-120" alt="Preview" />
         </div>
         </td>
         </tr>
-        <tr><td align="center" height="100px;">
-        <div style="width:50px;height:50px;overflow:hidden;">
+        <tr>
+        <td align="center"><div style="width:50px;height:50px;overflow:hidden;">
         <img src="{{ doc['avatar_path'] }}" id="preview-50" alt="Preview" />
         </div>
-        </td></tr>
-        <tr><td align="center" id="crop-process">&nbsp;</td></tr>
-        <tr><td align="center">
         <input type="hidden" name="pos-x" id="pos-x" value="0" />
         <input type="hidden" name="pos-y" id="pos-y" value="0" />
         <input type="hidden" name="pos-w" id="pos-w" value="0" />
         <input type="hidden" name="pos-time" id="pos-time" value="1" />
-        <button class="self-intro-button" style="float:none;">提交</button>
-        </td></tr>
+        </td>        
+        </tr>
         </table>
     {% end %}
-    </div>
     <div class="div-20"></div>
     <div class="div-20"></div>
     </div>
