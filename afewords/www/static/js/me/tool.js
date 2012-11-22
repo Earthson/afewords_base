@@ -383,7 +383,7 @@ jQuery.afewords.tools.Global_Funs = {
                     "check": function(paras){
                                 if(!jQuery.check_email(paras['email'])) return [-1, '请您填写正确的邮箱！'];
                                 if(!paras['pwd'] || paras['pwd'].length < 4) return [-1, '设置的密码需要4位以上！'];
-                                if(!paras['pwd'] != paras['pwd_again']) return [-1, "确认密码出错！"]
+                                if(paras['pwd'] != paras['pwd_again']) return [-1, "确认密码出错！"]
                                 if(!paras['token']) return [-1, '请您填写验证码！']
                                 return [1, '']
                     },
