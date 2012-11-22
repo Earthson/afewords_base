@@ -26,6 +26,10 @@ class Avatar(Picture):
     pic_path = 'static/avatar/normal/'
     thumb_path = 'static/avatar/small/'
 
+    @class_property
+    def cls_alias(cls):
+        return [u'avatar']
+
     @db_property
     def url():
         def getter(self):
