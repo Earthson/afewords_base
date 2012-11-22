@@ -193,7 +193,7 @@ float: left;border-bottom: #ccc 1px dotted;padding-left: 2%;position: relative;p
 .book_create table td{border-bottom: none;padding: 10px 0;}
 .book_create .g_c_name{width: 50%;padding: 5px;}
 .book_create .g_c_des{width: 70%;resize:none; height: 200px;padding: 5px;float: left;clear: both;}
-.book_create .g_c_process{color: black;margin-left: 20px;width: 60%;height: 40px;line-height: 40px;}
+.book_create .g_c_process{color: black;margin-left: 20px;width: 60%;line-height: 40px;display: inline-block;position: relative;top:-10px;}
 
 .book_create div.inline{float: left;display: inline-block;}
 
