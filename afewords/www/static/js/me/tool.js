@@ -446,10 +446,14 @@ jQuery.afewords.tools.Global_Funs = {
                                     $image_iframe.load(function(){
 
                                         var iframe_document = window.frames["up_picture_iframe"].document;
-                                        alert(iframe_document);
-                                        if(!iframe_document)    return;
-                                        alert(iframe_document.body.innerHTML);  
-                                        
+                                        var response_text = iframe_document.body.getElementsByTagName("textarea")[0].value;
+                                        var response = window['eval']('(' + response_text +')');
+                                        if(response.status != 0){
+                                            $process.error_process(response.info);
+                                            $button.remove_disabled();                                        
+                                        }else{
+                                            $process.right_process("上传成功！");
+                                        }                                     
                                                               
                                     });
                                     

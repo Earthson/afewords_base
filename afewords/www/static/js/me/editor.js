@@ -582,14 +582,15 @@
             function create_image_pop_html(){
                 if(paras["do"] == "new"){
                     return '<p class="first">添加图片<span class="all_example" title="说明"><a target="_blank" href="/help-editor-picture">说明</a></span></p>'+
-                            '<form action="/article-src-control" id="up_picture" enctype="multipart/form-data" method="post">'+
+                            '<form action="/article-src-control" id="up_picture" enctype="multipart/form-data" method="post" target="up_picture_iframe">'+
                             '<input type="hidden" name="picture_type" value="article" />' +
                             '<input type="hidden" name="_xsrf" value="' + jQ.getCookie("_xsrf") + '" />'+
                             hidden_paras_html + 
-                            '<p><input class="i_file" type="file" name="picture" onclick=clear_process(this,"i"); /></p>'+
-                            '<p>标题<input class="i_title" name="title" autocomplete="off" type="text" onfocus=clear_process(this,"i"); /></p>'+
-                            '<p><span class="i_button"><button type="submit">上传图片</button>'+
-                            '<button type="submit" style="display:none">提交</button></span><span class="i_process" id="src_process">&nbsp;</span></p></form>';                
+                            '<p><input class="i_file" type="file" name="picture" /></p>'+
+                            '<p>标题<input class="i_title" name="title" autocomplete="off" type="text" /></p>'+
+                            '<p><button class="i_button" type="submit">上传图片</button>'+
+                            '<span class="i_process" id="src_process">&nbsp;</span></p></form>'+
+                            '<iframe src="about:_blank" id="up_picture_iframe" name="up_picture_iframe" style="display:none;"></iframe>';                
                 }else{
                     return hidden_paras_html + 
                         '<p class="first">修改图片属性</p>'+
@@ -851,7 +852,7 @@
                 
                     if( !del_flag ){
                         $process.html('<img src="/static/img/ajax.gif" />');
-                        $button.attr("disabled", "disabled").css("color", "#333");
+                        $button.attr("disabled", "disabled").css("color", "#ccc");
                     }
                     
                 }, function(response){
@@ -889,14 +890,33 @@
         this.ajax_new_image_bind = function( $form ){
 
             //alert($form.html());
-            $form.unbind().bind("click", function(event){
-                event.stopPropagation();
-                event.preventDefault();
-                var target = event.target;
-                if(target.nodeName != "BUTTON") return false;
-                alert("update image, this is different from other src");
-                return false;
-            });       
+            $form.submit(function(){
+                var $this = $(this),
+                    mes = $this.DivToDict(),
+                    $button = $this.find("button"),
+                    $process = $button.siblings("span");
+                if(!mes['picture']){ $process.html("请选择图片！").css("color", "red"); return false; }
+                var img_reg = /.*\.(jpg|png|jpeg|gif)$/ig;
+                if(!mes['picture'].match(img_reg)) {  $process.html('图片格式为jpg,png,jpeg,gif！').css("color", "red"); return false; }
+                if(!mes['title']) { $process.html('请填写标题！').css("color", "red"); return false; }
+                $process.html('<img src="/static/img/ajax.gif" />');
+                $button.attr("disabled", "disabled").css("color", "#ccc");
+                var $up_iframe = $this.find("iframe").eq(0);
+                $up_iframe.load(function(){
+                    var iframe_doc = window.frames["up_picture_iframe"].document;
+                    var response_text = iframe_doc.getElementsByTagName("textarea")[0].value;
+                    var response = window.eval('('+ response_text +')');
+                    if(response.status != 0){
+                        $process.html(response.info).css("color", "red");
+                        $button.removeAttr("disabled").css("color", "black");                    
+                    }else{
+                        $process.html("上传成功！").css("color", "blue");
+                                            
+                    }
+                });         
+                return true;
+            });
+     
         }        
         this.handle_src_right = function(response, paras){
             /**********the handler function after the ajax submit ************/
