@@ -238,7 +238,7 @@ class ArticleSrcPara(IMGHandlerPara):
         self.paradoc = dict([(ek, self.handler.get_esc_arg(ek, ev)) 
                                     for ek, ev in self.paradoc.items()])
         self.error_code = 0
-        if self['src_type'] != 'img':
+        if self['src_type'] not in ['img', 'image']:
             return
         IMGHandlerPara.read_img(self)
         if self['do'] != 'new' and self.error_code == 55:
@@ -259,6 +259,8 @@ class ArticleSrcHandler(BaseArticleUpdateHandler):
         if status == 0 and handler_paras.error_code > 0:
             #data read error
             status = handler_paras.error_code
+        if handler_paras['src_type'] in ['img', 'image']:
+            handler_json.is_json = False
         if status != 0:
             handler_json.by_status(status)
             handler_json.write()
@@ -281,9 +283,8 @@ class ArticleSrcHandler(BaseArticleUpdateHandler):
                 return #Add Ref Failed
             handler_json.as_new_src(src_obj)
             src_obj.set_by_info(handler_paras.load_doc())
-            if handler_paras['src_type'] == 'img':
+            if handler_paras['src_type'] in ['img', 'image']:
                 handler_json['img_url'] = src_obj.thumb_url
-                handler_json.is_json = False
             handler_json.by_status(0)
             handler_json.write()
             return #0
@@ -301,7 +302,7 @@ class ArticleSrcHandler(BaseArticleUpdateHandler):
                 handler_json.write()
                 return #Src Not Exist
             src_obj.set_by_info(handler_paras.load_doc())
-            if handler_paras['src_type'] == 'img':
+            if handler_paras['src_type'] in ['img', 'image']:
                 handler_json['img_url'] = src_obj.thumb_url
             self.article_obj.do_update()
             handler_json.by_status(0)

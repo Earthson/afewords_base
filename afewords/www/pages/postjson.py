@@ -181,7 +181,7 @@ class ArticleSrcJson(StatusJson):
         if self.is_json is True:
             self.handler.write(ans)
             return
-        self.handler.write('<textarea' + str(ans) + '</textarea>')
+        self.handler.write('<textarea>' + str(ans) + '</textarea>')
 
 
 @with_attr

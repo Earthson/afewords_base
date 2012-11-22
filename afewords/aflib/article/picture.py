@@ -48,7 +48,7 @@ class Picture(DataBox):
 
     @class_property
     def cls_alias(cls):
-        return u'img'
+        return [u'img', u'image']
 
     def set_by_info(self, infodoc):
         ans = dict()
