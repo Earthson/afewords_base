@@ -52,7 +52,7 @@ class UserStatMongo(EmMongoDict):
             }
             view_doc.set_all(doc_new)
             return True
-        elif time_now - time_last < 2000:
+        elif time_now - time_last < 3600:
             return False
         view_doc['last_time'] = time_now
         return True
