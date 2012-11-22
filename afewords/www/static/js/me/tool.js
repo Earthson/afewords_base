@@ -769,7 +769,24 @@ jQuery.afewords.tools.Global_Funs = {
                                         }        
                 },
                 "create_book":      function( $body_content, $process, mes ){
-                                        alert("开发中....");
+                                        var $button = jQuery(this);
+                                        if(!mes['name']) { $process.error_process("请填写知识谱名称！"); return [false]; }
+                                        if(!mes['keywords']) { $process.error_process("请填写关键词【for SEO】!"); return [false]; }
+                                        var url = '/book-create';
+                                        jQuery.postJSON(url, mes, function(){
+                                            $process.ajax_process();  $button.to_disabled();                                        
+                                        },function(response){
+                                            if(response.status != 0){
+                                                $process.error_process(response.info);  $button.remove_disabled();                                            
+                                            }else{
+                                                $process.right_process("创建成功！3秒后自动跳转到该知识谱的摘要编辑页面！");
+                                                setTimeout(function(){
+                                                    location.href = '/write?id=' + response.about_id + '&type=about';
+                                                }, 3000);                                            
+                                            }
+                                        }, function(textStatus){
+                                            $process.error_process("出现错误：" + textStatus); $button.remove_disabled();                                        
+                                        });                                     
                                         return [false];                
                 },
                 "invite_friend":    function( $body_content, $process, mes){
