@@ -269,7 +269,10 @@ class User(DataBox):
     @db_property
     def alltags():
         def getter(self):
-            return self.lib.tag_lib['alltags']
+            ans = self.lib.tag_lib['alltags']
+            if ans is None:
+                return list()
+            return ans
         return getter
 
     @with_user_status

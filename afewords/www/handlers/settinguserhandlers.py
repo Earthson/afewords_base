@@ -15,7 +15,7 @@ class UserInviteHandler(BaseHandler):
     @with_login_post
     def post(self):
         from afutils.mail_utils import validate_email
-        from afutils.user_utile import invite_other
+        from afutils.user_utils import invite_other
         handler_para = UserInvitePara(self)
         handler_json = InviteJson(self)
         usr = self.current_user

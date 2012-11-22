@@ -34,8 +34,7 @@ class Avatar(Picture):
     def url():
         def getter(self):
             if not self.data['file_name']:
-                return self.pic_main_url + \
-                    'static/avatar/normal/afewords-user.jpg'
+                return ''
             return self.pic_main_url + self.pic_path + self.file_name
         return getter
 

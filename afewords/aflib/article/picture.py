@@ -144,6 +144,8 @@ class Picture(DataBox):
     @db_property
     def url():
         def getter(self):
+            if not self.data['file_name']:
+                return ''
             return self.pic_main_url + self.pic_path + self.file_name
         return getter
 
