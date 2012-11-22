@@ -414,50 +414,63 @@
             
             "init": {
                         "math": function( math_obj ){  // this must be jq object
-                                        math_obj["src_alias"] = math_obj["src_alias"] || math_obj["alias"] || '1';
+                                        if(math_obj["do"] == "new"){
+                                            math_obj["src_alias"] = math_obj["src_alias"] || math_obj["alias"] || '1';
+                                            this.find("#src_view_title").html("数式" + math_obj.src_alias);
+                                            this.attr("src_alias", math_obj.src_alias);
+                                        }
                                         math_obj["math_mode"] = math_obj["math_mode"] || math_obj["mode"] || 'display';
                                         math_obj["title"] = math_obj["title"] || math_obj["name"] || '';
-                                        this.find("#src_view_title").html("数式" + math_obj.src_alias);
-                                        this.attr("src_alias", math_obj.src_alias);
+
                                         this.find("#src_math_mode").val(math_obj.math_mode);
                                         this.find("#src_body").val(math_obj.body);
                                         this.find("#src_title").val(math_obj.title);                        
                                 },
                         "image": function( image_obj ){
-                                        image_obj["src_alias"] = image_obj["src_alias"] || image_obj["alias"] || '-1';
+                                        if(image_obj["do"] == "new"){
+                                            image_obj["src_alias"] = image_obj["src_alias"] || image_obj["alias"] || '-1';
+                                            this.attr("src_alias", image_obj.src_alias);
+                                            this.find("#src_view_title").html("图" + image_obj.src_alias);
+                                            image_obj["img_url"] = image_obj["img_url"] || image_obj["thumb_name"] || '';
+                                            this.find("#src_path").attr("src", image_obj.img_url);                                        
+                                        }
                                         image_obj["title"] = image_obj["title"] || image_obj["name"] || '';
-                                        image_obj["img_url"] = image_obj["img_url"] || image_obj["thumb_name"] || '';
-                                        this.attr("src_alias", image_obj.src_alias);
-                                        this.find("#src_view_title").html("图" + image_obj.src_alias);
-                                        this.attr("src_alias", image_obj.src_alias);
-                                        this.find("#src_path").attr("src", image_obj.img_url);
+     
                                         this.find("#src_title").val(image_obj.title);                        
                                 },
                         "table": function(table_obj ){
-                                        table_obj["src_alias"] = table_obj["src_alias"] || table_obj["alias"] || '-1';
+                                        if(table_obj["do"] == "new"){
+                                            table_obj["src_alias"] = table_obj["src_alias"] || table_obj["alias"] || '-1';
+                                            this.attr("src_alias", table_obj.src_alias);
+                                            this.find("#src_view_title").html("表" + table_obj.src_alias);
+                                        }
                                         table_obj["title"] = table_obj["title"] || table_obj["name"] || '';
-                                        //alert(table_obj["src_alias"]);
-                                        this.attr("src_alias", table_obj.src_alias);
-                                        this.find("#src_view_title").html("表" + table_obj.src_alias);
+                                        
                                         this.find("#src_title").val(table_obj.title);
                                         this.find("#src_body").val(table_obj.body);                        
                                 },
                         "code": function( code_obj ){
-                                        code_obj["src_alias"] = code_obj["src_alias"] || code_obj["alias"] || '-1';
+                                        if(code_obj["do"] == "new"){
+                                            code_obj["src_alias"] = code_obj["src_alias"] || code_obj["alias"] || '-1';
+                                            this.attr("src_alias", code_obj.src_alias);
+                                            this.find("#src_view_title").html("代码" + code_obj.src_alias);
+                                        }
                                         code_obj["title"] = code_obj["title"] || code_obj["name"] || '';
                                         code_obj["code_type"] = code_obj["code_type"] || code_obj["lang"] || 'python';
-                                        this.attr("src_alias", code_obj.src_alias);
-                                        this.find("#src_view_title").html("代码" + code_obj.src_alias);
+                                        
                                         this.find("#src_title").val(code_obj.title);
                                         this.find("#src_body").val(code_obj.body);
                                         this.find("#src_code_type").val(code_obj.code_type);
                                 },
                         "reference": function( ref_obj ){
-                                        ref_obj["src_alias"] = ref_obj["src_alias"] || ref_obj["alias"] || '-1';
+                                        if(ref_obj["do"] == "new"){
+                                            ref_obj["src_alias"] = ref_obj["src_alias"] || ref_obj["alias"] || '-1';
+                                            this.attr("src_alias", ref_obj.src_alias);
+                                            this.find("#src_view_title").html("引用" + ref_obj.src_alias);
+                                        }
                                         ref_obj["title"] = ref_obj["title"] || ref_obj["name"] || '';
                                         ref_obj["source"] = ref_obj["source"] || ref_obj["url"] || '';
-                                        this.attr("src_alias", ref_obj.src_alias);
-                                        this.find("#src_view_title").html("引用" + ref_obj.src_alias);
+                                        
                                         this.find("#src_title").val(ref_obj.title);
                                         this.find("#src_body").val(ref_obj.body);
                                         this.find("#src_source").val(ref_obj.source);                        
@@ -1014,6 +1027,7 @@
                 current_fun = init_funs[src_type];
                 for(var i = 0; i < src_list.length; i++){
                     tmp_obj = src_list[i];
+                    tmp_obj["do"] = "new";
                     $clone_demo = $src_demo.clone();
                     current_fun.call($clone_demo, tmp_obj);
                     $clone_demo.css("display", "block");    
