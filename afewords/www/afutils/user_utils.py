@@ -6,6 +6,8 @@ from datetime import datetime
 from security import *
 from log_utils import *
 
+from global_info import global_info
+
 from afconfig import af_conf
 
 def user_reg(email, password, sex, name):
@@ -61,8 +63,7 @@ def invite_other(invitor, invitee_mail):
         invi.date = datetime.now()
         invi.invitor = invitor.email
         global_info.inc('invitations_count')
-
-    invitor.invitations -= 1
+        invitor.invitations -= 1
     if send_invite(invitor, invitee_mail):
         return 0 #successfull
     return 2 #mail sending error
