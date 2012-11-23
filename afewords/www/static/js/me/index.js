@@ -468,12 +468,14 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
                 case 'blog':
                     basic_url = '/blog/' +  response.article_id;
                     break;
-                case 'user-about':
-                    basic_url = '/blogger/' + AFWUser['id'] + '/about';
+                case 'about':
+                    if(mes['env_type'] == 'user'){
+                        basic_url = '/blogger/' + AFWUser['id'] + '/about';
+                    }else{
+                        basic_url = '/book/' + mes['env_id'] + '/about';                   
+                    }
                     break;
-                case 'book-about':
-                    basic_url = '/book/' + mes['env_id'] + '/about';
-                    break;
+
                 default:
                     break;
             }
@@ -483,7 +485,7 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
                 $process.right_process('操作成功！预览地址<a href="'+ basic_url +'" target="_blank">预览</a>');
                 return;            
             }else{
-                $process.right_process('操作成功，1s后跳转到目的页！');
+                $process.right_process('操作成功，1秒后跳转...');
                 setTimeout( function (){ location.href=basic_url; }, 1000);   
                 jQuery.close_window_alert();         
             }
