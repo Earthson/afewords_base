@@ -110,6 +110,7 @@ class Picture(DataBox):
             tmp = value.copy()
             tmp.thumbnail((200, 200))
             tmp.save(self.thumb_path + self.data['thumb_name'], value.format)
+            print self.thumb_path + self.data['thumb_name']
         return getter, setter
 
     @db_property
