@@ -150,6 +150,9 @@ class Catalog(DataBox):
         if data is None:
             self.about.set_propertys(env=self, author_id=self.data['owner_id'])
 
+    def do_update(self):
+        self.update_time = datetime.now()
+
     @class_property
     def cls_alias(cls):
         return 'book'
@@ -244,6 +247,7 @@ class Catalog(DataBox):
         tmp.set_all([rel_obj._id])
         #self.get_node_dict(node_id)['spec_count'] += 1
         self.get_node_dict(node_id)['spec_count'] = 1
+        self.do_update()
         return True
 
     def unspec_article_to(self, node_id, rel_obj):
@@ -258,6 +262,7 @@ class Catalog(DataBox):
                 self.complete_count -= 1
             tmp.set_list(list(tmpset))
             self.get_node_dict(node_id)['spec_count'] -= 1
+        self.do_update()
         return True
 
     def recommend_article(self, node_id, article_obj):
@@ -270,6 +275,7 @@ class Catalog(DataBox):
         tmp_list.push(rr._id)
         self.lib.relations_list.push(rr._id)
         self.get_node_dict(node_id)['article_count'] += 1
+        self.do_update()
         return rr
 
     def remove_article(self, node_id, rel_obj):
@@ -289,6 +295,7 @@ class Catalog(DataBox):
         tmp.push(rr._id)
         self.lib.relations_list.push(rr._id)
         self.get_node_dict(node_id)['subcatalog_count'] += 1
+        self.do_update()
         return rr
 
     def remove_subcatalog(self, node_id, rel_obj):
@@ -314,6 +321,7 @@ class Catalog(DataBox):
         self.lib.node_lib[str(self.node_count)] = tmp_node
         self.lib.node_info_lib[str(self.node_count)] = tmp_info
         self.node_count += 1
+        self.do_update()
         return str(self.node_count - 1)
 
     def modify_node(self, node_id, title, section):
@@ -322,6 +330,7 @@ class Catalog(DataBox):
             return False #node not exist
         cnode['title'] = title
         cnode['section'] = section
+        self.do_update()
         return True
         
     def remove_node(self, node_id):
@@ -342,6 +351,7 @@ class Catalog(DataBox):
             each.remove()
         del self.lib.node_lib[node_id]
         del self.lib.node_info_lib[node_id]
+        self.do_update()
         return True
 
     def get_node_dict(self, node_id):
