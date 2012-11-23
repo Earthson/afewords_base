@@ -57,6 +57,7 @@ from handlers.bookhandlers import BookHandler
 from handlers.bookhandlers import BookChapterHandler
 from handlers.bookhandlers import BookCatalogHandler
 from handlers.bookhandlers import BookAboutHandler
+from handlers.bookhandlers import BookInfoHandler
 
 from handlers.afuserhandlers import AFUserRecentHandler
 
@@ -115,6 +116,7 @@ app_handlers = {
     (r'/book/([0-9a-zA-Z]+)/catalog', BookCatalogHandler),
     (r'/book/([0-9a-zA-Z]+)/catalog/([0-9]+)', BookChapterHandler),
     (r'/book/([0-9a-zA-Z]+)/about', BookAboutHandler),
+    (r'/book/([0-9a-zA-Z]+)/info', BookInfoHandler),
 
     #statistics
     (r'/obj-dolike', ObjDoLikeHandler),

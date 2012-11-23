@@ -1,7 +1,7 @@
 #coding=utf-8
 
 from basehandler import *
-from pages.bookpage import BookPage, BookChapterPage, BookAboutPage, BookCatalogPage
+from pages.bookpage import BookPage, BookChapterPage, BookAboutPage, BookCatalogPage, BookInfoPage
 
 
 
@@ -94,6 +94,26 @@ class BookChapterHandler(BaseHandler):
         handler_page['next_chapter'] = \
                 handler_page['book']['chapter_list'][nxt] if nxt else None
         handler_page['bid'] = bid
+        handler_page.page_init()
+        handler_page.render()
+        return
+
+
+class BookInfoHandler(BaseHandler):
+    '''
+        bid get from url
+    '''
+    def get(self, bid):
+        from article.catalog import Catalog
+        handler_page = BookInfoPage(self)
+        usr = self.current_user
+        handler_page['bid'] = bid
+        catalog_obj = Catalog.by_id(bid)
+        if catalog_obj is None:
+            self.send_error(404)
+            return
+        handler_page['book'] = catalog_obj.obj_info_view_by('basic_info', 
+                                    usr=usr)
         handler_page.page_init()
         handler_page.render()
         return
