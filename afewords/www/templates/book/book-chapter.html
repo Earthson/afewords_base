@@ -13,8 +13,8 @@
 
 {% if previous_chapter %}
 {% set previous_link = '/book/' + book['bid'] + '/catalog/' + previous_chapter['cid'] %} 
-<tr><td colspan="2"><a href="{{ previous_link }}" >{{ previous_chapter['chapter_num'] }} - {{ previous_chapter['title'] }}</a></td></tr>
-<tr><td class="time">上一节</td><td class="time">{{ previous_chapter['chapter_num'] }}</td></tr>
+<tr><td colspan="2"><a href="{{ previous_link }}" >&uarr; {{ previous_chapter['chapter_num'] }} - {{ previous_chapter['title'] }}</a></td></tr>
+{#<tr><td class="time">上一节</td><td class="time">{{ previous_chapter['chapter_num'] }}</td></tr>#}
 {% end %}
 
 <tr><td class="time chosed">当前章节</td>
@@ -22,8 +22,8 @@
 
 {% if next_chapter %}
 {% set next_link = '/book/' + book['bid'] + '/catalog/' + next_chapter['cid'] %} 
-<tr><td class="time">下一节</td><td class="time">{{ next_chapter['chapter_num'] }}</td></tr>
-<tr><td colspan="2"><a href="{{ next_link }}" >{{ next_chapter['chapter_num'] }} - {{ next_chapter['title'] }}</a></td></tr>
+{#<tr><td class="time">下一节</td><td class="time">{{ next_chapter['chapter_num'] }}</td></tr>#}
+<tr><td colspan="2"><a href="{{ next_link }}" >&darr; {{ next_chapter['chapter_num'] }} - {{ next_chapter['title'] }}</a></td></tr>
 {% end %}
 {% end %}
 
@@ -141,6 +141,20 @@ AFWUser['permission'] = {{"true" if 'd' in doc['book']['permission'] else "false
 $().ready(function(){
 	SyntaxHighlighter.all();
 });
+</script>
+<script type="text/javascript" src="/static/js/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['[math]', '[/math]']],
+      displayMath: [ ['[equation]', '[/equation]']],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] },
+     TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
 </script>
 {% end %}
 
