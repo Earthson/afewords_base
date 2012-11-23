@@ -97,7 +97,11 @@
 
 <div class="w-preview"><button do="preview">存稿</button><span></span></div>
 <div class="w-submit-result">&nbsp;</div>
+{% if article_type == "blog" and not isedit %}
 <div class="w-submit"><button type="submit" do="post">发布</button></div>
+{% else %}
+<div class="w-submit"><button type="submit" do="post">保存</button></div>
+{% end %}
 </div>
 </div>
 <!-- right body end -->

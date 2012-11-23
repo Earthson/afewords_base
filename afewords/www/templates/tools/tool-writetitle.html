@@ -1,9 +1,14 @@
 
 {% set article_type = doc['article_type'] %}
+{% set isedit = doc['isedit'] %}
 {% if article_type == 'user-blog' %}
-    文章
+    {% if not isedit %}
+    写文章
+    {% else %}
+    编辑文章
+    {% end %}
 {% elif article_type == 'user-about' %}
-    关于
+    编辑关于我
 {% elif article_type == 'book-about' %}
-    知识谱摘要
+    编辑知识谱摘要
 {% end %}

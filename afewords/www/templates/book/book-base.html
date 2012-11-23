@@ -31,14 +31,16 @@
 {% if want != "catalog" %}
 <td width="50%"><a href="/book/{{ book['bid'] }}" class="chosed{{ int(want=="catalog") }}">目录</a></td>
 {% end %}
-{% if want != "info" %}
+{% if want != "info" and want !="chapter" %}
 <td width="50%"><a href="/book/{{ book['bid'] }}/info" class="chosed{{ int(want=="info") }}">信息</a></td>
 {% end %}
 </tr>
-<tr><td class="time">最近更新</td><td class="time">2012-12-12</td></tr>
+
+<tr><td class="time">最近更新</td><td class="time">{{ str(book['update_time'])[:10] }}</td></tr>
+{#
 <tr><td class="time">浏览</td><td class="time">1</td></tr>
 <tr><td class="time">收藏</td><td class="time">1</td></tr>
-
+#}
 {% block book_base_left_body %}
 {% end %}
 </table>

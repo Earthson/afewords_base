@@ -420,9 +420,6 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
             var to_do = $button.attr("do");
             mes['do'] = to_do;
             
-            for(var i in mes){
-                console.log(i + '  ' +  mes[i]);            
-            }
             if(mes['title'] !== false){
                 if(!mes['title'] || mes['title'] == "标题") {  $process.error_process("请填写标题！"); return; }           
             }
