@@ -8,7 +8,6 @@ from pages.pages import CheckPage
 class CheckHandler(BaseHandler):
     '''check for email verify and password reset verify'''
 
-    @without_login
     def get(self):
         from user import User
 
