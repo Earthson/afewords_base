@@ -257,7 +257,7 @@ class User(DataBox):
     @db_property
     def avatar():
         def getter(self):
-            return id_generator(Avatar)(self.data['avatar_id'])
+            return Avatar.by_id(self.data['avatar_id'])
         return getter
 
     @db_property

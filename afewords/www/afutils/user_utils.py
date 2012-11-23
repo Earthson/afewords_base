@@ -28,7 +28,6 @@ def user_reg(email, password, sex, name):
         'account_status' : 'unverified',
     }
     usr.set_propertys(**doc)
-    usr.avatar.thumb_name = '/static/avatar/small/afewords-user.jpg'
     
     m_status = send_mail_email_verification(usr)
     if m_status is False:

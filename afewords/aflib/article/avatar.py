@@ -41,7 +41,7 @@ class Avatar(Picture):
     @db_property
     def thumb_url():
         def getter(self):
-            if not self.data['file_name']:
+            if not self.data['thumb_name']:
                 return self.pic_main_url + \
                     'static/avatar/small/afewords-user.jpg'
             return self.pic_main_url + self.thumb_path + self.file_name
