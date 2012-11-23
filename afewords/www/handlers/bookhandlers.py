@@ -89,10 +89,10 @@ class BookChapterHandler(BaseHandler):
                 pre = i - 1 if i > 0 else None
                 nxt = i + 1 if i + 1 < len(cids) else None
                 break
-        handler_page['previous_chapter'] = \
-                handler_page['book']['chapter_list'][pre] if pre else None
-        handler_page['next_chapter'] = \
-                handler_page['book']['chapter_list'][nxt] if nxt else None
+        handler_page['previous_chapter'] = None if pre is None else \
+                handler_page['book']['chapter_list'][pre] 
+        handler_page['next_chapter'] = None if nxt is None else \
+                handler_page['book']['chapter_list'][nxt]
         handler_page['bid'] = bid
         handler_page.page_init()
         handler_page.render()
