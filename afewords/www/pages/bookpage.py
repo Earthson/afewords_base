@@ -57,3 +57,12 @@ class BookAboutPage(BookBasePage):
         'subpage_type': 'about',
         'about': {},    # see [[ article ]]
     }
+
+@with_attr
+class BookInfoPage(BookBasePage):
+    ''' for url /book/xxx/info '''
+    __template_file__ = "book/book-info.html"
+    doc = {
+        'page_type': 'book',
+        'subpage_type': 'info',
+    }
