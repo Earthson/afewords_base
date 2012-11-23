@@ -15,15 +15,16 @@
 
 {% set book = doc['book'] %}
 {% set author = book['author'] %}
+{% set statis = book['statistics'] %}
 <table class="book_info" cellpadding="5" cellspacing="4">
-<tr><td width="10%" class="weak">审校</td><td width="90%" class="left"><a href="/blogger/{{ author['uid'] }}">{{ author['name'] }}</a></td></tr>
-<tr><td class="weak">创建</td><td class="left">2012-1-1</td></tr>
-<tr><td  class="weak">浏览</td><td class="left">12</td></tr>
-<tr><td class="weak">喜欢</td><td class="left">123</td></tr>
+<tr><td width="10%" class="weak">审校</td><td width="90%" class="left"><a href="/blogger/{{ author['uid'] }}" class="author">{{ author['name'] }}</a></td></tr>
+<tr><td class="weak">创建</td><td class="left">{{ book['release_time'] }}</td></tr>
+<tr><td  class="weak">浏览</td><td class="left">{{ statis['view_count'] }}</td></tr>
+<tr><td class="weak">喜欢</td><td class="left">{{ statis['like_count'] }}</td></tr>
 <tr><td class="weak">目录数</td><td class="left">{{ book['all_catalog_count'] }}</td></tr>
 <tr><td class="weak">完成度</td><td class="left">{{ book['complete_rate'] }}</td></tr>
-<tr><td class="weak">关键词</td><td class="left">sdfdsf</td></tr>
-<tr><td class="weak">最近更新</td><td class="left">2012-12-12</td></tr>
+<tr><td class="weak">关键词</td><td class="left">{{ book['keywords'] }}</td></tr>
+<tr><td class="weak">最近更新</td><td class="left">{{ book['update_time'] }}</td></tr>
 <tr><td class="weak">联合编者</td><td class="left">xxxx</td></tr>
 </table>
 

@@ -465,7 +465,7 @@ class Catalog(DataBox):
         ans['about_id'] = self.about_id
         ans['name'] = self.name
         ans['release_time'] = self.release_time
-        ans['last_modify_time'] = self.update_time
+        ans['update_time'] = self.update_time
         ans['all_catalog_count'] = self.node_sum
         ans['complete_count'] = self.complete_count
         ans['statistics'] = self.statistics.basic_info
