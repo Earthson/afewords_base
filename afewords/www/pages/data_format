@@ -8,6 +8,7 @@ user:{}
     'notice_count': 0, # int
     'thumb': '',    # unicode
     'tag_list': [], # list
+    'account_status' : '', #unverified, normal, limited
 }
 
 author:{}

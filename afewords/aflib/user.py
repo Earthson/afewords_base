@@ -139,7 +139,7 @@ class UserDoc(AFDocument):
         'token' : basestring,
         'invitations' : int,
         'domain' : basestring,
-        'account_status' : basestring,
+        'account_status' : basestring, #unverified, normal, limited 
         'release_time' : datetime,
 
         'avatar_id' : ObjectId,
@@ -605,14 +605,13 @@ class User(DataBox):
     @db_property
     def notify_user_info():
         def getter(self):
-            attrs = ['uid', 'name', 'draft_count', 
-                        'notice_count', 'thumb_name']
             ans = dict()
             ans['uid'] = self.uid
             ans['name'] = self.name
             ans['draft_count'] = self.draft_count
             ans['notice_count'] = self.notice_count
             ans['thumb'] = self.avatar.thumb_url
+            ans['account_status'] = self.account_status
             return ans
         return getter
 
@@ -662,6 +661,7 @@ class User(DataBox):
             ans['isfollow'] = False
             ans['isme'] = False
             ans['tag_list'] = self.alltags
+            ans['account_status'] = self.account_status
             return ans
         return getter
 
