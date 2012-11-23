@@ -29,7 +29,7 @@ def user_reg(email, password, sex, name):
     }
     usr.set_propertys(**doc)
     
-    m_status = send_mail_email_verification(usr)
+    m_status = email_verification(usr)
     if m_status is False:
         logging.error('+'*30) 
         logging.error('Email send Failed')
@@ -42,7 +42,7 @@ def user_reg(email, password, sex, name):
 def email_verification(usr):
     '''for email changing'''
     token = unicode(random_string(20), 'utf-8')
-    self.token = token
+    usr.token = token
     return send_mail_email_verification(usr)
 
 

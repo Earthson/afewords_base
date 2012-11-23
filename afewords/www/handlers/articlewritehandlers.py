@@ -169,7 +169,6 @@ class ArticleUpdateHandler(BaseArticleUpdateHandler):
         handler_paras = ArticleUpdatePara(self)
         handler_json = UpdateArticleJson(self)
         usr = self.current_user
-        print(usr.account_status)
         status = self.env_init(handler_paras, handler_json)
         if status != 0:
             handler_json.by_status(status)
