@@ -198,7 +198,7 @@ class VerificationMailHandler(BaseHandler):
             handler_json.by_status(2)
             handler_json.write()
             return #user not exist
-        if user.account_status != 'unverified':
+        if usr.account_status != 'unverified':
             handler_json.by_status(1)
             handler_json.write()
             return #already verified user
