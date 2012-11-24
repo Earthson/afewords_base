@@ -4,8 +4,8 @@
 
 <div class="settings">
 
-        {% if doc['invite_count'] < 5 %}
-        <div class="page_nav"><span>邀请好友</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>还可邀请{{ 5 - doc['invite_count'] }}人</span></div>
+        {% if doc['invite_count'] < 1 %}
+        <div class="page_nav"><span>邀请好友</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>还可邀请{{ doc['invite_count'] }}人</span></div>
         <div class="div-20"></div>
         <table>
         <tr><td width="15%" valign="top">好友邮箱</td>
@@ -17,7 +17,7 @@
         {% else %}
         <div class="page_nav"><span>邀请好友</span></div>
         <div class="div-20"></div>
-        您已经邀请了5人！
+        您已经无邀请名额了！
         <div class="div-20"></div>
         <div class="div-20"></div>
         </div>
