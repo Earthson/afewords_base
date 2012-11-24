@@ -8,6 +8,7 @@ from handlers.securityhandlers import RegisterHandler
 from handlers.testhandler import TestHandler
 from handlers.securityhandlers import CheckHandler
 from handlers.securityhandlers import ResetHandler, RepeatResetMailHandler
+from handlers.securityhandlers import VerificationMailHandler
 from handlers.bloghandler import BlogHandler
 from handlers.bloggerhandlers import BloggerBlogHandler
 from handlers.bloggerhandlers import BloggerBookHandler
@@ -91,6 +92,7 @@ app_handlers = {
     (r'/check', CheckHandler),
     (r'/reset', ResetHandler),
     (r'/repeat-mail', RepeatResetMailHandler),
+    (r'/send-verification', VerificationMailHandler),
     (r'/blog/(.+)', BlogHandler),
     (r'/blogger/([0-9a-zA-Z]+)/about', BloggerAboutHandler),
     (r'/blogger/([0-9a-zA-Z]+)/book', BloggerBookHandler),

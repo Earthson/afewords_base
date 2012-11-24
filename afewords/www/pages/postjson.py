@@ -87,6 +87,14 @@ class RepeatMailJson(StatusJson):
         5 : u'您无需验证，请尝试登入或者重置密码',
     }
 
+@with_attr
+class VerificationMailJson(StatusJson):
+    error_info = {
+        0 : u'发送成功, 请登入邮箱完成验证',
+        1 : u'您已经验证过了',
+        2 : u'非法邮箱',
+        3 : u'邮件发送失败',
+    }
 
 @with_attr
 class UpdateArticleJson(StatusJson):

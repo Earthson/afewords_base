@@ -2,7 +2,6 @@
 import re
 import hashlib
 import string
-import StringIO
 import Image, ImageDraw, ImageFont, random
 
 from tornado.escape import url_escape
@@ -43,6 +42,7 @@ def user_login(email, pwd):
     
 
 def create_vertify_code():
+    import StringIO
     background = (random.randrange(230,255),random.randrange(230,255),random.randrange(230,255))
     line_color = (random.randrange(0,255),random.randrange(0,255),random.randrange(0,255))
     img_width = 90

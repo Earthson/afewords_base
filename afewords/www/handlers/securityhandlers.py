@@ -3,13 +3,13 @@ from afutils.security import *
 from basehandler import *
 from pages.pages import CheckPage
 
+from user import User
 
 
 class CheckHandler(BaseHandler):
     '''check for email verify and password reset verify'''
 
     def get(self):
-        from user import User
 
         page = CheckPage(self)
         email = self.get_esc_arg('email')
@@ -173,3 +173,33 @@ class RepeatResetMailHandler(BaseHandler):
         self.set_cookie("repeat", str(time.time()))
         post_json.write()
         return
+
+class VerificationMailPara(BaseHandlerPara):
+    paradoc = {
+        'email' : '',
+    }
+
+class VerificationMailHandler(BaseHandler):
+    def post(self):
+        from afutils.user_utils import email_verification
+        handler_para = VerificationMailPara(self)
+        handler_json = VerificationMailJson(self)
+        usr = self.current_user
+        if usr is None:
+            usr = User.find_one({'email': handler_para['email'].lower()})
+        if usr is None:
+            handler_json.by_status(2)
+            handler_json.write()
+            return #user not exist
+        if user.account_status != 'unverified':
+            handler_json.by_status(1)
+            handler_json.write()
+            return #already verified user
+        else:
+            status = email_verification(usr)
+            if status:
+                handler_json.by_status(0)
+            else: #send failed
+                handler_json.by_status(3)
+            handler_json.write()
+            return #send status
