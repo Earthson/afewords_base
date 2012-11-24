@@ -393,6 +393,38 @@ jQuery.afewords.tools.Global_Funs = {
                             $process.right_process(texts);      
                     }
         },
+    "mail_check": function(){
+                    var pop_html = '<div id="pop_insert_table">' + 
+                        '<p class="first">邮箱验证 - 未验证用户不能发表任何信息</p>' + 
+                        '<p><button>发送验证邮件</button><span class="t_process" style="width:50%"></span></p>'+
+                        '</div>';
+                    var $pop_content = pop_page(500,150, pop_html);
+                    $pop_content.bind('click', function(e){
+                        if(e.target.nodeName != "BUTTON")  return;
+                        var $button = jQuery(e.target), $process = $button.siblings("span"),
+                            url = '/repeat-mail';
+                        jQuery.postJSON(url, {}, function(){
+                            $button.to_disabled(); $process.ajax_process();                        
+                        }, function(response){
+                            if(response.status != 0){ $button.remove_disabled();  $process.error_process(response.info); }
+                            else{ 
+                                $process.right_process("发送成功,10秒后可重新发送！");
+                                var seconds = 30;
+                                setTimeout(function(){
+                                    if(seconds > 0) { 
+                                        $process.right_process( seconds + "秒后可重新发送！");
+                                        seconds--; 
+                                        setTimeout(arguments.callee, 1000);                                    
+                                    }
+                                    else{
+                                        $process.right_process("");  $button.remove_disabled();
+                                    }
+                                                                    
+                                }, 1000);                            
+                            }                        
+                        }, function(textStatus){ $process.error_process("出现错误：" + textStatus); $button.remove_disabled(); } );                    
+                    });
+    },
     "domain":   {
                     "url": "/settingpost-user_domain",
                     "pop":  function(){

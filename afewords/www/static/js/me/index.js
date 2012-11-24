@@ -43,6 +43,11 @@ var Global_Funs = $Tools.Global_Funs;
     // for go to top
     jQuery.cursor_to_top();   
     
+    // for check mail
+    jQuery("#mail_check").bind('click', function(){
+        Global_Funs["mail_check"]();    
+    });    
+    
     // for load-feed page
     if(page_type == "feed" && subpage_type == "feed"){
         jQuery(window).scroll(function(){
