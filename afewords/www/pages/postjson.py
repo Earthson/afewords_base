@@ -92,8 +92,9 @@ class VerificationMailJson(StatusJson):
     error_info = {
         0 : u'发送成功, 请登入邮箱完成验证',
         1 : u'您已经验证过了',
-        2 : u'非法邮箱',
+        2 : u'用户不存在',
         3 : u'邮件发送失败',
+        5 : u'您发送邮件过于频繁',
     }
 
 @with_attr

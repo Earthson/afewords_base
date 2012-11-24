@@ -151,7 +151,6 @@ class RepeatResetMailHandler(BaseHandler):
     @without_login_post
     def post(self):
         post_json = RepeatMailJson(self)
-        result = {'status':1, 'info':''}
         email = self.get_esc_arg('email')
         pre_time = self.get_cookie('repeat', None)
         cur_time = time.time()
@@ -186,7 +185,13 @@ class VerificationMailHandler(BaseHandler):
         from afutils.user_utils import email_verification
         handler_para = VerificationMailPara(self)
         handler_json = VerificationMailJson(self)
+        pre_time = self.get_cookie('repeat', None)
+        cur_time = time.time()
         usr = self.current_user
+        if pre_time and cur_time - float(pre_time) < 30:
+            handler_json.by_status(5) 
+            handler_json.write()
+            return #within 30s
         if usr is None:
             usr = User.find_one({'email': handler_para['email'].lower()})
         if usr is None:
@@ -199,6 +204,7 @@ class VerificationMailHandler(BaseHandler):
             return #already verified user
         else:
             status = email_verification(usr)
+            self.set_cookie("repeat", str(time.time()))
             if status:
                 handler_json.by_status(0)
             else: #send failed
