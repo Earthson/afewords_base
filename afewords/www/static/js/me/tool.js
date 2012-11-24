@@ -402,7 +402,7 @@ jQuery.afewords.tools.Global_Funs = {
                     $pop_content.bind('click', function(e){
                         if(e.target.nodeName != "BUTTON")  return;
                         var $button = jQuery(e.target), $process = $button.siblings("span"),
-                            url = '/repeat-mail';
+                            url = '/send-verification';
                         jQuery.postJSON(url, {}, function(){
                             $button.to_disabled(); $process.ajax_process();                        
                         }, function(response){
