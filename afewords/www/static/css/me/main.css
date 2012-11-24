@@ -400,6 +400,8 @@ text-indent: 14px;position: relative;}
 #head .right .book_image{background-image: url('/static/img/button/book_ok10.png');}
 #head .right .login{float: right;padding: 0 20px 0 10px;background:url('/static/img/button/login_ok.png') no-repeat 5px 14px;
 text-indent: 14px;}
+#head .right a.wran{background:url('/static/img/problem.png') no-repeat top right; padding-right: 20px; display: inline-block; text-indent: 0;}
+#head .right li.wran_li{background:url('/static/img/problem_ok.png') no-repeat 2px 8px; }
 
 #head_user{display: block;position: absolute;z-index: 100;background-color: white; border:#ccc 1px solid; top: 30px;}
 #head_user li{list-style: none; text-align: center; padding: 4px 15px; text-indent: 0; line-height: 25px;}
