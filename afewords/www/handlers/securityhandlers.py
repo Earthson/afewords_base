@@ -179,6 +179,8 @@ class VerificationMailPara(BaseHandlerPara):
         'email' : '',
     }
 
+from pages.postjson import VerificationMailJson
+
 class VerificationMailHandler(BaseHandler):
     def post(self):
         from afutils.user_utils import email_verification
