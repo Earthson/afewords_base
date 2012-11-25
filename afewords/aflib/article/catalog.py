@@ -481,6 +481,7 @@ class Catalog(DataBox):
         ans['complete_count'] = self.complete_count
         ans['statistics'] = self.statistics.basic_info
         ans['keywords'] = self.keywords
+        ans['islike'] = False if usr is None else usr.is_like(self)
         if info_name in ('basic_info'):
             ans['author'] = self.owner.obj_info_view_by(info_name, 
                             usr=usr, env=env, **kwargs)

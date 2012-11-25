@@ -20,7 +20,6 @@ class BlogHandler(BaseHandler):
                     usr=usr, env=usr)
         if preview != 'yes' and userstat.view_article(blog_to):
             blog_to.statistics.view_count += 1
-        if usr:
-            page['islike'] = usr.is_like(blog_to)
+        page['islike'] = False if usr is None else usr.is_like(blog_to)
         page.render()
         return
