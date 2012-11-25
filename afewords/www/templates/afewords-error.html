@@ -18,23 +18,12 @@
 <div id="body_content">
 
 <div class="like settings margin-left-0 my_book_image">
-<div class="page_nav"><span>迷路详情</span></div>
+<div class="page_nav"><span>错误</span></div>
 <div class="error_wrap">
 <table summary="" class="error_wrap_table" >
-<tr><td width="10%" class="lefttd">迷路描述</td><td width="90%" class="righttd">{{ error['des'] }}</td></tr>
-<tr><td class="lefttd">迷路状态</td><td class="status_code">{{ error['code'] }}</td></tr>
-<tr><td class="lefttd">迷路位置</td><td>{{ error['url'] }}</td></tr>
-{% if error['debug'] %}
-<tr><td class="lefttd" valign="top">错误栈</td><td class="righttd">{{ error['exc_info'] }}</td></tr>
-{% end %}
-<tr><td class="lefttd" valign="top">迷路原因</td>
-<td class="righttd">
-<ul class="error_style">
-{% for item in error['reason'] %}
-<li>{{ item }}</li>
-{% end %}
-</ul>
-</td></tr>
+
+<tr><td class="lefttd">迷路状态</td><td class="status_code">{{ doc['status'] }}</td></tr>
+<tr><td width="10%" class="lefttd">错误描述</td><td width="90%" class="righttd">{{ doc['error_info'] }}</td></tr>
 </table>
 </div>
 
