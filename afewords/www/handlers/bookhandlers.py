@@ -113,8 +113,9 @@ class BookChapterHandler(BaseHandler):
         handler_page.page_init()
 
         book_name = handler_page['book']['name']
+        chapter_num = handler_page['current_chapter']['chapter_num']
         chapter_name = handler_page['current_chapter']['title']
-        handler_page['title'] = chapter_name + u' - ' + book_name
+        handler_page['title'] = chapter_num + u' -  ' +chapter_name + u' - ' + book_name
         handler_page['meta_keywords'] = handler_page['book']['keywords']
         handler_page['description'] = book_name + u',' + chapter_name
         handler_page.render()
