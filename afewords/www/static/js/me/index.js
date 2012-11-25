@@ -140,7 +140,7 @@ var Global_Funs = $Tools.Global_Funs;
             pop_height = 500;        
         }        
         var pop_html = '<div id="pop_insert_table">' + 
-                        '<p class="first">反馈 - 错误/不足  -  <span class="all_example"><a href="/afewords-feedback">更多反馈</a></span></p>' + 
+                        '<p class="first">反馈 - 错误/不足  <span class="all_example"><a href="/afewords-feedback">更多反馈</a></span></p>' + 
                         info_html +
                         '<p><textarea name="feedback">想说：</textarea>' + 
                         '<p><button>提交</button><span class="t_process" style="width:70%"></span></p>'+
@@ -163,7 +163,7 @@ var Global_Funs = $Tools.Global_Funs;
                 $process.ajax_process(); $target.to_disabled();            
             }, function(response){
                 if(response.status != 0){  $process.error_process(response.info);  $target.remove_disabled(); }
-                else{  $process.right_process("反馈成功，感谢您！");  pop_page_close();  }            
+                else{  $process.right_process("反馈成功，感谢您！");  setTimeout(pop_page_close,1000);  }            
             }, function(textStatus){
                 $process.error_process("出现错误：" + textStatus); $target.remove_disabled();            
             });

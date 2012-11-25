@@ -811,7 +811,7 @@ jQuery.afewords.tools.Global_Funs = {
                                             if(response.status != 0){
                                                 $process.error_process(response.info);  $button.remove_disabled();                                            
                                             }else{
-                                                $process.right_process("创建成功！3秒后自动跳转到该知识谱的摘要编辑页面！");
+                                                $process.right_process("创建成功！2秒后自动跳转到 * 摘要编辑页面 *！");
                                                 setTimeout(function(){
                                                     location.href = '/write?id=' + response.about_id + '&type=about';
                                                 }, 3000);                                            
