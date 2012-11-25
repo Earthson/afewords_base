@@ -21,6 +21,12 @@ class BookHandler(BaseHandler):
         handler_page['book'] = catalog_obj.obj_info_view_by('basic_info', 
                                     usr=usr)
         handler_page.page_init()
+        
+        book_name = handler_page['book']['name']
+        handler_page['title'] = book_name + u' - 子曰知识谱'
+        handler_page['meta_keywords'] = handler_page['book']['keywords']
+        handler_page['description'] = u'知识谱' + book_name
+
         handler_page.render()
         return
 
@@ -41,6 +47,12 @@ class BookAboutHandler(BaseHandler):
         handler_page['book'] = catalog_obj.obj_info_view_by('with_summary', 
                                     usr=usr)
         handler_page.page_init()
+
+        book_name = handler_page['book']['name']
+        handler_page['title'] = book_name + u' -  摘要 - 子曰知识谱'
+        handler_page['meta_keywords'] = handler_page['book']['keywords']
+        handler_page['description'] = u'知识谱' + book_name + u'摘要'
+
         handler_page.render()
         return
 
@@ -61,6 +73,10 @@ class BookCatalogHandler(BaseHandler):
         handler_page['book'] = catalog_obj.obj_info_view_by('basic_info', 
                                     usr=usr)
         handler_page.page_init()
+        book_name = handler_page['book']['name']
+        handler_page['title'] = book_name + u' - 子曰知识谱'
+        handler_page['meta_keywords'] = handler_page['book']['keywords']
+        handler_page['description'] = u'知识谱' + book_name + u'目录'
         handler_page.render()
         return
 
@@ -95,6 +111,12 @@ class BookChapterHandler(BaseHandler):
                 handler_page['book']['chapter_list'][nxt]
         handler_page['bid'] = bid
         handler_page.page_init()
+
+        book_name = handler_page['book']['name']
+        chapter_name = handler_page['current_chapter']['title']
+        handler_page['title'] = chapter_name + u' - ' + book_name
+        handler_page['meta_keywords'] = handler_page['book']['keywords']
+        handler_page['description'] = book_name + u',' + chapter_name
         handler_page.render()
         return
 
@@ -115,5 +137,9 @@ class BookInfoHandler(BaseHandler):
         handler_page['book'] = catalog_obj.obj_info_view_by('basic_info', 
                                     usr=usr)
         handler_page.page_init()
+        book_name = handler_page['book']['name']
+        handler_page['title'] = book_name + u' - 信息 - 子曰知识谱'
+        handler_page['meta_keywords'] = handler_page['book']['keywords']
+        handler_page['description'] = u'知识谱' + book_name + u'信息'
         handler_page.render()
         return
