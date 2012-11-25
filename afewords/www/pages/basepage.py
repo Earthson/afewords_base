@@ -105,7 +105,8 @@ class BasePage(AFDocBase):
         'subpage_type' : 'feed',
         'main_url' : af_conf['main_url'],
         'title' : '子曰', # the web page title
-        'description' : '', # the web page description, maybe for SEO
+        'description' : '子曰博客和知识谱为你提供开源的环境', # the web page description, maybe for SEO
+        'meta_keywords': ['子曰', '子曰博客', '子曰知识谱'],    # for SEO
         'user' : None, # the user's info, the value is returned by function user_to_dict
     }
 

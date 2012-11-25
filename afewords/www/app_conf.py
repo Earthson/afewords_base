@@ -79,6 +79,7 @@ from handlers.afbookhandlers import AFBookEditCatalogHandler
 from handlers.statisticshandlers import ObjDoLikeHandler
 
 from handlers.feedbackhandlers import FeedbackHandler
+from handlers.feedbackhandlers import AFFeedbackHandler
 
 app_handlers = {
     (r'/', IndexHandler), #MainHandler),
@@ -163,6 +164,7 @@ app_handlers = {
     (r'/settingpost-book_article_unspec', UnSpecArticleFromBookHandler),
 
     (r'/post-feedback', FeedbackHandler),
+    (r'/afewords-feedback', AFFeedbackHandler),
 }
 
 app_settings = {

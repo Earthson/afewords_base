@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>{{ doc['title'] }}</title>
-  <meta http-equiv="pragma" content="no-cache"/>
-  <meta http-equiv="cache-control" content="no-cache"/>
-  <meta http-equiv="expires" content="0"/>
-  <meta http-equiv="keywords" content="子曰,子曰网"/>
-  <meta http-equiv="description" content="{{ doc['description'] }}"/>
   <meta charset="UTF-8"/>
+  <title>{{ doc['title'] }}</title>
+  <meta http-equiv="keywords" content="{{ ','.join(doc['meta_keywords']) }}"/>
+  <meta http-equiv="description" content="{{ doc['description'] }}"/>
   <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/main.css") }}" />
   {% block css_link %} {% end %}
   <script type="text/javascript">
@@ -64,11 +61,17 @@
     <div class="login" title="入站"><a href="/login">入站</a></div>
     {% else %}
     
+    {% set account_status = False if user['account_status'] == 'unverfified' else True  %}
+    {% set avatar_status = False if user['thumb'] == '' or user['thumb'] == '/static/avatar/small/afewords-user.jpg'  else True %}
     <div class="myself manage" title="个人" id="head_user_block">
-    <a href="javascript:void(0);" id="head_user_link" class="wran">个人</a>
+    <a href="javascript:void(0);" id="head_user_link" class="wran{{ '1' if avatar_status and account_status else '' }}">个人</a>
     <ul id="head_user" style="display:none;">
+        {% if not account_status %}
         <li class="wran_li"><a href="javascript:void(0)" id="mail_check" do="mail_check">验证</a></li>
+        {% end %}
+        {% if not avatar_status %}        
         <li class="wran_li"><a href="/settings-avatar">头像</a></li>
+        {% end %}
         <li><a href="/blogger">博客</a></li>
         <li><a href="/write">执笔</a></li>
         <li><a href="/settings-domain">资料</a></li>
