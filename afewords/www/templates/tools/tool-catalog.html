@@ -7,7 +7,11 @@
 {% set complete_point = u'<span class="complete%s">%s/%s/%s&nbsp;%s</span>' %}
 
 {% if len(node_list) < 1 %} 
+    {% if not edit %}
     <ul class="catalog_ul" book_id="{{ book_id }}"></ul>
+    {% else %}
+    <ul class="catalog_ul catalog_edit1" book_id="{{ book_id }}"></ul>
+    {% end %}
 {% else %}
     {% if not edit %}
         <ul class="catalog_ul" book_id="{{ book_id }}">

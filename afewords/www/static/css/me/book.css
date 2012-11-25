@@ -78,7 +78,8 @@ padding-bottom: 100px;}
 .book_do_a a{color: blue;font-size: 12px;}
 
 
-ul.catalog_ul li{width: 100%;margin-left: 0px;list-style: none;line-height: 40px;font-size: 16px;position: relative;}
+ul.catalog_ul li{width: 100%;margin-left: 0px;list-style: none;line-height: 40px !important;font-size: 16px;
+position: relative;border-bottom: #ccc 1px dotted;}
 ul.catalog_ul li span{line-height: 30px;}
 ul.catalog_ul li span a{color: blue;}
 ul.catalog_edit1 li{border-bottom: #ccc 1px dotted;}
