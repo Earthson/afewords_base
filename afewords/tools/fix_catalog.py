@@ -5,6 +5,8 @@ from article.catalog import Catalog
 catalog_all = [Catalog(each) for each in Catalog.datatype.find()]
 
 for each in catalog_all:
+    if not each.keywords:
+        each.keywords = [each.name]
     each.remove_count = each.node_count - len(each.lib.node_lib)
     each.complete_count = 0
     for ek, ev in each.lib.node_info_lib.load_all().items():
