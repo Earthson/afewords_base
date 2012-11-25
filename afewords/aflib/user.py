@@ -297,7 +297,6 @@ class User(DataBox):
     @db_property
     def notifications():
         def getter(self):
-            del self.lib.notification_lib['isread']
             ans = dict([(ek, {
                 'index' : ek,
                 'content' : ev['info'],
