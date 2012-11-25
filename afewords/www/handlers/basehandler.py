@@ -44,7 +44,7 @@ def with_login_post(operate):
     handler_json = LoginStatusJson()
     def wrapper(self, *args, **kwargs):
         if not self.current_user:
-            handler_json.by_status(200)
+            handler_json.by_status(100)
             handler_json.write()
             return
         operate(self, *args, **kwargs)

@@ -26,7 +26,7 @@ _img_error_doc = {
 }
 
 @with_attr
-class LoginStatusJson(BaseJson):
+class LoginStatusJson(StatusJson):
     error_info = {
         0 : '',
         100 : '请先登入',
