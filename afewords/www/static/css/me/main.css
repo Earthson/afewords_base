@@ -605,3 +605,8 @@ min-height: 1px;}
 #crop-50{height: 50px;width: 50px; overflow: hidden;}
 #crop-120{height: 120px; width: 120px; overflow: hidden;}
 
+#collect_tip{position: absolute; top: 5px;left: 15px; width: 20px; height: 20px;cursor: pointer;}
+#collect_tip.done1{background: url('/static/img/button/favorite_love_ok.png') no-repeat;}
+#collect_tip.done0{background: url('/static/img/button/donate_ok.png') no-repeat;}
+
+

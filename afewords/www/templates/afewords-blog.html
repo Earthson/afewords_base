@@ -24,7 +24,14 @@
 <div id="middle-blog-left">
 
 <table id="blog_tip">
-<tr><td colspan="2" class="no_border"><span class="tip_mark">文</span></td></tr>
+<tr><td colspan="2" class="no_border">
+{% if doc['islike'] %}
+<span id="collect_tip" class="done1" title="取消喜欢">&nbsp;</span>
+{% else %}
+<span id="collect_tip" class="done0" title="喜欢">&nbsp;</span>
+{% end %}
+<span class="tip_mark">文</span>
+</td></tr>
 <tr><td width="40%">作者</td><td width="60%"><a href="/blogger/{{ author['uid'] }}">{{ author['name'] }}</a></td></tr>
 <tr><td>发布</td><td>{{ str(article['release_time'])[:10] }}</td></tr>
 <tr><td>评论</td><td>{{ article['comment_count'] }}</td></tr>

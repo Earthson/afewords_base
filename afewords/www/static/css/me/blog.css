@@ -17,7 +17,7 @@ word-wrap:break-word;overflow: hidden;}
 line-height: 28px;padding: 5px 0;margin-left: 10px;position: relative; border-bottom: #ccc 1px dotted;
 }
 
-#blog_tip{text-align: center;width: 100%; line-height: 28px;}
+#blog_tip{text-align: center;width: 100%; line-height: 28px;position: relative;}
 #blog_tip td{border:#ccc 1px dotted; font-size: 12px; color: #666; }
 #blog_tip td a{color: #A66100;}
 #blog_tip td span.tip_mark{text-align: center;float: right;display: block;width: 30px;height: 30px;border-radius:14px;
