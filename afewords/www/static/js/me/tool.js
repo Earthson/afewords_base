@@ -84,38 +84,20 @@ $.extend({
     
                     var times = 10;
                     var pass = 1,
-                        $to_top = jQuery("#go-to-top");
-                    jQuery(window).scroll(function(){
-                        var scroll_top = $(this).scrollTop();
-                        var screen_height = document.body.offsetHeight;
+                        $to_top = jQuery("#go-to-top"),
+                        $doc = jQuery(document),
+                        $win = jQuery(window),
+                        screen_height = $win.height();
+                    $doc.scroll(function(){
+                        var scroll_top = $doc.scrollTop();
                         if(scroll_top > screen_height){
                             $to_top.fadeIn('slow').die().live('click', function(){
-                                times = 10;
-                                pass = 1;
-                                go_algorithm(1);
+                                $doc.scrollTop(0);
                             });            
                         }else{
                             $to_top.fadeOut('slow');            
                         }
                     });
-        
-                    function go_algorithm(){
-                        var scroll_top = $(window).scrollTop();
-                        var screen_height = document.body.offsetHeight;
-                        var dif = scroll_top - screen_height;
-                        if( dif > 0){
-                            if(dif < 40){
-                                document.body.scrollTop = 0;
-                                dif = 0;
-                            }else{
-                                document.body.scrollTop = dif - dif/times;
-                                dif = dif - dif/times;
-                                pass++;
-                                times = (10 - pass) <= 0 ? 5 : (10-pass);
-                                setTimeout(go_algorithm,50);   
-                            };
-                        }
-                    }
     },
     crop_picture_init: function(){
     
