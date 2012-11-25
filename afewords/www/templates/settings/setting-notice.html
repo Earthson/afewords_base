@@ -10,7 +10,7 @@
     <span class="left20"><a href="javascript:void(0);" do="read_all">设置已读</a></span></div>
     <div class="div-20"></div>
     {% if doc['notice_list'] != [] %}
-    <ul>
+    <ul class="notice_ul">
     {% for kk in doc['notice_list'] %}
         
         <li index="{{ kk['index'] }}" class="noti-read-{{ int(kk['isread']) }}">{{ kk['content'] }}</li>

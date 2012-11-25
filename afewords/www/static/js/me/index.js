@@ -342,6 +342,16 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
             }       
         });    
     }
+    var $notice_ul = $body_content.find("ul.notice_ul");
+    if($notice_ul.length){
+        $notice_ul.live('click', function(e){
+            if(e.target.nodeName != "A")    return;
+            var $target = jQuery(e.target),
+                to_do = $target.attr("do");
+            $target.attr("do","notice_read");
+            parse_request.call($target);     
+        });    
+    }
 
     function parse_request(){
         var $that = this;    // must be jquery object
@@ -354,7 +364,6 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
             case 'remove_tag':  
                 mes['rm_tag'] = $that.attr("tag");
                 url = '/settingpost-user_removetag';
-               
                 break;
             case 'remove_book':
             case 'remove_article':
@@ -366,7 +375,11 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
                 mes['obj_id'] = $that.attr("obj_id");
                 mes['obj_type'] = $that.attr("obj_type");
                 url = '/obj-dolike';
-                break;       
+                break;      
+            case 'notice_read':
+                url = '/settingpost-user_noti_read';
+                mes['noti_ids']  = $that.parent().attr("index");
+                break;
             default:
                 return;
                 break;
@@ -384,7 +397,10 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
                     $that.parent().slideUp('slow').remove();
                     break;
                 case 'remove_book':
-                    $that.parent.parent.slideUp('slow').remove();
+                    $that.parent().parent().slideUp('slow').remove();
+                case 'notice_read':
+                    $that.parent().removeClass("noti-read-0").addClass("noti-read-1");
+                    break;
                 default:
                     break;            
             }

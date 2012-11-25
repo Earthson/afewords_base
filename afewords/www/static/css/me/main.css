@@ -277,9 +277,9 @@ min-height: 100px;background-color: #ffffff;}
 #body_content .notice ul li{width: 95%;float: left;padding: 10px 10px 10px 30px;border-bottom: #ccc 1px dotted;}
 #body_content .notice ul li a{font-size: 14px; color: blue;}
 #body_content .notice ul li a:hover{ color: blue;}
-#body_content .notice ul li.noti-read-False{background: url('/static/img/button/email_close.png') 0 10px no-repeat;}
-#body_content .notice ul li.noti-read-True{background: url('/static/img/button/email_open.png') 0 7px no-repeat;color: #999;}
-#body_content .notice ul li.noti-read-True a{color: #369 !important;}
+#body_content .notice ul li.noti-read-0{background: url('/static/img/button/email_close.png') 0 10px no-repeat;}
+#body_content .notice ul li.noti-read-1{background: url('/static/img/button/email_open.png') 0 7px no-repeat;color: #999;}
+#body_content .notice ul li.noti-read-1 a{color: #369 !important;}
 #body_content .notice a.noti_blog_name{margin: auto 3px;}
 #body_content .notice a.noti_author_name{margin: auto 3px;}
 #body_content .notice a.noti_link{margin: auto 2px;}
