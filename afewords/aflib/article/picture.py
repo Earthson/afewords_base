@@ -95,6 +95,7 @@ class Picture(DataBox):
 
     @db_property
     def thumb_file():
+        import Image
         def getter(self):
             import Image
             f_ospath = self.thumb_os_path
@@ -108,7 +109,7 @@ class Picture(DataBox):
             if not self.data['thumb_name']:
                 self.data['thumb_name'] = self.file_name_gen(value.format, True)
             tmp = value.copy()
-            tmp.thumbnail((200, 200))
+            tmp.thumbnail((200, 200), Image.ANTIALIAS)
             tmp.save(self.thumb_path + self.data['thumb_name'], value.format)
         return getter, setter
 
