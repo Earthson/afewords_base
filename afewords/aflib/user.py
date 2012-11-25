@@ -548,7 +548,8 @@ class User(DataBox):
     def reverse_like_post(self, obj):
         '''reverse like state. like->dislike, dislike->like'''
         from article.article import Article
-        if not isinstance(obj, Article):
+        from article.catalog import Catalog
+        if not isinstance(obj, Article) or not isinstance(obj, Catalog):
             return False
         if obj.uid in self.lib.favorite_lib:
             self.dislike_post(obj)

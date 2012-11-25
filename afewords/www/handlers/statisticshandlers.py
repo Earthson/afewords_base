@@ -22,7 +22,7 @@ class ObjDoLikeHandler(BaseHandler):
         if article_obj is None:
             handler_json.by_status(2)
             handler_json.write()
-            return #article not exist
+            return #obj not exist
         if not usr.reverse_like_post(article_obj):
             handler_json.by_status(1)
             handler_json.write()
