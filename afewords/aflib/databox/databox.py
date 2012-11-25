@@ -215,6 +215,12 @@ class DataBox(object):
         return getter
 
     @db_property
+    def env():
+        def getter(self):
+            return None
+        return getter
+
+    @db_property
     def obj_info():
         def getter(self):
             return (self._id, self.cls_name)
