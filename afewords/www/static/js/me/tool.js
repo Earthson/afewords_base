@@ -703,22 +703,27 @@ jQuery.afewords.tools.Global_Funs = {
                                     var $that = this,
                                         url = '/obj-dolike',
                                         like_status = $that.attr("like_status"),
+                                        istip = $that.attr("istip"),
                                         mes = { 'obj_id': $that.attr("obj_id"),
                                                 "obj_type": $that.attr("obj_type")};
                                     jQuery.postJSON(url, mes, function(){}, function(response){
                                         if(response.status == 0){
                                             if(like_status == "yes"){
+                                                if(istip){
+                                                    $that.removeClass("done1").addClass("done0").attr("like_status", "no"); return;                                                
+                                                }
                                                 $that.html("喜欢").attr("like_status", "no"); return;                                        
                                             }else{
+                                                if(istip){
+                                                    $that.removeClass("done0").addClass("done1").attr("like_status", "yes"); return;                          
+                                                }
                                                 $that.html("取消").attr("like_status", "yes"); return;                                     
                                             }                                        
                                         }
                                     },function(){});                    
                     },
                     "share":    function(){},
-                    "view":     function(){
-                                    var $that = this;
-                                    
+                    "view":     function(){                               
                                 },
                     "getcomment": function(){   // this must be jquery object
                                     var $that = this;                    

@@ -26,9 +26,9 @@
 <table id="blog_tip">
 <tr><td colspan="2" class="no_border">
 {% if doc['islike'] %}
-<span id="collect_tip" class="done1" title="取消喜欢">&nbsp;</span>
+<span id="collect_tip" class="done1" title="取消喜欢" do="like" obj_id="{{ article['aid'] }}" obj_type="blog" like_status="yes" istip="true">&nbsp;</span>
 {% else %}
-<span id="collect_tip" class="done0" title="喜欢">&nbsp;</span>
+<span id="collect_tip" class="done0" title="喜欢" do="like" obj_id="{{ article['aid'] }}" obj_type="blog" like_status="no" istip="true">&nbsp;</span>
 {% end %}
 <span class="tip_mark">文</span>
 </td></tr>

@@ -21,8 +21,11 @@
 <div class="book_tip">
 <table>
 <tr><td colspan="2" class="no_border">
-<span id="collect_tip" class="done1" title="取消喜欢">&nbsp;</span>
-<span id="collect_tip" class="done0" title="喜欢">&nbsp;</span>
+{% if book['islike'] %}
+<span id="collect_tip" class="done1" title="取消喜欢" obj_id="{{ book['bid'] }}" obj_type="book" like_status="yes" istip="true">&nbsp;</span>
+{% else %}
+<span id="collect_tip" class="done0" title="喜欢" obj_id="{{ book['bid'] }}" obj_type="book" like_status="no" istip="true">&nbsp;</span>
+{% end %}
 <span class="tip_mark">谱</span>
 </td></tr>
 <tr>

@@ -260,6 +260,9 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
             var configs = Global_Funs['blog'][to_do];
             configs.call($target);        
         });
+        jQuery("#collect_tip").live('click', function(){
+            Global_Funs["blog"]["like"].call(jQuery(this));        
+        });
         
     }
     
@@ -654,6 +657,10 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
     */
     var page_type = AFWUser['page_type'];
     if(page_type != "book") return;
+    // for collect book
+    jQuery("#collect_tip").bind('click', function(){
+        Global_Funs["blog"]["like"].call(jQuery(this));
+    });
     $("div.book_node_nav").bind('click', function(e){
         if(e.target.nodeName != "A")    return;
         var $target = jQuery(e.target),
