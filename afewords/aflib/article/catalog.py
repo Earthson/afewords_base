@@ -472,6 +472,7 @@ class Catalog(DataBox):
             'edit_with_summary']
         '''
         ans = dict()
+        ans['article_type'] = self.first_alias
         ans['bid'] = self.uid
         ans['about_id'] = self.about_id
         ans['name'] = self.name
