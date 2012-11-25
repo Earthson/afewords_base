@@ -44,3 +44,10 @@ class FeedbackHandler(BaseHandler):
         handler_json.by_status(0)
         handler_json.write()
         return #0
+
+from pages.af_feedpage import AFFeedbackPage
+class AFFeedbackHandler(BaseHandler):
+    def get(self):
+        page = AFFeedbackPage(self)
+        return page.render()
+        pass

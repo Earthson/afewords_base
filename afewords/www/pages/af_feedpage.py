@@ -13,6 +13,7 @@ class AFFeedPage(BasePage):
         'subpage_type': 'feed',
         'feed_list': [],    # list, like blog list
         'id_list': [],
+        'description': '动态聚合',
     }
 
 
@@ -22,7 +23,7 @@ class AFFeedLikePage(BasePage):
     
     ''' for url /user-like '''
     doc = {
-        'title': '收藏 - 子曰',
+        'title': '喜欢 - 子曰',
         'page_type': 'feed',
         'subpage_type': 'like',
         'like_list': [],    # list, like blog list
@@ -47,7 +48,7 @@ class AFFeedMyselfPage(BasePage):
     ''' for url /blog-lib '''
     __template_file__ = "afewords-feed/feed-myself.html"
     doc = {
-        'title': '我的动态 - 子曰',
+        'title': '我的文章 - 子曰',
         'page_type': 'feed',
         'subpage_type': 'myself',
         'tag_list' : [],
@@ -69,3 +70,14 @@ class AFFeedMyselfPage(BasePage):
         tmp.set_by(self['baseurl'], self['urlparas'], self['page_list'])
         self['paging_html'] = tmp.render_string()
 
+@with_attr
+class AFFeedbackPage(BasePage):
+    ''' for url /afewords-feedback '''
+    __template_file__ = "afewords-feed/feed-feedback.html"
+    doc = {
+        'title': '反馈 - 子曰',
+        'feedback_list': [],
+        'subpage_type': 'feedback',
+        'current_page': 1,
+        'paging_html': '',
+    }

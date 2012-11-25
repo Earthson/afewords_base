@@ -106,23 +106,8 @@ span.complete1{font-size: 12px;color: green;margin-left: 10px;}
 .book_one_time{margin-left:20px;font-size: 12px; color: #666;}
 .book_one_modify{color: #A66100; font-size: 12px; margin-right: 20px;}
 .book_one_modify:hover{color: blue;}
+a.book_one_del{color: red;}
 
-
-/*
-.book_card_one{width: 300px;float: left;height: 200px;border:#ccc 1px dotted;padding: 20px;margin-right: 10px;margin-bottom: 20px;}
-.book_card_one td{border:none;}
-.book_card{width: 150px;height: 200px;text-align: center;border:#ccc 2px solid;background-color: #ffffff;float: left;clear: left;
--moz-box-shadow: 3px 3px 4px #ccc;
-    -webkit-box-shadow: 3px 3px 4px #ccc;
-    box-shadow: 3px 3px 4px #ccc;border-left-width: 2px;}
-.book_card .book_card_name{width: 80%;margin: 0 auto; text-align: center;margin-top: 50px;}
-.book_card .book_card_name a{color: black;font-size: 16px;}
-
-.book_card_feed{width: 130px;float: right;height: auto;margin-left: 20px;}
-.book_card_feed .card_tip{width: 100%;float: left;line-height: 25px;text-align: left;}
-.book_card_feed .card_tip a{color: #369;}
-.book_card_feed .card_tip a.book_modify{font-size: 12px;margin-right:5px;}
-*/
 
 .book_textarea{
 border: #CCC 1px solid;

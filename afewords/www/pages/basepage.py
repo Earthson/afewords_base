@@ -106,6 +106,7 @@ class BasePage(AFDocBase):
         'main_url' : af_conf['main_url'],
         'title' : '子曰', # the web page title
         'description' : '', # the web page description, maybe for SEO
+        'meta_keywords': [],    # for SEO
         'user' : None, # the user's info, the value is returned by function user_to_dict
     }
 

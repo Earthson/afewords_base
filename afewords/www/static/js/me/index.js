@@ -140,7 +140,7 @@ var Global_Funs = $Tools.Global_Funs;
             pop_height = 500;        
         }        
         var pop_html = '<div id="pop_insert_table">' + 
-                        '<p class="first">反馈 - 错误/不足</p>' + 
+                        '<p class="first">反馈 - 错误/不足  -  <span class="all_example"><a href="/afewords-feedback">更多反馈</a></span></p>' + 
                         info_html +
                         '<p><textarea name="feedback">想说：</textarea>' + 
                         '<p><button>提交</button><span class="t_process" style="width:70%"></span></p>'+
@@ -329,6 +329,19 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
             parse_request.call( $target );
         });    
     }
+    var $book_card = $body_content.find("div.book_card_wrap");
+    if($book_card.length){
+        $book_card.live('click', function(e){
+            if(e.target.nodeName != "A")  return;
+            var $target = jQuery(e.target),
+                to_do = $target.attr("do");
+            if(!to_do) return;
+            if(to_do == "remove_book"){
+                var ret = confirm("确认删除该知识谱？");
+                if(ret) parse_request.call($target);            
+            }       
+        });    
+    }
 
     function parse_request(){
         var $that = this;    // must be jquery object
@@ -343,6 +356,7 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
                 url = '/settingpost-user_removetag';
                
                 break;
+            case 'remove_book':
             case 'remove_article':
                 mes['obj_id'] = $that.attr("obj_id");
                 mes['obj_type'] = $that.attr("obj_type");
@@ -369,6 +383,8 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
                 case 'unlike':
                     $that.parent().slideUp('slow').remove();
                     break;
+                case 'remove_book':
+                    $that.parent.parent.slideUp('slow').remove();
                 default:
                     break;            
             }
