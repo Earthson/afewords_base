@@ -168,7 +168,7 @@ app_handlers = {
     (r'/post-feedback', FeedbackHandler),
     (r'/afewords-feedback', AFFeedbackHandler),
 
-    (r'/.+', AFNotFoundHandler),
+#    (r'/(.*)', AFNotFoundHandler),
 }
 
 app_settings = {

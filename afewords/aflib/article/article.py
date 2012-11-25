@@ -301,11 +301,10 @@ class Article(DataBox):
                 ret = set_auth(ret, A_DEL)
             if self.env_write_access and test_auth(tmp, A_WRITE):
                 ret = set_auth(ret, A_WRITE)
-        ret = set_auth(ret, A_POST)
-        #if env:
-        #    tmp = env.authority_verify(usr)
-        #    if test_auth(tmp, A_POST):
-        #        ret = set_auth(ret, A_POST)
+        if env:
+            tmp = env.authority_verify(usr)
+            if test_auth(tmp, A_POST):
+                ret = set_auth(ret, A_POST)
         return ret
 
     def refinder(self, reftype, refname):

@@ -169,9 +169,10 @@ class BaseHandler(RequestHandler):
         self.redirect('/')
         return
 
-    def get_error_html(self, status=500, error_info='', **kwargs):
+    def get_error_html(self, status_code=500, error_info='', **kwargs):
         from pages.errorpage import BaseErrorPage
         errorpage = BaseErrorPage(self)
-        errorpage['status'] = status
+        errorpage['status'] = status_code
         errorpage['error_info'] = error_info
         errorpage.render()
+        return

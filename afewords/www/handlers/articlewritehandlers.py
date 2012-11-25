@@ -179,12 +179,12 @@ class ArticleUpdateHandler(BaseArticleUpdateHandler):
         self.article_obj.set_by_info(handler_paras.load_doc())    
         author = self.article_obj.author
         if self.article_obj.is_posted is False:
-            if handler_paras['article_type'] not in ['comment']:
+            if handler_paras['article_type'] in ['blog']:
                 self.article_obj.tag = list(set(author.alltags) & 
                         set(handler_paras['tags']))
             if handler_paras['do'] == 'post':
                 auth_ans = self.article_obj.authority_verify(usr, self.env)
-                if not test_auth(auth_ans, A_POST):
+                if test_auth(auth_ans, A_POST) is False:
                     handler_json.by_status(17)
                     handler_json.write()
                     return #Post Permission Denied
