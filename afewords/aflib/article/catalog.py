@@ -60,7 +60,8 @@ class CatalogLib(EmMongoDict):
     @property
     def own_data(self):
         ans = list()
-        ans += [each for each in Relation.by_ids(relations_list.load_all())]
+        ans += [each for each in 
+                Relation.by_ids(self.relations_list.load_all())]
         return ans
 
     @property
