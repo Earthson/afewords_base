@@ -39,8 +39,11 @@ class FeedbackHandler(BaseHandler):
             return #too short
         feedback_obj = Feedback()
         feedback_obj.set_by_info(handler_para.load_doc())
-        recent_feedbacks.pop_head()
+        tmp = recent_feedbacks.pop_head()
         recent_feedbacks.push(feedback_obj._id)
+        tmp = Feedback.by_id(tmp)
+        if tmp is not None:
+            tmp.remove()
         handler_json.by_status(0)
         handler_json.write()
         return #0
@@ -52,7 +55,7 @@ from article.feedback import Feedback
 class AFFeedbackHandler(BaseHandler):
     def get(self):
         page = AFFeedbackPage(self)
-        feedbacks = Feedback.by_ids(recent_feedbacks.get_slice(-50))
+        feedbacks = sorted(Feedback.by_ids(recent_feedbacks.get_slice(-50)))
         feedback_infos = [each.obj_info_view_by() for each in feedbacks]
         page['feedback_list'] = feedback_infos
         return page.render()
