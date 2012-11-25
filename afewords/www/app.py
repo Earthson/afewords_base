@@ -2,6 +2,7 @@
 # coding=utf-8
 
 import sys
+import os
 
 from tornado.httpserver import  HTTPServer
 from tornado.web import Application
@@ -11,6 +12,8 @@ import tornado.options
 
 from afconfig import *
 from app_conf import *
+
+os.chdir(os.path.dirname(sys.argv[0]))
 
 def app_gen(handlers, settings, debug=False):
     if debug:
