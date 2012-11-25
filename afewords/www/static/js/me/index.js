@@ -552,8 +552,8 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
         
         var ret = configs[to_do].call($target, $body_content, $process, mes); 
         if(!ret || !ret[0]) return;
-        for(var i = 0; i < ret.length; i++) console.log(i+ ret[i]);
         var url = ret[1], right_handle = ret[2], error_handle = ret[3] || _error_handle;
+        
         jQuery.postJSON(url, mes, function(){
             $process.ajax_process();    $target.to_disabled();        
         }, right_handle, error_handle);
