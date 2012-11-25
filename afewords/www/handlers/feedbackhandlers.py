@@ -46,8 +46,13 @@ class FeedbackHandler(BaseHandler):
         return #0
 
 from pages.af_feedpage import AFFeedbackPage
+from global_info import recent_feedbacks
+from article.feedback import Feedback
+
 class AFFeedbackHandler(BaseHandler):
     def get(self):
         page = AFFeedbackPage(self)
+        feedbacks = Feedback.by_ids(recent_feedbacks.get_slice(-50))
+        feedback_infos = [each.obj_info_view_by() for each in feedbacks]
+        page['feedback_list'] = feedback_infos
         return page.render()
-        pass
