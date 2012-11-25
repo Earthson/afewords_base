@@ -216,7 +216,8 @@ class User(DataBox):
     @db_property
     def notice_count():
         def getter(self):
-            return len(self.lib.notification_lib)
+            ans = self.lib.notification_lib.values()
+            return len([each for each in ans if each['isread'] is False])
         return getter
 
     @db_property
