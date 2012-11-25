@@ -301,10 +301,11 @@ class Article(DataBox):
                 ret = set_auth(ret, A_DEL)
             if self.env_write_access and test_auth(tmp, A_WRITE):
                 ret = set_auth(ret, A_WRITE)
-        if env:
-            tmp = env.authority_verify(usr)
-            if test_auth(tmp, A_POST):
-                ret = set_auth(ret, A_POST)
+        ret = set_auth(ret, A_POST)
+        #if env:
+        #    tmp = env.authority_verify(usr)
+        #    if test_auth(tmp, A_POST):
+        #        ret = set_auth(ret, A_POST)
         return ret
 
     def refinder(self, reftype, refname):
@@ -367,10 +368,8 @@ class Article(DataBox):
             catalog_obj.remove_article(node_id, rr)
 
     def comments_info_view_by(self, usr=None):
-        if usr:
-            return [each.obj_info_view_by('comment_info_for_json', usr)
+        return [each.obj_info_view_by('comment_info_for_json', usr)
                         for each in self.comments]
-        return [each.comment_info_for_json for each in self.comments] 
 
     @db_property
     def comments():

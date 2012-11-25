@@ -67,6 +67,10 @@ class Comment(Article):
             return ans
         return getter
 
+    def obj_info_view_by(self, infotype='comment_info_for_json', 
+                            usr=None, env=None, **kwargs):
+        return self.comment_info_for_json
+
     @db_property
     def obj_url():
         def getter(self):

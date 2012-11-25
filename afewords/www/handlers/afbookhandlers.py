@@ -67,6 +67,8 @@ class AFBookCreateHandler(BaseHandler):
         book_new = usr.create_catalog(handler_para['name'], 
                                         handler_para['keywords'])
         handler_json['about_id'] = str(book_new.about_id)
+        recent_books.pop_head()
+        recent_books.push(book_new._id)
         handler_json.by_status(0)
         handler_json.write()
         return

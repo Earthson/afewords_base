@@ -95,7 +95,8 @@ def article_env_init(handler, handler_paras, handler_json):
         acls = cls_gen(handler_paras['article_type'])
         if not acls or not issubclass(acls, Article):
             return 11#Invalid Article Type
-        if not test_auth(handler.env.authority_verify(usr), A_WRITE):
+        if not issubclass(acls, Comment) and \
+                not test_auth(handler.env.authority_verify(usr), A_WRITE):
             return 12#Permission Denied
         handler.article_obj = acls()
         if handler.article_obj is None:
