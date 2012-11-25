@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <title>{{ doc['title'] }}</title>
-  <meta http-equiv="keywords" content="子曰,子曰网"/>
+  <meta http-equiv="keywords" content="{{ ','.join(doc['meta_keywords']) }}"/>
   <meta http-equiv="description" content="{{ doc['description'] }}"/>
   <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/main.css") }}" />
   {% block css_link %} {% end %}
