@@ -294,8 +294,8 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
                     jQuery.postJSON(url, {}, function(){}, function(response){
                         if(response.status == 0){
                             var $notice_div = $('#body_content').find('ul');
-                            if(to_do == "read_all") $notice_div.find('li').removeClass('noti-read-False').addClass('noti-read-True');
-                            if(to_do == "delete_all")  $notice_div.html('<div>没有消息！</div>');                 
+                            if(to_do == "read_all") $notice_div.find('li').removeClass('noti-read-0').addClass('noti-read-1');
+                            if(to_do == "delete_all")  $notice_div.html('<div>Nothing</div>');                 
                         }                    
                     }, function(){});
                     break;            
