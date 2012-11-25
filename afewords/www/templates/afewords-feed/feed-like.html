@@ -18,8 +18,14 @@
 
     <ul class="like_ul">
         {% for like_one in like_list %}
-           <li><a href="/blog/{{ like_one['aid'] }}" target="_blank">{{ like_one['title'] }}</a>
+            <li>
+            {% if like_one['article_type'] == "blog" %}
+           <a href="/blog/{{ like_one['aid'] }}" target="_blank">[文] - {{ like_one['title'] }}</a>
            <span class="tag-del hide_span" page="settings" do="unlike" obj_id="{{ like_one['aid'] }}" obj_type="blog">取消</span>
+           {% elif like_one['article_type'] == "book" %}
+           <a href="/book/{{ like_one['bid'] }}" target="_blank">[谱] - {{ like_one['name'] }}</a>
+           <span class="tag-del hide_span" page="settings" do="unlike" obj_id="{{ like_one['bid'] }}" obj_type="book">取消</span>
+           {% end%}
            </li>
         {% end %}
 
