@@ -297,6 +297,7 @@ class User(DataBox):
     @db_property
     def notifications():
         def getter(self):
+            del self.lib.notification_lib['isread']
             ans = dict([(ek, {
                 'index' : ek,
                 'content' : ev['info'],
@@ -311,7 +312,7 @@ class User(DataBox):
         noti_lib = self.lib.notification_lib
         for each in noti_ids:
             if each in noti_lib:
-                noti_lib['isread'] = True
+                noti_lib.sub_dict(each)['isread'] = True
 
     def remove_notifications(self, *noti_ids):
         noti_lib = self.lib.notification_lib
