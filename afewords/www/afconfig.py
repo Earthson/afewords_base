@@ -1,4 +1,5 @@
 #coding=utf-8
+import os
 af_conf = {
     'debug' : True,
     'needinvite' : True,
@@ -8,4 +9,5 @@ af_conf = {
     #'main_mail' : r'afewords@ipv6.earthson.net',
     'invitation_limit' : 50,
     'autoescape': None,
+    'root_dir': os.path.dirname(__file__),
 }
