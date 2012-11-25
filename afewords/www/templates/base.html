@@ -60,8 +60,7 @@
     {% if not user %}
     <div class="login" title="入站"><a href="/login">入站</a></div>
     {% else %}
-    
-    {% set account_status = False if user['account_status'] == 'unverfified' else True  %}
+    {% set account_status = False if user['account_status'] == 'unverified' else True  %}
     {% set avatar_status = False if user['thumb'] == '' or user['thumb'] == '/static/avatar/small/afewords-user.jpg'  else True %}
     <div class="myself manage" title="个人" id="head_user_block">
     <a href="javascript:void(0);" id="head_user_link" class="wran{{ '1' if avatar_status and account_status else '' }}">个人</a>
