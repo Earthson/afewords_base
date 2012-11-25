@@ -113,6 +113,7 @@ class WritePage(BasePage):
         'article_type': 'blog',	# unicode
         'page_type': 'write',
         'subpage_type': 'write',
+        'title': '执笔 - 子曰',
     }
 
     def page_init(self):
