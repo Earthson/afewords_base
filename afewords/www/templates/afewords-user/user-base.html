@@ -2,7 +2,7 @@
 
 
 {% block css_link %}
- <link rel="stylesheet" type="text/css" href="{{ static_url("css/jquery.Jcrop.css") }}" />
+ 
  <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/write.css") }}" />
 {% end %}
 
@@ -45,9 +45,5 @@ var settings_type = "{{ doc['subpage_type'] }}";
 {% end %}
 
 {% block script_bottom %}
-
-<script type="text/javascript" src="{{ static_url("js/jq/jquery.Jcrop.min.js") }}" ></script>
-<script type="text/javascript" src="{{ static_url("js/me/login.js") }}" ></script>
-<script type="text/javascript" src="{{ static_url("js/me/write.js") }}" ></script>
 
 {% end %}
