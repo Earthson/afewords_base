@@ -14,7 +14,7 @@ class AFBookHandler(BaseHandler):
         usr = self.current_user
         try:
             books = sorted(Catalog.by_ids(recent_books.get_slice(-20)), 
-                                reverse=True)
+                                reverse=False)
         except:
             books = []
         handler_page['book_list'] = [each.obj_info_view_by('overview_info',
