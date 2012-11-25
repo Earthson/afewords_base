@@ -21,5 +21,8 @@ class BlogHandler(BaseHandler):
         if preview != 'yes' and userstat.view_article(blog_to):
             blog_to.statistics.view_count += 1
         page['islike'] = False if usr is None else usr.is_like(blog_to)
+        page['title'] = page['article']['title'] + u' - 子曰博文'
+        page['meta_keywords'] = page['article']['keywords']
+        page['description'] = page['article']['title']
         page.render()
         return

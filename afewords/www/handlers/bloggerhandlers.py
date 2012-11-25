@@ -61,6 +61,9 @@ class BloggerBlogHandler(BaseBloggerHandler):
         page['urlparas'] = paradoc
         page['baseurl'] = self.request_url
         page.page_init()
+        page['title'] = page['author']['name'] + u' - 子曰'
+        page['meta_keywords'] = [page['author']['name']]
+        page['description'] = page['author']['name']
         page.render()
         return
 
@@ -80,6 +83,11 @@ class BloggerBookHandler(BaseBloggerHandler):
         handler_page['book_list'] = [each.obj_info_view_by('basic_info', usr)
                 for each in author.managed_catalogs]
         handler_page.page_init()
+
+        author_name = handler_page['author']['name']
+        handler_page['title'] = u'知识谱 - ' + author_name + u' - 子曰'
+        handler_page['meta_keywords'] = [ author_name, u'子曰知识谱', author_name + u'的知识谱']
+        handler_page['description'] = author_name + u'的知识谱'
         handler_page.render()
         return
 
@@ -96,5 +104,9 @@ class BloggerAboutHandler(BaseBloggerHandler):
         handler_page['about'] = author.about.obj_info_view_by('basic_info',
                                     usr=usr, env=author)
         handler_page.page_init()
+        author_name = handler_page['author']['name']
+        handler_page['title'] = u'关于我 - ' + author_name + u' - 子曰'
+        handler_page['meta_keywords'] = [ author_name, author_name + u'关于我' ]
+        handler_page['description'] = author_name + u'在子曰，关于他'
         handler_page.render()
         return
