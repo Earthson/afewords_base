@@ -1007,7 +1007,8 @@ jQuery.afewords.tools.Global_Funs = {
 change_code = function(classname){
     classname = classname || '';
     var $img = jQuery("#code_img");
-    $img.html('<img src="/code" class="'+classname+'" />');
+    var times = + new Date();
+    $img.html('<img src="/code?time='+ times +'" class="'+classname+'" />');
 }
 
 

@@ -132,10 +132,11 @@ var Global_Funs = $Tools.Global_Funs;
             info_html = '', 
             pop_height = 370;
         if(!login_flag){
+            var times = + new Date;
             info_html = '<p>称呼  <input type="text" class="feedback" name="name" /><span class="feedback">*当前为未登陆状态，可<a href="/login">登陆</a>后反馈</span></p>' +
                         '<p>邮箱  <input type="text" class="feedback" name="email" /><span class="feedback">*方便联系您</span></p>' + 
                         '<p>验证码 <input type="text" class="feedback_token" name="token" />' + 
-                            '<span id="code_img" class="feedback"><img src="/code" class="feedback" /></span>' +
+                            '<span id="code_img" class="feedback"><img src="/code?times='+ times +'" class="feedback" /></span>' +
                             '<a href="javascript:void(0)" onclick="change_code(\'feedback\');" class="feedback">换一张</a></p>';
             pop_height = 500;        
         }        
