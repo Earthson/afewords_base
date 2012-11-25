@@ -740,7 +740,7 @@ jQuery.afewords.tools.Global_Funs = {
                                                     ref_comment_html = '<div class="ref_comment_div">' + current_com.ref_comment_info + '</div>';                                                
                                                 }
                                                 var user_link = '/blogger/' +  current_com.author.uid;
-                                                comment_html += '<div class="com_one">' +
+                                                comment_html += '<div class="com_one" href="'+ current_com.aid +'">' +
                                                                 '<div class="com_pic"><a href="'+ user_link +'"><img src="'+ current_com.author.thumb +'" /></a></div>' +
                                                                 '<div class="com_body">' +
                                                                 '<div class="com_con">' +

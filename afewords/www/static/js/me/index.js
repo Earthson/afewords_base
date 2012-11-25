@@ -378,7 +378,7 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
                 break;      
             case 'notice_read':
                 url = '/settingpost-user_noti_read';
-                mes['noti_ids']  = $that.parent().attr("index");
+                mes['noti_ids']  = [$that.parent().attr("index")];
                 break;
             default:
                 return;
