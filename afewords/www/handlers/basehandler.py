@@ -29,8 +29,8 @@ def with_login(operate):
 
 def without_login_post(operate):
     from pages.postjson import LoginStatusJson
-    handler_json = LoginStatusJson()
     def wrapper(self, *args, **kwargs):
+        handler_json = LoginStatusJson(self)
         if self.current_user is not None:
             handler_json.by_status(200)
             handler_json.write()
@@ -41,8 +41,8 @@ def without_login_post(operate):
 
 def with_login_post(operate):
     from pages.postjson import LoginStatusJson
-    handler_json = LoginStatusJson()
     def wrapper(self, *args, **kwargs):
+        handler_json = LoginStatusJson(self)
         if not self.current_user:
             handler_json.by_status(100)
             handler_json.write()
