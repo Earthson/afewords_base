@@ -35,7 +35,10 @@ def start_server(port, app, debug=False, log_path=None, proc_num=1):
 
 
 if __name__ == '__main__':
-    port = sys.argv[1]
+    try:
+        port = int(sys.argv[1])
+    except:
+        port = 8000
     print(port)
     app = app_gen(app_handlers, app_settings)
     start_server(port, app, app_settings['debug'])
