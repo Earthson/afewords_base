@@ -12,7 +12,7 @@ af_conf = {
 }
 
 app_settings = {
-    'debug' : True,
+    'debug' : False,
     'static_path' : os.path.join(os.path.dirname(__file__), "static"),
     'template_path' : os.path.join(os.path.dirname(__file__), "templates"),
     'cookie_secret' : '11oETzKXQAGaYdkL5gEmGeJJFuYh7EQnp2XdTP1o/Vo=',
