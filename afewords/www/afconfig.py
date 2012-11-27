@@ -1,6 +1,8 @@
 #coding=utf-8
 import os
 
+afrootpath=os.path.dirname(__file__)
+
 af_conf = {
     'needinvite' : True,
     'main_url' : r'http://www.afewords.com',
@@ -25,7 +27,7 @@ app_settings = {
 
 def load_app_conf(filename='app.conf'):
     try:
-        ff = open('conf.d/'+filename, 'r')
+        ff = open(afrootpath+'/conf.d/'+filename, 'r')
         app_settings.update(
             (lambda tup: (tup[0], eval(tup[1])))(eachline[:-1].split('=', 1))
             for eachline in ff)
@@ -37,7 +39,7 @@ def load_app_conf(filename='app.conf'):
 
 def load_af_conf(filename='afewords.conf'):
     try:
-        ff = open('conf.d/'+filename, 'r')
+        ff = open(afrootpath+'/conf.d/'+filename, 'r')
         af_conf.update(
             (lambda tup: (tup[0], eval(tup[1])))(eachline[:-1].split('=', 1))
             for eachline in ff)
