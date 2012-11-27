@@ -1,4 +1,5 @@
 #coding=utf-8
+import os
 from tornado.escape import json_encode
 from tornado.template import Loader, Template
 from afconfig import af_conf
@@ -41,7 +42,7 @@ class AFDocBase(object):
 @with_attr
 class BaseToolPage(AFDocBase):
     __template_file__ = ''
-    __loader__ = Loader('templates/tools')
+    __loader__ = Loader(os.path.join(af_conf['root_dir'], 'templates/tools'))
 
     doc = {
         'main_url' : af_conf['main_url'],
@@ -71,13 +72,13 @@ class BaseStringRender(AFDocBase):
 @with_attr
 class BaseMail(BaseStringRender):
     subject = u'Mail from afewords'
-    __loader__ = Loader('templates/mails')
+    __loader__ = Loader(os.path.join(af_conf['root_dir'], 'templates/mails'))
 
 
 @with_attr
 class BaseMSG(BaseStringRender):
     subject = u'Mail from afewords'
-    __loader__ = Loader('templates/messages')
+    __loader__ = Loader(os.path.join(af_conf['root_dir'], 'templates/messages'))
 
 
 @with_attr
@@ -99,7 +100,7 @@ class BaseJson(AFDocBase):
 @with_attr
 class BasePage(AFDocBase):
     __template_file__ = ''
-    __loader__ = Loader('templates')
+    __loader__ = Loader(os.path.join(af_conf['root_dir'], 'templates'))
     doc = {
         'page_type' : 'index',  # web page type, for nav chosed
         'subpage_type' : 'feed',
@@ -123,6 +124,9 @@ class BasePage(AFDocBase):
     show = render
 
     def render_string(self):
+        if self.handler is not None:
+            return self.handler.render_string(self.__template_file__, 
+                                            doc=self.doc)
         return self.__loader__.load(self.__template_file__).generate(doc=self.doc)
 
     #__unicode__ = render_string

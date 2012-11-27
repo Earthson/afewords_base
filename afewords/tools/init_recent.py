@@ -9,6 +9,8 @@ recent_blogs.set_all([None for i in range(200)])
 blog_all = sorted([Blog(each) 
                 for each in Blog.datatype.find()], reverse=True)
 for each in blog_all:
+    if each.is_posted is False:
+        continue
     recent_blogs.push(each._id)
     recent_blogs.pop_head()
 

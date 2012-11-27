@@ -81,7 +81,8 @@ from handlers.statisticshandlers import ObjDoLikeHandler
 from handlers.feedbackhandlers import FeedbackHandler
 from handlers.feedbackhandlers import AFFeedbackHandler
 
-app_handlers = {
+from handlers.errorhandlers import AFNotFoundHandler
+app_handlers = [
     (r'/', IndexHandler), #MainHandler),
     (r'/test', TestHandler),
     #(r'/home', HomeHandler),
@@ -165,17 +166,7 @@ app_handlers = {
 
     (r'/post-feedback', FeedbackHandler),
     (r'/afewords-feedback', AFFeedbackHandler),
-}
 
-app_settings = {
-    'static_path' : os.path.join(os.path.dirname(__file__), "static"),
-    'template_path' : os.path.join(os.path.dirname(__file__), "templates"),
-    #'debug' : True,
-    'cookie_secret' : '11oETzKXQAGaYdkL5gEmGeJJFuYh7EQnp2XdTP1o/Vo=',
-    'login_url' : '/login',
-    'autoescape' : None,
-    'xsrf_cookies' : True,
-    'picture_domain' : 'picture1',
-    #'localhost' : True,
-}
+    (r'(.*)', AFNotFoundHandler),
+]
 

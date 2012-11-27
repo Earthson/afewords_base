@@ -82,6 +82,7 @@ def bookedit_init(handler, bid, page):
     if test_auth(auth_tmp, A_WRITE) is False:
         return 2 #permission denied
     handler.book = book
+    return 0
     
 
 class AFBookEditInfoHandler(BaseHandler):
