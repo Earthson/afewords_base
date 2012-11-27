@@ -13,7 +13,9 @@ import tornado.options
 from afconfig import *
 from app_conf import *
 
-os.chdir(os.path.dirname(sys.argv[0]))
+_cur_path = os.path.dirname(sys.argv[0])
+if _cur_path:
+    os.chdir(_cur_path)
 
 def app_gen(handlers, settings, debug=False):
     if debug:
