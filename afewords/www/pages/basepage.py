@@ -124,6 +124,9 @@ class BasePage(AFDocBase):
     show = render
 
     def render_string(self):
+        if self.handler is not None:
+            return self.handler.render_string(self.__template_file__, 
+                                            doc=self.doc)
         return self.__loader__.load(self.__template_file__).generate(doc=self.doc)
 
     #__unicode__ = render_string

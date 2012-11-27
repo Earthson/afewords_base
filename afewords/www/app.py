@@ -13,7 +13,7 @@ import tornado.options
 from afconfig import *
 from app_conf import *
 
-_cur_path = os.path.dirname(sys.argv[0])
+_cur_path = os.path.join(os.path.dirname(__file__))
 if _cur_path:
     os.chdir(_cur_path)
 

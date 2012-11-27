@@ -175,4 +175,3 @@ class BaseHandler(RequestHandler):
         errorpage['status'] = status_code
         errorpage['error_info'] = error_info
         errorpage.render()
-        return
