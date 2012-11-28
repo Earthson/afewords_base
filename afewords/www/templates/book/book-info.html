@@ -33,7 +33,13 @@
 {% end %}
 </td></tr>
 <tr><td class="weak">最近更新</td><td class="left">{{ str(book['update_time'])[:16] }}</td></tr>
-<tr><td class="weak">联合编者</td><td class="left"><a href="/blogger/{{ author['uid'] }}" class="author">{{ author['name'] }}</a></td></tr>
+<tr><td class="weak">联合编者</td><td class="left">
+<a href="/blogger/{{ author['uid'] }}" class="author">{{ author['name'] }}</a>
+{% for manager in book['manager_list'] %}
+<a href="/blogger/{{ manager['uid'] }}" class="author">{{ manager['name'] }}</a>
+{% end %}
+
+</td></tr>
 </table>
 
 
