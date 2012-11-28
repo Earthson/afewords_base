@@ -68,7 +68,7 @@ class CatalogManagerAddHandler(BaseHandler):
             handler_json.write()
             return #user to add not exist
         tmp_auth = book.authority_verify(usr=usr)
-        if test_auth(tmp_auth, A_OWNER) is False
+        if test_auth(tmp_auth, A_OWNER) is False:
             handler_json.by_status(4)
             handler_json.write()
             return #permission denied
@@ -102,7 +102,7 @@ class CatalogManagerDelHandler(BaseHandler):
             handler_json.write()
             return #book not exist
         tmp_auth = book.authority_verify(usr=usr)
-        if test_auth(tmp_auth, A_OWNER) is False
+        if test_auth(tmp_auth, A_OWNER) is False:
             handler_json.by_status(2)
             handler_json.write()
             return #permission denied
