@@ -452,3 +452,20 @@ class CatalogInfoModifyJson(StatusJson):
         1 : u'知识谱不存在',
         2 : u'修改被拒绝，您没有需要的权限',
     }
+
+@with_attr
+class CatalogManagerAddJson(StatusJson):
+    error_info = {
+        0 : u'添加管理员成功',
+        1 : u'知识谱不存在',
+        2 : u'不存在的用户',
+        3 : u'没有可用的管理员名额',
+    }
+
+
+@with_attr
+class CatalogManagerDelJson(StatusJson):
+    error_info = {
+        0 : u'删除管理员成功',
+        1 : u'知识谱不存在',
+    }

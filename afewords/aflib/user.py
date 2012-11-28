@@ -282,7 +282,7 @@ class User(DataBox):
         if usr is None:
             ret = set_auth(ret, A_READ)
         elif self._id == usr._id:
-            ret = set_auth(ret, A_READ | A_WRITE | A_DEL | A_POST)
+            ret = set_auth(ret, A_READ | A_WRITE | A_DEL | A_POST | A_OWNER)
         return ret
 
     def accept_notification(self, info, from_who=None):

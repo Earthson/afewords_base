@@ -10,6 +10,7 @@ A_READ = 1
 A_WRITE = 1 << 2
 A_POST = 1 << 3
 A_DEL = 1 << 4
+A_OWNER = 1 << 5
 #A_MANAGE = 1 << 5
 
 auth_doc = {
@@ -17,6 +18,7 @@ auth_doc = {
     A_WRITE : 'w',
     A_POST : 'p',
     A_DEL : 'd',
+    A_OWNER : 'o',
 }
 
 

@@ -44,6 +44,64 @@ class CatalogInfoModifyHandler(BaseHandler):
         handler_json.write()
         return #0
 
+class CatalogManagerAddPara(BaseHandlerPara):
+    paradoc = {
+        'id' : '',
+        'uid' : '',
+    }
+
+class CatalogManagerAddHandler(BaseHandler):
+    @with_login_post
+    def post(self):
+        from pages.postjson import CatalogManagerAddJson
+        handler_para = CatalogManagerAddPara(self)
+        handler_json = CatalogManagerAddJson(self)
+        usr = self.current_user
+        book = Catalog.by_id(handler_para['id'])
+        if book is None:
+            handler_json.by_status(1)
+            handler_json.write()
+            return #book not exist
+        tomodify = User.by_id(handler_para['uid'])
+        if tomodify is None:
+            handler_json.by_status(2)
+            handler_json.write()
+            return #user to add not exist
+        add_stat = book.add_manager(tomodify)
+        if add_stat is False:
+            handler_json.by_status(3)
+            handler_json.write()
+            return #managers full
+        handler_json.by_status(0)
+        handler_json.write()
+        return #0
+       
+
+class CatalogManagerDelPara(BaseHandlerPara):
+    paradoc = {
+        'id' : '',
+        'uid' : '',
+    }
+
+class CatalogManagerDelHandler(BaseHandler):
+    @with_login_post
+    def post(self):
+        from pages.postjson import CatalogManagerDelJson
+        handler_para = CatalogManagerDelPara(self)
+        handler_json = CatalogManagerDelJson(self)
+        usr = self.current_user
+        book = Catalog.by_id(handler_para['id'])
+        if book is None:
+            handler_json.by_status(1)
+            handler_json.write()
+            return #book not exist
+        tomodify = User.by_id(handler_para['uid'])
+        book.del_manager(tomodify)
+        handler_json.by_status(0)
+        handler_json.write()
+        return #0
+
+
 
 class CatalogSectionModifyPara(BaseHandlerPara):
     paradoc = {

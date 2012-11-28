@@ -146,6 +146,8 @@ class Catalog(DataBox):
     }
     own_data = ['statistics', 'about', 'lib']
 
+    manager_limit = 3
+
     def __init__(self, data=None, *args, **kwargs):
         DataBox.__init__(self, data, *args, **kwargs)
         if data is None:
@@ -216,6 +218,24 @@ class Catalog(DataBox):
             return True
         return False
 
+    def add_manager(self, usr):
+        '''return 
+            True if add or already in manager
+            False if manager if full
+        '''
+        if self.is_manager(usr):
+            return True
+        if len(self.managers) >= 2:
+            return False
+        self.managers.append(usr._id)
+        self.save()
+
+    def del_manager(self, usr):
+        if usr is None:
+            return
+        if usr in self.managers:
+            self.managers.remove(usr._id)
+
     def is_owner(self, usr):
         if usr is None:
             return False
@@ -224,11 +244,14 @@ class Catalog(DataBox):
             return True
         return False
 
+
     @with_user_status
     def authority_verify(self, usr, env=None, **kwargs):
         ret = 0
         if usr == None:
             ret = set_auth(ret, A_READ)
+        elif self.is_owner(usr):
+            ret = set_auth(ret, A_READ | A_WRITE | A_DEL | A_POST | A_OWNER)
         elif self.is_manager(usr):
             ret = set_auth(ret, A_READ | A_WRITE | A_DEL | A_POST)
         else:

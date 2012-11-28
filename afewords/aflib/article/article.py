@@ -290,7 +290,7 @@ class Article(DataBox):
         if usr is None:
             return ret
         elif self.author is not None and self.author._id == usr._id:
-            ret = set_auth(ret, A_READ | A_WRITE | A_DEL)
+            ret = set_auth(ret, A_READ | A_WRITE | A_DEL | A_OWNER)
         tmp_fa = self.father
         if tmp_fa and tmp_fa.author_id == usr._id:
             ret = set_auth(ret, A_READ | A_DEL)
