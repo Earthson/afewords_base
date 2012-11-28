@@ -72,6 +72,7 @@ class CatalogManagerAddHandler(BaseHandler):
             handler_json.by_status(3)
             handler_json.write()
             return #managers full
+        handler_json['new_manager'] = tomodify.json_info_view_by(usr=usr)
         handler_json.by_status(0)
         handler_json.write()
         return #0

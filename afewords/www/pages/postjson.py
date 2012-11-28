@@ -455,6 +455,9 @@ class CatalogInfoModifyJson(StatusJson):
 
 @with_attr
 class CatalogManagerAddJson(StatusJson):
+    doc = {
+        'new_manager': {}, #usr overview info, with: uid, name, thumb
+    }
     error_info = {
         0 : u'添加管理员成功',
         1 : u'知识谱不存在',
