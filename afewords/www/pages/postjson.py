@@ -444,3 +444,11 @@ class AFBookCreateJson(StatusJson):
         0 : u'知识谱创建成功',
         1 : u'请先给知识谱命名',
     }
+
+@with_attr
+class CatalogInfoModifyJson(StatusJson):
+    error_info = {
+        0 : u'知识谱修改成功',
+        1 : u'知识谱不存在',
+        2 : u'修改被拒绝，您没有需要的权限',
+    }
