@@ -242,6 +242,7 @@ class Catalog(DataBox):
             return
         if usr in self.managers:
             self.managers.remove(usr._id)
+            self.save()
 
     def is_owner(self, usr):
         if usr is None:
