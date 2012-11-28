@@ -51,6 +51,7 @@ from handlers.settingcataloghandlers import RecArticleToBookHandler
 from handlers.settingcataloghandlers import DelArticleFromBookHandler
 from handlers.settingcataloghandlers import SpecArticleToBookHandler
 from handlers.settingcataloghandlers import UnSpecArticleFromBookHandler
+from handlers.settingcataloghandlers import CatalogInfoModifyHandler
 
 from handlers.loadhandlers import GetArticleOverviewsHandler
 
@@ -163,6 +164,7 @@ app_handlers = [
     (r'/settingpost-book_article_del', DelArticleFromBookHandler),
     (r'/settingpost-book_article_spec', SpecArticleToBookHandler),
     (r'/settingpost-book_article_unspec', UnSpecArticleFromBookHandler),
+    (r'/settingpost-book_info_modify', CatalogInfoModifyHandler),
 
     (r'/post-feedback', FeedbackHandler),
     (r'/afewords-feedback', AFFeedbackHandler),

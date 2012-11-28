@@ -153,9 +153,9 @@ class ArticleUpdatePara(BaseHandlerPara):
         self['tags'] = self.handler.get_esc_args('tags[]')
         self['ref_comments'] = self.handler.get_esc_args('ref_comments[]')
         self['tags'].append('default')
-        self['keywords'] = self['keywords'].replace(u'，', u',').split(u',')
-        if self['keywords'][0] == u'' and len(self['keywords']) == 1:
-            self['keywords'] = list()
+        self['keywords'] = [each for each in 
+                self['keywords'].replace(u'，', u',').split(u',')
+                if each]
         if self['privilege'] not in ['public', 'private']:
             self['privilege'] = 'public'
     

@@ -9,6 +9,42 @@ from generator import generator
 
 from authority import *
 
+class CatalogInfoModifyPara(BaseHandlerPara):
+    paradoc = {
+        'book_id' : '',
+        'book_name' : '',
+        'keywords' : '', 
+    }
+
+    def read(self):
+        BaseHandlerPara.read(self)
+        self['keywords'] = [each for each in 
+                    self['keywords'].replace(u'，', u',').split(u',')
+                    if each]
+
+class CatalogInfoModifyHandler(BaseHandler):
+    @with_login_post
+    def post(self):
+        from pages.postjson import CatalogInfoModifyJson
+        handler_para = CatalogInfoModifyPara(self)
+        handler_json = CatalogInfoModifyJson(self)
+        usr = self.current_user
+        book = Catalog.by_id(handler_para['book_id'])
+        if book is None:
+            handler_json.by_status(1)
+            handler_json.write()
+            return #book not exist
+        tmp_auth = book.authority_verify(usr)
+        if test_auth(tmp_auth, A_WRITE) is False:
+            handler_json.by_status(2)
+            handler_json.write()
+            return #permission denied
+        book.set_by_info(handler_para)
+        handler_json.by_status(0)
+        handler_json.write()
+        return #0
+
+
 class CatalogSectionModifyPara(BaseHandlerPara):
     paradoc = {
         'book_id' : '',
