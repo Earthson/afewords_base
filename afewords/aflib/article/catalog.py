@@ -498,7 +498,7 @@ class Catalog(DataBox):
                             usr=None, env=None, **kwargs):
         '''
         info_name: ['basic_info', 'overview_info', 'with_summary', 'edit_info',
-            'edit_with_summary']
+            'edit_with_summary', 'manager_info']
         '''
         ans = dict()
         ans['article_type'] = self.first_alias

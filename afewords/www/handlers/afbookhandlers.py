@@ -131,7 +131,7 @@ class AFBookEditInviteHandler(BaseHandler):
         if status == 2:
             self.handler_page.render()
             return #permission denied
-        handler_page['book'] = self.book.obj_info_view_by('basic_info',
+        handler_page['book'] = self.book.obj_info_view_by('manager_info',
                                 usr=usr, env=self.book)
         handler_page.render()
         return #0

@@ -135,7 +135,7 @@ class BookInfoHandler(BaseHandler):
         if catalog_obj is None:
             self.send_error(404)
             return
-        handler_page['book'] = catalog_obj.obj_info_view_by('basic_info', 
+        handler_page['book'] = catalog_obj.obj_info_view_by('manager_info', 
                                     usr=usr)
         handler_page.page_init()
         book_name = handler_page['book']['name']
