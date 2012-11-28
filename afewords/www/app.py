@@ -17,11 +17,8 @@ _cur_path = os.path.join(os.path.dirname(__file__))
 if _cur_path:
     os.chdir(_cur_path)
 
-def app_gen(handlers, settings, debug=False):
-    if debug:
-        settings.update({'debug':True})
+def app_gen(handlers, settings):
     return Application(handlers, **settings)
-
 
 def start_server(port, app, debug=False, log_path=None, proc_num=1):
     port = int(port)
@@ -38,7 +35,10 @@ def start_server(port, app, debug=False, log_path=None, proc_num=1):
 
 
 if __name__ == '__main__':
-    port = sys.argv[1]
+    try:
+        port = int(sys.argv[1])
+    except:
+        port = 8000
     print(port)
-    app = app_gen(app_handlers, app_settings, af_conf['debug'])
-    start_server(port, app, af_conf['debug'])
+    app = app_gen(app_handlers, app_settings)
+    start_server(port, app, app_settings['debug'])

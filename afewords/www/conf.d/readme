@@ -1,0 +1,6 @@
+app.conf for tornado application settings
+afewords.conf for afewords settings
+
+attribute set by, value is python excutable(bool, num, str, .etc)
+
+attribute_name=value
