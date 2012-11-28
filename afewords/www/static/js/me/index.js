@@ -578,8 +578,8 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
                 Global_Funs['book_chapter_manage']["remove_chapter"].call($target, sort_node_fun);
                 break;
             case "add_book_manager":
-                break;
             case "remove_book_manager":
+                Global_Funs['book_chapter_manage'][to_do].call($target);
                 break;
             default:
                 break;           

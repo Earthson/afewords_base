@@ -80,6 +80,11 @@ $.extend({
                     if(list_len < 4)    return {'return': false};
                     return {'return': true, 'book_id': url_list[list_len-3], 'node_id': url_list[list_len-1]};
     },
+    get_user_from_url:  function(url){
+                    var url_list = url.split('/'), list_len = url_list.length;
+                    if(list_len < 2)    return { 'return': false };
+                    return {'return': true, 'user_id': url_list[list_len-1]};
+    },
     cursor_to_top: function(){
     
                     var times = 10;
@@ -1017,6 +1022,53 @@ jQuery.afewords.tools.Global_Funs = {
                             $li.remove();                        
                         }                    
                     }, function(){});
+                },
+                "add_book_manager": function(){
+                    var $that = jQuery(this),
+                        book_id = $that.attr("book_id");
+                    var pop_html = '<div id="pop_insert_table">' +
+                                    '<p class="first">添加编者</p>'+
+                                    '<input type="hidden" name="id" value="'+ book_id +'" />'+
+                                    '<p>作者链接<input type="text" name="url" autocomplete="off"/></p>'+
+                                    '<p><button type="submit" id="recommend_button">添加</button><span class="t_process">&nbsp;</span></p>'+
+                                    '</div>';
+                    var $pop_html = jQuery(pop_html);
+                    var $pop_content = pop_page(450,200, $pop_html);
+                    $pop_content.bind('click', function(e){
+                        if(e.target.nodeName != "BUTTON")   return;
+                        var $button = jQuery(e.target), $process = $button.siblings("span"),
+                            url = '/settingpost-book_manager_add',
+                            mes = $pop_content.DivToDict(),
+                            ret = jQuery.get_user_from_url(mes['url']);
+                        if(!ret["return"]){ $process.error_process("链接未识别！"); return; }
+                        mes['uid'] = ret['user_id'];
+                        jQuery.postJSON(url, mes, function(){ $button.to_disabled(); $process.ajax_process(); }, 
+                            function(response){
+                                if(response.status != 0){  $process.error_process(response.info); $button.remove_disabled(); }
+                                else{
+                                    // add ok 
+                                    var manager = response.new_manager;
+                                    $process.right_process("添加成功！");
+                                    var li_html = '<li user_id="'+ mes['uif'] +'">' +
+                                                    '<span><a href="/blogger/' + mes['uid'] +'">'+ manager["name"] +'</a></span>' +
+                                                    '<span class="catalog_del" do="remove_book_manager">移除</span>'+
+                                                    '</li>'; 
+                                    var $catalog_ul = jQuery("ul.catalog_ul");
+                                    $catalog_ul.append(li_html);  
+                                    pop_page_close();                            
+                                }                            
+                            }, function(textStatus){ $button.remove_disabled(); $process.error_process("出现错误：" + textStatus); });
+                        
+                                                
+                    });
+                },
+                "remove_book_manager": function(){
+                            var $that = jQuery(this), $li = $that.parent(), $ul = $li.parent(),
+                                url = '/settingpost-book_manager_del',
+                                mes = { 'id': $ul.attr("book_id"), 'uid': $li.attr("user_id") };
+                            jQuery.postJSON(url, mes, function(){}, function(response){
+                                if(response.status == 0) $li.remove();                            
+                            }, function(){});
                 }
     }  
     
