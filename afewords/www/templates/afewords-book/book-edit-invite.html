@@ -4,10 +4,13 @@
 
 {% set book = doc['book'] %}
 {% set author = book['author'] %}
+{% set isowner = True if 'o' in book['permission'] else False %}
 
 <div class="book_catalog">
 
+{% if isowner %}
 <span class="book_catalog_add" book_id="{{ book['bid'] }}" do="add_book_manager">添加编者</span>
+{% end %}
 
 <div class="book_catalog_con" style="margin-top:30px;">
 
@@ -21,7 +24,9 @@
 {% for manager in book['manager_list'] %}
 <li user_id="{{ manager['uid'] }}">
 <span><a href="/blogger/{{ manager['uid'] }}">{{ manager['name'] }}</a></span>
+{% if isowner %}
 <span class="catalog_del" do="remove_book_manager">移除</span>
+{% end %}
 </li>
 {% end %}
 

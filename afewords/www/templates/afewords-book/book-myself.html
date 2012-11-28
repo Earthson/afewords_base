@@ -21,7 +21,9 @@
             <a href="/book-edit/{{ item['bid'] }}/catalog" class="book_one_modify">管理目录</a>
             <a href="/book-edit/{{ item['bid'] }}/invite" class="book_one_modify">管理编者</a>            
             <a href="/book-edit/{{ item['bid'] }}/info" class="book_one_modify">管理信息</a>
+            {% if 'o' in item['permission'] %}
             <a href="javascript:void(0)" class="book_one_modify book_one_del" do="remove_book" obj_id="{{ item['bid'] }}" obj_type="book">删除</a> 
+            {% end %}
             </p>
             </div>
             
