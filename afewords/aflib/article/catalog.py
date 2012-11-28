@@ -530,3 +530,9 @@ class Catalog(DataBox):
         def getter(self):
             return self.main_url + 'book/' + self.uid
         return getter
+
+    def set_by_info(self, infodoc):
+        ans = dict()
+        ans['name'] = infodoc['name']
+        ans['keywords'] = infodoc['keywords']
+        self.set_propertys(**ans)

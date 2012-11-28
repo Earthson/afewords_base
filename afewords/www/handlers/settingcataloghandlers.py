@@ -11,8 +11,8 @@ from authority import *
 
 class CatalogInfoModifyPara(BaseHandlerPara):
     paradoc = {
-        'book_id' : '',
-        'book_name' : '',
+        'id' : '',
+        'name' : '',
         'keywords' : '', 
     }
 
@@ -29,7 +29,7 @@ class CatalogInfoModifyHandler(BaseHandler):
         handler_para = CatalogInfoModifyPara(self)
         handler_json = CatalogInfoModifyJson(self)
         usr = self.current_user
-        book = Catalog.by_id(handler_para['book_id'])
+        book = Catalog.by_id(handler_para['id'])
         if book is None:
             handler_json.by_status(1)
             handler_json.write()
