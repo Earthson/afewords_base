@@ -18,10 +18,13 @@
 <span><a href="/blogger/{{ author['uid'] }}">{{ author['name'] }}</a>[创建]</span>
 </li>
 
-<li user_id="{{ author['uid'] }}">
-<span><a href="/blogger/{{ author['uid'] }}">{{ author['name'] }}</a></span>
+{% for manager in book['manager_list'] %}
+<li user_id="{{ manager['uid'] }}">
+<span><a href="/blogger/{{ manager['uid'] }}">{{ manager['name'] }}</a></span>
 <span class="catalog_del" do="remove_book_manager">移除</span>
 </li>
+{% end %}
+
 
 </ul>
 
