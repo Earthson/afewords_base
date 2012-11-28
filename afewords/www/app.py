@@ -23,7 +23,7 @@ def app_gen(handlers, settings):
 def start_server(port, app, debug=False, log_path=None, proc_num=1):
     port = int(port)
     if not log_path:
-        log_path = 'log' + str(port)
+        log_path = 'log/' + str(port)
     if not debug:
         tornado.options.options['log_file_prefix'].set(log_path)
         tornado.options.parse_command_line()
