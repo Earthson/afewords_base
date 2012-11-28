@@ -7,39 +7,3 @@
 <button class="self-intro-button">提交</button>
 
 {% end %}
-
-{% block afewords_book_more_script %}
-
-{% set article = doc['book']['summary'] %}
-{% set env = article['env'] %}
-
-<script type="text/javascript" src="{{ static_url("js/me/editor.js") }}" ></script>
-
-<script type="text/javascript">
-
-$(document).ready(function(){
-    
-    
-    // edit 
-    var article_json = {
-        "article_id": "{{ article['aid'] }}" || '-1',
-        "article_type": "{{ article['article_type'] }}" || 'blog',
-        "env_id": "{{ env['env_id'] }}",
-        "env_type": "{{ env['env_type'] }}",
-        "src": {
-                    "math": {{ json_encode(article['equation_list']) }},
-                    "image": {{ json_encode(article['picture_list']) }},
-                    "table": {{ json_encode(article['tableform_list']) }},
-                    "reference": {{ json_encode(article['reference_list']) }},
-                    "code": {{ json_encode(article['langcode_list']) }}    
-                }
-    };
-    $("#write_textarea").create_editor(article_json);
-    
-});
-
-
-
-</script>
-
-{% end %}
