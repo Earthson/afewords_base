@@ -18,7 +18,10 @@
             <p>
             <a href="/book/{{ item['bid'] }}/about" class="book_one_modify">摘要</a>
             <a href="/book/{{ item['bid'] }}/catalog" class="book_one_modify">目录</a>
-            <a href="/book/{{ item['bid'] }}/info" class="book_one_modify">信息</a> 
+            <a href="/book/{{ item['bid'] }}/info" class="book_one_modify">信息</a>
+            {% if 'd' in item['permission'] %}
+            <a href="/book-edit/{{ item['bid'] }}/info" class="book_one_modify">管理</a>
+            {% end %} 
             </p>
             </div>
         {% end %}

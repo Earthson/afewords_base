@@ -6,7 +6,7 @@
 <div id="middle_book" class="middle_book_summary current_middle1">
 <div class="book_header"><span class="header_left">摘要</span><span class="header_right">{{ book['name'] }}</span></div>
 <div class="book_summary">
-{% if doc['user'] and doc['user']['uid'] == author['uid'] %}
+{% if 'd' in book['permission'] %}
         <div class="book_do_a" book_id="{{ book['bid'] }}"><a href="/write?id={{ book['summary']['aid'] }}&type=about">修改摘要</a></div>
 {% end %}
 <div class="book_summary_tip">摘要</div>
