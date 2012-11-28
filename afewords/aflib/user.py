@@ -673,6 +673,7 @@ class User(DataBox):
             ans = dict()
             ans['uid'] = self.uid
             ans['name'] = self.name
+            ans['thumb'] = self.avatar.thumb_url
             ans['url'] = self.obj_url
             ans['isfollow'] = False
             ans['isme'] = False
