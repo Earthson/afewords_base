@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import os
-for each in os.popen('ls *.py'):
+for each in os.popen('ls init_*.py'):
     if each == 'fix.py\n' or each == 'do_init.py\n':
         continue
     print('running...: %s' % each[:-1])
