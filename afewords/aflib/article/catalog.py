@@ -211,6 +211,12 @@ class Catalog(DataBox):
             return self.data['node_count'] - self.data['remove_count']
         return getter
 
+    @db_property
+    def manager_objs():
+        def getter(self):
+            from user import User
+            return User.by_ids(self.managers)
+
     def is_manager(self, usr):
         if usr is None:
             return False
@@ -506,6 +512,10 @@ class Catalog(DataBox):
         ans['statistics'] = self.statistics.basic_info
         ans['keywords'] = self.keywords
         ans['islike'] = False if usr is None else usr.is_like(self)
+        if info_name in ('manager_info'):
+            ans['manager_list'] = [each.obj_info_view_by('overview_info', 
+                            usr=usr, env=env, **kwargs)
+                            for each in self.manager_objs]
         if info_name in ('basic_info'):
             ans['author'] = self.owner.obj_info_view_by(info_name, 
                             usr=usr, env=env, **kwargs)
