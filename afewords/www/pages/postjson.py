@@ -463,6 +463,7 @@ class CatalogManagerAddJson(StatusJson):
         1 : u'知识谱不存在',
         2 : u'不存在的用户',
         3 : u'没有可用的管理员名额',
+        4 : u'添加请求被拒绝',
     }
 
 
@@ -471,4 +472,5 @@ class CatalogManagerDelJson(StatusJson):
     error_info = {
         0 : u'删除管理员成功',
         1 : u'知识谱不存在',
+        2 : u'删除请求被拒绝',
     }

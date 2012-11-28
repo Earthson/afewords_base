@@ -216,6 +216,7 @@ class Catalog(DataBox):
         def getter(self):
             from user import User
             return User.by_ids(self.managers)
+        return getter
 
     def is_manager(self, usr):
         if usr is None:

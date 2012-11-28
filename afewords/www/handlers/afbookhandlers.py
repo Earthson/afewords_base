@@ -129,7 +129,7 @@ class AFBookEditInviteHandler(BaseHandler):
             self.send_error(404)
             return #book not found
         if status == 2:
-            self.handler_page.render()
+            self.send_error(500, u'Permission Denied')
             return #permission denied
         handler_page['book'] = self.book.obj_info_view_by('manager_info',
                                 usr=usr, env=self.book)
