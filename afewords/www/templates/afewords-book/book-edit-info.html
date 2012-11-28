@@ -6,7 +6,7 @@
     <div class="book_create">
     <table summary="" id="book_create_table" >
     <tr><td width="10%" align="center">知识谱名</td><td width="90%">
-    <input type="hidden" name="book_id" value="{{ book['bid'] }}" />
+    <input type="hidden" name="id" value="{{ book['bid'] }}" />
     <input type="text" class="g_c_name" name="name" value="{{ book['name'] }}" /></td></tr>
 
     <tr><td align="center" style="letter-spacing:4px;">关键词</td><td>
@@ -15,7 +15,6 @@
     <td><button id="book_create_button" do="edit_book_info">提交</button><span class="g_c_process">&nbsp;</span></td></tr>
     </table>
     </div>
-
 
 
 

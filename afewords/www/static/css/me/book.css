@@ -68,7 +68,7 @@ text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;}
 padding-bottom: 100px;}
 
 
-.book_catalog{width: 100%;float: left;margin-top: 30px;position: relative;}
+.book_catalog{width: 100%;float: left;margin-top: 30px;position: relative;min-height: 100px;}
 .book_catalog div.book_catalog_tip{float: left;width: 100%;height: 30px;line-height: 30px;font-size: 18px;}
 .book_catalog div.book_catalog_con{float: left;width: 100%;min-height: 100px;margin-top: 20px;font-size: 16px !important;
 padding-bottom: 100px;}
