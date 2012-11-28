@@ -812,7 +812,7 @@ jQuery.afewords.tools.Global_Funs = {
                                         var $button = jQuery(this);
                                         if(!mes['name']) { $process.error_process("请填写知识谱名称！"); return [false]; }
                                         if(!mes['keywords']) { $process.error_process("请填写关键词【for SEO】!"); return [false]; }
-                                        var url = '/book';
+                                        var url = '/settingpost-book_info_modify';
                                         jQuery.postJSON(url, mes, function(){
                                             $process.ajax_process();  $button.to_disabled();                                        
                                         },function(response){

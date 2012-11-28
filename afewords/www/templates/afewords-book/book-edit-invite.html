@@ -2,8 +2,34 @@
 
 {% block afewords_book_html %}
 
-开发中...
+{% set book = doc['book'] %}
+{% set author = book['author'] %}
 
+<div class="book_catalog">
+
+<span class="book_catalog_add" book_id="{{ book['bid'] }}" do="add_book_manager">添加编者</span>
+
+<div class="book_catalog_con" style="margin-top:30px;">
+
+
+<ul class="catalog_ul catalog_edit1" book_id="502e5cff3725176a91000004">
+
+<li user_id="{{ author['uid'] }}">
+<span><a href="/blogger/{{ author['uid'] }}">{{ author['name'] }}</a>[创建]</span>
+</li>
+
+<li user_id="{{ author['uid'] }}">
+<span><a href="/blogger/{{ author['uid'] }}">{{ author['name'] }}</a></span>
+<span class="catalog_del" do="remove_book_manager">移除</span>
+</li>
+
+</ul>
+
+
+
+</div>
+
+</div>
 
 <div class="div-20"></div>
 <div class="div-20"></div>
