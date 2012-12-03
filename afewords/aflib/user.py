@@ -415,7 +415,11 @@ class User(DataBox):
         if not tagname:
             return [], 0
         tag_blogs = self.lib.tag_lib.sub_list(tagname)
+        #print(tagname)
+        #print(tag_blogs.load_all())
         toview = tag_blogs.load_all()
+        if toview is None:
+            toview = []
         toview = sorted(toview, key=itemgetter(1), reverse=True)
         len_toview = len(toview)
         if vfrom >= len_toview:
