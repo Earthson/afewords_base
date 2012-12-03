@@ -21,9 +21,9 @@
 {% end %}
 {% for one_tag in doc['tag_list'] %}
     {% if search_tag == one_tag %}
-        <li><a href="/blog-lib?tag={{ url_escape(one_tag) }}" class="current">{{ one_tag }}</a></li>
+        <li><a href="/blog-lib?tag={{ url_escape(xhtml_escape(one_tag)) }}" class="current">{{ one_tag }}</a></li>
     {% else %}
-        <li><a href="/blog-lib?tag={{ url_escape(one_tag) }}">{{ one_tag }}</a></li>
+        <li><a href="/blog-lib?tag={{ url_escape(xhtml_escape(one_tag)) }}">{{ one_tag }}</a></li>
     {% end %}
 {% end %}
 </ul>
