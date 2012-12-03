@@ -1,6 +1,6 @@
 #coding=utf-8
 import os
-from tornado.escape import json_encode
+from tornado.escape import json_encode, xhtml_unescape
 from tornado.template import Loader, Template
 from afconfig import af_conf
 
@@ -119,15 +119,16 @@ class BasePage(AFDocBase):
             self.doc['user'] = usr.notify_user_info
 
     def render(self):
-        return self.handler.render(self.__template_file__, doc=self.doc)
+        return self.handler.render(self.__template_file__, doc=self.doc, 
+                        xhtml_unescape=xhtml_unescape)
 
     show = render
 
     def render_string(self):
         if self.handler is not None:
             return self.handler.render_string(self.__template_file__, 
-                                            doc=self.doc)
-        return self.__loader__.load(self.__template_file__).generate(doc=self.doc)
+                        doc=self.doc, xhtml_unescape=xhtml_unescape)
+        return self.__loader__.load(self.__template_file__).generate(doc=self.doc, xhtml_unescape=xhtml_unescape)
 
     #__unicode__ = render_string
     __str__ = render_string
