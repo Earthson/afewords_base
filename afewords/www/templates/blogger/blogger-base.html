@@ -30,9 +30,9 @@
 {% end %}
 {% for one_tag in doc['tag_list'] %}
     {% if doc['current_tag'] == one_tag %}
-        <li><a href="/blogger/{{ author['uid'] }}?tag={{ url_escape(one_tag) }}" class="current">{{ one_tag }}</a></li>
+        <li><a href="/blogger/{{ author['uid'] }}?tag={{ url_escape(xhtml_unescape(one_tag)) }}" class="current">{{ one_tag }}</a></li>
     {% else %}
-        <li><a href="/blogger/{{ author['uid'] }}?tag={{ url_escape(one_tag) }}">{{ one_tag }}</a></li>
+        <li><a href="/blogger/{{ author['uid'] }}?tag={{ url_escape(xhtml_unescape(one_tag)) }}">{{ one_tag }}</a></li>
     {% end %}
 {% end %}
 </ul>
