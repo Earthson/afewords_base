@@ -21,7 +21,6 @@ app_settings = {
     'login_url' : '/login',
     'autoescape' : None,
     'xsrf_cookies' : True,
-    'autoescape': None,
 }
 
 
