@@ -16,6 +16,7 @@ class BloggerBlogPara(BaseHandlerPara):
         except:
             self['page'] = 1
         self['tag'] = self.handler.get_esc_arg('tag', self['tag'])
+        print(self['tag'])
 
 
 class BaseBloggerHandler(BaseHandler):
