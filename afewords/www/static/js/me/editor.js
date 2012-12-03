@@ -13,11 +13,12 @@
     function AFWEditor_attrs(){
         
         this.default_support_characterset = {
+            //SEE http://www.tamasoft.co.jp/en/general-info/unicode.html
             "Greece": {
                         "name": "希腊字符",  // see  http://zh.wikipedia.org/wiki/%E5%B8%8C%E8%85%8A%E5%AD%97%E6%AF%8D
                         "exec": function(){
                                     
-                                    var unicode_range = [ ["0370", "03FF"], ["1F00", "1FFF"], ["2100", "214F"], ["2C80", "2CFF"] ],
+                                    var unicode_range = [ ["03A6", "03FF"], ["2100", "214E"]],
                                         return_list = [],
                                         ii = jj = 0,
                                         tmp_unicode = 0;
@@ -35,9 +36,8 @@
             "Latin": {
                         "name": "拉丁字符", // see http://zh.wikipedia.org/wiki/Unicode%E4%B8%AD%E7%9A%84%E6%8B%89%E4%B8%81%E5%AD%97%E6%AF%8D
                         "exec": function(){
-                                    var unicode_range = [ ["00C0", "02AF"], ["1D00", "1DBF"], ["1E00", "1EFF"], ["2100", "210F"],
-                                                            ["2110", "214F"], ["2490", "24EF"], ["2C60", "2C7F"], ["A720", "A7FF"],
-                                                            ["FB00", "FB4F"], ["FF00", "FFEF"], ["1D400", "1D7FF"] ];   
+                                    var unicode_range = [ ["1D00", "1DBF"], ["2100", "210F"],
+                                                            ["2110", "214E"] ];   
                                     var ii = jj = 0,
                                         return_list = [];
                                     for(var ii = 0; ii < unicode_range.length; ii++){
@@ -63,9 +63,17 @@
                             }            
                         },
             "Letter": {
-                    "name": "字符",
+                    "name": "特殊符号",
                     "exec": function(){
-                        return ["~", "|", "¡", "¿", "†", "‡", "↔", "↑", "↓", "•", "¶", "#", 
+                                    var unicode_range = [ ["25A0", "26BD"], ["2701", "2775"], ["2795", "27FF"] ];   
+                                    var ii = jj = 0,
+                                        return_list = [];
+                                    for(var ii = 0; ii < unicode_range.length; ii++){
+                                        for(var jj = parseInt(unicode_range[ii][0], 16); jj <= parseInt(unicode_range[ii][1], 16); jj++){
+                                            return_list.push(String.fromCharCode(jj));                                        
+                                        }                                    
+                                    }
+                                    return return_list;["~", "|", "¡", "¿", "†", "‡", "↔", "↑", "↓", "•", "¶", "#", 
                                 "½", "⅓", "⅔", "¼", "¾", "⅛", "⅜", "⅝", "⅞", "∞", "‘", "’", 
                                 "“", "”", "„", "“", "„", "”", "«", "»", "¤", "₳", "฿", "₵", 
                                 "¢", "₡", "₢", "$", "₫", "₯", "€", "₠", "₣", "ƒ", "₴", "₭", 
@@ -73,8 +81,23 @@
                                 "♥", "♦", "m", "²", "m", "³", "–", "—", "…", "‘", "’", "“", 
                                 "”", "°", "′", "″", "≈", "≠", "≤", "≥", "±", "−", "×", "÷", 
                                 "←", "→", "·", "§"];                    
-                    }            
-            }       
+                    }    
+            },
+            "Number":   {
+                            "name": "序号",
+                            "exec": function(){
+                                    var unicode_range = [ ["2776", "2783"], ["2460", "24FE"], ["2150", "216B"], ["2170", "217B"] ];   
+                                    var ii = jj = 0,
+                                        return_list = [];
+                                    for(var ii = 0; ii < unicode_range.length; ii++){
+                                        for(var jj = parseInt(unicode_range[ii][0], 16); jj <= parseInt(unicode_range[ii][1], 16); jj++){
+                                            return_list.push(String.fromCharCode(jj));                                        
+                                        }                                    
+                                    }
+                                    return return_list;                            
+                            }
+                    
+            }
         }
             
         this.default_support_code = function (){
