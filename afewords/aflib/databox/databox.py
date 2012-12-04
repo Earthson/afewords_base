@@ -144,6 +144,10 @@ class DataBox(object):
         return index_generator(cls)(*args, **kwargs)
 
     @classmethod
+    def find(cls, *args, **kwargs):
+        return [cls(data=each) for each in cls.datatype.find(*args, **kwargs)]
+
+    @classmethod
     def by_id(cls, uid):
         from generator import id_generator
         return id_generator(cls)(uid)
