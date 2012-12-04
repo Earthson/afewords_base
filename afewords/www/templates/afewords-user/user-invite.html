@@ -4,7 +4,7 @@
 
 <div class="settings">
 
-        {% if doc['invite_count'] < 1 %}
+        {% if doc['invite_count'] > 0 %}
         <div class="page_nav"><span>邀请好友</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>还可邀请{{ doc['invite_count'] }}人</span></div>
         <div class="div-20"></div>
         <table>
