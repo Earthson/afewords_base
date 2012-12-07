@@ -386,7 +386,7 @@ jQuery.afewords.tools.Global_Funs = {
                         '<p><button>发送验证邮件</button><span class="t_process" style="width:50%"></span></p>'+
                         '</div>';
                     var $pop_content = pop_page(500,150, pop_html);
-                    $pop_content.bind('click', function(e){
+                    $pop_content.unbind().bind('click', function(e){
                         if(e.target.nodeName != "BUTTON")  return;
                         var $button = jQuery(e.target), $process = $button.siblings("span"),
                             url = '/send-verification';
@@ -420,7 +420,7 @@ jQuery.afewords.tools.Global_Funs = {
                                                 "<p><button>修改</button><span class='t_process' style='width:70%'></span></p>"+
                                               '</div>';
                                 var $pop_page = pop_page(350,180, tag_html);
-                                $pop_page.bind('click', function(e){
+                                $pop_page.unbind().bind('click', function(e){
                                     if(e.target.nodeName != "BUTTON")   return false;
                                     var mes = $pop_page.DivToDict(),  $this = jQuery(e.target), $process = $this.siblings('span.t_process');
                                     var regstr = /^[a-zA-Z0-9\.]+$/ig;
@@ -955,7 +955,7 @@ jQuery.afewords.tools.Global_Funs = {
                                     '</div>';
                     var $pop_html = jQuery(pop_html);
                     var $pop_content = pop_page(450,200, $pop_html);
-                    $pop_content.bind('click', function(e){
+                    $pop_content.unbind().bind('click', function(e){
                         if(e.target.nodeName != "BUTTON")   return;
                         var $target = jQuery(e.target), $process = $target.siblings("span"),
                             mes = $pop_content.DivToDict();
@@ -1034,7 +1034,7 @@ jQuery.afewords.tools.Global_Funs = {
                                     '</div>';
                     var $pop_html = jQuery(pop_html);
                     var $pop_content = pop_page(450,200, $pop_html);
-                    $pop_content.bind('click', function(e){
+                    $pop_content.unbind().bind('click', function(e){
                         if(e.target.nodeName != "BUTTON")   return;
                         var $button = jQuery(e.target), $process = $button.siblings("span"),
                             url = '/settingpost-book_manager_add',
