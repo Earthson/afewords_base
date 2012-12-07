@@ -6,6 +6,8 @@ from article.blog import Blog
 user_all = [User(each) for each in User.datatype.find()]
 
 for each in user_all:
+    if each.email != 'earthson.lu@gmail.com':
+        continue
     tag_lib = each.lib.tag_lib
     tmp = tag_lib.load_all()
     for tag in tmp.keys():
