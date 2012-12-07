@@ -13,7 +13,7 @@ for each in user_all:
     for tag in tmp.keys():
         if tag == u'alltags':
             continue
-        print(tmp[tag])
+        print(tag, tmp[tag])
         if not tmp[tag]:
             continue
         if not isinstance(tmp[tag][0], list):
