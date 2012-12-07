@@ -131,6 +131,10 @@
 
 
 {% block script_book_bottom %}
+
+<script type="text/javascript">
+AFWUser['permission'] = {{"true" if 'd' in doc['book']['permission'] else "false"}};
+</script>
 {% if doc['current_chapter']['spec_article_count'] > 0 %}
 <script type="text/javascript" src="{{ static_url("js/code/shCore.js") }}"></script>
 {%  for jjj in doc['current_chapter']['spec_article_list'][0]['entity']['js_list']  %}
