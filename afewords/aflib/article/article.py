@@ -619,7 +619,7 @@ class Article(DataBox):
     @db_property
     def js_list():
         def getter(self):
-            code_dict = {'applescript':'AppleScript','as3':'AS3','bash':'Bash','coldfusion':'ColdFusion','c++':'Cpp', 'c#':'CSharp','css':'Css','delphi':'Delphi','diff':'Diff','erlang':'Erlang','groovy':'Groovy','java':'Java', 'javafx':'JavaFX','javascript':'JScript','lisp': 'Lisp','perl':'Perl','php':'Php','plain':'Plain','python':'Python', 'ruby':'Ruby','sass':'Sass','scala':'Scala','sql':'Sql','vb':'Vb','xml':'Xml'};
+            code_dict = {'applescript':'AppleScript','as3':'AS3','bash':'Bash','coldfusion':'ColdFusion','c++':'Cpp', 'c#':'CSharp','css':'Css','delphi':'Delphi','diff':'Diff','erlang':'Erlang','groovy':'Groovy','go':'Go','java':'Java', 'javafx':'JavaFX','javascript':'JScript','lisp': 'Lisp','perl':'Perl','php':'Php','plain':'Plain','python':'Python', 'ruby':'Ruby','sass':'Sass','scala':'Scala','sql':'Sql','vb':'Vb','xml':'Xml'};
             return ['shBrush'+code_dict[each]+'.js' for each in self.lang_list]
         return getter
 
