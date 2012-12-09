@@ -13,6 +13,8 @@ for each in user_all:
             continue
         if not tmp[tag]:
             continue
-        if not isinstance(tmp[tag][0], list):
-            tmp[tag] = [(e._id, e.release_time) for e in Blog.by_ids(tmp[tag])]
+        tmp[tag] = [[e._id, e.release_time]
+                for e in Blog.by_ids(
+                    [each[0] if isinstance(each, list) else each 
+                    for each in tmp[tag]])]
     tag_lib.set_all(tmp)
