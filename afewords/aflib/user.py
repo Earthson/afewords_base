@@ -358,6 +358,11 @@ class User(DataBox):
             self.lib.tag_lib.sub_list(each).add_to_set(
                                 [blogobj._id, blogobj.release_time])
 
+    def reset_blog_tags(self, blogobj):
+        for each in blogobj.tag:
+            self.lib.tag_lib.sub_list(each).add_to_set([blogobj._id, 
+                                blogobj.release_time])
+
     def post_comment(self, commentobj):
         commentid = commentobj.uid
         father = generator(commentobj.father_id, commentobj.father_type)

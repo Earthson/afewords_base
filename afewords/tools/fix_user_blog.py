@@ -7,3 +7,4 @@ for each in usrs:
     blogs = Blog.by_ids(each.lib.blog_list.load_all())
     for eb in blogs:
         eb.env = each
+        each.reset_blog_tags(eb)
