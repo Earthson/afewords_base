@@ -482,7 +482,7 @@ jQuery.afewords.tools.Global_Funs = {
                                     var subpage_type = AFWUser['subpage_type'];
                                     switch(subpage_type){
                                         case "write":
-                                            var tag_html = '<span class="w-class"><label><input type="checkbox" name="classes" value="' + $.encode(mes['tag']) + '" />'+
+                                            var tag_html = '<span class="w-class"><label><input type="checkbox" name="tags" value="' + $.encode(mes['tag']) + '" />'+
                                                             $.encode( mes['tag'] )+'</label></span>';
                                             $('div.w-class').find('div').eq(1).append(tag_html);
                                             break;
