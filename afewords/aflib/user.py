@@ -355,7 +355,8 @@ class User(DataBox):
         blogobj.do_post()
         del self.lib.drafts_lib[blogid]
         for each in blogobj.tag:
-            self.lib.tag_lib.sub_list(each).add_to_set(blogobj._id)
+            self.lib.tag_lib.sub_list(each).add_to_set(
+                                [blogobj._id, blogobj.release_time])
 
     def post_comment(self, commentobj):
         commentid = commentobj.uid
