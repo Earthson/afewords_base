@@ -86,10 +86,12 @@ from handlers.feedbackhandlers import AFFeedbackHandler
 
 from handlers.errorhandlers import AFNotFoundHandler
 app_handlers = [
-    (r'/', IndexHandler), #MainHandler),
+    #(r'/', IndexHandler), #MainHandler),
+    (r'/', AFBlogsRecentHandler), 
     (r'/test', TestHandler),
     #(r'/home', HomeHandler),
-    (r'/home', BloggerBlogHandler),
+    #(r'/home', BloggerBlogHandler),
+    (r'/home', AFBlogsRecentHandler),
     (r'/login', LoginHandler),
     (r'/quit', LogoutHandler),
     (r'/code', VertifyCodeHandler),
