@@ -11,7 +11,8 @@ supportedlangcode = dict()
 def load_supportedlangcode(filename='supportedlangcode.conf'):
     try:
         ff = open(aflib_root+'/conf.d/'+filename, 'r')
-        supportedlangcode.update(eachline[:-1].split('=',1) for eachline in ff)
+        supportedlangcode.update(eachline[:-1].split('=',1) for eachline in ff
+                    if eachline[0] not in ['#', ' '])
     except IOError:
         print('file not found! supported langcode not load!')
 
