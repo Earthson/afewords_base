@@ -68,12 +68,13 @@
         {% else %}
         
             {% for ii in range(nest - tmp_nest) %}
-            
                 </ul>
-                {% set nest = tmp_nest %}
+            {% end %}
+            
+            {% set nest = tmp_nest %}
                 
-                {% if not edit %}
-                    {#{{ tmp_normal_li }}#}
+            {% if not edit %}
+                {#{{ tmp_normal_li }}#}
                     <li chapter_id="{{ cid }}">
                     <span class="num">{{ c_n }}</span>
                     <span><a href="/book/{{ book_id }}/catalog/{{ cid }}">{{ title }}</a></span>
@@ -94,7 +95,7 @@
                     </li>
                 {% end %}
                 
-            {% end %}
+            
         {% end %}
     {% end %}
 </ul>
