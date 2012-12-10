@@ -10,7 +10,7 @@ af_conf = {
     'main_mail' : r'afewords@afewords.com',
     #'main_mail' : r'afewords@ipv6.earthson.net',
     'invitation_limit' : 50,
-    'root_dir': os.path.dirname(__file__),
+    'root_dir': afrootpath,
 }
 
 app_settings = {

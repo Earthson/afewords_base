@@ -2,6 +2,8 @@ import os
 
 
 aflib_root = os.path.dirname(__file__)
+if not aflib_root:
+    aflib_root = '.'
 pic_main_url = '/'
 #pic_main_url = 'http://picture.afewords.com/'
 main_url = '/'
