@@ -102,7 +102,7 @@
             
         this.default_support_code = function (){
             return ['AS3','AppleScript','Bash','C#','ColdFusion','C++','CSS','Delphi','Diff',
-                    'Erlang','Groovy','JavaScript','Java','JavaFX','Lisp' ,'Perl','Php','Plain',
+                    'Erlang','Groovy', 'Go', 'JavaScript','Java','JavaFX','Lisp' ,'Perl','Php','Plain',
                     'PowerShell','Python','Ruby','Sass','Scala','SQL','VB','XML'];
         }
         
