@@ -128,9 +128,10 @@ def split_to_lines(idoc):
 
 
 def merge_lines(lines):
-    brstr = r'<div class="br"></div>'
-    return '\n'.join(r'<div>' + each + r'</div>' if each != brstr else each
-                         for each in lines)
+    #brstr = r'<div class="br"></div>'
+    #return '\n'.join(r'<div>' + each + r'</div>' if each != brstr else each
+    #                     for each in lines)
+    return '\n'.join(lines)
 
 
 def dolist_translate(lines):

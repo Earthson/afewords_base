@@ -24,15 +24,17 @@ def _ilink_repl(mastr):
         name, url = mastr.split('---', 1)
     else:
         name = url = tmp[0]
-    return r'<a href="%s" target="_blank" title="%s">%s</a>' % (
-            url.replace('"', '%22'), name, name)
+    return ur'[%s](%s)' % (name, url)
+    #return r'<a href="%s" target="_blank" title="%s">%s</a>' % (
+            #url.replace('"', '%22'), name, name)
 
 ilink = ReplacePattern(_ilink_pattern, _ilink_repl)
 
 _icode_pattern = get_inline_ref_pattern('code')
 
 def _icode_repl(mastr):
-    return ur'<div><pre class="afewords-brush">' + mastr + ur'</pre></div>'
+    return '<code>'+mastr+'</code>'
+    #return ur'<div><pre class="afewords-brush">' + mastr + ur'</pre></div>'
 
 icode = ReplacePattern(_icode_pattern, _icode_repl)
 
@@ -42,14 +44,16 @@ def _iurl_repl(mastr):
     return r'<a href="%s" target="_blank">%s</a>' % (
             mastr.replace('"', '%22'), mastr)
 
-iurl = ReplacePattern(_iurl_pattern, _iurl_repl)
+#iurl = ReplacePattern(_iurl_pattern, _iurl_repl)
 
 #in doc math
 _imath_pattern = get_inline_ref_pattern('math')
 def _imath_repl(mastr):
     ret = r'<div class="math">'
-    ret += r'[math]'
-    ret += mastr + r'[/math]</div>'
+    #ret += r'[math]'
+    #ret += mastr + r'[/math]</div>'
+    ret += r'$'
+    ret += mastr + r'$</div>'
     return ret
 
 imath = ReplacePattern(_imath_pattern, _imath_repl)
@@ -58,8 +62,10 @@ imath = ReplacePattern(_imath_pattern, _imath_repl)
 _iequation_pattern = get_inline_ref_pattern('equation')
 def _iequation_repl(mastr):
     ret = r'<div class="math">'
-    ret += r'[equation]'
-    ret += mastr + r'[/equation]</div>'
+    #ret += r'[equation]'
+    ret += r'$$'
+    #ret += mastr + r'[/equation]</div>'
+    ret += mastr + r'$$</div>'
     return ret
 
 iequation = ReplacePattern(_iequation_pattern, _iequation_repl)
@@ -78,28 +84,32 @@ iesc = ReplacePattern(_iesc_pattern, _iesc_repl)
 #h2
 _ih2_pattern = r'==([^=].*?)=='
 def _ih2_repl(mastr):
-    return r'<h2>' + mastr + r'</h2>'
+    #return r'<h2>' + mastr + r'</h2>'
+    return r'## ' + mastr + ' ##'
 
 ih2 = ReplacePattern(_ih2_pattern, _ih2_repl)
 
 #h3
 _ih3_pattern = r'===([^=].*?)==='
 def _ih3_repl(mastr):
-    return r'<h3>' + mastr + r'</h3>'
+    #return r'<h3>' + mastr + r'</h3>'
+    return r'### ' + mastr + r' ###'
 
 ih3 = ReplacePattern(_ih3_pattern, _ih3_repl)
 
 #h4
 _ih4_pattern = r'====([^=].*?)===='
 def _ih4_repl(mastr):
-    return r'<h4>' + mastr + r'</h4>'
+    #return r'<h4>' + mastr + r'</h4>'
+    return r'#### ' + mastr + r' ####'
 
 ih4 = ReplacePattern(_ih4_pattern, _ih4_repl)
 
 #Bold
 _ibold_pattern = r'\+\+([^\+].*?)\+\+'
 def _ibold_repl(mastr):
-    return r'<b>' + mastr + r'</b>'
+    #return r'<b>' + mastr + r'</b>'
+    return r'**' + mastr + '**'
 
 ibold = ReplacePattern(_ibold_pattern, _ibold_repl)
 
@@ -120,7 +130,8 @@ iins = ReplacePattern(_iins_pattern, _iins_repl)
 #italic
 _iitalic_pattern = r'//([^/].*?)//'
 def _iitalic_repl(mastr):
-    return r'<i>' + mastr + r'</i>'
+    return r'*' + mastr + r'*'
+    #return r'<i>' + mastr + r'</i>'
 
 iitalic = ReplacePattern(_iitalic_pattern, _iitalic_repl)
 
@@ -141,14 +152,16 @@ isub = ReplacePattern(_isub_pattern, _isub_repl)
 #ibr
 _ibr_pattern = r'^()$'
 def _ibr_repl(mastr):
-    return r'<div class="br"></div>'
+    #return r'<div class="br"></div>'
+    return '\n\n'
 
 ibr = ReplacePattern(_ibr_pattern, _ibr_repl)
 
 #ihr
 _ihr_pattern = r'^(~+)$'
 def _ihr_repl(mastr):
-    return r'<div class="hr"></div>'
+    #return r'<div class="hr"></div>'
+    return r'- - -'
 
 ihr = ReplacePattern(_ihr_pattern, _ihr_repl)
 

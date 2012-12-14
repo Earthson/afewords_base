@@ -20,6 +20,12 @@ from equation import Equation
 
 import aflib_conf
 
+import markdown
+
+def markdown_translate(txt):
+    ext = ['extra','fenced_code', 'codehilite']
+    return markdown.markdown(txt, ext)
+
 @with_conn
 class ArticleLibDoc(AFDocument):
     __collection__ = 'ArticleLib'
@@ -459,7 +465,7 @@ class Article(DataBox):
             self.data['view_body_version'] = self.data['body_version']
             translator = self.translator
             self.data['view_body'] = \
-                    translator.translate(self.data['body'])
+                    markdown_translate(translator.translate(self.data['body']))
             return self.data['view_body'], True
         return getter
 

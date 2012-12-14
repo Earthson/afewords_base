@@ -39,6 +39,7 @@ class Reference(DataBox):
         'name' : True,
         'alias' : True,
         'url' : True,
+        'body_version' : True,
     }
 
     translator = reference_translator
@@ -78,24 +79,29 @@ class Reference(DataBox):
             name = self.name
             url = self.url
             if cbody is None or cbody == '':
-                ret = r'<a href="%s" target="_blank" title="%s">' % (
-                       url.replace('"', '%22'), name)
-                ret += name + r'</a>'
+                #ret = r'<a href="%s" target="_blank" title="%s">' % (
+                #       url.replace('"', '%22'), name)
+                #ret += name + r'</a>'
+                ret = r'[%s](%s "%s")' % (name, url.replace('"', '%22'), name)
             else:
                 source = self.url
                 if is_url(source):
-                    source = r'<a href="%s" target="_blank" title="%s">' % (
-                            source.replace('"', '%22'), name)
-                    source += name + r'</a>'
+                    #source = r'<a href="%s" target="_blank" title="%s">' % (
+                    #        source.replace('"', '%22'), name)
+                    source = r'[%s](%s "%s")' % (name, 
+                                    url.replace('"', '%22'), name)
+                    #source += name + r'</a>'
                 ss = self.data['view_body']
-                ret = r'<div class="ref">'
-                ret += r'<div class="ref-div">'
-                ret += r'<div class="ref_open"></div>'
-                ret += r'<div class="ref_close"></div>'
-                ret += r'<div class="ref_source">[ %s ]</div>' % (
-                        source)
-                ret += r'<div class="ref_body">%s</div>' % ss
-                ret += r'</div></div>'
+                ret = source + '\n'
+                ret += '\n'.join(['>'+each for each in ss.split('\n')])
+                #ret = r'<div class="ref">'
+                #ret += r'<div class="ref-div">'
+                #ret += r'<div class="ref_open"></div>'
+                #ret += r'<div class="ref_close"></div>'
+                #ret += r'<div class="ref_source">[ %s ]</div>' % (
+                #        source)
+                #ret += r'<div class="ref_body">%s</div>' % ss
+                #ret += r'</div></div>'
             self.data['view_body'] = ret
             return self.data['view_body'], True
         return getter

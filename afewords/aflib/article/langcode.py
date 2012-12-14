@@ -50,13 +50,17 @@ class Langcode(DataBox):
     @db_property
     def view_body():
         def getter(self):
+            '''
             bg = r'<div class="code">'
             bg += r'<div class="code-title">%s</div>' % self.name
             bg += r'<div><pre class="brush:%s;">' % self.lang + '\n'
             ed = '\n' + r'</pre></div>'
             ed += r'<div class="code-title">&nbsp;</div></div>'
+            '''
+            bg = '\n\n'+r"````"+self.lang+'\n'
+            ed = "\n````\n\n"
             displaycode = self.code
-            displaycode = displaycode.replace('<', '&lt;')
+            #displaycode = displaycode.replace('<', '&lt;')
             displaycode = bg + displaycode + ed
             return displaycode
         return getter

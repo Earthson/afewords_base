@@ -134,12 +134,13 @@ class Picture(DataBox):
     @db_property
     def view_body():
         def getter(self):
-            ret = r'<div class="image" title="%s">' % (self.name)
-            ret += r'<div><img src="%s" alt="%s"/></div>' % (self.url,
-                                                           self.name)
-            ret += r'<div class="title">%s</div>' % (self.name)
-            ret += '</div>'
-            return ret
+            #ret = r'<div class="image" title="%s">' % (self.name)
+            #ret += r'<div><img src="%s" alt="%s"/></div>' % (self.url,
+            #                                               self.name)
+            #ret += r'<div class="title">%s</div>' % (self.name)
+            #ret += '</div>'
+            #return ret
+            return r'![%s](%s "%s")' % (self.name, self.url, self.name)
         return getter
 
     @db_property
