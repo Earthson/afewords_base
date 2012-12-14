@@ -655,7 +655,7 @@
         this.close_prompt = false;
         this.$lib_bars = {}; // OBJECT, key/value(JQ object)
         this.editor_config = Editor_Config;
-        this.markup = 'default';
+        this.$markup_select = null;
         this.exec_fun = this.markup + 'exec';
         
         /*********************** cursor process in textarea **************************/
