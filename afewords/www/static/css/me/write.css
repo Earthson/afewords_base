@@ -67,7 +67,7 @@
 #write_menu{float:left;margin-top: 10px;width: 100%;position:relative;background-color: #ffffff;
 border:#cccccc 1px solid;border-bottom-width:0;line-height: 30px;font-size: 14px;color: #000;}
 #write_menu_base{width: 100%;height:36px;float: left;display: block;}
-#write_menu_base ul{list-style: none;float: left !important;height: 20px !important;line-height: 20px !important;margin: 8px !important;}
+#write_menu_base ul{list-style: none;float: left !important;height: 20px !important;line-height: 20px !important;margin: 8px !important;margin: 0;padding: 0;}
 #write_menu_base ul li{padding:0 !important;float: left;cursor: pointer;height:20px;width: 20px !important;font-size: 14px;
 background-image: url('/static/img/write_menu.png');margin: 0 3px; border:none !important;}
 #write_menu_base ul li.bold{background-position: 0 0; }
@@ -95,7 +95,10 @@ background-image: url('/static/img/write_menu.png');margin: 0 3px; border:none !
 #write_menu_base ul li:hover{background-color: #e0e0e0;}
 #write_menu_base ul li.split:hover{background-color: #fff;cursor: default;}
 
-#write_menu_base ul li.menu_focus{background-color: #e0e0e0;};
+#write_menu_base ul li.menu_focus{background-color: #e0e0e0;}
+
+#write_menu_base select{float: right;line-height: inherit;height: 25px;margin-top: 5px; border:#ccc 1px solid;}
+
 
 /*
 #write_menu_more{width: 100%;height: 30px;float: left;display: block;border-top: 1px #ccc dotted;text-align: right;}

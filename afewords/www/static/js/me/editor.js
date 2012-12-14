@@ -106,6 +106,10 @@
                     'PowerShell','Python','Ruby','Sass','Scala','SQL','VB','XML'];
         }
         
+        this.default_support_markup = function(){
+            return ['Default', 'Markdown'];        
+        }
+        
         /****** editor panel *****/
         this.default_panel = {
             "bold":         {   
@@ -1237,7 +1241,8 @@
             editor_id = editor_config.default_editor_attrs["editor_menu_id"],
             textarea_id = editor_config.default_editor_attrs["editor_textarea_id"],
             editor_panel = editor_config.default_panel,
-            menu_attrs = editor_config.default_menu_attrs;
+            menu_attrs = editor_config.default_menu_attrs,
+            markups = editor_config.default_support_markup();
             
         var tmp_default_panel  = ["bold", "italic", "underline", "del", "split",
                                     "super", "suber", "split",
@@ -1281,7 +1286,7 @@
         var editor_menu_base_html = ['<ul>'],
             tmp_html = '',
             tmp_panel = {};
-        for(var ii = 0 ; ii < panel.length; ii++){
+        for(var ii = 0, len = panel.length ; ii < len; ii++){
             if(! panel[ii] in editor_panel){
                 console.log("Not defined in panel!");
                 continue;            
@@ -1291,6 +1296,12 @@
             editor_menu_base_html.push(tmp_html);        
         }
         editor_menu_base_html.push('</ul>');
+        editor_menu_base_html.push('<select>');// for markup language select
+        for(var ii = 0, len = markups.length; ii < len; ii++){
+            editor_menu_base_html.push('<option value="' + markups[ii].toLowerCase() + '">'+ markups[ii] + '</option>');
+        }
+        editor_menu_base_html.push('</select>');
+        
         
         $editor_menu_base.append(editor_menu_base_html.join(''));
         $editor_menu.append($editor_menu_base);

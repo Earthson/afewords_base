@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block css_link %}
-<link rel="stylesheet" type="text/css" href="{{ static_url("css/me/blog.css") }}" />
+<link rel="stylesheet" type="text/css" href="{{ static_url("css/me/blog1.css") }}" />
 <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/write.css") }}" />
 <link type="text/css" rel="stylesheet" href="{{ static_url("css/code/shCore.css") }}" />
 <link type="text/css" rel="stylesheet" href="{{ static_url("css/code/shThemeEmacs.css") }}" />
@@ -90,7 +90,7 @@
         </div>
 
 
-        <div class="bb_con">
+        <div id="bb_con">
         {{ article['content'] }}
         </div>
     {% else %}
