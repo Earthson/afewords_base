@@ -50,11 +50,12 @@ class Equation(DataBox):
     @db_property
     def view_body():
         def getter(self):
-            ret = '<div class="math">'
-            ret += '[math]' if self.mode == 'inline' else '[equation]'
-            ret += self.equation
-            ret += '[/math]\n</div>' if self.mode == 'inline' else \
-                        '[/equation]\n</div>'
+            ret = '<mathjax>'
+            if self.mode == 'inline':
+                ret += '$' + self.equation + '$$'
+            else:
+                ret += '$$\n' + self.equation + '\n$$'
+            ret += '</mathjax>'
             return ret
         return getter
 
