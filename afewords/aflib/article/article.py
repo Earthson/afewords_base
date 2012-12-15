@@ -454,7 +454,7 @@ class Article(DataBox):
             if self.data['view_body_version'] == self.data['body_version']:
                 return self.data['view_body']
             self.data['view_body_version'] = self.data['body_version']
-            self.data['view_body'] = self.parser(self.data['view_body'])
+            self.data['view_body'] = self.parser(self.data['body'])
             return self.data['view_body'], True
         return getter
 
