@@ -154,7 +154,7 @@ padding: 0px 5px;
 border: 1px solid #eaeaea;
 background-color: #f8f8f8;
 border-radius: 3px;}
-#bb_con pre code{background: none;border:none;}
+#bb_con pre code{background: none;border:none;margin: 0;padding: 0;}
 #bb_con strong{font-size: inherit;}
 #bb_con hr{height: 1px; width: 50%;border-top:1px solid #000;margin-bottom: 14px;margin-top: 13px;margin-left: 0;}
 #bb_con h1, h2, h3, h4, h5, h6{border-bottom: 1px solid #060;}
