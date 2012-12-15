@@ -117,8 +117,8 @@
                                 "title": "加粗", 
                                 "value": '&nbsp;', 
                                 "exec":  function(){
-                                            var args = { "prefix":"++", "suffix":"++" },
-                                                args_markdown = { "perfix":"*", "suffix": "*" },
+                                            var args = { "prefix":"++", "suffix":"++", "content": '加粗内容'},
+                                                args_markdown = { "perfix":"*", "suffix": "*", "content": '加粗内容' },
                                                 args_dict = {"default": args, "markdown": args_markdown };
                                             this.set_character(args_dict[arguments[arguments.length-1]]);
                                         },
@@ -128,7 +128,7 @@
                                 "title": "斜体", 
                                 "value": '&nbsp;', 
                                 "exec": function(markup){
-                                            var args = { "prefix": "--", "suffix":"--"};
+                                            var args = { "prefix": "--", "suffix":"--", "content": '斜体内容'};
                                             this.set_character(args);                                
                                         }
                             },
@@ -137,7 +137,7 @@
                                 "title": "下划线", 
                                 "value": '&nbsp;', 
                                 "exec": function(markup){
-                                            var args = { "prefix": "__", "allow_empty": false};
+                                            var args = { "prefix": "__", "allow_empty": false, "content": '下划线内容'};
                                             this.set_character(args);                                
                                         }
                             },
@@ -146,7 +146,7 @@
                                 "title": "删除线", 
                                 "value": '&nbsp;', 
                                 "exec": function(markup){
-                                            var args = { "prefix": "--", "allow_empty": false };
+                                            var args = { "prefix": "--", "allow_empty": false, "content": '删除线内容' };
                                             this.set_character(args);                                
                                         }
                             },
@@ -155,7 +155,7 @@
                                 "title": "上标", 
                                 "value": '&nbsp;', 
                                 "exec": function(markup){
-                                            var args = {"prefix": "^{", "suffix": "}", "allow_empty": false };
+                                            var args = {"prefix": "^{", "suffix": "}", "allow_empty": false, "content": '上标内容' };
                                             this.set_character(args);                                
                                         }
                             },
@@ -164,7 +164,7 @@
                                 "title": "下标", 
                                 "value": '&nbsp;', 
                                 "exec": function(markup){
-                                            var args = { "prefix": "_{", "suffix": "}", "allow_empty":false };
+                                            var args = { "prefix": "_{", "suffix": "}", "allow_empty":false, "content": '下标内容' };
                                             this.set_character(args);                                
                                         }
                             },
@@ -173,8 +173,8 @@
                                 "title": "有序列表", 
                                 "value": '&nbsp;', 
                                 "exec": function(markup){
-                                            var args = { "prefix": "\n#", "prefix_l": true, "suffix": "\n", "suffix_r": true },
-                                                args_markdown = { "prefix": "\n1. ", "prefix_l": true, "suffix": "\n", "suffix_r": true },
+                                            var args = { "prefix": "\n#", "prefix_l": true, "suffix": "\n", "suffix_r": true, "content": '列表项内容' },
+                                                args_markdown = { "prefix": "\n1. ", "prefix_l": true, "suffix": "\n", "suffix_r": true, "content": '列表项内容' },
                                                 args_dict = {"default": args, "markdown": args_markdown};
                                             this.set_character(args_dict[arguments[arguments.length-1]]);                                
                                         }
@@ -184,7 +184,7 @@
                                 "title": "无序列表", 
                                 "value": '&nbsp;', 
                                 "exec": function(markup){
-                                            var args = { "prefix": "\n*", "prefix_l": true, "suffix": "\n", "suffix_r": true };
+                                            var args = { "prefix": "\n*", "prefix_l": true, "suffix": "\n", "suffix_r": true, "content": '列表项内容' };
                                             this.set_character(args);                                
                                         }
                             },
@@ -204,8 +204,8 @@
                                 "title": "二级标题", 
                                 "value": "T<sub><small>2</small></sub>", 
                                 "exec": function(markup){
-                                            var args = { "prefix": "\n==", "suffix": "==\n", "suffix_r": true, "prefix_l": true},
-                                                args_markdown = { "prefix": "\n## ", "suffix": "##\n", "suffix_r": true, "prefix_l": true},
+                                            var args = { "prefix": "\n==", "suffix": "==\n", "suffix_r": true, "prefix_l": true, "content": '二级标题'},
+                                                args_markdown = { "prefix": "\n##", "suffix": "##\n", "suffix_r": true, "prefix_l": true, "content": '二级标题'},
                                                 args_dict = {"default": args, "markdown": args_markdown};
                                             this.set_character(args_dict[arguments[arguments.length-1]]);                                
                                         }
@@ -215,8 +215,8 @@
                                 "title": "三级标题", 
                                 "value": "T<sub><small>3</small></sub>", 
                                 "exec": function(){
-                                            var args = { "prefix": "\n===", "suffix": "===\n", "suffix_r": true, "prefix_l": true},
-                                                args_markdown = { "prefix": "\n###", "suffix": "###\n", "suffix_r": true, "prefix_l": true},
+                                            var args = { "prefix": "\n===", "suffix": "===\n", "suffix_r": true, "prefix_l": true, "content": '三级标题'},
+                                                args_markdown = { "prefix": "\n###", "suffix": "###\n", "suffix_r": true, "prefix_l": true, "content": '三级标题'},
                                                 args_dict = {"default": args, "markdown": args_markdown};
                                             this.set_character(args_dict[arguments[arguments.length-1]]);                                 
                                         }
@@ -226,8 +226,8 @@
                                 "title": "四级标题", 
                                 "value": "T<sub><small>4</small></sub>", 
                                 "exec": function(markup){
-                                            var args = { "prefix": "\n====", "suffix": "====\n", "suffix_r": true, "prefix_l": true},
-                                                args_markdown = { "prefix": "\n####", "suffix": "####\n", "suffix_r": true, "prefix_l": true},
+                                            var args = { "prefix": "\n====", "suffix": "====\n", "suffix_r": true, "prefix_l": true, "content": '四级标题'},
+                                                args_markdown = { "prefix": "\n####", "suffix": "####\n", "suffix_r": true, "prefix_l": true, "content": '四级标题'},
                                                 args_dict = {"default": args, "markdown": args_markdown};
                                             this.set_character(args_dict[arguments[arguments.length-1]]);                                 
                                         }
@@ -728,15 +728,19 @@
                 suffix_l = args["suffix_l"] || false,
                 suffix_r = args["suffix_r"] || false,
                 allow_empty = args["allow_empty"] || false,
-                status_info = args["status"] || "请选中文字";
+                status_info = args["status"] || "请选中文字",
+                default_content = args["content"] || false;
             
             var pos = this.get_position(),
                 pos_s = pos.start,
                 pos_e = pos.end;
 
             if(!allow_empty && pos_s == pos_e){
-                console.log(status_info);
-                return false;
+                if(!default_content){
+                    console.log(status_info);
+                    return false;
+                }
+                prefix = prefix + default_content;
             }            
             
             if(prefix_l) {
