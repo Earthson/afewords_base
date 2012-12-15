@@ -569,6 +569,8 @@ min-height: 1px;}
 #page li a{color: #666;}
 #page li a.current1{color: black;}
 
+#pop-content p{margin: 0;padding: 0;}
+
 #pop-content p.first{border-bottom:#aaa 1px solid;margin: 5px; padding: 5px 5px 0 5px;margin-bottom: 10px;}
 #pop-content p textarea{border:#ccc 1px solid;}
 #pop-content p input[type="text"]{border:#ccc 1px solid;}

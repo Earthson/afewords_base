@@ -117,16 +117,18 @@
                                 "title": "加粗", 
                                 "value": '&nbsp;', 
                                 "exec":  function(){
-                                            var args = { "prefix":"++", "suffix":"++" };
-                                            this.set_character(args);
-                                        }
+                                            var args = { "prefix":"++", "suffix":"++", "content": '加粗内容'},
+                                                args_markdown = { "perfix":"*", "suffix": "*", "content": '加粗内容' },
+                                                args_dict = {"default": args, "markdown": args_markdown };
+                                            this.set_character(args_dict[arguments[arguments.length-1]]);
+                                        },
                             },
             "italic":       {
                                 "class": "italic", 
                                 "title": "斜体", 
                                 "value": '&nbsp;', 
-                                "exec": function(){
-                                            var args = { "prefix": "--", "suffix":"--"};
+                                "exec": function(markup){
+                                            var args = { "prefix": "--", "suffix":"--", "content": '斜体内容'};
                                             this.set_character(args);                                
                                         }
                             },
@@ -134,8 +136,8 @@
                                 "class": "underline", 
                                 "title": "下划线", 
                                 "value": '&nbsp;', 
-                                "exec": function(){
-                                            var args = { "prefix": "__", "allow_empty": false};
+                                "exec": function(markup){
+                                            var args = { "prefix": "__", "allow_empty": false, "content": '下划线内容'};
                                             this.set_character(args);                                
                                         }
                             },
@@ -143,8 +145,8 @@
                                 "class": "del", 
                                 "title": "删除线", 
                                 "value": '&nbsp;', 
-                                "exec": function(){
-                                            var args = { "prefix": "--", "allow_empty": false };
+                                "exec": function(markup){
+                                            var args = { "prefix": "--", "allow_empty": false, "content": '删除线内容' };
                                             this.set_character(args);                                
                                         }
                             },
@@ -152,8 +154,8 @@
                                 "class": "super", 
                                 "title": "上标", 
                                 "value": '&nbsp;', 
-                                "exec": function(){
-                                            var args = {"prefix": "^{", "suffix": "}", "allow_empty": false };
+                                "exec": function(markup){
+                                            var args = {"prefix": "^{", "suffix": "}", "allow_empty": false, "content": '上标内容' };
                                             this.set_character(args);                                
                                         }
                             },
@@ -161,8 +163,8 @@
                                 "class": "suber", 
                                 "title": "下标", 
                                 "value": '&nbsp;', 
-                                "exec": function(){
-                                            var args = { "prefix": "_{", "suffix": "}", "allow_empty":false };
+                                "exec": function(markup){
+                                            var args = { "prefix": "_{", "suffix": "}", "allow_empty":false, "content": '下标内容' };
                                             this.set_character(args);                                
                                         }
                             },
@@ -170,17 +172,19 @@
                                 "class": "ol", 
                                 "title": "有序列表", 
                                 "value": '&nbsp;', 
-                                "exec": function(){
-                                            var args = { "prefix": "\n#", "prefix_l": true, "suffix": "\n", "suffix_r": true };
-                                            this.set_character(args);                                
+                                "exec": function(markup){
+                                            var args = { "prefix": "\n#", "prefix_l": true, "suffix": "\n", "suffix_r": true, "content": '列表项内容' },
+                                                args_markdown = { "prefix": "\n1. ", "prefix_l": true, "suffix": "\n", "suffix_r": true, "content": '列表项内容' },
+                                                args_dict = {"default": args, "markdown": args_markdown};
+                                            this.set_character(args_dict[arguments[arguments.length-1]]);                                
                                         }
                             },
             "ul":           {
                                 "class": "ul", 
                                 "title": "无序列表", 
                                 "value": '&nbsp;', 
-                                "exec": function(){
-                                            var args = { "prefix": "\n*", "prefix_l": true, "suffix": "\n", "suffix_r": true };
+                                "exec": function(markup){
+                                            var args = { "prefix": "\n*", "prefix_l": true, "suffix": "\n", "suffix_r": true, "content": '列表项内容' };
                                             this.set_character(args);                                
                                         }
                             },
@@ -188,19 +192,22 @@
                                 "class": "part", 
                                 "title": "分割线", 
                                 "value": '~~', 
-                                "exec": function(){
-                                            var args = { "prefix": "", "suffix": "\n~~~~~~~~~~\n", 
-                                                         "suffix_l": true, "allow_empty": true };
-                                            this.set_character(args);                                
+                                "exec": function(markup){
+                                            var args = { "prefix": "", "suffix": "\n~~~~~~~~~~\n", "suffix_l": true, "allow_empty": true },
+                                                args_markdown = { "prefix": "", "suffix": "\n* * *\n", "suffix_l": true, "allow_empty": true },
+                                                args_dict = {"default": args, "markdown": args_markdown};
+                                            this.set_character(args_dict[arguments[arguments.length-1]]);                                
                                         }
                             },
             "heading2":     {
                                 "class": "title", 
                                 "title": "二级标题", 
                                 "value": "T<sub><small>2</small></sub>", 
-                                "exec": function(){
-                                            var args = { "prefix": "\n==", "suffix": "==\n", "suffix_r": true, "prefix_l": true};
-                                            this.set_character(args);                                
+                                "exec": function(markup){
+                                            var args = { "prefix": "\n==", "suffix": "==\n", "suffix_r": true, "prefix_l": true, "content": '二级标题'},
+                                                args_markdown = { "prefix": "\n##", "suffix": "##\n", "suffix_r": true, "prefix_l": true, "content": '二级标题'},
+                                                args_dict = {"default": args, "markdown": args_markdown};
+                                            this.set_character(args_dict[arguments[arguments.length-1]]);                                
                                         }
                             },
             "heading3":     {
@@ -208,17 +215,21 @@
                                 "title": "三级标题", 
                                 "value": "T<sub><small>3</small></sub>", 
                                 "exec": function(){
-                                            var args = { "prefix": "\n===", "suffix": "===\n", "suffix_r": true, "prefix_l": true};
-                                            this.set_character(args);                                 
+                                            var args = { "prefix": "\n===", "suffix": "===\n", "suffix_r": true, "prefix_l": true, "content": '三级标题'},
+                                                args_markdown = { "prefix": "\n###", "suffix": "###\n", "suffix_r": true, "prefix_l": true, "content": '三级标题'},
+                                                args_dict = {"default": args, "markdown": args_markdown};
+                                            this.set_character(args_dict[arguments[arguments.length-1]]);                                 
                                         }
                             },
             "heading4":     {
                                 "class": "title", 
                                 "title": "四级标题", 
                                 "value": "T<sub><small>4</small></sub>", 
-                                "exec": function(){
-                                            var args = { "prefix": "\n====", "suffix": "====\n", "suffix_r": true, "prefix_l": true};
-                                            this.set_character(args);                                 
+                                "exec": function(markup){
+                                            var args = { "prefix": "\n====", "suffix": "====\n", "suffix_r": true, "prefix_l": true, "content": '四级标题'},
+                                                args_markdown = { "prefix": "\n####", "suffix": "####\n", "suffix_r": true, "prefix_l": true, "content": '四级标题'},
+                                                args_dict = {"default": args, "markdown": args_markdown};
+                                            this.set_character(args_dict[arguments[arguments.length-1]]);                                 
                                         }
                             },
             "indent":       {
@@ -328,6 +339,7 @@
             "env_type": 'user',
             "father_id": '-1',
             "father_type": 'blog',
+            "markup": "default",
             "iscomment": false        
         }
         
@@ -655,8 +667,8 @@
         this.close_prompt = false;
         this.$lib_bars = {}; // OBJECT, key/value(JQ object)
         this.editor_config = Editor_Config;
-        this.$markup_select = null;
-        this.exec_fun = this.markup + 'exec';
+        this.markup = "default";
+        this.$markup = null;
         
         /*********************** cursor process in textarea **************************/
         this.get_position = function(){
@@ -716,15 +728,19 @@
                 suffix_l = args["suffix_l"] || false,
                 suffix_r = args["suffix_r"] || false,
                 allow_empty = args["allow_empty"] || false,
-                status_info = args["status"] || "请选中文字";
+                status_info = args["status"] || "请选中文字",
+                default_content = args["content"] || false;
             
             var pos = this.get_position(),
                 pos_s = pos.start,
                 pos_e = pos.end;
 
             if(!allow_empty && pos_s == pos_e){
-                console.log(status_info);
-                return false;
+                if(!default_content){
+                    console.log(status_info);
+                    return false;
+                }
+                prefix = prefix + default_content;
             }            
             
             if(prefix_l) {
@@ -1037,7 +1053,7 @@
                   
         }        
         this.lib_bar_content_init = function(paras){
-            // init picture
+            // init content of each bar
             var _self_ = this, 
                 init_funs = _self_.editor_config.default_block_html["init"],
                 src_type = "image",
@@ -1216,6 +1232,25 @@
             });
         }
             
+        this.markup_change_init = function(){
+            var self = this;
+            this.$markup.bind("change", function(){
+                self.markup = $(this).val();
+                self.$menu.attr("markup", self.markup);
+                //alert(self.markup);
+            });        
+        };        
+        
+        this.lib_li_init = function(){
+            var self = this,
+                $editor_menu_base = this.$menu.find('ul'),
+                editor_panel = self.editor_config.default_panel;
+            jQ.fn.unbind.call($editor_menu_base).bind.call($editor_menu_base, "click", function(event){
+                var target = event.target, $target = jQ(target);
+                    if(target.nodeName != 'LI') return false;
+                editor_panel[$target.attr("kind")]["exec"].call(self, target, self.markup);
+            });                    
+        }
                                                    
         this.init = function(args){
             // init the textarea 
@@ -1224,10 +1259,14 @@
             this.lib_flag = args["lib_flag"];
             this.$lib_bars = args["$lib_bars"];
             this.editor_config = args["editor_config"];
+            this.$markup = args["$markup"];
+            this.markup = args["markup"];
             
             var lib_bars = this.editor_config.default_lib_bar;
             this.lib_letter_bar_init();
             this.lib_bar_init();
+            this.lib_li_init();
+            this.markup_change_init();
             var src_dict = args["src"] || {};
             if(args["src"]){ this.window_close_prompt(); };
             this.lib_bar_content_init(src_dict);
@@ -1245,6 +1284,7 @@
             editor_panel = editor_config.default_panel,
             menu_attrs = editor_config.default_menu_attrs,
             markups = editor_config.default_support_markup();
+        //paras["markup"] = "markdown";
             
         var tmp_default_panel  = ["bold", "italic", "underline", "del", "split",
                                     "super", "suber", "split",
@@ -1299,8 +1339,15 @@
         }
         editor_menu_base_html.push('</ul>');
         editor_menu_base_html.push('<select>');// for markup language select
+        
         for(var ii = 0, len = markups.length; ii < len; ii++){
-            editor_menu_base_html.push('<option value="' + markups[ii].toLowerCase() + '">'+ markups[ii] + '</option>');
+            var current_option = '',
+                current_markup = markups[ii];
+            if(markups[ii].toLowerCase() != menu_paras["markup"]){
+                editor_menu_base_html.push('<option value="' + current_markup.toLowerCase() + '">'+ current_markup + '</option>');
+            }else{
+                editor_menu_base_html.push('<option selected="selected" value="' + current_markup.toLowerCase() + '">'+ current_markup + '</option>');            
+            }        
         }
         editor_menu_base_html.push('</select>');
         
@@ -1342,18 +1389,13 @@
                                 "menu": $editor_menu, 
                                 "src": paras["src"] || false,
                                 "lib_flag": lib_flag,
-                                "$lib_bars": $lib_bars
+                                "$lib_bars": $lib_bars,
+                                "$markup": $editor_menu_base.find("select"),
+                                "markup": menu_paras["markup"]
                             };
 
         // init the Textarea
         self_textarea.init(textarea_para);
-        
-        // bind event to the panel 
-        jQ.fn.unbind.call($editor_menu_base).bind.call($editor_menu_base, "click", function(event){
-            var target = event.target, $target = jQ(target);
-            if(target.nodeName != 'LI') return false;
-            editor_panel[$target.attr("kind")]["exec"].call(self_textarea, target);
-        });
 
     }
 
