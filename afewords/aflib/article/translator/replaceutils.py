@@ -33,7 +33,8 @@ ilink = ReplacePattern(_ilink_pattern, _ilink_repl)
 _icode_pattern = get_inline_ref_pattern('code')
 
 def _icode_repl(mastr):
-    return '<code>'+mastr+'</code>'
+    return '\n\n```\n' + mastr + '\n```\n'
+    #return '\n\n'+'\n'.join(['    '+each for each in mastr.split('\n')]) + '\n\n'
     #return ur'<div><pre class="afewords-brush">' + mastr + ur'</pre></div>'
 
 icode = ReplacePattern(_icode_pattern, _icode_repl)
@@ -136,6 +137,7 @@ def _iitalic_repl(mastr):
 iitalic = ReplacePattern(_iitalic_pattern, _iitalic_repl)
 
 #sup
+#_isup_pattern = r'(?<!\$)(\^\{.*?\})'
 _isup_pattern = r'\^\{(.*?)\}'
 def _isup_repl(mastr):
     return r'<sup>' + mastr + r'</sup>'
@@ -143,6 +145,7 @@ def _isup_repl(mastr):
 isup = ReplacePattern(_isup_pattern, _isup_repl)
 
 #sub
+#_isub_pattern = r'(?<!\$)(_\{.*?\})'
 _isub_pattern = r'_\{(.*?)\}'
 def _isub_repl(mastr):
     return r'<sub>' + mastr + r'</sub>'
@@ -161,25 +164,28 @@ ibr = ReplacePattern(_ibr_pattern, _ibr_repl)
 _ihr_pattern = r'^(~+)$'
 def _ihr_repl(mastr):
     #return r'<div class="hr"></div>'
-    return r'- - -'
+    return '- - -\n'
 
 ihr = ReplacePattern(_ihr_pattern, _ihr_repl)
 
 #iindent
 _iindent3_pattern = r'^&gt;&gt;&gt;&gt;&gt;&gt;(.*)$'
 def _iindent3_repl(mastr):
-    return ur'<div class="indent3">' + mastr + ur'</div>'
+    #return ur'<div class="indent3">' + mastr + ur'</div>'
+    return '                 '+mastr
 
 iindent3 = ReplacePattern(_iindent3_pattern, _iindent3_repl)
 
 _iindent2_pattern = r'^&gt;&gt;&gt;&gt;([\s\S]+)$'
 def _iindent2_repl(mastr):
-    return ur'<div class="indent2">' + mastr + ur'</div>'
+    #return ur'<div class="indent2">' + mastr + ur'</div>'
+    return '            '+mastr
 
 iindent2 = ReplacePattern(_iindent2_pattern, _iindent2_repl)
 
 _iindent1_pattern = r'^&gt;&gt;([\s\S]+)$'
 def _iindent1_repl(mastr):
-    return ur'<div class="indent1">' + mastr + ur'</div>'
+    #return ur'<div class="indent1">' + mastr + ur'</div>'
+    return '    '+mastr
 
 iindent1 = ReplacePattern(_iindent1_pattern, _iindent1_repl)

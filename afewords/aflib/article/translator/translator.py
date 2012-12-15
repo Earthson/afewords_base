@@ -169,9 +169,11 @@ def list_trans(lines, curline, flag, prefix = ''):
     mlen = len(prefix)
     res, end = None, None
     if flag == '*':
-        res, end = '<ul>', '</ul>'
+        #res, end = '<ul>', '</ul>'
+        res, end = '', ''
     else:
-        res, end = '<ol>', '</ol>'
+        #res, end = '<ol>', '</ol>'
+        res, end = '', ''
     while curline < lcnt:
         if has_prefix(lines[curline], prefix + '*'):
             ss, curline = list_trans(lines, curline, '*', prefix + '*')
@@ -180,7 +182,14 @@ def list_trans(lines, curline, flag, prefix = ''):
             ss, curline = list_trans(lines, curline, '#', prefix + '#')
             res += ss
         elif has_prefix(lines[curline], prefix):
-            res += '<li>' + lines[curline][mlen:] + '</li>'
+            tmp = prefix[-1]
+            if tmp == '#':
+                tmp = '1.  '
+            else:
+                tmp = '*   '
+            tmp = ''.join(['    ' for each in prefix[:-1]]) + tmp
+            res += tmp + lines[curline][mlen:] + '\n'#+ '</li>'
+            #res += '<li>' + lines[curline][mlen:] + '</li>\n'
             curline += 1
         else:
             res += end
