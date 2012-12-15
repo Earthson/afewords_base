@@ -64,9 +64,9 @@ _iequation_pattern = get_inline_ref_pattern('equation')
 def _iequation_repl(mastr):
     #ret = r'<div class="math">'
     #ret += r'[equation]'
-    ret = '$$\n'
+    ret = '$$'
     #ret += mastr + r'[/equation]</div>'
-    ret += mastr + '\n$$'
+    ret += mastr + '$$'
     return ret
 
 iequation = ReplacePattern(_iequation_pattern, _iequation_repl)
