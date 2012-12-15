@@ -4,7 +4,7 @@ from databox.databox import *
 
 import re
 
-from translator import trans
+from markup.parse import article_parser
 
 
 @with_conn
@@ -15,11 +15,13 @@ class TableformDoc(AFDocument):
         'name' : basestring,
         'alias' : basestring,
         'tableform' : basestring,
+        'markup' : basestring,
     }
     required_fields = [] #['tableform']
     default_values = {
         'name' : '',
         'alias' : '',
+        'markup' : 'markdown',
     }
 
 
@@ -31,10 +33,14 @@ class Tableform(DataBox):
         'name' : True,
         'alias' : True,
         'tableform' : True,
+        'markup' : True,
     }
 
-    normal_translator = trans.normal_translator
     as_reftype = u'table' #as_reftype should also in cls_alias
+
+    def __init__(self, *args, **kwargs):
+        DataBox.__init__(self, *args, **kwargs)
+        self.parser = article_parser(None, self.markup)
 
     @class_property
     def cls_alias(cls):
@@ -70,7 +76,7 @@ class Tableform(DataBox):
                         mode.append('center')
                     mobj = re.search(r'#([r|l|c])$', tmp[i])
                     tmp[i] = re.sub(r'#[r|l|c]$', r'', tmp[i], 1)
-                    tmp[i] = self.normal_translator.translate(tmp[i])
+                    tmp[i] = self.parser(tmp[i])
                     if mobj is not None:
                         if mobj.groups()[0] == 'r':
                             mode[i] = 'right'

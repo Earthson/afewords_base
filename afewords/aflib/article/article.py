@@ -8,7 +8,6 @@ from datetime import datetime
 
 from statistics import Statistics, StatisticsDoc
 from generator import *
-from translator.trans import *
 
 from authority import *
 
@@ -20,11 +19,7 @@ from equation import Equation
 
 import aflib_conf
 
-import markdown
-
-def markdown_translate(txt):
-    ext = ['extra','codehilite']
-    return markdown.markdown(txt, ext)
+from markup.parse import article_parser
 
 @with_conn
 class ArticleLibDoc(AFDocument):
@@ -222,7 +217,7 @@ class ArticleDoc(AFDocument):
         'body_version' : int,
         'view_body' : basestring,
         'view_body_version' : int,
-        'lang_type' : basestring,
+        'markup' : basestring,
         'release_time' : datetime,
         'update_time' : datetime, #last update
         'keywords' : [basestring],
@@ -242,7 +237,7 @@ class ArticleDoc(AFDocument):
         'body_version' : 0,
         'view_body' : '',
         'view_body_version' : 0,
-        'lang_type' : 'afewords',
+        'markup' : 'markdown',
         'update_time' : datetime.now,
         'release_time' : datetime.now,
         'keywords' : [],
@@ -266,7 +261,7 @@ class Article(DataBox):
         'env_id' : False,
         'env_type' : False,
         'env_write_access' : True,
-        'lang_type' : True,
+        'markup' : True,
         'release_time' : True,
         'update_time' : True,
         'body_version' : True,
@@ -284,11 +279,7 @@ class Article(DataBox):
 
     def __init__(self, *args, **kwargs):
         DataBox.__init__(self, *args, **kwargs)
-        self.normal_translator = normal_translator
-
-    @property
-    def translator(self):
-        return ArticleTranslator(self.refinder)
+        self.parser = article_parser(self.refinder)
 
     @with_user_status
     def authority_verify(self, usr=None, env=None, **kwargs):
@@ -463,9 +454,7 @@ class Article(DataBox):
             if self.data['view_body_version'] == self.data['body_version']:
                 return self.data['view_body']
             self.data['view_body_version'] = self.data['body_version']
-            translator = self.translator
-            self.data['view_body'] = translator.translate(self.data['body'])
-            self.data['view_body'] = markdown_translate(self.data['view_body'])
+            self.data['view_body'] = self.parser(self.data['view_body'])
             return self.data['view_body'], True
         return getter
 
@@ -487,7 +476,7 @@ class Article(DataBox):
     @db_property
     def abstract_viewbody():
         def getter(self):
-            return self.normal_translator.translate(self.data['abstract'])
+            return self.parser(self.data['abstract'])
         return getter
 
     @db_property

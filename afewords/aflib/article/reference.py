@@ -2,9 +2,9 @@ from databox.afdocument import AFDocument
 from databox.mongokit_utils import with_conn
 from databox.databox import *
 
-from translator.trans import reference_translator
 from aflib_utils import is_url
 
+from markup.parse import article_parser
 
 @with_conn
 class ReferenceDoc(AFDocument):
@@ -18,6 +18,7 @@ class ReferenceDoc(AFDocument):
         'view_body' : basestring,
         'view_body_version' : int,
         'url' : basestring,
+        'markup' : basestring,
     }
     required_fields = []
     default_values = {
@@ -28,6 +29,7 @@ class ReferenceDoc(AFDocument):
         'view_body' : '',
         'view_body_version' : 0,
         'url' : '',
+        'markup' : 'markdown',
     }
 
 
@@ -40,10 +42,14 @@ class Reference(DataBox):
         'alias' : True,
         'url' : True,
         'body_version' : True,
+        'markup' : True,
     }
 
-    translator = reference_translator
     as_reftype = u'ref' #as_reftype should also in cls_alias
+
+    def __init__(self, *args, **kwargs):
+        DataBox.__init__(self, *args, **kwargs)
+        self.parser = article_parser(None, self.markup)
 
     @class_property
     def cls_alias(cls):
@@ -73,7 +79,7 @@ class Reference(DataBox):
                 return self.data['view_body']
             self.data['view_body_version'] = self.data['body_version']
             self.data['view_body'] = \
-                    self.translator.translate(self.data['body'])
+                    self.parser(self.data['body'])
             ret = ''
             cbody = self.body
             name = self.name
