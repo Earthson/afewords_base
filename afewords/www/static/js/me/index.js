@@ -493,6 +493,7 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
                 'father_id': $menu.attr('father_id'),
                 'father_type': $menu.attr('father_type'),
                 'iscomment': $menu.attr('iscomment'),
+                "markup": $menu.attr("markup"),
                 'body': $text.val(),
                 'summary': $summary.length > 0 ? $summary.val() : false,
                 'title': $title.length > 0 ? $title.val() : false,

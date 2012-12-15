@@ -1256,6 +1256,7 @@
             this.$lib_bars = args["$lib_bars"];
             this.editor_config = args["editor_config"];
             this.$markup = args["$markup"];
+            this.markup = args["markup"];
             
             var lib_bars = this.editor_config.default_lib_bar;
             this.lib_letter_bar_init();
@@ -1279,6 +1280,7 @@
             editor_panel = editor_config.default_panel,
             menu_attrs = editor_config.default_menu_attrs,
             markups = editor_config.default_support_markup();
+        //paras["markup"] = "markdown";
             
         var tmp_default_panel  = ["bold", "italic", "underline", "del", "split",
                                     "super", "suber", "split",
@@ -1333,8 +1335,15 @@
         }
         editor_menu_base_html.push('</ul>');
         editor_menu_base_html.push('<select>');// for markup language select
+        
         for(var ii = 0, len = markups.length; ii < len; ii++){
-            editor_menu_base_html.push('<option value="' + markups[ii].toLowerCase() + '">'+ markups[ii] + '</option>');
+            var current_option = '',
+                current_markup = markups[ii];
+            if(markups[ii].toLowerCase() != menu_paras["markup"]){
+                editor_menu_base_html.push('<option value="' + current_markup.toLowerCase() + '">'+ current_markup + '</option>');
+            }else{
+                editor_menu_base_html.push('<option selected="selected" value="' + current_markup.toLowerCase() + '">'+ current_markup + '</option>');            
+            }        
         }
         editor_menu_base_html.push('</select>');
         
@@ -1377,7 +1386,8 @@
                                 "src": paras["src"] || false,
                                 "lib_flag": lib_flag,
                                 "$lib_bars": $lib_bars,
-                                "$markup": $editor_menu_base.find("select")
+                                "$markup": $editor_menu_base.find("select"),
+                                "markup": menu_paras["markup"]
                             };
 
         // init the Textarea
