@@ -515,6 +515,7 @@ class Article(DataBox):
         ans['release_time'] = str(self.release_time)
         ans['keywords'] = self.keywords
         ans['tag_list'] = self.tag
+        ans['markup'] = self.markup
         #ans['privilege'] = self.privilege
         author = self.author
         ans['author'] = None if author is None else author.json_info_view_by(
@@ -529,6 +530,7 @@ class Article(DataBox):
         ans['aid'] = self.uid
         ans['title'] = self.title
         ans['summary'] = self.abstract
+        ans['markup'] = self.markup
         ans['content'] = self.view_body
         ans['content_short'] = self.view_body_short
         ans['release_time'] = self.release_time
