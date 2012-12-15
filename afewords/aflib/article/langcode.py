@@ -4,6 +4,8 @@ from databox.databox import *
 
 from datetime import datetime
 
+from markup.parse import markup_parser
+
 
 @with_conn
 class LangcodeDoc(AFDocument):
@@ -36,6 +38,10 @@ class Langcode(DataBox):
 
     as_reftype = u'code' #as_reftype should also in cls_alias
 
+    def __init__(self, *args, **kwargs):
+        DataBox.__init__(self, *args, **kwargs)
+        self.parser = markup_parser('markdown')
+
     @class_property
     def cls_alias(cls):
         return u'code'
@@ -62,7 +68,7 @@ class Langcode(DataBox):
             displaycode = self.code
             #displaycode = displaycode.replace('<', '&lt;')
             displaycode = bg + displaycode + ed
-            return displaycode
+            return self.parser(displaycode)
         return getter
 
     @db_property

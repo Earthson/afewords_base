@@ -78,8 +78,7 @@ class Reference(DataBox):
             if self.data['view_body_version'] == self.data['body_version']:
                 return self.data['view_body']
             self.data['view_body_version'] = self.data['body_version']
-            self.data['view_body'] = \
-                    self.parser(self.data['body'])
+            #self.data['view_body'] = self.parser(self.data['body'])
             ret = ''
             cbody = self.body
             name = self.name
@@ -97,7 +96,7 @@ class Reference(DataBox):
                     source = r'[%s](%s "%s")' % (name, 
                                     url.replace('"', '%22'), name)
                     #source += name + r'</a>'
-                ss = self.data['view_body']
+                ss = self.data['body']
                 ret = source + '\n'
                 ret += '\n'.join(['>'+each for each in ss.split('\n')])
                 #ret = r'<div class="ref">'
@@ -108,7 +107,7 @@ class Reference(DataBox):
                 #        source)
                 #ret += r'<div class="ref_body">%s</div>' % ss
                 #ret += r'</div></div>'
-            self.data['view_body'] = ret
+            self.data['view_body'] = self.parser(ret)
             return self.data['view_body'], True
         return getter
 

@@ -15,9 +15,7 @@ def article_parser(refinder=None, lang='markdown'):
 
 def markup_parser(lang='markdown'):
     if lang == 'markdown':
-        markup_parser = afmarkdown()
+        m_parser = afmarkdown()
     else:
         raise KeyError()
-    def parser(txt):
-        return markup_parser(txt)
-    return parser
+    return lambda txt: m_parser(txt)
