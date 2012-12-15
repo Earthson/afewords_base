@@ -23,7 +23,7 @@ import aflib_conf
 import markdown
 
 def markdown_translate(txt):
-    ext = ['extra','fenced_code', 'codehilite']
+    ext = ['extra','codehilite']
     return markdown.markdown(txt, ext)
 
 @with_conn
@@ -464,8 +464,8 @@ class Article(DataBox):
                 return self.data['view_body']
             self.data['view_body_version'] = self.data['body_version']
             translator = self.translator
-            self.data['view_body'] = \
-                    markdown_translate(translator.translate(self.data['body']))
+            self.data['view_body'] = translator.translate(self.data['body'])
+            self.data['view_body'] = markdown_translate(self.data['view_body'])
             return self.data['view_body'], True
         return getter
 
