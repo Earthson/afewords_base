@@ -150,6 +150,8 @@ class ArticleUpdatePara(BaseHandlerPara):
     def read(self):
         self.paradoc = dict([(ek, self.handler.get_esc_arg(ek, ev)) 
                                     for ek, ev in self.paradoc.items()])
+        self['body'] = self.handler.get_argument('body', '')
+        self['summary'] = self.handler.get_argument('summary', '')
         self['tags'] = self.handler.get_esc_args('tags[]')
         self['ref_comments'] = self.handler.get_esc_args('ref_comments[]')
         self['tags'].append('default')
@@ -238,6 +240,7 @@ class ArticleSrcPara(IMGHandlerPara):
     def read(self):
         self.paradoc = dict([(ek, self.handler.get_esc_arg(ek, ev)) 
                                     for ek, ev in self.paradoc.items()])
+        self['body'] = self.handler.get_argument('body', '')
         self.error_code = 0
         if self['src_type'] not in ['img', 'image']:
             return
