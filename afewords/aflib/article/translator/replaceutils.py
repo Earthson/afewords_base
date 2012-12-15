@@ -50,11 +50,11 @@ def _iurl_repl(mastr):
 #in doc math
 _imath_pattern = get_inline_ref_pattern('math')
 def _imath_repl(mastr):
-    ret = r'<div class="math">'
+    #ret = r'<div class="math">'
     #ret += r'[math]'
     #ret += mastr + r'[/math]</div>'
-    ret += r'$'
-    ret += mastr + r'$</div>'
+    ret = r'$'
+    ret += mastr + r'$'
     return ret
 
 imath = ReplacePattern(_imath_pattern, _imath_repl)
@@ -62,11 +62,11 @@ imath = ReplacePattern(_imath_pattern, _imath_repl)
 #in doc equation
 _iequation_pattern = get_inline_ref_pattern('equation')
 def _iequation_repl(mastr):
-    ret = r'<div class="math">'
+    #ret = r'<div class="math">'
     #ret += r'[equation]'
-    ret += r'$$'
+    ret = '$$\n'
     #ret += mastr + r'[/equation]</div>'
-    ret += mastr + r'$$</div>'
+    ret += mastr + '\n$$'
     return ret
 
 iequation = ReplacePattern(_iequation_pattern, _iequation_repl)
