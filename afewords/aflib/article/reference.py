@@ -4,7 +4,7 @@ from databox.databox import *
 
 from aflib_utils import is_url
 
-from markup.parse import article_parser
+from markup.parse import markup_parser
 
 @with_conn
 class ReferenceDoc(AFDocument):
@@ -49,7 +49,7 @@ class Reference(DataBox):
 
     def __init__(self, *args, **kwargs):
         DataBox.__init__(self, *args, **kwargs)
-        self.parser = article_parser(None, self.markup)
+        self.parser = markup_parser(self.markup)
 
     @class_property
     def cls_alias(cls):

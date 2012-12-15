@@ -2,8 +2,10 @@ from markdown import Markdown
 
 afmarkdown_settings = {
     'extensions' : [ #markdown extensions
+        'insdel',
         'extra',
         'codehilite',
+        'mathjax',
     ],
     'output_format' : 'xhtml5',
 }
