@@ -17,5 +17,4 @@ for each in blogs_all+comments_all+about_all+ref_all:
             continue
     except:
         pass
-    finally:
-        each.body_version += 1
+    each.body_version += 1

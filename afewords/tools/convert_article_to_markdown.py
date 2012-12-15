@@ -23,5 +23,5 @@ for each in blogs_all + comments_all + about_all:
 for each in ref_all:
     each.body = translate(each.body)
 
-#for each in table_all:
-#    each.tableform = translate(each.tableform)
+for each in table_all:
+    each.tableform = translate(each.tableform)
