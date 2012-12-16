@@ -8,6 +8,7 @@ afmarkdown_settings = {
         'mathjax',
     ],
     'output_format' : 'xhtml5',
+    'safe_mode' : 'replace',
 }
 
 
