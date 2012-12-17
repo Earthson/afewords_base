@@ -26,11 +26,11 @@ class AFGlobalDoc(AFDocument):
     }
     default_values = {
         'invitations_count' : 0,
-        'recent_blogs' : [None for i in range(200)],
-        'recent_books' : [None for i in range(200)],
-        'recent_users' : [None for i in range(200)],
+        'recent_blogs' : [None for i in range(500)],
+        'recent_books' : [None for i in range(500)],
+        'recent_users' : [None for i in range(500)],
         'unreg_users' : [None for i in range(5000)],
-        'recent_feedbacks' : [None for i in range(200)],
+        'recent_feedbacks' : [None for i in range(500)],
     }
 
 if AFGlobalDoc.find_one() is None:
