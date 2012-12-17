@@ -147,7 +147,7 @@ border:#fff 4px solid;color: black;font-weight: bolder;border-left: none;border-
 #left3_tag_tag{float: left;min-width: 10px;border-left:#ccc 1px dotted;line-height: 35px;padding: 0 10px;
 color: #999;border-bottom: #ccc 1px dotted;font-size: 14px;}
 #left3_tag_nav{float: left;margin-top: 0px;margin-left: 20px;}
-#left3_tag_nav ul{list-style-type: none;line-height: 33px;float: left;}
+#left3_tag_nav ul{list-style-type: none;line-height: 33px;float: left;margin: 0;padding: 0;}
 #left3_tag_nav ul li{float: left;padding: 0 5px;border-bottom: #ccc 1px dashed;}
 #left3_tag_nav ul li a{font-size: 14px !important;line-height: 33px;display: block;
 border-bottom: #fff 2px dotted;color: #999;float: left;padding: 0 10px;}
@@ -215,7 +215,7 @@ background-color: #ffffff;}
 #body_content .like a.like_cancel{font-size: 12px;color: red;cursor: pointer;position: absolute;top: 12px;right: 10px;}
 #body_content .like a.like_cancel:hover{text-decoration: underline;}
 
-ul.like_ul{list-style-type: none;line-height: 25px;margin: 0 0 30px 0;width: 100%;float: left;}
+ul.like_ul{list-style-type: none;line-height: 25px;margin: 0 0 30px 0;width: 100%;float: left;padding: 0;}
 ul.like_ul li{width: 90%;padding: 10px 8% 10px 2%;
 float: left;border-bottom: #ccc 1px dotted;padding-left: 2%;position: relative;padding-right: 8%;vertical-align: middle;
 }
@@ -562,6 +562,8 @@ min-height: 1px;}
 
 
 #page{float: left; width: 80%;position: relative;border:#aaa 1px dotted;}
+#page ul{margin: 0;padding: 0;}
+
 #page_title{position: absolute;top: 20px;left: 0;background-color: #A0331F;padding: 3px 5px 3px 20px; color: white;}
 
 #page ul{float: left;margin-top: 60px;width: 100%;margin-bottom: 40px;}

@@ -339,7 +339,7 @@
             "env_type": 'user',
             "father_id": '-1',
             "father_type": 'blog',
-            "markup": "default",
+            //"markup": "default",
             "iscomment": false        
         }
         
@@ -793,6 +793,7 @@
         this.div_to_dict = function( $div ){
             return $div.DivToDict();           
         }  
+        
         this.window_close_prompt = function(){
             
             jQ(window).bind('beforeunload', function(){
@@ -1338,8 +1339,9 @@
             editor_menu_base_html.push(tmp_html);        
         }
         editor_menu_base_html.push('</ul>');
-        editor_menu_base_html.push('<select>');// for markup language select
         
+        /*
+        editor_menu_base_html.push('<select>');// for markup language select        
         for(var ii = 0, len = markups.length; ii < len; ii++){
             var current_option = '',
                 current_markup = markups[ii];
@@ -1350,7 +1352,7 @@
             }        
         }
         editor_menu_base_html.push('</select>');
-        
+        */
         
         $editor_menu_base.append(editor_menu_base_html.join(''));
         $editor_menu.append($editor_menu_base);
