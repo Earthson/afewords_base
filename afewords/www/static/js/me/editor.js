@@ -339,7 +339,7 @@
             "env_type": 'user',
             "father_id": '-1',
             "father_type": 'blog',
-            //"markup": "default",
+            "markup": "markdown",
             "iscomment": false        
         }
         
