@@ -513,7 +513,7 @@ class Article(DataBox):
             ans['title'] = self.title
             ans['link'] = self.obj_url
             ans['guid'] = self.uid
-            ans['description'] = 'afewords blog'
+            ans['description'] = self.abstract
             ans['pubDate'] = self.release_time
             ans['author'] = self.author_name
             return ans

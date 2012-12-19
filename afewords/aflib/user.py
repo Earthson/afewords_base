@@ -701,7 +701,7 @@ class User(DataBox):
             ans['title'] = self.name + u"'s Blog——子曰"
             ans['link'] = self.main_url + 'user-feed/' + self.uid
             ans['description'] = self.name
-            blogs = self.blogs_from_tag('default', vfrom=0, vlim=10)[0]
+            blogs = self.blogs_from_tag('default', vfrom=0, vlim=20)[0]
             ans['items'] = [each.rss_info for each in blogs]
             return ans
         return getter
