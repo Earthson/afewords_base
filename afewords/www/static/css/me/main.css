@@ -1,6 +1,6 @@
 @CHARSET "UTF-8";
 /***************** global style ********************/
-*{border:0;}
+*{border:0;font-size: 14px;}
 body{ background:#ffffff;line-height:25px;width:100%;color:#000;font:14px/24px Arial, sans-serif;position: relative;
 margin: 0;padding: 0;font-size: 14px;}
 
@@ -228,7 +228,7 @@ ul.like_ul li a:hover{ color: blue;}
 #body_content .follow{width: 88%;float: left;margin-left: 20px;border:#aaa 1px dotted;padding: 35px 20px 20px 20px;
 margin-top: 30px;position: relative;background: url('/static/img/button/user_ok.png') 20px 10px  no-repeat;
 background-color: #ffffff;}
-#body_content .follow_ul{list-style-type: none;line-height: 40px;margin: 10px 0 50px 0;width: 100%;float: left;}
+#body_content .follow_ul{list-style-type: none;line-height: 40px;margin: 10px 0 50px 0;width: 100%;float: left;padding: 0;}
 #body_content .follow_ul li{float: left;display: inline-block;border:#ccc 1px dotted;margin: 0 0 30px 30px;}
 
 #body_content .follow_one{min-width: 150px;float: left;height: 100px;}
