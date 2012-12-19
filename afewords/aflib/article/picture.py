@@ -151,6 +151,8 @@ class Picture(DataBox):
             return self.pic_main_url + self.pic_path + self.file_name
         return getter
 
+    obj_url = url
+
     @db_property
     def thumb_url():
         def getter(self):

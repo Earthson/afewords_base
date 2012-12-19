@@ -3,6 +3,7 @@ import os
 from tornado.escape import json_encode, xhtml_unescape
 from tornado.template import Loader, Template
 from afconfig import af_conf
+from datetime import datetime
 
 def with_attr(cls):
     try:
@@ -32,11 +33,42 @@ class AFDocBase(object):
     def __delitem__(self, key):
         del self.doc[key]
 
+    def update(self, **doc):
+        for ek, ev in doc.items():
+            self.doc[ek] = ev
+
     def __str__(self):
         return str(self.doc)
 
     def __unicode__(self):
         return unicode(self.doc)
+
+
+import PyRSS2Gen
+
+class BaseFeedPage(AFDocBase):
+    doc = {
+        'title' : u'',
+        'link' : u'',
+        'description' : u'',
+        'lastBuildDate' : datetime.now(),
+        'items' : [],
+    }
+
+    def __init__(self, handler=None, doc=None):
+        super(BaseFeedPage, self).__init__(doc)
+        self.handler = handler
+
+    def init_page(self):
+        '''init after items is set'''
+        self['items'] = [PyRSS2Gen.RSSItem(**each) for each in self['items']]
+
+    def render_string(self):
+        rss = PyRSS2Gen.RSS2(**self.doc)
+        return rss.to_xml(encoding="utf-8")
+
+    def render(self):
+        return self.handler.write(self.render_string())
 
 
 @with_attr

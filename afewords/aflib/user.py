@@ -1,3 +1,4 @@
+#coding=utf-8
 from databox.afdocument import AFDocument
 from databox.mongokit_utils import with_conn
 from databox.databox import *
@@ -420,16 +421,21 @@ class User(DataBox):
         from article.blog import Blog
         if not tagname:
             return [], 0
-        tag_blogs = self.lib.tag_lib.sub_list(tagname)
-        toview = tag_blogs.load_all()
+        if tagname == 'default':
+            toview = self.blogids
+        else:
+            tag_blogs = self.lib.tag_lib.sub_list(tagname)
+            toview = tag_blogs.load_all()
+            toview = sorted(toview, key=itemgetter(1), reverse=True)
         if toview is None:
             toview = []
-        toview = sorted(toview, key=itemgetter(1), reverse=True)
         len_toview = len(toview)
         if vfrom >= len_toview:
             return [], len_toview
         if vfrom + vlim > len_toview:
             vlim = len_toview - vfrom
+        if tagname == 'default':
+            return Blog.by_ids(toview), len(toview)
         toview = [tuple(each) for each in toview[vfrom:(vfrom+vlim)]]
         tmp = set(toview)
         toview = Blog.by_ids([each[0] for each in toview])
@@ -689,6 +695,18 @@ class User(DataBox):
         return getter
 
     @db_property
+    def blog_rss_info():
+        def getter(self):
+            ans = dict()
+            ans['title'] = self.name + u"'s Blog——子曰"
+            ans['link'] = self.main_url + 'user-feed/' + self.uid
+            ans['description'] = self.name
+            blogs = self.blogs_from_tag('default', vfrom=0, vlim=10)[0]
+            ans['items'] = [each.rss_info for each in blogs]
+            return ans
+        return getter
+
+    @db_property
     def as_env():
         def getter(self):
             ans = dict()
@@ -704,4 +722,10 @@ class User(DataBox):
             from article.catalog import Catalog
             cids = self.lib.managed_catalog_lib.keys()
             return sorted(Catalog.by_ids(cids), reverse=True)
+        return getter
+
+    @db_property
+    def obj_url():
+        def getter(self):
+            return self.main_url + 'user/' + self.uid
         return getter
