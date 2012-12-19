@@ -19,3 +19,4 @@ def markup_parser(lang='markdown'):
     else:
         raise KeyError()
     return lambda txt: m_parser(txt)
+

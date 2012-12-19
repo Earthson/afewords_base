@@ -1,3 +1,35 @@
+from pygments import highlight
+from pygments.lexers import get_lexer_by_name, guess_lexer
+from pygments.formatters import HtmlFormatter
+
+class CodeHtmlFormatter(HtmlFormatter):
+    def wrap(self, source, outfile):
+        return self._wrap_code(source)
+
+    def _wrap_code(self, source):
+        yield 0, '<code class="highlight"><table><tbody>'
+        cnt = 0
+        for i, t in source:
+            cnt += 1
+            bg = '<tr class="line_%s">' % str(cnt%2)
+            ss = '<td class="number"><code>' + str(cnt) + '</code></td>'
+            ss += '<td class="content"><pre>' + t.split('\n')[0] + '</pre></td>'
+            ed = '</tr>'
+            yield i, bg+ss+ed
+        yield 0, '</tbody></table></code>'
+
+
+def code_parser(code, lang=None):
+    try:
+        if not lang:
+            raise
+        lexer = get_lexer_by_name("python", stripall=True)
+    except:
+        lexer = guess_lexer(code)
+    formatter = CodeHtmlFormatter(cssclass="highlight")
+    return highlight(code, lexer, formatter)
+
+
 from databox.afdocument import AFDocument
 from databox.mongokit_utils import with_conn
 from databox.databox import *
@@ -63,12 +95,13 @@ class Langcode(DataBox):
             ed = '\n' + r'</pre></div>'
             ed += r'<div class="code-title">&nbsp;</div></div>'
             '''
-            bg = '\n\n'+r"````"+self.lang.lower()+'\n'
-            ed = "\n````\n\n"
-            displaycode = self.code
+            return code_parser(self.code, self.lang.lower())
+            #bg = '\n\n'+r"````"+self.lang.lower()+'\n'
+            #ed = "\n````\n\n"
+            #displaycode = self.code
             #displaycode = displaycode.replace('<', '&lt;')
-            displaycode = bg + displaycode + ed
-            return self.parser(displaycode)
+            #displaycode = bg + displaycode + ed
+            #return self.parser(displaycode)
         return getter
 
     @db_property
