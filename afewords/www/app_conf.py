@@ -85,6 +85,11 @@ from handlers.feedbackhandlers import FeedbackHandler
 from handlers.feedbackhandlers import AFFeedbackHandler
 
 from handlers.errorhandlers import AFNotFoundHandler
+
+from handlers.affeedhandlers import AFRSSRecentHandler
+from handlers.affeedhandlers import AFRSSUserBlogHandler
+
+
 app_handlers = [
     #(r'/', IndexHandler), #MainHandler),
     (r'/', AFBlogsRecentHandler), 
@@ -143,6 +148,7 @@ app_handlers = [
     #(r'/afewords-feed', AFFeedPageHandler),
     (r'/load-feed', GetArticleOverviewsHandler),
     (r'/afewords-feed', AFBlogsRecentHandler),
+    (r'/blog_recent', AFBlogsRecentHandler),
     (r'/user-like', AFUserFavHandler),
     (r'/blog-lib', AFUserBlogLibHandler),
 
@@ -174,6 +180,9 @@ app_handlers = [
 
     (r'/post-feedback', FeedbackHandler),
     (r'/afewords-feedback', AFFeedbackHandler),
+
+    (r'/feed-recent', AFRSSRecentHandler),
+    (r'/user-feed/([0-9a-zA-Z]+)', AFRSSUserBlogHandler),
 
     (r'(.*)', AFNotFoundHandler),
 ]

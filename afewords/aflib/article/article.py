@@ -232,6 +232,7 @@ class ArticleDoc(AFDocument):
     required_fields = [] #['name', 'env_id', 'env_type']
     default_values = {
         'env_write_access' : True,
+        'author_name' : '',
         'abstract' : '',
         'body' : '',
         'body_version' : 0,
@@ -402,6 +403,7 @@ class Article(DataBox):
             return User.by_id(self.data['author_id'])
         def setter(self, value):
             self.data['author_id'] = value._id
+            self.data['author_name'] = value.name
         return getter, setter
 
     @db_property
@@ -502,6 +504,19 @@ class Article(DataBox):
     def overview_info():
         def getter(self):
             return self.basic_info
+        return getter
+
+    @db_property
+    def rss_info():
+        def getter(self):
+            ans = dict()
+            ans['title'] = self.title
+            ans['link'] = self.obj_url
+            ans['guid'] = self.uid
+            ans['description'] = self.abstract
+            ans['pubDate'] = self.release_time
+            ans['author'] = self.author_name
+            return ans
         return getter
 
     def json_info_view_by(self, info_name='overview',
@@ -642,4 +657,10 @@ class Article(DataBox):
         def getter(self):
             env_cls = cls_gen(self.env_type)
             return env_cls.first_alias + '-' + self.first_alias
+        return getter
+
+    @db_property
+    def obj_url():
+        def getter(self):
+            return self.main_url + 'blog/' + self.uid
         return getter

@@ -4,7 +4,7 @@
 <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/blog1.css") }}" />
 <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/write.css") }}" />
 <link type="text/css" rel="stylesheet" href="{{ static_url("css/code/shCore.css") }}" />
-<link type="text/css" rel="stylesheet" href="{{ static_url("css/code/shThemeEmacs.css") }}" />
+<link type="text/css" rel="stylesheet" href="{{ static_url("css/code/default.css") }}" />
 
 {% end %}
 {% set article = doc['article'] %}
@@ -170,8 +170,8 @@ $().ready(function(){
     extensions: ["tex2jax.js"],
     jax: ["input/TeX", "output/HTML-CSS"],
     tex2jax: {
-      inlineMath: [ ['[math]', '[/math]']],
-      displayMath: [ ['[equation]', '[/equation]']],
+      inlineMath: [ ['$', '$'], ['[math]', '[/math]']],
+      displayMath: [ ['$$', '$$'], ['[equation]', '[/equation]']],
       processEscapes: true
     },
     "HTML-CSS": { availableFonts: ["TeX"] },

@@ -63,7 +63,7 @@ class Langcode(DataBox):
             ed = '\n' + r'</pre></div>'
             ed += r'<div class="code-title">&nbsp;</div></div>'
             '''
-            bg = '\n\n'+r"````"+self.lang+'\n'
+            bg = '\n\n'+r"````"+self.lang.lower()+'\n'
             ed = "\n````\n\n"
             displaycode = self.code
             #displaycode = displaycode.replace('<', '&lt;')
