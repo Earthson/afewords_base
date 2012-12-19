@@ -155,7 +155,7 @@ border-left: none;border-right: none;}
 .book_node_author a{margin-left: 5px;color: blue;}
 
 
-.node_style{list-style-type: none;line-height: 25px;margin: 20px 0 30px 0;width: 100%;float: left;border-top:#ccc 1px dotted;}
+.node_style{list-style-type: none;padding: 0; line-height: 25px;margin: 20px 0 30px 0;width: 100%;float: left;border-top:#ccc 1px dotted;}
 .node_style li{width: 90%;padding: 10px 8% 10px 2%;
 float: left;border-bottom: #ccc 1px dotted;padding-left: 2%;position: relative;padding-right: 8%;vertical-align: middle;
 }
