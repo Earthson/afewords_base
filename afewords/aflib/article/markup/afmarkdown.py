@@ -4,7 +4,7 @@ afmarkdown_settings = {
     'extensions' : [ #markdown extensions
         'insdel',
         'extra',
-        'codehilite(css_class=highlight)',
+        'codehilite(force_linenos=True, css_class=highlight)',
         'mathjax',
     ],
     'output_format' : 'xhtml5',

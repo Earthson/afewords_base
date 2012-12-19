@@ -174,21 +174,21 @@ ihr = ReplacePattern(_ihr_pattern, _ihr_repl)
 _iindent3_pattern = r'^&gt;&gt;&gt;&gt;&gt;&gt;(.*)$'
 def _iindent3_repl(mastr):
     #return ur'<div class="indent3">' + mastr + ur'</div>'
-    return '                 '+mastr
+    return '>'+mastr
 
 iindent3 = ReplacePattern(_iindent3_pattern, _iindent3_repl)
 
 _iindent2_pattern = r'^&gt;&gt;&gt;&gt;([\s\S]+)$'
 def _iindent2_repl(mastr):
     #return ur'<div class="indent2">' + mastr + ur'</div>'
-    return '            '+mastr
+    return '>'+mastr
 
 iindent2 = ReplacePattern(_iindent2_pattern, _iindent2_repl)
 
 _iindent1_pattern = r'^&gt;&gt;([\s\S]+)$'
 def _iindent1_repl(mastr):
     #return ur'<div class="indent1">' + mastr + ur'</div>'
-    return '    '+mastr
+    return '>'+mastr
 
 iindent1 = ReplacePattern(_iindent1_pattern, _iindent1_repl)
 
