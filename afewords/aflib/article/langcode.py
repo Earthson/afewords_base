@@ -7,7 +7,7 @@ class CodeHtmlFormatter(HtmlFormatter):
         return self._wrap_code(source)
 
     def _wrap_code(self, source):
-        yield 0, '<code class="highlight"><table><tbody>'
+        yield 0, '<table class="highlight"><tbody>'
         cnt = 0
         for i, t in source:
             cnt += 1
@@ -16,7 +16,7 @@ class CodeHtmlFormatter(HtmlFormatter):
             ss += '<td class="content"><pre>' + t.split('\n')[0] + '</pre></td>'
             ed = '</tr>'
             yield i, bg+ss+ed
-        yield 0, '</tbody></table></code>'
+        yield 0, '</tbody></table>'
 
 
 def code_parser(code, lang=None):
