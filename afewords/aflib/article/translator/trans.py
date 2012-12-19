@@ -2,7 +2,7 @@ from translator import *
 from replaceutils import *
 from replacepattern import *
 
-_ref_line_repls = [ih4, ih3, ih2, ibold, idel, iins, iitalic,
+_ref_line_repls = [ih4, ih3, ih2, ibold, iins, iitalic,
                     isup, isub, ibr, ihr, iindent3, iindent2, iindent1]
 _ref_pro_repls = [ilink, imath, iequation, icode, iesc]
 _ref_line_trans = LineTranslator(*_ref_line_repls)

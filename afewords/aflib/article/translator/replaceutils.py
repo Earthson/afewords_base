@@ -124,7 +124,7 @@ idel = ReplacePattern(_idel_pattern, _idel_repl)
 #ins
 _iins_pattern = r'__([^_].*?)__'
 def _iins_repl(mastr):
-    return r'<ins>' + mastr + r'</ins>'
+    return r'..' + mastr + r'..'
 
 iins = ReplacePattern(_iins_pattern, _iins_repl)
 
