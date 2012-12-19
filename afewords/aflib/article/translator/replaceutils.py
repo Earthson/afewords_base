@@ -137,18 +137,20 @@ def _iitalic_repl(mastr):
 iitalic = ReplacePattern(_iitalic_pattern, _iitalic_repl)
 
 #sup
-#_isup_pattern = r'(?<!\$)(\^\{.*?\})'
-_isup_pattern = r'\^\{(.*?)\}'
+_isup_pattern = r'(?<!\$)(\^\{.*?\})'
+#_isup_pattern = r'\^\{(.*?)\}'
 def _isup_repl(mastr):
-    return r'<sup>' + mastr + r'</sup>'
+    #return r'<sup>' + mastr + r'</sup>'
+    return '$' + mastr + '$'
 
 isup = ReplacePattern(_isup_pattern, _isup_repl)
 
 #sub
-#_isub_pattern = r'(?<!\$)(_\{.*?\})'
-_isub_pattern = r'_\{(.*?)\}'
+_isub_pattern = r'(?<!\$)(_\{.*?\})'
+#_isub_pattern = r'_\{(.*?)\}'
 def _isub_repl(mastr):
-    return r'<sub>' + mastr + r'</sub>'
+    #return r'<sub>' + mastr + r'</sub>'
+    return '$' + mastr + '$'
 
 isub = ReplacePattern(_isub_pattern, _isub_repl)
 
@@ -189,3 +191,10 @@ def _iindent1_repl(mastr):
     return '    '+mastr
 
 iindent1 = ReplacePattern(_iindent1_pattern, _iindent1_repl)
+
+_irefsep_pattern = r'(?<![\\\n])\[([^:\]\s]+:[^:\]]+)(?<!\\)\]'
+
+def _irefsep_repl(mastr):
+    return '\n[' + mastr + ']\n'
+
+irefsep = ReplacePattern(_irefsep_pattern, _irefsep_repl)

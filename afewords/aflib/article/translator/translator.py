@@ -131,7 +131,7 @@ def merge_lines(lines):
     #brstr = r'<div class="br"></div>'
     #return '\n'.join(r'<div>' + each + r'</div>' if each != brstr else each
     #                     for each in lines)
-    return '\n'.join(lines)
+    return '\n\n'.join(lines)
 
 
 def dolist_translate(lines):
