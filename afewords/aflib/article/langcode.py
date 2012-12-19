@@ -23,10 +23,12 @@ def code_parser(code, lang=None):
     try:
         if not lang:
             raise
-        lexer = get_lexer_by_name("python", stripall=True)
+        lexer = get_lexer_by_name(lang, stripall=True)
     except:
         lexer = guess_lexer(code)
-    formatter = CodeHtmlFormatter(cssclass="highlight")
+    formatter = CodeHtmlFormatter(
+            cssclass="highlight",
+            style='default')
     return highlight(code, lexer, formatter)
 
 
