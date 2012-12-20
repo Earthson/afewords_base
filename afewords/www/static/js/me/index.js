@@ -272,7 +272,7 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
                     $that = jQuery(this);
                 $that.prepend('<span id="code_copy" title="复制代码"></span>');
             });        
-        }, 3000);
+        }, 2000);
         
         jQuery("span#code_copy").live('click', function(){
             var that = this, $that = jQuery(that),
