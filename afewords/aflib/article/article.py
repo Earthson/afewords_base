@@ -554,7 +554,7 @@ class Article(DataBox):
         ans['tag_list'] = self.tag
         ans['privilege'] = self.privilege
         ans['comment_count'] = self.comment_count
-        ans['js_list'] = self.js_list
+        #ans['js_list'] = self.js_list
 
         ans['env'] = self.env_info
 
