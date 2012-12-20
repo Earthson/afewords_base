@@ -6,10 +6,15 @@ class db_property(object):
     class.data.save()  required'''
     def __init__(self, attrfunc):
         tmp = attrfunc()
+        func_name = attrfunc.__name__
         if isinstance(tmp, tuple):
             self.getter, self.setter = tmp
         else:
             self.getter, self.setter = tmp, None
+        if self.getter:
+            self.getter.pname = func_name
+        if self.setter:
+            self.setter.pname = func_name
 
     def __get__(self, obj, objtype=None):
         if obj is None:
@@ -66,7 +71,26 @@ def with_mapper(cls_obj):
     for each in tmp:
         setattr(cls_obj, *each)
     return cls_obj
-        
+
+def with_cache0(method):
+    '''
+    auto cache value of method(have no arguments, except self)
+    need: dict: self.cache(auto create if not exist)
+        method.pname: name of property
+    '''
+    def new_method(self, *args, **kwargs):
+        try:
+            cache = self.cache
+        except AttributeError:
+            self.cache = dict()
+            cache = self.cache
+        if new_method.pname in cache and cache[new_method.pname] is not None:
+            #print('return with cache: %s' % new_method.pname)
+            return cache[new_method.pname]
+        ans = cache[new_method.pname] = method(self, *args, **kwargs)
+        #print('cached: %s' % new_method.pname)
+        return ans
+    return new_method
 
 @with_mapper
 class DataBox(object):
@@ -80,6 +104,7 @@ class DataBox(object):
         'data_status' : True,
     }
     own_data = []
+    auto_load = []
 
     def __init__(self, data=None, attrs=None, *args, **kwargs):
         if data is None:
@@ -90,6 +115,7 @@ class DataBox(object):
         if attrs:
             self.set_propertys(**attrs)
         release_time = datetime.now() #just for play
+        self.cache = dict()
 
     def __lt__(self, other):
         return self.release_time > other.release_time

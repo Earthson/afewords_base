@@ -29,17 +29,15 @@ class AFFeedLikePage(BasePage):
         'like_list': [],    # list, like blog list
         'current_page': 1,
         'paging_html': '',  # for paging
-        'page_list' : [],
+        'page_all' : 1,
         'baseurl' : [],
         'urlparas' : {},
     }
     def page_init(self):
         from toolpages import PagingPage
-        if len(self['page_list']) <= 1:
-            self['page_list'] = []
         tmp = PagingPage()
         tmp['current_page'] = self['current_page']
-        tmp.set_by(self['baseurl'], self['urlparas'], self['page_list'])
+        tmp.set_by(self['baseurl'], self['urlparas'], self['page_all'])
         self['paging_html'] = tmp.render_string()
 
 
@@ -56,18 +54,16 @@ class AFFeedMyselfPage(BasePage):
         'current_page': 1,
         'paging_html': '',
         'current_tag': 'default',
-        'page_list' : [],
+        'page_all' : 1,
         'baseurl' : [],
         'urlparas' : {},
     }
 
     def page_init(self):
         from toolpages import PagingPage
-        if len(self['page_list']) <= 1:
-            self['page_list'] = []
         tmp = PagingPage()
         tmp['current_page'] = self['current_page']
-        tmp.set_by(self['baseurl'], self['urlparas'], self['page_list'])
+        tmp.set_by(self['baseurl'], self['urlparas'], self['page_all'])
         self['paging_html'] = tmp.render_string()
 
 @with_attr

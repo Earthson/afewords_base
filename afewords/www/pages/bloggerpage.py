@@ -13,18 +13,16 @@ class BloggerPage(BasePage):
         'paging_html' : '', # unicode, for paging
         'tag_list' : [],    # see [[tag_list]]
         'current_tag' : 'default', # unicode
-        'page_list' : [],
+        'page_all' : 1,
         'baseurl' : [],
         'urlparas' : {},
     }
 
     def page_init(self):
         from toolpages import PagingPage
-        if len(self['page_list']) <= 1:
-            self['page_list'] = []
         tmp = PagingPage()
         tmp['current_page'] = self['current_page']
-        tmp.set_by(self['baseurl'], self['urlparas'], self['page_list'])
+        tmp.set_by(self['baseurl'], self['urlparas'], self['page_all'])
         self['paging_html'] = tmp.render_string()
 
 
