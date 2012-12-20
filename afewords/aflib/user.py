@@ -244,6 +244,7 @@ class User(DataBox):
     @db_property
     def about():
         '''introduction page to user'''
+        @with_cache0
         def getter(self):
             ans = About.by_id(self.data['about_id'])
             if ans is None:
@@ -254,6 +255,7 @@ class User(DataBox):
             if not ans.author_id or not ans.env_id or not ans.env_type:
                 ans.set_propertys(author_id=self._id, env=self)
             return ans
+
         return getter
 
     @db_property

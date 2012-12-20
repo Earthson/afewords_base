@@ -6,10 +6,15 @@ class db_property(object):
     class.data.save()  required'''
     def __init__(self, attrfunc):
         tmp = attrfunc()
+        func_name = attrfunc.__name__
         if isinstance(tmp, tuple):
             self.getter, self.setter = tmp
         else:
             self.getter, self.setter = tmp, None
+        if self.getter:
+            self.getter.pname = func_name
+        if self.setter:
+            self.setter.pname = func_name
 
     def __get__(self, obj, objtype=None):
         if obj is None:
@@ -71,6 +76,7 @@ def with_cache0(method):
     '''
     auto cache value of method(have no arguments, except self)
     need: dict: self.cache(auto create if not exist)
+        method.pname: name of property
     '''
     def new_method(self, *args, **kwargs):
         try:
@@ -78,12 +84,13 @@ def with_cache0(method):
         except AttributeError:
             self.cache = dict()
             cache = self.cache
-        if method.__name__ in cache and cache[method.__name__] is not None:
-            print('return with cache: %s' % method.__name__)
-            return cache[method.__name__]
-        ans = cache[method.__name__] = method(self, *args, **kwargs)
-        print('cached: %s' % method.__name__)
+        if new_method.pname in cache and cache[new_method.pname] is not None:
+            #print('return with cache: %s' % new_method.pname)
+            return cache[new_method.pname]
+        ans = cache[new_method.pname] = method(self, *args, **kwargs)
+        #print('cached: %s' % new_method.pname)
         return ans
+    return new_method
 
 @with_mapper
 class DataBox(object):
