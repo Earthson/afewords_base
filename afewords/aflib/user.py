@@ -449,14 +449,18 @@ class User(DataBox):
         if vfrom + vlim > len_toview:
             vlim = len_toview - vfrom
         if tagname == 'default':
-            return Blog.by_ids(toview), len(toview)
-        toview = [tuple(each) for each in toview[vfrom:(vfrom+vlim)]]
-        tmp = set(toview)
-        toview = Blog.by_ids([each[0] for each in toview])
-        toview.sort()
-        tmp2 = set((each._id, each.release_time) for each in toview)
-        tag_blogs.pull(*tuple(tmp - tmp2)) #try remove blog not existed
-        return toview, len_toview
+            toview = Blog.by_ids(toview, auto_cache=False)
+        else:
+            toview = [tuple(each) for each in toview[vfrom:(vfrom+vlim)]]
+            tmp = set(toview)
+            toview = Blog.by_ids([each[0] for each in toview], auto_cache=False)
+            toview.sort()
+            tmp2 = set((each._id, each.release_time) for each in toview)
+            tag_blogs.pull(*tuple(tmp - tmp2)) #try remove blog not existed
+        for each in toview:
+            each.set_cache('author', self)
+            each.set_cache('env', self)
+        return toview, len(toview)
 
     @db_property
     def drafts_info():

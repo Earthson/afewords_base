@@ -182,14 +182,15 @@ class DataBox(object):
         return id_generator(cls)(uid)
 
     @classmethod
-    def by_ids(cls, uids):
+    def by_ids(cls, uids, auto_cache=True):
         from bson import ObjectId
         from generator import list_generator
         if uids is None:
             return []
-        #oids = [ObjectId(each) for each in uids if ObjectId.is_valid(each)]
-        #datas = cls.datatype.find({'_id':{'$in':oids}})
-        #return [cls(data=each) for each in datas]
+        if auto_cache is False:
+            oids = [ObjectId(each) for each in uids if ObjectId.is_valid(each)]
+            datas = cls.datatype.find({'_id':{'$in':oids}})
+            return [cls(data=each) for each in datas]
         infos = [(each, cls.cls_name) for each in uids]
         def objs_gen(infos):
             objs = list_generator(infos)
