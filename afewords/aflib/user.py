@@ -200,6 +200,7 @@ class User(DataBox):
         'userstat_id' : False,
     }
     own_data =  ['avatar', 'about', 'lib', 'stat_info']
+    auto_cache = ['avatar']
 
     def __init__(self, data=None, *args, **kwargs):
         DataBox.__init__(self, data, *args, **kwargs)
@@ -213,6 +214,14 @@ class User(DataBox):
 
     def logoff(self):
         self.account_status = 'logoff'
+
+    @db_property
+    def cache_info():
+        def getter(self):
+            ans = dict()
+            ans['avatar'] = (self.data['avatar_id'], 'avatar')
+            return ans
+        return getter
 
     @db_property
     def notice_count():

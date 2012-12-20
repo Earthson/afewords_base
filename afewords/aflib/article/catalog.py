@@ -145,6 +145,7 @@ class Catalog(DataBox):
         'statistics_id' : False,
     }
     own_data = ['statistics', 'about', 'lib']
+    auto_cache = []
 
     manager_limit = 3
 
@@ -152,6 +153,13 @@ class Catalog(DataBox):
         DataBox.__init__(self, data, *args, **kwargs)
         if data is None:
             self.about.set_propertys(env=self, author_id=self.data['owner_id'])
+
+    @db_property
+    def cache_info():
+        def getter(self):
+            ans = dict()
+            return ans
+        return getter
 
     def do_update(self):
         self.update_time = datetime.now()

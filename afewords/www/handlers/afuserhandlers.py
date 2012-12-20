@@ -13,7 +13,8 @@ class AFUserRecentHandler(BaseHandler):
         try:
             usrs = sorted(User.by_ids(recent_users.get_slice(-50)),
                             reverse=True)
-        except:
+        except Exception as e:
+            print(e)
             usrs = []
         handler_page['user_list'] = [each.obj_info_view_by('basic_info',
                 usr=usr, env=None) for each in usrs]

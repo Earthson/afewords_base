@@ -104,7 +104,7 @@ class DataBox(object):
         'data_status' : True,
     }
     own_data = []
-    auto_load = []
+    auto_cache = []
 
     def __init__(self, data=None, attrs=None, *args, **kwargs):
         if data is None:
@@ -116,6 +116,9 @@ class DataBox(object):
             self.set_propertys(**attrs)
         release_time = datetime.now() #just for play
         self.cache = dict()
+
+    def set_cache(self, name, obj):
+        self.cache[name] = obj
 
     def __lt__(self, other):
         return self.release_time > other.release_time
@@ -181,11 +184,33 @@ class DataBox(object):
     @classmethod
     def by_ids(cls, uids):
         from bson import ObjectId
+        from generator import list_generator
         if uids is None:
             return []
-        oids = [ObjectId(each) for each in uids if ObjectId.is_valid(each)]
-        datas = cls.datatype.find({'_id':{'$in':oids}})
-        return [cls(data=each) for each in datas]
+        #oids = [ObjectId(each) for each in uids if ObjectId.is_valid(each)]
+        #datas = cls.datatype.find({'_id':{'$in':oids}})
+        #return [cls(data=each) for each in datas]
+        infos = [(each, cls.cls_name) for each in uids]
+        def objs_gen(infos):
+            objs = list_generator(infos)
+            if not objs:
+                return objs
+            ccls = None
+            for each in objs:
+                if each is not None:
+                    ccls = each.__class__
+                    break
+            if ccls is None:
+                return objs
+            for each in ccls.auto_cache:
+                tmps = objs_gen([obj.cache_info[each] 
+                                if obj else None for obj in objs])
+                for obj, tmp in zip(objs, tmps):
+                    if obj is None:
+                        continue
+                    obj.set_cache(each, tmp)
+            return objs
+        return [each for each in objs_gen(infos) if each is not None]
 
     @classmethod
     def by_indexes(cls, idx_name, idx_values):
@@ -267,6 +292,15 @@ class DataBox(object):
         def getter(self):
             from aflib_conf import main_url
             return main_url
+        return getter
+
+    @db_property
+    def cache_info():
+        '''
+        name:(id, type)
+        '''
+        def getter(self):
+            return dict()
         return getter
 
     def remove(self):

@@ -277,10 +277,20 @@ class Article(DataBox):
         'is_posted' : True,
     }
     own_data = ['statistics', 'lib']
+    auto_cache = ['author'] #, 'env']
 
     def __init__(self, *args, **kwargs):
         DataBox.__init__(self, *args, **kwargs)
         self.parser = article_parser(self.refinder)
+
+    @db_property
+    def cache_info():
+        def getter(self):
+            ans = dict()
+            ans['author'] = (self.data['author_id'], 'user')
+            #ans['env'] = (self.data['env_id'], self.data['env_type'])
+            return ans
+        return getter
 
     @with_user_status
     def authority_verify(self, usr=None, env=None, **kwargs):

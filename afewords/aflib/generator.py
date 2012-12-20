@@ -54,8 +54,15 @@ def list_generator(objinfos):
     '''
     cls_map = dict()
     objs_map = dict()
-    objinfos = [each for each in objinfos if len(each) == 2]
+    if not isinstance(objinfos, list):
+        objinfos = list(objinfos)
+    objinfos = [(ObjectId(each[0]), each[1])
+                if each and len(each) == 2 and ObjectId.is_valid(each[0])
+                else None
+                    for each in objinfos]
     for each in objinfos:
+        if each is None:
+            continue
         tmp_cls = cls_gen(each[1])
         if tmp_cls is None:
             continue
@@ -65,10 +72,14 @@ def list_generator(objinfos):
         else:
             cls_map[tmp_cls_name].append(each[0])
     for ek, ev in cls_map.items():
-        tmps = cls_gen(ek).by_ids(ev)
+        ccls = cls_gen(ek)
+        tmps = [ccls(data=each) for each in ccls.datatype.find(
+                    {'_id':{'$in':ev}})]
         objs_map.update((each.uid, each) for each in tmps)
-    return [objs_map[str(eid)] if str(eid) in objs_map else None 
-                    for eid, etype in objinfos]
+    return [objs_map[str(each[0])] 
+            if each and str(each[0]) in objs_map 
+            else None 
+                for each in objinfos]
 
 def ungenerator(obj):
     return obj._id, obj.cls_name
