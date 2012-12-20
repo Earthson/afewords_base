@@ -184,7 +184,7 @@
                                 "title": "无序列表", 
                                 "value": '&nbsp;', 
                                 "exec": function(markup){
-                                            var args = { "prefix": "\n*", "prefix_l": true, "suffix": "\n", "suffix_r": true, "content": '列表项内容' };
+                                            var args = { "prefix": "\n+ ", "prefix_l": true, "suffix": "\n", "suffix_r": true, "content": '列表项内容' };
                                             this.set_character(args);                                
                                         }
                             },
