@@ -392,12 +392,14 @@ class Article(DataBox):
 
     @db_property
     def lib():
+        @with_cache0
         def getter(self):
             return ArticleLib(spec={'_id':self.data['lib_id']})
         return getter
 
     @db_property
     def author():
+        @with_cache0
         def getter(self):
             from user import User
             return User.by_id(self.data['author_id'])
@@ -408,6 +410,7 @@ class Article(DataBox):
 
     @db_property
     def father():
+        @with_cache0
         def getter(self):
             return generator(self.data['father_id'], self.data['father_type'])
         def setter(self, val):
@@ -417,6 +420,7 @@ class Article(DataBox):
 
     @db_property
     def env():
+        @with_cache0
         def getter(self):
             return generator(self.data['env_id'], self.data['env_type'])
         def setter(self, val):
@@ -433,6 +437,7 @@ class Article(DataBox):
 
     @db_property
     def statistics():
+        @with_cache0
         def getter(self):
             data = Statistics.datatype.find_one(
                         {'_id':self.data['statistics_id']})
@@ -632,6 +637,7 @@ class Article(DataBox):
 
     @db_property
     def js_list():
+        '''no need now'''
         def getter(self):
             from aflib_conf import supportedlangcode as code_dict
             return ['shBrush'+code_dict[each]+'.js' for each in self.lang_list]
