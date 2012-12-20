@@ -1290,7 +1290,7 @@
         var tmp_default_panel  = ["bold", "italic", "underline", "del", "split",
                                     "super", "suber", "split",
                                     "ol", "ul", "split",
-                                    "separator", "heading2", "heading3", "heading4", "indent", "split",
+                                    "separator", "heading2", "heading3", "heading4", "split",
                                     "table", "image", "reference", "code", "math", "letter" ];
         if(paras['iscomment']) tmp_default_panel.splice(tmp_default_panel.length - 7, 7);
         var panel = Object.prototype.toString.call(panel) == "[object Array]" ? panel : tmp_default_panel;
