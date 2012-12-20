@@ -61,7 +61,7 @@
 
 <div class="book_node_author">[原文：<a href="/blog/{{ current_article['aid'] }}">{{ current_article['title'] }}</a> By <a href="/blogger/{{ current_author['uid'] }}">{{ current_author['name'] }}</a>]</div>
 <div class="div-20"></div>
-<div class="bb_con">
+<div id="bb_con">
     {{ current_article['content'] }}
 </div>
 {% end %}
@@ -136,15 +136,10 @@
 AFWUser['permission'] = {{"true" if 'd' in doc['book']['permission'] else "false"}};
 </script>
 {% if doc['current_chapter']['spec_article_count'] > 0 %}
-<script type="text/javascript" src="{{ static_url("js/code/shCore.js") }}"></script>
-{%  for jjj in doc['current_chapter']['spec_article_list'][0]['entity']['js_list']  %}
-    <script type="text/javascript" src="{{ static_url("js/code/" + jjj) }}"></script>
-{% end %}
+
 <script type="text/javascript">
 AFWUser['permission'] = {{"true" if 'd' in doc['book']['permission'] else "false"}};
-$().ready(function(){
-	SyntaxHighlighter.all();
-});
+
 </script>
 <script type="text/javascript" src="/static/js/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script type="text/x-mathjax-config">
