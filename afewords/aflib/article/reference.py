@@ -97,7 +97,8 @@ class Reference(DataBox):
                                  % (source.replace('"', '%22'), name, name)
                 ret += source
                 ret += '</span>'
-                ret += self.parser(self.data['body'])
+                ret += '<blockquote>' + self.parser(self.data['body']) + \
+                       '</blockquote>'
                 ret += '</div>'
                 #ret = r'<div class="ref">'
                 #ret += r'<div class="ref-div">'
