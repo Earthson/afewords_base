@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block css_link %}
-<link rel="stylesheet" type="text/css" href="{{ static_url("css/me/blog1.css") }}" />
+<link rel="stylesheet" type="text/css" href="{{ static_url("css/me/blog.css") }}" />
 <link rel="stylesheet" type="text/css" href="{{ static_url("css/me/write.css") }}" />
 <link type="text/css" rel="stylesheet" href="{{ static_url("css/code/shCore.css") }}" />
 <link type="text/css" rel="stylesheet" href="{{ static_url("css/code/default.css") }}" />
@@ -154,15 +154,6 @@ $().ready(function(){
 </script>
 
 <script type="text/javascript" src="{{ static_url("js/me/editor.js") }}"></script>
-<script type="text/javascript" src="{{ static_url("js/code/shCore.js") }}"></script>
-{%  for jjj in article['js_list']  %}
-    <script type="text/javascript" src="{{ static_url("js/code/" + jjj) }}"></script>
-{% end %}
-<script type="text/javascript">
-$().ready(function(){
-	SyntaxHighlighter.all();
-});
-</script>
 
 <script type="text/javascript" src="/static/js/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script type="text/x-mathjax-config">
