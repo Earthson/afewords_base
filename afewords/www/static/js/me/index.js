@@ -265,6 +265,29 @@ jQuery(document.getElementById("login_do")).bind('click', function(event){
             Global_Funs["blog"]["like"].call(jQuery(this));        
         });
         
+        setTimeout(function(){
+            var $article_con = jQuery("#bb_con");
+            $article_con.find("table.highlight").each(function(){
+                var that = this,
+                    $that = jQuery(this);
+                $that.prepend('<span id="code_copy" title="复制代码"></span>');
+            });        
+        }, 3000);
+        
+        jQuery("span#code_copy").live('click', function(){
+            var that = this, $that = jQuery(that),
+                $table = $that.parent();
+            var code = '';
+            $table.find('tr').each(function(){
+                var $tr = jQuery(this);
+                code += $tr.find('td.content').children().text();
+                code += '\r\n';            
+            });    
+            //alert(code);
+            pop_page(800,450, '<textarea id="code_copy">'+code+'</textarea>');
+        });
+
+        
     }
     
     
