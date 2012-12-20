@@ -90,7 +90,7 @@ class Reference(DataBox):
                 ret += name + r'</a>'
             else:
                 ret = '<div class="blockquote">'
-                ret += u'<span class="source">————'
+                ret += u'<span class="source">———  '
                 source = self.url
                 if is_url(source):
                     source = '<a href="%s" target="_blank" title="%s">%s</a>'\
