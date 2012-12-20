@@ -174,10 +174,22 @@ border-bottom: #aaa 1px dashed;color: #216093 !important;margin-bottom: 4px;line
 #bb_con .MathJax{margin-top: 0 !important;font-size: inherit;}
 #bb_con .MathJax *{font-size: inherit;}
 
-/*
-#bb_con .highlight{border:#111 1px dotted;margin-top: 10px;margin-bottom: 10px;}
+
+
+#bb_con table.highlight{border:#111 1px dotted;margin-top: 10px;margin-bottom: 10px;border-spacing: 0;
+background-color: #000;width: 100%;}
+
+#bb_con table.highlight .line_1{background-color: #f0f0f0;}
+#bb_con table.highlight .line_0{background-color: #f8f8f8;}
+#bb_con table.highlight .number{background-color: #000;color: white;vertical-align: top;width: 40px;text-align: center;}
+#bb_con table.highlight .number code{color: inherit;background-color: inherit;margin: 0;padding: 0;
+min-width: 30px;text-align: center;display: inline-block;max-width: 100px;
+border:none;border-left: 1px #fff solid;}
+
+#bb_con table.highlight .content pre{margin: 0;padding: 0;white-space: pre-wrap;padding-right: 20px;padding-left: 5px;}
+
 #bb_con .highlight pre{background-color: inherit;}
-*/
+
 #bb_con em{letter-spacing: 1px;}
 
 #bb_con div.table{width: 100%;text-align: center;float: none;margin-bottom: 5px;}
@@ -204,8 +216,17 @@ table.highlighttable .linenos .linenodiv{vertical-align: top;height: 100%;}
 table.highlighttable .linenos pre{background-color: #000 !important; color: #fff; padding: 10px 0;padding-left: 10px;
 padding-right: 0;}
 
+
 #bb_con .code .highlight{border:#000 1px dotted;border-left: none;}
 #bb_con .code .highlight pre{padding-left: 2px; }
+
+#bb_con div.highlight{border:#000 1px dotted;color: #060;border-left-style: solid;background-color: white;}
+
+
+
+
+
+
 
 
 .bb_con div{float: left;color: #111;width: 100%;text-indent: 0px;margin-bottom: 2px;margin-top: 3px;
