@@ -184,7 +184,7 @@ background-color: #000;width: 100%;}
 #bb_con table.highlight .number{background-color: #000;color: white;vertical-align: top;width: 40px;text-align: center;}
 #bb_con table.highlight .number code{color: inherit;background-color: inherit;margin: 0;padding: 0;
 min-width: 30px;text-align: center;display: inline-block;max-width: 100px;
-border:none;border-left: 1px #fff solid;}
+border:none;border-left: 3px #738A78 solid;}
 
 #bb_con table.highlight .content pre{margin: 0;padding: 0;white-space: pre-wrap;padding-right: 20px;padding-left: 5px;}
 
