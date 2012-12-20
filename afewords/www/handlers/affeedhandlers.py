@@ -77,8 +77,7 @@ class AFUserFavHandler(BaseHandler):
         enum = 10
         handler_page['like_list'], like_cnt = usr.fav_info_view_by(usr,
                     vfrom=enum*(handler_para['page'] - 1), vlim=enum) 
-        handler_page['page_list'] = [i/enum + 1 
-                            for i in range(0, like_cnt, enum)]
+        handler_page['page_all'] = (like_cnt-1)//enum + 1
         paradoc = dict()
         #para need to be add. 
         handler_page['urlparas'] = paradoc
@@ -113,8 +112,7 @@ class AFUserBlogLibHandler(BaseHandler):
         handler_page['blog_list'], blog_cnt = usr.blogs_info_view_by(usr, 
                 handler_page['current_tag'], 
                 vfrom=enum*(handler_para['page'] - 1), vlim=enum)
-        handler_page['page_list'] = [i/enum + 1 
-                for i in range(0, blog_cnt, enum)]
+        handler_page['page_all'] = (blog_cnt-1)//enum + 1
         #for pagin support
         paradoc = dict()
         if handler_para['tag'] != 'default':

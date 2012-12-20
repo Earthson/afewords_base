@@ -66,7 +66,24 @@ def with_mapper(cls_obj):
     for each in tmp:
         setattr(cls_obj, *each)
     return cls_obj
-        
+
+def with_cache0(method):
+    '''
+    auto cache value of method(have no arguments, except self)
+    need: dict: self.cache(auto create if not exist)
+    '''
+    def new_method(self, *args, **kwargs):
+        try:
+            cache = self.cache
+        except AttributeError:
+            self.cache = dict()
+            cache = self.cache
+        if method.__name__ in cache and cache[method.__name__] is not None:
+            print('return with cache: %s' % method.__name__)
+            return cache[method.__name__]
+        ans = cache[method.__name__] = method(self, *args, **kwargs)
+        print('cached: %s' % method.__name__)
+        return ans
 
 @with_mapper
 class DataBox(object):
@@ -80,6 +97,7 @@ class DataBox(object):
         'data_status' : True,
     }
     own_data = []
+    auto_load = []
 
     def __init__(self, data=None, attrs=None, *args, **kwargs):
         if data is None:
@@ -90,6 +108,7 @@ class DataBox(object):
         if attrs:
             self.set_propertys(**attrs)
         release_time = datetime.now() #just for play
+        self.cache = dict()
 
     def __lt__(self, other):
         return self.release_time > other.release_time
