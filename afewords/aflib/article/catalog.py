@@ -162,6 +162,7 @@ class Catalog(DataBox):
 
     @db_property
     def statistics():
+        @with_cache0
         def getter(self):
             ans = Statistics.by_id(self.data['statistics_id'])
             if ans is None:
@@ -176,6 +177,7 @@ class Catalog(DataBox):
     @db_property
     def about():
         '''introduction page to user'''
+        @with_cache0
         def getter(self):
             ans = About.by_id(self.data['about_id'])
             if ans is None:
@@ -192,12 +194,14 @@ class Catalog(DataBox):
 
     @db_property
     def lib():
+        @with_cache0
         def getter(self):
             return CatalogLib(spec={'_id':self.data['lib_id']})
         return getter
 
     @db_property
     def owner():
+        @with_cache0
         def getter(self):
             return generator(self.data['owner_id'], self.data['owner_type'])
         def setter(self, value):
@@ -213,6 +217,7 @@ class Catalog(DataBox):
 
     @db_property
     def manager_objs():
+        @with_cache0
         def getter(self):
             from user import User
             return User.by_ids(self.managers)
