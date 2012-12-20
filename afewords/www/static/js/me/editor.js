@@ -137,7 +137,7 @@
                                 "title": "下划线", 
                                 "value": '&nbsp;', 
                                 "exec": function(markup){
-                                            var args = { "prefix": "__", "allow_empty": false, "content": '下划线内容'};
+                                            var args = { "prefix": "..", "allow_empty": false, "content": '下划线内容'};
                                             this.set_character(args);                                
                                         }
                             },
