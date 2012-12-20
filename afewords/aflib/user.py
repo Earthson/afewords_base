@@ -230,6 +230,7 @@ class User(DataBox):
     @db_property
     def stat_info():
         '''user statistics info'''
+        @with_cache0
         def getter(self):
             return UserStat.by_id(self.data['userstat_id'])
         return getter
@@ -237,6 +238,7 @@ class User(DataBox):
     @db_property
     def stat_info_doc():
         '''user statistics info'''
+        @with_cache0
         def getter(self):
             return UserStatMongo.by_id(self.data['userstat_id'])
         return getter
@@ -255,17 +257,18 @@ class User(DataBox):
             if not ans.author_id or not ans.env_id or not ans.env_type:
                 ans.set_propertys(author_id=self._id, env=self)
             return ans
-
         return getter
 
     @db_property
     def avatar():
+        @with_cache0
         def getter(self):
             return Avatar.by_id(self.data['avatar_id'])
         return getter
 
     @db_property
     def lib():
+        @with_cache0
         def getter(self):
             return UserLib(spec={'_id':self.data['lib_id']})
         return getter

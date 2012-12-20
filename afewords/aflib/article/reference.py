@@ -1,3 +1,4 @@
+#coding=utf-8
 from databox.afdocument import AFDocument
 from databox.mongokit_utils import with_conn
 from databox.databox import *
@@ -84,21 +85,20 @@ class Reference(DataBox):
             name = self.name
             url = self.url
             if cbody is None or cbody == '':
-                #ret = r'<a href="%s" target="_blank" title="%s">' % (
-                #       url.replace('"', '%22'), name)
-                #ret += name + r'</a>'
-                ret = r'[%s](%s "%s")' % (name, url.replace('"', '%22'), name)
+                ret = r'<a href="%s" target="_blank" title="%s">' % (
+                       url.replace('"', '%22'), name)
+                ret += name + r'</a>'
             else:
+                ret = '<div class="blockquote">'
+                ret += u'<span class="source">————'
                 source = self.url
                 if is_url(source):
-                    #source = r'<a href="%s" target="_blank" title="%s">' % (
-                    #        source.replace('"', '%22'), name)
-                    source = r'[%s](%s "%s")' % (name, 
-                                    url.replace('"', '%22'), name)
-                    #source += name + r'</a>'
-                ss = self.data['body']
-                ret = source + '\n'
-                ret += '\n'.join(['>'+each for each in ss.split('\n')])
+                    source = '<a href="%s" target="_blank" title="%s">%s</a>'\
+                                 % (source.replace('"', '%22'), name, name)
+                ret += source
+                ret += '</span>'
+                ret += self.parser(self.data['body'])
+                ret += '</div>'
                 #ret = r'<div class="ref">'
                 #ret += r'<div class="ref-div">'
                 #ret += r'<div class="ref_open"></div>'
@@ -107,7 +107,7 @@ class Reference(DataBox):
                 #        source)
                 #ret += r'<div class="ref_body">%s</div>' % ss
                 #ret += r'</div></div>'
-            self.data['view_body'] = self.parser(ret)
+            self.data['view_body'] = ret
             return self.data['view_body'], True
         return getter
 
