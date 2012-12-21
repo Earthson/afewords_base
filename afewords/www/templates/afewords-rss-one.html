@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+
+{% set article = doc['article'] %}
+<head>
+<title>{{ article['name'] }}</title>
+<link rel="stylesheet" type="text/css" href="{{ static_url("css/me/blog.css") }}" />
+<link type="text/css" rel="stylesheet" href="{{ static_url("css/code/shCore.css") }}" />
+<link type="text/css" rel="stylesheet" href="{{ static_url("css/code/default.css") }}" />
+</head>
+<body>
+<div id="bb_con">
+{{ article['content'] }}
+</div>
+</body>
+</html>
