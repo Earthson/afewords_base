@@ -539,6 +539,24 @@ class Article(DataBox):
             return ans
         return getter
 
+    @db_property
+    def atom_info():
+        def getter(self):
+            ans = dict()
+            ans['title'] = self.title
+            ans['content'] = self.view_body
+            ans['summary'] = self.abstract
+            ans['content_type'] = 'html'
+            ans['author'] = dict(
+                        name=self.author_name,
+                        uri=self.author.obj_url)
+            ans['url'] = self.obj_url
+            ans['timezone'] = '+0800'
+            ans['updated'] = self.update_time
+            ans['published'] = self.release_time
+            return ans
+        return getter
+
     def json_info_view_by(self, info_name='overview',
                             usr=None, env=None, **kwargs):
         ans = dict()

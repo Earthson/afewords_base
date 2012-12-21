@@ -46,7 +46,7 @@ class AFDocBase(object):
 
 import PyRSS2Gen
 
-class BaseFeedPage(AFDocBase):
+class BaseRSSPage(AFDocBase):
     doc = {
         'title' : u'',
         'link' : u'',
@@ -56,7 +56,7 @@ class BaseFeedPage(AFDocBase):
     }
 
     def __init__(self, handler=None, doc=None):
-        super(BaseFeedPage, self).__init__(doc)
+        super(BaseRSSPage, self).__init__(doc)
         self.handler = handler
 
     def init_page(self):
@@ -69,6 +69,33 @@ class BaseFeedPage(AFDocBase):
 
     def render(self):
         return self.handler.write(self.render_string())
+
+
+from pyatom import AtomFeed, FeedEntry
+
+class BaseAtomPage(AFDocBase):
+    doc = {
+        'title':u'',
+        'subtitle':u'',
+        'feed_url':'',
+        'url':'',
+        'author':'',
+        'entries':[],
+    }
+
+    def __init__(self, handler=None, doc=None):
+        super(BaseAtomPage, self).__init__(doc)
+        self.handler = handler
+
+    def render_string(self):
+        feed = AtomFeed(**self.doc)
+        return feed.to_string()
+
+    def render(self):
+        return self.handler.write(self.render_string())
+
+    def add_entries(self, *entries):
+        self['entries'].extend([FeedEntry(**each) for each in entries]) 
 
 
 @with_attr

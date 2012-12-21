@@ -86,8 +86,10 @@ from handlers.feedbackhandlers import AFFeedbackHandler
 
 from handlers.errorhandlers import AFNotFoundHandler
 
-from handlers.feedhandlers import AFRSSRecentHandler
-from handlers.feedhandlers import AFRSSUserBlogHandler
+from handlers.feedhandlers import RSSRecentHandler
+from handlers.feedhandlers import RSSUserBlogHandler
+from handlers.feedhandlers import AtomRecentHandler
+from handlers.feedhandlers import AtomUserBlogHandler
 
 
 app_handlers = [
@@ -181,8 +183,10 @@ app_handlers = [
     (r'/post-feedback', FeedbackHandler),
     (r'/afewords-feedback', AFFeedbackHandler),
 
-    (r'/feed-recent', AFRSSRecentHandler),
-    (r'/user-feed/([0-9a-zA-Z]+)', AFRSSUserBlogHandler),
+    #(r'/feed-recent', RSSRecentHandler),
+    #(r'/user-feed/([0-9a-zA-Z]+)', RSSUserBlogHandler),
+    (r'/feed-recent', AtomRecentHandler),
+    (r'/user-feed/([0-9a-zA-Z]+)', RSSUserBlogHandler),
 
     (r'(.*)', AFNotFoundHandler),
 ]
