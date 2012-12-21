@@ -145,7 +145,6 @@ class Catalog(DataBox):
         'statistics_id' : False,
     }
     own_data = ['statistics', 'about', 'lib']
-    auto_cache = []
 
     manager_limit = 3
 

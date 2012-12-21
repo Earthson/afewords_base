@@ -200,7 +200,6 @@ class User(DataBox):
         'userstat_id' : False,
     }
     own_data =  ['avatar', 'about', 'lib', 'stat_info']
-    auto_cache = ['avatar']
 
     def __init__(self, data=None, *args, **kwargs):
         DataBox.__init__(self, data, *args, **kwargs)

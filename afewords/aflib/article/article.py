@@ -247,6 +247,8 @@ class ArticleDoc(AFDocument):
         'statistics_id' : Statistics.new_doc,
         'lib_id' : ArticleLib.new_doc,
         'is_posted' : False,
+        'father_id' : None,
+        'father_type' : '',
     }
 
 
@@ -277,7 +279,6 @@ class Article(DataBox):
         'is_posted' : True,
     }
     own_data = ['statistics', 'lib']
-    auto_cache = ['author'] #, 'env']
 
     def __init__(self, *args, **kwargs):
         DataBox.__init__(self, *args, **kwargs)
@@ -288,7 +289,11 @@ class Article(DataBox):
         def getter(self):
             ans = dict()
             ans['author'] = (self.data['author_id'], 'user')
-            #ans['env'] = (self.data['env_id'], self.data['env_type'])
+            ans['env'] = (self.data['env_id'], self.data['env_type'])
+            ans['statistics'] = (self.data['statistics_id'], 'statistics')
+            if self.data['father_id']:
+                ans['father'] = (self.data['father_id'], 
+                        self.data['father_type'])
             return ans
         return getter
 

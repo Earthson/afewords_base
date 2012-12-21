@@ -192,24 +192,42 @@ class DataBox(object):
             datas = cls.datatype.find({'_id':{'$in':oids}})
             return [cls(data=each) for each in datas]
         infos = [(each, cls.cls_name) for each in uids]
-        def objs_gen(infos):
+        oids = set() #hash ids to merge duplicate query
+        obj_pool = dict() 
+        def objs_gen(infos, depth=0, depth_lim=2):
+            #print(depth)
             objs = list_generator(infos)
             if not objs:
                 return objs
-            ccls = None
-            for each in objs:
-                if each is not None:
-                    ccls = each.__class__
-                    break
-            if ccls is None:
+            if depth == depth_lim:
                 return objs
-            for each in ccls.auto_cache:
-                tmps = objs_gen([obj.cache_info[each] 
-                                if obj else None for obj in objs])
-                for obj, tmp in zip(objs, tmps):
-                    if obj is None:
+            toget = []
+            for each in objs:
+                if each is None:
+                    continue
+                for ev in each.cache_info.values():
+                    if not ObjectId.is_valid(ev[0]):
                         continue
-                    obj.set_cache(each, tmp)
+                    if ev[0] in oids:
+                        continue
+                    toget.append(ev)
+                    oids.add(ObjectId(ev[0]))
+            tmps = objs_gen(toget, depth+1) #get_obj
+            for each in tmps:
+                #add obj in tmps to pool
+                if each is None:
+                    continue
+                obj_pool[each._id] = each
+            for each in objs:
+                #add obj in obj_pool to objs
+                if each is None:
+                    continue
+                for ek, ev in each.cache_info.items():
+                    if not ObjectId.is_valid(ev[0]):
+                        continue
+                    ev = ObjectId(ev[0])
+                    if ev in obj_pool:
+                        each.set_cache(ek, obj_pool[ev])
             return objs
         return [each for each in objs_gen(infos) if each is not None]
 
