@@ -116,10 +116,12 @@ class BaseToolPage(AFDocBase):
 @with_attr
 class BaseStringRender(AFDocBase):
     __template_file__ = ''
+    __loader__ = Loader(os.path.join(af_conf['root_dir'], 'templates'))
 
     doc = {
         'main_url' : af_conf['main_url'],
     }
+
     
     def render_string(self):
         return self.__loader__.load(self.__template_file__).generate(doc=self.doc)

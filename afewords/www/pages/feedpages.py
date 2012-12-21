@@ -3,7 +3,7 @@ from basepage import with_attr, BaseRSSPage, BaseStringRender, BaseAtomPage
 
 @with_attr
 class ArticleFeedRender(BaseStringRender):
-    __template_file__ = ''
+    __template_file__ = 'afewords-rss-one.html'
     doc = {
         'article':{}
     }

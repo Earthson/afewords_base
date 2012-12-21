@@ -15,8 +15,12 @@ from pages.feedpages import AtomRecentBlogPage
 class AtomRecentHandler(BaseHandler):
     def get(self):
         handler_page = AtomRecentBlogPage(self)
-        blogs = sorted(Blog.by_ids(recent_blogs.get_slice(-20)))
-        handler_page.add_entries(*[each.atom_info for each in blogs])
+        blogs = sorted(Blog.by_ids(recent_blogs.get_slice(-10)))
+        atominfos = [each.atom_info for each in blogs]
+        #for each in atominfos:
+        #    each['content'] = ArticleFeedRender(
+        #        doc={'article':{'content':each['content']}}).render_string()
+        handler_page.add_entries(*blogs)
         handler_page.render()
         return #0
 
@@ -38,7 +42,7 @@ from pages.feedpages import RSSRecentBlogPage
 class RSSRecentHandler(BaseHandler):
     def get(self):
         handler_page = RSSRecentBlogPage(self)
-        blogs = sorted(Blog.by_ids(recent_blogs.get_slice(-20)))
+        blogs = sorted(Blog.by_ids(recent_blogs.get_slice(-10)))
         handler_page['items'] = [each.rss_info for each in blogs]
         handler_page.init_page()
         handler_page.render()
