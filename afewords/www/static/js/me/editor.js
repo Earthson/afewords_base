@@ -1288,7 +1288,7 @@
         //paras["markup"] = "markdown";
             
         var tmp_default_panel  = ["bold", "italic", "underline", "del", "split",
-                                    "super", "suber", "split",
+                                    //"super", "suber", "split",
                                     "ol", "ul", "split",
                                     "separator", "heading2", "heading3", "heading4", "split",
                                     "table", "image", "reference", "code", "math", "letter" ];
