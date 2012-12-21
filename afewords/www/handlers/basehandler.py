@@ -175,7 +175,7 @@ class BaseHandler(RequestHandler):
             errorpage = BaseErrorPage(self)
             errorpage['status'] = status_code
             errorpage['error_info'] = error_info
-            self.write(errorpage.render_string())
+            return errorpage.render_string()
         except Exception as e:
             print(e)
-            self.write(status_code)
+            return str(status_code)
