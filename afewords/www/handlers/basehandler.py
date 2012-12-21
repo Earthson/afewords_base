@@ -171,7 +171,11 @@ class BaseHandler(RequestHandler):
 
     def get_error_html(self, status_code=500, error_info='', **kwargs):
         from pages.errorpage import BaseErrorPage
-        errorpage = BaseErrorPage(self)
-        errorpage['status'] = status_code
-        errorpage['error_info'] = error_info
-        errorpage.render()
+        try:
+            errorpage = BaseErrorPage(self)
+            errorpage['status'] = status_code
+            errorpage['error_info'] = error_info
+            self.write(errorpage.render_string())
+        except Exception as e:
+            print(e)
+            self.write(status_code)
