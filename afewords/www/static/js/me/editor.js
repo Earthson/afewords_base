@@ -118,7 +118,7 @@
                                 "value": '&nbsp;', 
                                 "exec":  function(){
                                             var args = { "prefix":"++", "suffix":"++", "content": '加粗内容'},
-                                                args_markdown = { "perfix":"*", "suffix": "*", "content": '加粗内容' },
+                                                args_markdown = { "prefix":"**", "suffix": "**", "content": '加粗内容' },
                                                 args_dict = {"default": args, "markdown": args_markdown };
                                             this.set_character(args_dict[arguments[arguments.length-1]]);
                                         },
@@ -128,7 +128,7 @@
                                 "title": "斜体", 
                                 "value": '&nbsp;', 
                                 "exec": function(markup){
-                                            var args = { "prefix": "--", "suffix":"--", "content": '斜体内容'};
+                                            var args = { "prefix": "_", "suffix":"_", "content": '斜体内容'};
                                             this.set_character(args);                                
                                         }
                             },
@@ -207,6 +207,7 @@
                                             var args = { "prefix": "\n==", "suffix": "==\n", "suffix_r": true, "prefix_l": true, "content": '二级标题'},
                                                 args_markdown = { "prefix": "\n##", "suffix": "##\n", "suffix_r": true, "prefix_l": true, "content": '二级标题'},
                                                 args_dict = {"default": args, "markdown": args_markdown};
+                                            //console.log(args_dict[arguments[arguments.length-1]]);
                                             this.set_character(args_dict[arguments[arguments.length-1]]);                                
                                         }
                             },
