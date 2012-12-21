@@ -439,9 +439,9 @@ class User(DataBox):
         else:
             tag_blogs = self.lib.tag_lib.sub_list(tagname)
             toview = tag_blogs.load_all()
+            if toview is None:
+                toview = []
             toview = sorted(toview, key=itemgetter(1), reverse=True)
-        if toview is None:
-            toview = []
         len_toview = len(toview)
         if vfrom >= len_toview:
             return [], len_toview
@@ -681,7 +681,10 @@ class User(DataBox):
     def blogids():
         from article.blog import Blog
         def getter(self):
-            return self.lib.blog_list.load_all()[::-1]
+            tmp = self.lib.blog_list.load_all()
+            if tmp is None:
+                tmp = []
+            return tmp[::-1]
         return getter
 
     @db_property
