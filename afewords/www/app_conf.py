@@ -86,8 +86,8 @@ from handlers.feedbackhandlers import AFFeedbackHandler
 
 from handlers.errorhandlers import AFNotFoundHandler
 
-from handlers.affeedhandlers import AFRSSRecentHandler
-from handlers.affeedhandlers import AFRSSUserBlogHandler
+from handlers.feedhandlers import AFRSSRecentHandler
+from handlers.feedhandlers import AFRSSUserBlogHandler
 
 
 app_handlers = [

@@ -1,5 +1,12 @@
 #coding=utf-8
-from basepage import with_attr, BaseFeedPage
+from basepage import with_attr, BaseFeedPage, BaseStringRender
+
+@with_attr
+class ArticleFeedRender(BaseStringRender):
+    __template_file__ = ''
+    doc = {
+        'article':{}
+    }
 
 @with_attr
 class RSSRecentBlogPage(BaseFeedPage):
