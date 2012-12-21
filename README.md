@@ -15,6 +15,7 @@ Requires
 * PIL
 * sendmail interface(eg. postfix)
 * mathjax
+* pyatom 1.2+(for atom feed support)
 * PyRSS2Gen
 
 
