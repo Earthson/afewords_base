@@ -721,8 +721,23 @@ class User(DataBox):
             ans['title'] = self.name + u"'s Blog——子曰"
             ans['link'] = self.main_url + 'user-feed/' + self.uid
             ans['description'] = self.name
-            blogs = self.blogs_from_tag('default', vfrom=0, vlim=20)[0]
+            blogs = self.blogs_from_tag('default', vfrom=0, vlim=10)[0]
             ans['items'] = [each.rss_info for each in blogs]
+            return ans
+        return getter
+
+    @db_property
+    def blog_atom_info():
+        def getter(self):
+            ans = dict()
+            ans['title'] = self.name + u"'s Blog——子曰"
+            ans['subtitle'] = u'afewords'
+            ans['feed_url'] = self.main_url + 'user-feed/' + self.uid
+            ans['url'] = self.obj_url
+            ans['author'] = self.name
+            blogs = self.blogs_from_tag('default', vfrom=0, vlim=10)[0]
+            ans['items'] = [each.rss_info for each in blogs]
+            ans['entries'] = [each.atom_info for each in blogs]
             return ans
         return getter
 

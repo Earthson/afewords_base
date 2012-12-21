@@ -17,10 +17,8 @@ class AtomRecentHandler(BaseHandler):
         handler_page = AtomRecentBlogPage(self)
         blogs = sorted(Blog.by_ids(recent_blogs.get_slice(-10)))
         atominfos = [each.atom_info for each in blogs]
-        #for each in atominfos:
-        #    each['content'] = ArticleFeedRender(
-        #        doc={'article':{'content':each['content']}}).render_string()
         handler_page.add_entries(*atominfos)
+        handler_page.init_page()
         handler_page.render()
         return #0
 
@@ -30,10 +28,9 @@ class AtomUserBlogHandler(BaseHandler):
     def get(self, uid):
         handler_page = AtomUserBlogPage(self)
         usr = User.by_id(uid)
-        #Todo: Earthson
         if usr is not None:
             handler_page.update(**usr.blog_atom_info)
-
+        handler_page.init_page()
         handler_page.render()
         return #0
 

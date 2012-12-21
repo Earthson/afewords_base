@@ -94,8 +94,11 @@ class BaseAtomPage(AFDocBase):
     def render(self):
         return self.handler.write(self.render_string())
 
+    def init_page(self):
+        self['entries'] = [FeedEntry(**each) for each in self['entries']]
+
     def add_entries(self, *entries):
-        self['entries'].extend([FeedEntry(**each) for each in entries]) 
+        self['entries'].extend(entries) 
 
 
 @with_attr
