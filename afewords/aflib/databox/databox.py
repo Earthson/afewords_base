@@ -104,7 +104,6 @@ class DataBox(object):
         'data_status' : True,
     }
     own_data = []
-    auto_cache = []
 
     def __init__(self, data=None, attrs=None, *args, **kwargs):
         if data is None:
