@@ -20,7 +20,7 @@ class AtomRecentHandler(BaseHandler):
         #for each in atominfos:
         #    each['content'] = ArticleFeedRender(
         #        doc={'article':{'content':each['content']}}).render_string()
-        handler_page.add_entries(*blogs)
+        handler_page.add_entries(*atominfos)
         handler_page.render()
         return #0
 
