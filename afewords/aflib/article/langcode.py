@@ -1,5 +1,5 @@
 from pygments import highlight
-from pygments.lexers import get_lexer_by_name, guess_lexer
+from pygments.lexers import get_lexer_by_name, guess_lexer, TextLexer
 from pygments.formatters import HtmlFormatter
 
 class CodeHtmlFormatter(HtmlFormatter):
@@ -25,10 +25,11 @@ def code_parser(code, lang=None):
             raise
         lexer = get_lexer_by_name(lang, stripall=True)
     except:
-        lexer = guess_lexer(code)
+        #lexer = guess_lexer(code)
+        lexer = TextLexer(stripall=True)
     formatter = CodeHtmlFormatter(
-            cssclass="highlight",
-            style='default')
+        cssclass="highlight",
+        style='default')
     return highlight(code, lexer, formatter)
 
 
