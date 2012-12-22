@@ -1,5 +1,5 @@
 from afmarkdown import afmarkdown
-from parseutils import ref_parser
+from parseutils import ref_parser, xml_parser
 
 def article_parser(refinder=None, lang='markdown'):
     if lang == 'markdown':
@@ -7,9 +7,10 @@ def article_parser(refinder=None, lang='markdown'):
     else:
         raise KeyError()
     afref_parser = ref_parser(refinder)
+    end_parser = xml_parser(afref_parser)
     def parser(txt):
         txt = markup_parser(txt)
-        txt = afref_parser(txt)
+        txt = end_parser(txt)
         return txt
     return parser
 
