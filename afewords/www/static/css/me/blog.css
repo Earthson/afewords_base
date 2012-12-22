@@ -156,12 +156,12 @@ padding: 0px 5px;border: 1px solid #eaeaea;background-color: #f8f8f8;border-radi
 #bb_con strong{font-size: inherit;}
 #bb_con hr{height: 1px; width: 50%;border-top:1px solid #000;margin-bottom: 21px;margin-top: 20px;margin-left: 0;}
 #bb_con h1, h2, h3, h4, h5, h6{border-bottom: 1px solid #060;text-align: left;}
-#bb_con h1{margin: 10px auto;border-bottom: 1px solid #060;padding-bottom: 8px;font-size: 1.8em;}
-#bb_con h2{margin: 10px auto;border-bottom: 1px solid #060;padding-bottom: 8px;font-size: 1.6em;}
+#bb_con h1{margin: 20px auto;border-bottom: 1px solid #060;padding-bottom: 8px;font-size: 1.8em;}
+#bb_con h2{margin: 15px auto;border-bottom: 1px solid #060;padding-bottom: 8px;font-size: 1.6em;}
 #bb_con h3{margin-top: 3px;margin: 8px auto;padding-bottom: 5px;font-size: 1.4em;}
 #bb_con h4{margin-top: 2px;margin: 6px auto;padding-bottom: 3px;font-size: 1.2em;}
 #bb_con h5{margin-top: 1px;color: #333;margin: 4px auto;}
-#bb_con p{margin: 15px 0; min-height: 25px;}
+#bb_con p{margin: 6px 0; min-height: 1px;}
 
 
 #bb_con blockquote{background-color: #f5f5f5;margin: 10px 0; padding: 1em .5em 1em 1.5em; 
@@ -180,17 +180,22 @@ border-bottom: #aaa 1px dashed;color: #216093 !important;margin-bottom: 4px;line
 #bb_con .MathJax{margin-top: 0 !important;font-size: inherit;}
 #bb_con .MathJax *{font-size: inherit;}
 
+#bb_con table{width: 100%;border:#333 1px solid;border-top: #333 2px solid;border-bottom: #333 2px solid; border-spacing: 0;
+}
+#bb_con table th{border:#aaa 1px solid;padding: 5px;}
+#bb_con table td{border:#aaa 1px solid;padding: 2px 5px;}
 
 
 #bb_con table.highlight{border:#111 1px dotted;margin-top: 10px;margin-bottom: 10px;border-spacing: 0;
 background-color: #000;width: 100%;position: relative;}
 
-#bb_con table.highlight .line_1{background-color: #f0f0f0;}
-#bb_con table.highlight .line_0{background-color: #f8f8f8;}
-#bb_con table.highlight .number{background-color: #000;color: white;vertical-align: top;width: 40px;text-align: center;}
+#bb_con table.highlight .line_1{background-color: #f0f0f0;border: none;}
+#bb_con table.highlight .line_0{background-color: #f8f8f8;border: none;}
+#bb_con table.highlight .number{background-color: #000;color: white;vertical-align: top;width: 40px;text-align: center;border: none;}
 #bb_con table.highlight .number code{color: inherit;background-color: inherit;margin: 0;padding: 0;
 min-width: 30px;text-align: center;display: inline-block;max-width: 100px;
 border:none;border-left: 3px #738A78 solid;}
+#bb_con table.highlight .content{border: none;}
 #bb_con table.highlight .content pre{margin: 0;padding: 0;white-space: pre-wrap;padding-right: 20px;padding-left: 5px;}
 #bb_con table.highlight #code_copy{position: absolute;right: 5px; top: 5px;
 background: url(/static/img/document_copy.png) no-repeat;width: 20px;height: 20px; cursor: pointer;}
@@ -207,10 +212,11 @@ textarea#code_copy{width: 760px;height: 400px;}
 #bb_con div.table{width: 100%;text-align: center;float: none;margin-bottom: 5px;}
 #bb_con div.table div{text-align:center;width: 95%;float: none;position: static;margin-left: auto;margin-right: auto;} 
 #bb_con div.table div.table_name{text-align: center;height: 30px;font-size:14px;font-weight: bold;width: 100%;line-height: 40px;margin-bottom: 5px;}
-#bb_con div.table div table{border-top: #333 2px solid;border-bottom: #333 2px solid;width: 100%;border-spacing: 0;
+#bb_con div.table div table{border:#333 1px solid;border-top: #333 2px solid;border-bottom: #333 2px solid;width: 100%;border-spacing: 0;
 line-height: 30px !important;font-size: 14px !important;cell-padding:10px;}
-#bb_con div.table div table th{border-bottom: #333 1px solid;white-space:nowrap;font-size: 14px;}
-#bb_con div.table div table td{font-size: 14px !important;}
+#bb_con div.table div table th{border-bottom: #333 1px solid;white-space:nowrap;font-size: 14px;border:#aaa 1px solid;
+padding: 5px;}
+#bb_con div.table div table td{font-size: 14px !important;border:#aaa 1px solid; padding: 2px 5px;}
 #bb_con div.table div table div{text-align: inherit !important;}
 #bb_con div.table p{margin: 0;padding: 0;}
 
