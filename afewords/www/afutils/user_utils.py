@@ -30,6 +30,9 @@ def user_reg(email, password, sex, name):
         'account_status' : 'unverified',
     }
     usr.set_propertys(**doc)
+    from global_info import recent_users
+    recent_users.push(usr._id)
+    recent_users.pop_head()
     
     m_status = email_verification(usr)
     if m_status is False:
