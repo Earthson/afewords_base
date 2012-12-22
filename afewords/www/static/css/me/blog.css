@@ -158,9 +158,9 @@ padding: 0px 5px;border: 1px solid #eaeaea;background-color: #f8f8f8;border-radi
 #bb_con h1, h2, h3, h4, h5, h6{border-bottom: 1px solid #060;text-align: left;}
 #bb_con h1{margin: 20px auto;border-bottom: 1px solid #060;padding-bottom: 8px;font-size: 1.8em;}
 #bb_con h2{margin: 15px auto;border-bottom: 1px solid #060;padding-bottom: 8px;font-size: 1.6em;}
-#bb_con h3{margin-top: 3px;margin: 8px auto;padding-bottom: 5px;font-size: 1.4em;}
-#bb_con h4{margin-top: 2px;margin: 6px auto;padding-bottom: 3px;font-size: 1.2em;}
-#bb_con h5{margin-top: 1px;color: #333;margin: 4px auto;}
+#bb_con h3{margin-top: 3px;margin: 8px auto;padding-bottom: 5px;font-size: 1.4em;border-bottom: none;}
+#bb_con h4{margin-top: 2px;margin: 6px auto;padding-bottom: 3px;font-size: 1.2em; border-bottom: none;}
+#bb_con h5{margin-top: 1px;color: #333;margin: 4px auto; border-bottom: none;}
 #bb_con p{margin: 9px 0; min-height: 1px;}
 
 
@@ -203,6 +203,7 @@ background: url(/static/img/document_copy.png) no-repeat;width: 20px;height: 20p
 textarea#code_copy{width: 760px;height: 400px;}
 
 
+
 #bb_con .highlight pre{background-color: inherit;}
 
 
@@ -231,9 +232,8 @@ padding: 8px;}
 #bb_con .code .highlight{border:#000 1px dotted;border-left: none;}
 #bb_con .code .highlight pre{padding-left: 2px; }
 
-#bb_con div.highlight{border:#000 1px dotted;color: #060;border-left-style: solid;background-color: white;}
-
-
+#bb_con div.highlight{border-radius: 3px; padding: 6px 10px;font-size: 13px;background-color: #f8f8f8; border:#ccc 1px solid;}
+#bb_con div.highlight pre{padding: 0;margin: 0;white-space: pre-wrap;}
 
 
 
