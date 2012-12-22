@@ -233,7 +233,7 @@ padding: 8px;}
 #bb_con .code .highlight pre{padding-left: 2px; }
 
 #bb_con div.highlight{border-radius: 3px; padding: 6px 10px;font-size: 13px;background-color: #f8f8f8; border:#ccc 1px solid;}
-#bb_con div.highlight pre{padding: 0;margin: 0;white-space: pre-wrap;}
+#bb_con div.highlight pre{padding: 0;margin: 0;white-space: pre-wrap; word-wrap: break-word;}
 
 
 
