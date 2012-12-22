@@ -352,11 +352,11 @@
             "math":     { "title": '', "body": '', "math_mode": 'display'},
             "reference":{ "title": '', "body": '', "source": ''},
             "size":     { 
-                            "math": { "width": 450, "height": 380 },
+                            "math": { "width": 760, "height": 380 },
                             "image": { "width": 360, "height": 240 },
-                            "reference": { "width": 450, "height": 390 },
+                            "reference": { "width": 760, "height": 390 },
                             "code": { "width": 760, "height": 400 },
-                            "table": { "width": 450, "height": 390 }
+                            "table": { "width": 760, "height": 390 }
                         },
             "tip":      {
                             "math": "数学式",
