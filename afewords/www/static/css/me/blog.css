@@ -151,7 +151,7 @@ text-decoration: underline;cursor: pointer;}
 #bb_con *{font-size: 14px;}
 #bb_con pre{background-color: #f5f5f5; padding-top: 10px;padding-bottom: 10px;}
 #bb_con code{background-color: #f5f5f5; line-height: inherit;margin: 0 2px;
-padding: 0px 5px;border: 1px solid #eaeaea;background-color: #f8f8f8;border-radius: 3px;}
+padding: 0px 5px;border: 1px solid #B1AFAF;background-color: #E9E9E9;border-radius: 3px;}
 #bb_con pre code{background: none;border:none;margin: 0;padding: 0;}
 #bb_con strong{font-size: inherit;}
 #bb_con hr{height: 1px; width: 50%;border-top:1px solid #000;margin-bottom: 21px;margin-top: 20px;margin-left: 0;}
@@ -166,7 +166,8 @@ padding: 0px 5px;border: 1px solid #eaeaea;background-color: #f8f8f8;border-radi
 
 
 #bb_con blockquote{background-color: #f5f5f5;margin: 10px 0; padding: 1em .5em 1em 1.5em; 
-border-left: 5px solid #f3bfbf;background-color: #f5f5f5;	color: #222;}
+border-left: 5px solid #f3bfbf;background-color: #f5f5f5;	color: #222; }
+
 
 #bb_con .blockquote{position: relative;}
 #bb_con span.source{position: absolute;bottom: 10px;right: 20px;font-style: italic;font-weight: bold;z-index: 1000;}
@@ -196,7 +197,7 @@ padding: 0;text-align: inherit;}
 #bb_con table.highlight .number code{color: inherit;background-color: inherit;margin: 0;padding: 0;
 min-width: 30px;text-align: center;display: inline-block;max-width: 100px;
 border:none;}
-#bb_con table.highlight .content{border: none;padding: 4px 0;text-align: inherit;}
+#bb_con table.highlight .content{border: none;padding: 1px 0;text-align: inherit;}
 #bb_con table.highlight .content pre{margin: 0;padding: 0;white-space: pre-wrap;padding-right: 20px;padding-left: 5px;}
 #bb_con table.highlight #code_copy{position: absolute;right: 5px; top: 5px;
 background: url(/static/img/document_copy.png) no-repeat;width: 20px;height: 20px; cursor: pointer;}
@@ -224,7 +225,8 @@ padding: 8px;}
 #bb_con .code .highlight pre{padding-left: 2px; }
 #bb_con .highlight pre{background-color: inherit;}
 
-#bb_con div.highlight{border-radius: 3px; padding: 6px 10px;font-size: 13px;background-color: #f8f8f8; border:#ccc 1px solid;}
+#bb_con div.highlight{border-radius: 3px; padding: 6px 10px;font-size: 13px;
+background-color: #f8f8f8; border:#ccc 1px solid;margin: 3px 0;}
 #bb_con div.highlight pre{padding: 0;margin: 0;white-space: pre-wrap; word-wrap: break-word;}
 
 
