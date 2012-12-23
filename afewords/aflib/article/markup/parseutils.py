@@ -16,7 +16,7 @@ def ref_parser(refinder=None):
 
 
 def fix_data():
-    pattern = r'\[fdksfdhfsdf\](.*?)\[/fdksfdhfsdf\]'
+    pattern = r'\[fdksfdhfsdf\]([\s\S]*?)\[/fdksfdhfsdf\]'
     pattern = re.compile(pattern)
     def repl(mobj):
         return unescape(mobj.group(1))
@@ -42,6 +42,7 @@ def xml_parser(*parsers):
         for each in etree:
             parse_node(each)
         ans = ET.tostring(etree, encoding="utf-8", method="html")
+        print(ans)
         ans = fix_data(ans)
         return ans[5:-6]
     return parse_func
