@@ -16,7 +16,7 @@ def ref_parser(refinder=None):
 
 
 def fix_data():
-    pattern = r'\[fdksfdhfsdf\](.*?)\[/fdksfdhfsdf\]'
+    pattern = r'\[fdksfdhfsdf\]([\s\S]*?)\[/fdksfdhfsdf\]'
     pattern = re.compile(pattern)
     def repl(mobj):
         return unescape(mobj.group(1))
