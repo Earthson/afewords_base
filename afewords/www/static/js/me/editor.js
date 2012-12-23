@@ -643,7 +643,7 @@
                             '<p>标题<input class="i_title" name="title" autocomplete="off" type="text" /></p>'+
                             '<p><button class="i_button" type="submit">上传图片</button>'+
                             '<span class="i_process" id="src_process">&nbsp;</span></p></form>'+
-                            '<iframe src="about:_blank" id="up_picture_iframe" name="up_picture_iframe" style="display:none;"></iframe>';                
+                            '<iframe id="up_picture_iframe" name="up_picture_iframe" style="display:none;"></iframe>';                
                 }else{
                     return hidden_paras_html + 
                         '<p class="first">修改图片属性</p>'+

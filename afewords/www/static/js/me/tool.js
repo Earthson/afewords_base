@@ -512,7 +512,7 @@ jQuery.afewords.tools.Global_Funs = {
                                             '<input type="hidden" name="_xsrf" value="' + jQuery.getCookie("_xsrf") + '" />'+
                                             '<p><input class="i_file" type="file" name="picture"  /></p>'+
                                             '<p><button type="submit" class="i_button">上传</button><span class="i_process" id="src_process">&nbsp;</span></p></form>' +
-                                            '<iframe name="up_picture_iframe" id="up_picture_iframe" style="display:none" src="about:_blank"></iframe>' +
+                                            '<iframe name="up_picture_iframe" id="up_picture_iframe" style="display:none"></iframe>' +
                                             '</div>';
                                 $htmls = jQuery(htmls);
                                 var $pop_content = pop_page(350,180, $htmls);
@@ -559,19 +559,20 @@ jQuery.afewords.tools.Global_Funs = {
                                     return true;                                
                                 });
                                 function create_crop_block(response){
+                                    var url = response.img_url + '?' +  new Date();
                                      return '<table id="avatar_wrap_form">'+
                                             '<tr>' +
                                             '<td width="70%" rowspan="2" id="crop-contain">'+
-                                            '<img src="'+ response.img_url +'" id="crop-obj" />' +
+                                            '<img src="'+ url +'" id="crop-obj" />' +
                                             '</td>' +
                                             '<td width="30%" align="center">'+
                                             '<div id="crop-120">'+
-                                            '<img src="'+ response.img_url +'" id="preview-120" />' +
+                                            '<img src="'+ url +'" id="preview-120" />' +
                                             '</div>'+
                                             '</td></tr>' +
                                             '<tr>' +
                                             '<td align="center"><div id="crop-50">'+
-                                            '<img src="' + response.img_url + '" id="preview-50" />'+
+                                            '<img src="' + url + '" id="preview-50" />'+
                                             '</div></td></tr>'+
                                             '</table>';
                                 }
