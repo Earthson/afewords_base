@@ -168,7 +168,7 @@ class ArticleSrcJson(StatusJson):
         16: u'您无权操作该文章',
         17: u'您无权在此发布',
         18: u'资源不存在',
-        19: u'资源添加失败',
+        19: u'资源添加失败,可能已经达到数量上限',
     }
     error_info = dict(error_info, **_img_error_doc)
 
