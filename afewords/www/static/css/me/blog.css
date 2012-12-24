@@ -199,7 +199,9 @@ padding: 0;text-align: inherit;}
 min-width: 30px;text-align: center;display: inline-block;max-width: 100px;
 border:none;}
 #bb_con table.highlight .content{border: none;padding: 1px 0;text-align: inherit;}
-#bb_con table.highlight .content pre{margin: 0;padding: 0;white-space: pre-wrap;padding-right: 20px;padding-left: 5px;}
+#bb_con table.highlight .content pre{margin: 0;padding: 0;white-space: pre-wrap;padding-right: 20px;padding-left: 5px;
+word-wrap: break-word;word-break: break-all; }
+
 #bb_con table.highlight #code_copy{position: absolute;right: 5px; top: 5px;
 background: url(/static/img/document_copy.png) no-repeat;width: 20px;height: 20px; cursor: pointer;}
 textarea#code_copy{width: 760px;height: 400px;}
