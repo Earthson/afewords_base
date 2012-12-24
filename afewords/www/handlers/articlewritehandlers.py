@@ -284,6 +284,7 @@ class ArticleSrcHandler(BaseArticleUpdateHandler):
             src_obj = scls()
             tmps = self.article_obj.add_ref(src_obj)
             if tmps is False:
+                src_obj.remove()
                 handler_json.by_status(19)
                 handler_json.write()
                 return #Add Ref Failed

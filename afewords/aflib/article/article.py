@@ -168,7 +168,7 @@ class ArticleLib(EmMongoDict):
         if refobj.alias and refobj.alias not in alias_all:
             inlib[refobj.alias] = refobj._id
             return True
-        for i in range(1, 1000):
+        for i in range(1, 20):
             if str(i) not in alias_all:
                 refobj.alias = str(i)
                 inlib[refobj.alias] = refobj._id
