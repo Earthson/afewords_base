@@ -30,7 +30,8 @@ def xml_parser(*parsers):
             txt = each(txt)
         return txt
     def parse_func(text):
-        text = '<div class="articlebody">' + text + '</div>'
+        text = u'<div class="articlebody">' + text + u'</div>'
+        #text = '<div>' + text + '</div>'
         etree = ET.fromstringlist(text.encode('utf-8'))
         def parse_node(node):
             if node.tag in ['code', 'mathjax', 'pre']:
@@ -42,5 +43,5 @@ def xml_parser(*parsers):
         for each in etree:
             parse_node(each)
         ans = ET.tostring(etree, encoding="utf-8", method="html")
-        return fix_data(ans)
+        return fix_data(ans)#[5:-6]
     return parse_func
