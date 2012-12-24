@@ -147,7 +147,7 @@ text-decoration: underline;cursor: pointer;}
 .ref_comment_div span.com_time1{font-size: 14px;color: #666;}
 .ref_comment_div  div.com_nav1{width: 100%;min-height: 20px;}
 
-#bb_con{font-size: 14px;line-height: 28px;float: left;}
+#bb_con{font-size: 14px;line-height: 28px;float: left;width: 100%;}
 #bb_con *{font-size: 14px;}
 #bb_con pre{background-color: #f5f5f5; padding-top: 10px;padding-bottom: 10px;}
 #bb_con code{background-color: #f5f5f5; line-height: inherit;margin: 0 2px;
