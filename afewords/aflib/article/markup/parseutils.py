@@ -42,6 +42,6 @@ def xml_parser(*parsers):
                 parse_node(each)
         for each in etree:
             parse_node(each)
-        ans = ET.tostring(etree, encoding="utf-8", method="html")
+        ans = ET.tostring(etree, method="html")
         return fix_data(ans)#[5:-6]
     return parse_func
