@@ -1,15 +1,12 @@
+import re
 from HTMLParser import HTMLParser
 
+_strip_pattern = re.compile(r'<[^>]*?>')
 
 def strip_tags(html, length):
     html = html.strip()
     html = html.strip("\n")
-    result = []
-    parser = HTMLParser()
-    parser.handle_data = result.append
-    parser.feed(html)
-    parser.close()
-    return ''.join(result)[:length]
+    return _strip_pattern.sub(u'', html)[:length]
 
 def section_cmp(sec0, sec1):
     sec0 = [int(each) if each.isdigit() else each for each in sec0.split('.')]

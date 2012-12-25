@@ -2,8 +2,8 @@ from markdown import Markdown
 
 afmarkdown_settings = {
     'extensions' : [ #markdown extensions
-        'insdel',
         'extra',
+        'insdel',
         'codehilite(guess_lang=False, css_class=highlight)',
         'mathjax',
     ],
