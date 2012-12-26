@@ -20,8 +20,9 @@ line-height: 28px;padding: 5px 0;margin-left: 10px;position: relative; border-bo
 .book_page_current1{background-color: #369;color: #fff;}
 .book_page_current1:hover{color: #fff;background-color: blue;}
 
-.book_tip table{width: 100%; text-align: center;margin-top: 10px;}
-.book_tip table td{text-align: center;border:#ccc 1px dotted;}
+.book_tip table{width: 100%; text-align: center;margin-top: 10px;border-collapse: collapse;}
+.book_tip table tr{}
+.book_tip table td{text-align: center;border:#ccc 1px solid;}
 .book_tip table td a{color: #A66100;}
 .book_tip table td a.chosed1{color: black;}
 .book_tip table td.time{font-size: 12px;}
