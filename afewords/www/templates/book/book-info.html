@@ -19,8 +19,10 @@
 <table class="book_info" cellpadding="5" cellspacing="4">
 <tr><td width="10%" class="weak">审校</td><td width="90%" class="left"><a href="/blogger/{{ author['uid'] }}" class="author">{{ author['name'] }}</a></td></tr>
 <tr><td class="weak">创建</td><td class="left">{{ str(book['release_time'])[:16] }}</td></tr>
+{#
 <tr><td  class="weak">浏览</td><td class="left">{{ statis['view_count'] }}</td></tr>
 <tr><td class="weak">喜欢</td><td class="left">{{ statis['like_count'] }}</td></tr>
+#}
 <tr><td class="weak">目录数</td><td class="left">{{ book['all_catalog_count'] }}</td></tr>
 <tr><td class="weak">完成度</td><td class="left">{{ book['complete_rate'] }}%</td></tr>
 <tr><td class="weak">关键词</td><td class="left">
