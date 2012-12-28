@@ -275,7 +275,7 @@ min-height: 100px;background-color: #ffffff;}
 
 /********** for notice ************/
 #body_content .notice{background-image: url('/static/img/button/email_ok.png');}
-#body_content .notice ul{list-style-type: none;line-height: 25px;margin: 0 0 30px 0;width: 100%;float: left;}
+#body_content .notice ul{list-style-type: none;line-height: 25px;margin: 0 0 30px 0;width: 100%;float: left;padding: 0;}
 #body_content .notice ul li{width: 95%;float: left;padding: 10px 10px 10px 30px;border-bottom: #ccc 1px dotted;}
 #body_content .notice ul li a{font-size: 14px; color: blue;}
 #body_content .notice ul li a:hover{ color: blue;}
