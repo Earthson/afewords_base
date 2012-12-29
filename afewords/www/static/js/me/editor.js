@@ -966,6 +966,10 @@
                     var iframe_doc = window.frames["up_picture_iframe"].document;
                     var response_text = iframe_doc.getElementsByTagName("textarea")[0].value;
                     var response = window.eval('('+ response_text +')');
+                    if(response.article_isnew == 1){
+                        that.$menu.attr("article_id", response.article_id);    
+                        if(!that.close_prompt)  that.window_close_prompt();  
+                    }
                     if(response.status != 0){
                         $process.html(response.info).css("color", "red");
                         $button.removeAttr("disabled").css("color", "black");                    
