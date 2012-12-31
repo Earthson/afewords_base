@@ -552,7 +552,8 @@ class Article(DataBox):
                         uri=self.author.obj_url)
             ans['url'] = self.obj_url
             ans['timezone'] = '+0800'
-            ans['updated'] = self.update_time
+            #ans['updated'] = self.update_time
+            ans['updated'] = self.release_time
             ans['published'] = self.release_time
             return ans
         return getter
