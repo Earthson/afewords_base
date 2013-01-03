@@ -98,32 +98,14 @@ background-image: url('/static/img/write_menu.png');margin: 0 3px; border:none !
 #write_menu_base ul li.menu_focus{background-color: #e0e0e0;}
 
 #write_menu_base select{float: right;line-height: inherit;height: 25px;margin-top: 5px; border:#ccc 1px solid;}
+#write_menu_base a.write_help{float: right;margin-right: 10px;line-height: 40px;color: blue;text-decoration: underline;}
 
 
-/*
-#write_menu_more{width: 100%;height: 30px;float: left;display: block;border-top: 1px #ccc dotted;text-align: right;}
-#write_menu_more span{color: #999;font-size: 12px;}
-#write_menu_more ul{list-style: none;float: right;margin:5px;height: 20px;}
-#write_menu_more ul li{float: left;cursor: pointer;font-size: 14px;width: 20px;height: 20px;margin: 0 5px;}
-#write_menu_more ul li.image{background: url('/static/img/picture.gif') no-repeat 0 2px;}
-#write_menu_more ul li.code{background: url('/static/img/code.png') no-repeat;}
-#write_menu_more ul li.math{background: url('/static/img/fxy_ok.png') no-repeat;width: 58px;}
-#write_menu_more ul li.table{background: url('/static/img/write_menu.png') no-repeat -580px -20px;}
-#write_menu_more ul li.ref{background: url('/static/img/write_menu.png') no-repeat -220px 0;}
-#write_menu_more ul li.letter{background: url('/static/img/sep_ok.png') no-repeat;}
-#write_menu_more ul li.split{background-position: -178px 0;width: 5px;margin: 0;background-image: url('/static/img/write_menu.png');}
-#write_menu_more ul li.split:hover{background-color: #fff;cursor: default;}
-#write_menu_more ul li.special_but{}
-#write_menu_more ul li:hover{background-color: #e0e0e0;}
-*/
-/*
-#write_lib_bar{z-index:100;position: absolute;top: 0;right: -252px;background-color: #fff; border:1px #ccc solid;width: 250px;min-height:370px;
-overflow:hidden;box-shadow: 2px 2px 2px #e1e1e1;float: left;}
-*/
+
+
 #write_lib_bar{float: left;border-top:#ccc 1px dotted;width: 100%;min-height: 1px;max-height: 200px;}
 
 #write_letter_bar{float: left;border-top:#ccc 1px dotted;width: 100%;}
-
 
 #bar_nav{width: 70%;height: auto;float: left;border-bottom: #ccc 1px solid;line-height: 25px;box-shadow: 2px 2px 2px #e1e1e1;
 padding: 5px;position: relative;}

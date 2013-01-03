@@ -1359,6 +1359,9 @@
         editor_menu_base_html.push('</select>');
         */
         
+        // for help
+        editor_menu_base_html.push('<a href="/book/50b4c1c83725170c03172f94" class="write_help" title="帮助" target="_blank">?</a>');
+        
         $editor_menu_base.append(editor_menu_base_html.join(''));
         $editor_menu.append($editor_menu_base);
         $editor_menu.insertBefore(this);
