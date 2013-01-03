@@ -386,10 +386,6 @@
                                 '<div class="div" title="表格库">表格库</div></div><div id="bar_body"><div id="crtm"></div></div>',
             
             "src_letter_lib":   '<div id="bar_nav">'+
-                                //'<span id="l1" class="lbutton" kind="word4">希腊字符</span>'+           
-                                //'<span class="lbutton" kind="word1">拉丁字符</span> ' +
-                                //'<span class="lbutton" kind="word2">国际音标</span>' +
-                                //'<span class="lbutton" kind="word3">字符</span>' +
                                 '</div>'+
                                 '<div id="bar_body"><div class="l"></div></div>',
                                                             
@@ -575,7 +571,7 @@
             
             function create_reference_pop_html(){
                 return hidden_paras_html + 
-                    '<p class="first">'+ control_tag +'引用 <span class="all_example" title="查看说明"><a href="/help-editor-reference" target="_blank">说明</a></span></p>'+
+                    '<p class="first">'+ control_tag +'引用</p>'+
                     '<div style="display:block">'+
                     '<p title="设置引用的名称">名称<input type="text" name="title" autocomplete="off" value="'+ paras["title"] +'" /></p>'+
                     '<p title="出处">出处<input type="text" name="source" autocomplete="off" value="'+ paras["source"] +'" /></p>'+
@@ -586,7 +582,7 @@
             
             function create_table_pop_html(){
                 return hidden_paras_html + 
-                    '<p class="first">'+ control_tag +'表格 <span class="all_example" title="说明"><a target="_blank" href="/help-editor-table">实例</a></span></p>'+
+                    '<p class="first">'+ control_tag +'表格</p>'+
                     '<div style="display:block">'+
                     '<p title="表格名称">表名<input type="text" name="title" autocomplete="off" value="'+ paras["title"] +'" /></p>' +
                     '<p title="表格内容"><textarea name="body" autocomplete="off">'+ paras["body"] +'</textarea></p>'+
@@ -605,7 +601,7 @@
                 }
                 
                 return hidden_paras_html +
-                    '<p class="first">'+ control_tag +'数学式--<font size="12px">数学式采用latex规则</font><span class="all_example" title="说明"><a href="/help-editor-math" target="_blank">说明</a></span></p>'+
+                    '<p class="first">'+ control_tag +'数学式--<font size="12px">数学式采用latex规则</font></p>'+
                     '<p title="设置名称">名称<input type="text" name="title" autocomplete="off" value="'+ paras["title"] +'"/></p>'+
                     '<p title="设置名称">样式'+ math_mode_html +'</p>'+
                     '<p title="数学式latex内容"><textarea resize="none" autocomplete="off" name="body">'+ paras["body"] +'</textarea></p>'+
@@ -624,7 +620,7 @@
                 }
                 
                 return hidden_paras_html + 
-                    '<p class="first">'+ control_tag +'代码 <span class="all_example" title="说明"><a target="_blank" href="/help-editor-code">说明</a></span></p>'+
+                    '<p class="first">'+ control_tag +'代码</p>'+
                     '<p title="代码名称">名称<input type="text" autocomplete="off" name="title" value="'+ paras["title"] +'" /></p>'+
                     '<p title="代码种类">种类<select name="code_type">'+ code_select_html+ '</select></p>'+
                     '<p title="代码"><textarea name="body" autocomplete="off">'+ paras["body"] +'</textarea></p>'+
@@ -634,7 +630,7 @@
             
             function create_image_pop_html(){
                 if(paras["do"] == "new"){
-                    return '<p class="first">添加图片<span class="all_example" title="说明"><a target="_blank" href="/help-editor-picture">说明</a></span></p>'+
+                    return '<p class="first">添加图片</p>'+
                             '<form action="/article-src-control" id="up_picture" enctype="multipart/form-data" method="post" target="up_picture_iframe">'+
                             '<input type="hidden" name="picture_type" value="article" />' +
                             '<input type="hidden" name="_xsrf" value="' + jQ.getCookie("_xsrf") + '" />'+
