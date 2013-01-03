@@ -571,38 +571,6 @@ min-height: 1px;}
 #page li a{color: #666;}
 #page li a.current1{color: black;}
 
-#pop-content p{margin: 0;padding: 0;}
-
-#pop-content p.first{border-bottom:#aaa 1px solid;margin: 5px; padding: 5px 5px 0 5px;margin-bottom: 10px;}
-#pop-content p textarea{border:#ccc 1px solid;}
-#pop-content p input[type="text"]{border:#ccc 1px solid;}
-#pop-content p .all_example{float: right;color: blue;cursor: pointer;font-size: 14px;margin-right: 10px;}
-#pop-content p .all_example{text-decoration: underline;}
-#pop-content p .all_example a{color: blue;text-decoration: none;}
-#pop-content p span img{margin-top: 5px;}
-
-#pop_insert_table{width: 100%;height: 100%;display: block;background-color: #fff;text-align: center;}
-#pop_insert_table p{display: block;padding: 5px 20px;line-height: 25px;text-align: left;}
-#pop_insert_table p textarea{width: 95%;height: 200px;resize:none;padding: 5px;}
-#pop_insert_table p button{padding: 0 15px;height: 38px;line-height: 39px;border: 1px solid #CCC;display: inline-block;float: left;}
-#pop_insert_table p .t_process{line-height: 40px;margin-left: 5px;width: 270px;float: left;font-size: 12px;text-align: center;}
-#pop_insert_table p .t_process a{color: blue;}
-#pop_insert_table p input[type="text"]{width:70%;height:30px;margin-left:10px;line-height: 30px;font-size: 16px;}
-
-#pop_insert_image{width: 100%;height: 100%;display: block;background-color: #fff;text-align: center;}
-#pop_insert_image p{display: block;width: 300px;padding:10px 20px;line-height: 25px;text-align: left;max-height: 32px;overflow: hidden;}
-#pop_insert_image p input[type='text']{width:70%;height:30px;margin-left:10px;line-height: 30px;font-size: 16px;}
-#pop_insert_image p span button{padding: 0 15px;height: 38px;line-height: 39px;border: 1px solid #CCC;display: inline-block;}
-#pop_insert_image p label{line-height: 30px;margin: auto 10px auto 5px;}
-#pop_insert_image p .i_button{float: left;}
-#pop_insert_image p .i_process{line-height: 40px;margin-left: 5px;width: 190px;float: left;font-size: 12px;text-align: center;}
-
-#pop_insert_table input.feedback{width: 50% !important;}
-#pop_insert_table input.feedback_token{width: 30% !important;}
-#pop_insert_table span.feedback{color: #A66100; font-size: 12px; margin-left: 20px; }
-#pop_insert_table span.feedback a{color: blue; font-size: 12px;}
-#pop_insert_table img.feedback{line-height: 30px;position: relative;top: 7px;margin: 0;}
-#pop_insert_table a.feedback{color: blue; font-size: 12px;margin-left: 20px;}
 
 #avatar_wrap_nav{float: left;width: 100%;margin-top: 20px;margin-bottom: 20px;}
 #avatar_wrap_form{float: left;width: 100%;margin-top: 20px;margin-bottom: 20px;}
@@ -618,4 +586,67 @@ min-height: 1px;}
 
 #feed-button{background: url(/static/img/button/feed_ok.png)  no-repeat;position: absolute;top: 25px;right: 20px;width: 20px;}
 #feed-button a:hover{text-decoration: none;}
+
+
+
+/* write pop page style */
+#pop-content p{margin: 0;padding: 0;}
+
+#pop-content p.first{border-bottom:#aaa 1px solid;margin: 5px; padding: 5px 5px 0 5px;margin-bottom: 10px;}
+#pop-content p textarea{border:#ccc 1px solid;}
+#pop-content p input[type="text"]{border:#ccc 1px solid;}
+#pop-content p .all_example{float: right;color: blue;cursor: pointer;font-size: 14px;margin-right: 10px;}
+#pop-content p .all_example{text-decoration: underline;}
+#pop-content p .all_example a{color: blue;text-decoration: none;}
+#pop-content p span img{margin-top: 5px;}
+
+#pop_insert_image{width: 100%;height: 100%;display: block;background-color: #fff;text-align: center;}
+#pop_insert_image p{display: block;width: 300px;padding:10px 20px;line-height: 25px;text-align: left;max-height: 32px;overflow: hidden;}
+#pop_insert_image p input[type='text']{width:70%;height:30px;margin-left:10px;line-height: 30px;font-size: 16px;}
+#pop_insert_image p span button{padding: 0 15px;height: 38px;line-height: 39px;border: 1px solid #CCC;display: inline-block;}
+#pop_insert_image p label{line-height: 30px;margin: auto 10px auto 5px;}
+#pop_insert_image p .i_button{float: left;}
+#pop_insert_image p .i_process{line-height: 40px;margin-left: 5px;width: 190px;float: left;font-size: 12px;text-align: center;}
+
+
+#pop_insert_table{width: 100%;height: 100%;display: block;background-color: #fff;text-align: center;}
+#pop_insert_table p{display: block;padding: 5px 20px;line-height: 25px;text-align: left;}
+#pop_insert_table p textarea{width: 95%;height: 200px;resize:none;padding: 5px;}
+#pop_insert_table p button{padding: 0 15px;height: 38px;line-height: 39px;border: 1px solid #CCC;display: inline-block;float: left;}
+#pop_insert_table p .t_process{line-height: 40px;margin-left: 5px;width: 270px;float: left;font-size: 12px;text-align: center;}
+#pop_insert_table p .t_process a{color: blue;}
+#pop_insert_table p input[type="text"]{width:70%;height:30px;margin-left:10px;line-height: 30px;font-size: 16px;}
+
+#pop_insert_ref{width: 100%;height: 100%;display: block;background-color: #fff;text-align: center;}
+#pop_insert_ref p{display: block;padding: 5px 20px;line-height: 25px;text-align: left;}
+#pop_insert_ref p input[type="text"]{width:70%;height:30px;margin-left:10px;line-height: 30px;font-size: 16px;}
+#pop_insert_ref p textarea{width: 95%;height: 150px;resize:none;padding: 5px;}
+#pop_insert_ref p button{padding: 0 15px;height: 38px;line-height: 39px;border: 1px solid #CCC;display: inline-block;float: left;}
+#pop_insert_ref p .r_process{line-height: 40px;margin-left: 5px;width: 300px;float: left;font-size: 12px;text-align: center;}
+
+
+#pop_insert_reference{width: 100%;height: 100%;display: block;background-color: #fff;text-align: center;}
+#pop_insert_reference p{display: block;padding: 5px 20px;line-height: 25px;text-align: left;}
+#pop_insert_reference p input[type="text"]{width:70%;height:30px;margin-left:10px;line-height: 30px;font-size: 16px;}
+#pop_insert_reference p textarea{width: 95%;height: 150px;resize:none;padding: 5px;}
+#pop_insert_reference p button{padding: 0 15px;height: 38px;line-height: 39px;border: 1px solid #CCC;display: inline-block;float: left;}
+#pop_insert_reference p .r_process{line-height: 40px;margin-left: 5px;width: 300px;float: left;font-size: 12px;text-align: center;}
+
+#pop_insert_code{width: 100%;height: 100%;display: block;background-color: #fff;text-align: center;}
+#pop_insert_code p{display: block;padding: 5px 20px;line-height: 25px;text-align: left;}
+#pop_insert_code p input[type="text"]{width:70%;height:30px;margin-left:10px;line-height: 30px;font-size: 16px;}
+#pop_insert_code p select{margin-left: 10px;border:#ccc 1px solid;padding: 5px;}
+#pop_insert_code p textarea{width: 97%;height: 150px;resize:none;padding: 5px;}
+#pop_insert_code p button{padding: 0 15px;height: 38px;line-height: 39px;border: 1px solid #CCC;display: inline-block;float: left;}
+#pop_insert_code p .c_process{line-height: 40px;margin-left: 5px;width: 300px;float: left;font-size: 12px;text-align: center;}
+
+#pop_insert_math{width: 100%;height: 100%;display: block;background-color: #fff;text-align: center;}
+#pop_insert_math p{display: block;padding: 5px 20px;line-height: 25px;text-align: left;}
+#pop_insert_math label{margin-left: 10px;margin-right: 20px;letter-spacing: 1px;}
+#pop_insert_math label input[type='radio']{margin-right: 3px;}
+#pop_insert_math textarea{width: 95%;height: 150px;resize:none;padding: 5px;}
+#pop_insert_math p input[type="text"]{width:70%;height:30px;margin-left:10px;line-height: 30px;font-size: 16px;}
+#pop_insert_math p span{float: left;}
+#pop_insert_math p span button{padding: 0 15px;height: 38px;line-height: 39px;border: 1px solid #CCC;display: inline-block;}
+#pop_insert_math p .m_process{line-height: 40px;margin-left: 5px;width: 300px;float: left;font-size: 12px;text-align: center;}
 
