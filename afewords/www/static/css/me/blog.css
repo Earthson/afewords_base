@@ -158,11 +158,12 @@ padding: 0px 5px;border: 1px solid #D6D6D6;background-color: #F8F8F8;border-radi
 #bb_con strong{font-size: inherit;}
 #bb_con hr{height: 1px; width: 50%;border-top:1px solid #000;margin-bottom: 21px;margin-top: 20px;margin-left: 0;}
 #bb_con h1, h2, h3, h4, h5, h6{border-bottom: 1px solid #060;text-align: left;}
-#bb_con h1{margin: 30px auto 20px auto;border-bottom: 1px solid #060;padding-bottom: 8px;font-size: 1.8em;}
-#bb_con h2{margin: 25px auto 15px auto;border-bottom: 1px solid #060;padding-bottom: 8px;font-size: 1.6em;}
-#bb_con h3{margin: 15px auto 8px auto;padding-bottom: 5px;font-size: 1.4em;border-bottom: none;}
-#bb_con h4{margin: 10px auto 6px auto;padding-bottom: 3px;font-size: 1.2em; border-bottom: none;color: #49425C;}
+#bb_con h1{margin: 30px auto 20px auto;border-bottom: 2px solid #060;font-size: 1.8em;}
+#bb_con h2{margin: 25px auto 15px auto;border-bottom: 1px solid #060;font-size: 1.6em;}
+#bb_con h3{margin: 15px auto 8px auto;font-size: 1.4em;border-bottom: none;}
+#bb_con h4{margin: 10px auto 6px auto;font-size: 1.2em; border-bottom: none;color: #49425C;}
 #bb_con h5{margin: 5px auto 4px auto; border-bottom: none; color: #4D4D4D;}
+
 #bb_con p{margin: 15px 0; min-height: 1px;}
 #bb_con em{letter-spacing: 1px;}
 
