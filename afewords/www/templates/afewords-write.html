@@ -30,14 +30,14 @@
     {% if not isedit %}
     <textarea class="w_summary" style="resize:none;" spellcheck="false">摘要</textarea>
     {% else %}
-    <textarea class="w_summary" style="resize:none;" spellcheck="false">{{ article['summary'] }}</textarea>
+    <textarea class="w_summary" style="resize:none;" spellcheck="false">{{ xhtml_escape(article['summary']) }}</textarea>
     {% end %}
 {% end %}
 
 {% if not isedit %}
 <textarea class="text" id="write_textarea"></textarea>
 {% else %}
-<textarea class="text" id="write_textarea">{{ article['body'] }}</textarea>
+<textarea class="text" id="write_textarea">{{ xhtml_escape(article['body']) }}</textarea>
 {% end %}
 </div>
 </div>
