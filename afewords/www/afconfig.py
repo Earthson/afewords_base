@@ -4,7 +4,7 @@ import os
 afrootpath=os.path.dirname(__file__)
 
 af_conf = {
-    'needinvite' : True,
+    'needinvite' : False,
     'main_url' : r'http://www.afewords.com',
     #'main_url' : r'http://ipv6.earthson.net',
     'main_mail' : r'afewords@afewords.com',
