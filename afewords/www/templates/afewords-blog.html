@@ -39,6 +39,16 @@
 <tr><td>浏览</td><td>{{ statis['view_count'] }}</td></tr>
 </table>
 
+<div class="blog_recommend">
+<div class="blog_recommend_tip">推荐</div>
+<ul class="blog_recommend_ul">
+{% set rec_blog = doc['recommend_list'] %}
+{% for each_blog in rec_blog %}
+<li><a href="/blog/{{ each_blog['aid'] }}" target="_blank">{{ each_blog['title'] }}<a></li>
+{% end %}
+</ul>
+</div>
+
 </div>
 
 
