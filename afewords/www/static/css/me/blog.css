@@ -369,3 +369,24 @@ background: url('/static/img/reply.gif') no-repeat 0 5px;width: 20px;height:25px
 #ref_comment_lib a.link_close{position: absolute;right: 5px;top: 5px;padding: 2px;line-height: 14px;font-size: 14px;}
 #ref_comment_lib a.link_close:hover{color: #fff;background-color: #999;}
 #ref_comment_lib a.ref_author{margin-left: 20px;font-size: 14px;color: blue;}
+
+.blog_recommend_ul {
+list-style: none;
+margin-left: 20px;
+padding: 0;
+margin-right: 20px;
+margin-top: 0;
+}
+.blog_recommend_ul li {
+border-bottom: 1px #999 dotted;
+height: 30px;
+line-height: 35px;
+}
+.blog_recommend_ul a {
+color: blue;
+}
+.blog_recommend_tip {
+text-indent: 20px;
+margin-top: 10px;
+color: #666;
+}
